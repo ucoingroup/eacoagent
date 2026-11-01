@@ -33,6 +33,7 @@ https://ucoingroup.github.io/eacoagent/Earth_Compendium.html
 | [地球纲要](https://ucoingroup.github.io/eacoagent/Earth_Compendium.html) | 四卷结构：五个账本 → EACO 四要素 → 数字镜像 → 星际六级台阶 | 关心文明长期演化、需要框架感的人 |
 
 首页 [`index.html`](index.html) 是统一入口，包含导航、三张页面卡片、EACO 核心数据与全部生态外链。
+另有 [`SKILLS.md`](SKILLS.md) —— EACO Agent 的 **30 个常用技能**技术文档，见下文「Agent 技能库」。
 
 ---
 
@@ -56,11 +57,15 @@ eacoagent/
 ├── eacoagent-opc2026.html         # 一人公司 OPC 2026 操作手册
 ├── Earth_Compendium.html          # 地球纲要（四卷）
 ├── 404.html                       # 自定义 404
+├── SKILLS.md                      # 30 个 Agent 技能技术文档（源文件）
+├── skills/                        # 由 scripts/scaffold-skills.js 生成
+│   └── <slug>/SKILL.md            # 每个技能一个目录，Agent 直接加载
 ├── assets/
 │   ├── site.css                   # 共享设计系统（配色/卡片/表格/页脚）
 │   └── favicon.svg                # 站点图标
 ├── scripts/
-│   └── check-links.js             # 内部链接自检脚本（无依赖）
+│   ├── check-links.js             # 内部链接自检脚本（无依赖）
+│   └── scaffold-skills.js         # 从 SKILLS.md 落盘技能目录
 ├── .github/workflows/
 │   └── quality.yml                # 推送时自动跑链接检查
 ├── sitemap.xml
@@ -92,6 +97,30 @@ python -m http.server 8000     # 或 npx serve
 4. 保存，约 1 分钟后访问 `https://ucoingroup.github.io/eacoagent/`
 
 > 若绑定自定义域名，请在根目录添加 `CNAME` 文件，并把 `sitemap.xml`、`canonical` 中的域名同步替换。
+
+---
+
+## Agent 技能库（30 个）
+
+[`SKILLS.md`](SKILLS.md) 收录 EACO Agent 最常用的 30 个技能，每个技能包含：
+**frontmatter（name/description 触发约定）+ 执行步骤 + 可运行代码**，分六类：
+
+| 类别 | 技能 |
+|---|---|
+| 站点与仓库 | repo-init · page-scaffold · check-links · pages-deploy · changelog-gen |
+| 内容生产 | topic-miner · article-draft · thread-writer · i18n-parity · seo-meta · og-image-spec · rss-builder · content-recycle |
+| 研究与数据 | city-score · quota-calc · market-scan · competitor-matrix · policy-watch · fact-check |
+| 运营与增长 | social-calendar · faq-keeper · lead-pipeline · email-drip · metrics-weekly |
+| 财务与合规 | ledger-keep · invoice-gen · compliance-redline |
+| 协作与治理 | meeting-minutes · weekly-review · dao-proposal |
+
+一键落盘：
+
+```bash
+node scripts/scaffold-skills.js   # 生成 skills/<slug>/SKILL.md（30 个）
+```
+
+典型组合：`topic-miner → article-draft → seo-meta → og-image-spec → social-calendar`。
 
 ---
 
@@ -136,6 +165,7 @@ CI 在每次 push 时自动执行（见 `.github/workflows/quality.yml`）。
 - ✅ sitemap / robots / manifest / .nojekyll
 - ✅ 内部链接自检脚本 + CI
 - ✅ SEO：canonical、OG、JSON-LD
+- ✅ **Agent 技能库**：30 个技能（SKILLS.md + 落盘脚本 + skills/ 目录）
 - ⬜ **OG 分享图**：建议补一张 1200×630 的 PNG，替换各页 `og:image`
 - ⬜ **完整英文版**：OPC 与纲要目前为双语标题，可扩为整页英文
 - ⬜ **站内搜索**：可用纯前端 `index.json + 高亮`，无需服务端
@@ -171,4 +201,3 @@ CI 在每次 push 时自动执行（见 `.github/workflows/quality.yml`）。
 ## License
 
 [MIT](LICENSE) © 2026 ucoingroup
-
