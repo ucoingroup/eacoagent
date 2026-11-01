@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ucoingroup.github.io/eacoagent/sitemap.xml
