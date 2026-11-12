@@ -1,1 +1,2189 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="green">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>EACO 亚非市场拓展方法 · Asia–Africa Market Playbook</title>
+<meta name="description" content="EACO 亚非拉市场拓展方法手册：结算底座、五条落地通道、50 城友好度榜单、拉丁美洲 e33 布局与三阶段推进路线。" />
+<style>
+  /* ============ 1. Design tokens ============ */
+  :root{
+    --maxw: 1160px;
+    --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro SC", "PingFang SC", "Microsoft YaHei", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-serif: "Songti SC", "STSong", "SimSun", "Noto Serif SC", Georgia, "Times New Roman", serif;
+    --font-mono: "SF Mono", "JetBrains Mono", "Roboto Mono", Consolas, "Courier New", monospace;
+  }
 
+  /* 苹果绿 Apple Green */
+  html[data-theme="green"]{
+    --bg: #f5faf4;
+    --bg-deco: radial-gradient(1100px 620px at 82% -12%, rgba(126,217,87,.20), transparent 62%),
+               radial-gradient(900px 520px at 4% 8%, rgba(47,180,87,.10), transparent 60%);
+    --surface: #ffffff;
+    --surface-2: #f2f9ef;
+    --text: #10231a;
+    --muted: #5d7368;
+    --accent: #2fb457;
+    --accent-2: #7ed957;
+    --accent-ink: #ffffff;
+    --line: rgba(16,35,26,.10);
+    --line-strong: rgba(16,35,26,.18);
+    --radius: 22px;
+    --radius-sm: 14px;
+    --shadow: 0 1px 2px rgba(18,50,32,.04), 0 14px 36px rgba(23,74,42,.075);
+    --shadow-hover: 0 2px 4px rgba(18,50,32,.05), 0 20px 46px rgba(23,74,42,.12);
+    --hero-title: #0d1f16;
+    --chip-bg: #eaf6e4;
+    --chip-ink: #1f6b3a;
+    --warn: #b3541e;
+    --warn-bg: #fdf3e8;
+  }
+
+  /* 科技蓝 Tech Blue */
+  html[data-theme="tech"]{
+    --bg: #04070f;
+    --bg-deco: radial-gradient(900px 520px at 78% -8%, rgba(59,123,255,.28), transparent 62%),
+               radial-gradient(760px 460px at 6% 10%, rgba(34,224,208,.12), transparent 60%);
+    --surface: rgba(255,255,255,.038);
+    --surface-2: rgba(255,255,255,.06);
+    --text: #e9f0ff;
+    --muted: #8ea3c4;
+    --accent: #3b7bff;
+    --accent-2: #22e0d0;
+    --accent-ink: #04101f;
+    --line: rgba(120,160,255,.16);
+    --line-strong: rgba(120,160,255,.32);
+    --radius: 14px;
+    --radius-sm: 10px;
+    --shadow: 0 0 0 1px rgba(80,130,255,.06), 0 18px 44px rgba(0,0,0,.45);
+    --shadow-hover: 0 0 0 1px rgba(80,140,255,.18), 0 24px 60px rgba(24,80,220,.28);
+    --hero-title: #ffffff;
+    --chip-bg: rgba(59,123,255,.14);
+    --chip-ink: #a8c6ff;
+    --warn: #ffb454;
+    --warn-bg: rgba(255,180,84,.09);
+  }
+
+  /* 华夏古典 Chinese Classical */
+  html[data-theme="classic"]{
+    --bg: #f6efe0;
+    --bg-deco: radial-gradient(760px 520px at 88% 0%, rgba(163,46,28,.07), transparent 60%),
+               radial-gradient(680px 480px at 0% 24%, rgba(176,141,87,.12), transparent 62%);
+    --surface: #fdf9f0;
+    --surface-2: #f7f0df;
+    --text: #241f18;
+    --muted: #6f6353;
+    --accent: #a32e1c;
+    --accent-2: #b08d57;
+    --accent-ink: #fdf9f0;
+    --line: rgba(36,31,24,.20);
+    --line-strong: rgba(36,31,24,.36);
+    --radius: 4px;
+    --radius-sm: 3px;
+    --shadow: 0 1px 0 rgba(36,31,24,.05), 0 10px 26px rgba(78,60,36,.07);
+    --shadow-hover: 0 2px 0 rgba(36,31,24,.06), 0 16px 34px rgba(78,60,36,.12);
+    --hero-title: #1c1811;
+    --chip-bg: #f2e6cc;
+    --chip-ink: #7d4a1d;
+    --warn: #8e2a18;
+    --warn-bg: #f6e7d8;
+  }
+
+  /* ============ 2. Base ============ */
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-size:16px;
+    line-height:1.75;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color .4s ease, color .4s ease;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+    background: var(--bg-deco);
+    transition: background .4s ease;
+  }
+  html[data-theme="tech"] body::before{
+    background-image:
+      var(--bg-deco),
+      linear-gradient(rgba(90,140,255,.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(90,140,255,.055) 1px, transparent 1px);
+    background-size: auto, 64px 64px, 64px 64px;
+    mask-image: linear-gradient(#000 0%, #000 58%, transparent 92%);
+  }
+  html[data-theme="classic"] body::before{
+    background-image:
+      var(--bg-deco),
+      repeating-linear-gradient(0deg, rgba(120,96,60,.045) 0px, rgba(120,96,60,.045) 1px, transparent 1px, transparent 4px);
+  }
+  img{max-width:100%}
+  a{color:inherit}
+  h1,h2,h3,h4{margin:0;line-height:1.18;letter-spacing:-.02em;font-weight:700}
+  p{margin:0}
+  ::selection{background: var(--accent); color: var(--accent-ink)}
+  .wrap{width:min(var(--maxw), calc(100% - 48px));margin:0 auto;position:relative;z-index:1}
+
+  html[data-theme="classic"] h1,
+  html[data-theme="classic"] h2,
+  html[data-theme="classic"] h3{font-family: var(--font-serif); letter-spacing:.04em; font-weight:600}
+
+  /* ============ 3. Nav ============ */
+  .nav{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:saturate(180%) blur(18px);
+    -webkit-backdrop-filter:saturate(180%) blur(18px);
+    border-bottom:1px solid var(--line);
+    background: color-mix(in srgb, var(--bg) 78%, transparent);
+    transition: background .4s ease, border-color .4s ease;
+  }
+  .nav-in{display:flex;align-items:center;gap:18px;height:66px}
+  .brand{display:flex;align-items:center;gap:11px;text-decoration:none;flex:0 0 auto}
+  .brand-mark{
+    width:32px;height:32px;border-radius:9px;display:grid;place-items:center;
+    background: linear-gradient(140deg, var(--accent), var(--accent-2));
+    color: var(--accent-ink);font-weight:800;font-size:14px;letter-spacing:0;
+    box-shadow: 0 6px 16px color-mix(in srgb, var(--accent) 34%, transparent);
+  }
+  html[data-theme="classic"] .brand-mark{border-radius:2px;font-family:var(--font-serif);font-size:12px;letter-spacing:.06em}
+  .brand-txt{display:flex;flex-direction:column;line-height:1.2}
+  .brand-txt b{font-size:14.5px;letter-spacing:.01em}
+  .brand-txt span{font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+  .nav-links{display:flex;gap:4px;margin-left:8px}
+  .nav-links a{
+    text-decoration:none;font-size:13.5px;color:var(--muted);padding:7px 11px;border-radius:999px;
+    transition: color .2s, background .2s;
+  }
+  .nav-links a:hover{color:var(--text);background:var(--surface-2)}
+  html[data-theme="classic"] .nav-links a{border-radius:2px}
+  .nav-right{margin-left:auto;display:flex;align-items:center;gap:10px}
+  .seg{display:flex;padding:3px;border:1px solid var(--line);border-radius:999px;background:var(--surface);gap:2px}
+  html[data-theme="classic"] .seg{border-radius:2px}
+  .seg button{
+    border:0;background:transparent;color:var(--muted);font:inherit;font-size:12.5px;
+    padding:5px 12px;border-radius:999px;cursor:pointer;transition:color .2s, background .2s;
+  }
+  html[data-theme="classic"] .seg button{border-radius:1px;font-family:var(--font-serif)}
+  .seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+  .themes{display:flex;gap:6px}
+  .theme-btn{
+    width:26px;height:26px;border-radius:50%;cursor:pointer;padding:0;
+    border:1px solid var(--line-strong);position:relative;transition:transform .2s, box-shadow .2s;
+  }
+  .theme-btn:hover{transform:translateY(-1px)}
+  .theme-btn[aria-pressed="true"]{box-shadow:0 0 0 2px var(--bg), 0 0 0 4px var(--accent)}
+  html[data-theme="classic"] .theme-btn{border-radius:2px}
+  .theme-btn::after{content:"";position:absolute;inset:0;border-radius:inherit}
+  .theme-btn[data-set="green"]{background:linear-gradient(140deg,#7ed957,#2fb457)}
+  .theme-btn[data-set="tech"]{background:linear-gradient(140deg,#22e0d0,#3b7bff)}
+  .theme-btn[data-set="classic"]{background:linear-gradient(140deg,#c9a063,#a32e1c)}
+  .theme-label{font-size:12px;color:var(--muted);margin-right:2px}
+
+  /* ============ 4. Hero ============ */
+  .hero{padding:76px 0 34px;position:relative}
+  .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:54px;align-items:center}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:9px;font-size:11.5px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--muted);margin-bottom:20px;font-weight:600;
+  }
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--accent)}
+  .hero h1{
+    font-size:clamp(30px, 4.4vw, 52px);
+    color: var(--hero-title);
+    letter-spacing:-.035em;
+    line-height:1.12;
+    margin-bottom:20px;
+  }
+  html[data-theme="classic"] .hero h1{letter-spacing:.03em;line-height:1.28}
+  html[data-theme="tech"] .hero h1{
+    background:linear-gradient(96deg,#ffffff 8%,#a9c7ff 58%,#22e0d0 96%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero .lead{font-size:16.5px;color:var(--muted);max-width:62ch;line-height:1.85}
+  .hero-meta{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 30px}
+  .pill{
+    font-size:12px;color:var(--chip-ink);background:var(--chip-bg);border:1px solid var(--line);
+    padding:5px 11px;border-radius:999px;white-space:nowrap;
+  }
+  html[data-theme="classic"] .pill{border-radius:2px;font-family:var(--font-serif)}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;border-top:1px solid var(--line);padding-top:22px}
+  .stat b{display:block;font-family:var(--font-mono);font-size:26px;letter-spacing:-.04em;line-height:1.1}
+  html[data-theme="classic"] .stat b{font-family:var(--font-serif)}
+  .stat span{font-size:11.5px;color:var(--muted);display:block;margin-top:5px;line-height:1.4}
+
+  /* hero matrix */
+  .matrix-panel{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+    padding:24px;box-shadow:var(--shadow);position:relative;overflow:hidden;
+  }
+  html[data-theme="classic"] .matrix-panel{box-shadow:var(--shadow), inset 0 0 0 1px rgba(176,141,87,.28)}
+  html[data-theme="tech"] .matrix-panel{background:rgba(8,16,32,.55)}
+  .matrix-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px;gap:10px}
+  .matrix-head b{font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+  .matrix-head em{font-style:normal;font-family:var(--font-mono);font-size:11px;color:var(--accent)}
+  .matrix{display:grid;grid-template-columns:repeat(10,1fr);gap:9px}
+  .dot{
+    aspect-ratio:1;border-radius:50%;background:var(--surface-2);
+    border:1px solid var(--line);position:relative;transition:transform .25s, background .25s;
+    cursor:default;
+  }
+  .dot.hot{background:var(--accent);border-color:transparent;box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent)}
+  .dot.warm{background:color-mix(in srgb, var(--accent) 52%, var(--surface-2));border-color:transparent}
+  .dot:hover{transform:scale(1.28)}
+  html[data-theme="classic"] .dot{border-radius:1px}
+  .matrix-legend{display:flex;gap:16px;margin-top:18px;flex-wrap:wrap;font-size:11.5px;color:var(--muted)}
+  .matrix-legend i{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:6px;vertical-align:middle}
+  html[data-theme="classic"] .matrix-legend i{border-radius:1px}
+
+  .seal{
+    display:none;position:absolute;top:70px;right:calc(50% - 560px + 30px);
+    width:78px;height:96px;background:var(--accent);color:#fdf9f0;
+    font-family:var(--font-serif);font-size:18px;letter-spacing:.08em;
+    writing-mode:vertical-rl;text-align:center;padding:10px 0;
+    box-shadow:0 6px 18px rgba(163,46,28,.28);border-radius:2px;z-index:2;
+  }
+  html[data-theme="classic"] .seal{display:block}
+
+  /* ============ 5. Sections ============ */
+  section{padding:72px 0;position:relative;scroll-margin-top:80px}
+  .sec-head{display:grid;grid-template-columns:64px 1fr;gap:18px;margin-bottom:38px;align-items:start}
+  .sec-num{
+    font-family:var(--font-mono);font-size:12.5px;color:var(--accent);letter-spacing:.06em;
+    padding-top:9px;border-top:1px solid var(--accent);font-weight:600;
+  }
+  html[data-theme="classic"] .sec-num{font-family:var(--font-serif);border-top:1px solid var(--accent)}
+  .sec-head h2{font-size:clamp(23px,2.9vw,33px);letter-spacing:-.03em}
+  html[data-theme="classic"] .sec-head h2{letter-spacing:.05em}
+  .sec-sub{margin-top:11px;color:var(--muted);font-size:15px;max-width:74ch;line-height:1.8}
+
+  .card{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+    padding:26px;box-shadow:var(--shadow);
+    transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease, background .35s ease;
+  }
+  .card:hover{transform:translateY(-3px);box-shadow:var(--shadow-hover);border-color:var(--line-strong)}
+  html[data-theme="classic"] .card{box-shadow:var(--shadow), inset 0 0 0 1px rgba(176,141,87,.22)}
+
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  .demand .k{
+    font-family:var(--font-mono);font-size:11.5px;color:var(--accent);letter-spacing:.1em;display:block;margin-bottom:12px;
+  }
+  html[data-theme="classic"] .demand .k{font-family:var(--font-serif)}
+  .demand h3{font-size:18px;margin-bottom:10px;line-height:1.4}
+  .demand p{color:var(--muted);font-size:14px;line-height:1.85}
+
+  .callout{
+    margin-top:20px;padding:22px 26px;border-radius:var(--radius-sm);
+    background:var(--surface-2);border:1px solid var(--line);
+    border-left:3px solid var(--accent);display:grid;gap:6px;
+  }
+  html[data-theme="classic"] .callout{border-left-width:4px;border-radius:2px}
+  .callout b{font-size:13px;letter-spacing:.05em;color:var(--accent);text-transform:uppercase}
+  .callout p{font-size:15px;line-height:1.8}
+
+  /* stack diagram */
+  .stack-card{padding:30px 26px}
+  .stack-row{display:flex;align-items:center;gap:12px;justify-content:center;flex-wrap:wrap}
+  .node{
+    flex:1 1 0;min-width:150px;text-align:center;padding:16px 12px;border-radius:var(--radius-sm);
+    border:1px solid var(--line);background:var(--surface-2);
+  }
+  .node b{display:block;font-family:var(--font-mono);font-size:14px;letter-spacing:-.01em}
+  .node span{display:block;font-size:11.5px;color:var(--muted);margin-top:5px}
+  .node.mid{
+    background:linear-gradient(140deg, var(--accent), color-mix(in srgb, var(--accent-2) 80%, var(--accent)));
+    border-color:transparent;color:var(--accent-ink);
+    box-shadow:0 10px 26px color-mix(in srgb, var(--accent) 26%, transparent);
+  }
+  .node.mid b{color:var(--accent-ink)}
+  .node.mid span{color:color-mix(in srgb, var(--accent-ink) 78%, transparent)}
+  html[data-theme="classic"] .node{border-radius:2px}
+  .arrow{color:var(--muted);font-size:16px;flex:0 0 auto;opacity:.7}
+  .fork{height:22px;margin:6px 0 0;border-left:1px dashed var(--line-strong);border-right:1px dashed var(--line-strong);
+        border-bottom:1px dashed var(--line-strong);width:82%;margin-left:9%;border-radius:0 0 8px 8px}
+  .branches{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px}
+  .branch{padding:16px;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--surface);transition:border-color .25s, transform .25s}
+  .branch:hover{border-color:var(--accent);transform:translateY(-2px)}
+  .branch em{font-style:normal;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;color:var(--accent)}
+  .branch b{display:block;font-size:13.5px;margin:6px 0 6px}
+  .branch p{font-size:12.5px;color:var(--muted);line-height:1.65}
+
+  .legs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:26px}
+  .leg{padding:18px 20px;border-left:2px solid var(--accent);background:var(--surface-2);border-radius:0 var(--radius-sm) var(--radius-sm) 0}
+  .leg b{display:block;font-size:13.5px;margin-bottom:5px}
+  .leg span{font-size:12.5px;color:var(--muted);line-height:1.65;display:block}
+  .note{font-size:13px;color:var(--muted);margin-top:16px;padding-left:14px;border-left:2px solid var(--line-strong);line-height:1.75}
+
+  /* channels */
+  .channels{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .channel{padding:24px 24px 22px;position:relative}
+  .channel .c-no{
+    font-family:var(--font-mono);font-size:11px;color:var(--accent);letter-spacing:.14em;
+    display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;
+  }
+  .channel .c-no i{font-style:normal;color:var(--muted);font-size:10.5px;letter-spacing:.06em}
+  .channel h3{font-size:16.5px;margin-bottom:4px}
+  .channel .c-en{font-size:11.5px;color:var(--muted);letter-spacing:.03em;margin-bottom:12px}
+  .channel p{font-size:13.5px;color:var(--muted);line-height:1.8}
+  .channel p + p{margin-top:8px}
+  .channel p b{color:var(--text);font-weight:600}
+  .channel.wide{grid-column:span 2}
+
+  /* compare table */
+  .cmp{width:100%;border-collapse:collapse;font-size:13.5px}
+  .cmp th,.cmp td{text-align:left;padding:14px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+  .cmp thead th{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;border-bottom:1px solid var(--line-strong)}
+  .cmp tbody th{font-weight:600;font-size:13px;white-space:nowrap;color:var(--text);width:120px}
+  .cmp td{color:var(--muted);line-height:1.7}
+  .cmp tr:last-child th,.cmp tr:last-child td{border-bottom:0}
+  .cmp-wrap{overflow:hidden;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow)}
+
+  /* city table */
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;align-items:center}
+  .chip{
+    border:1px solid var(--line);background:var(--surface);color:var(--muted);
+    font:inherit;font-size:12.5px;padding:6px 14px;border-radius:999px;cursor:pointer;
+    transition:all .2s;
+  }
+  html[data-theme="classic"] .chip{border-radius:2px;font-family:var(--font-serif)}
+  .chip:hover{color:var(--text);border-color:var(--line-strong)}
+  .chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:transparent}
+  .tbl-wrap{overflow:auto;max-height:72vh;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow)}
+  table.city{width:100%;border-collapse:collapse;font-size:13px;min-width:760px}
+  table.city thead th{
+    position:sticky;top:0;background:var(--surface-2);z-index:2;
+    text-align:left;padding:11px 14px;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--muted);font-weight:600;border-bottom:1px solid var(--line-strong);white-space:nowrap;
+  }
+  table.city td{padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:middle;color:var(--muted)}
+  table.city tr:last-child td{border-bottom:0}
+  table.city tr{transition:background .18s}
+  table.city tbody tr:hover{background:var(--surface-2)}
+  table.city .num{font-family:var(--font-mono);color:var(--muted);font-size:11.5px;width:44px;min-width:44px;white-space:nowrap}
+  table.city .city-name{color:var(--text);font-weight:600;font-size:13.5px}
+  table.city .city-country{font-size:11.5px;color:var(--muted);margin-top:1px}
+  table.city .cur{font-family:var(--font-mono);font-size:11.5px;white-space:nowrap}
+  table.city .reg{font-size:12px;white-space:nowrap}
+  table.city .pos{font-size:12.5px;line-height:1.6}
+  .grade{
+    display:inline-block;min-width:34px;text-align:center;padding:2px 7px;border-radius:6px;
+    font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.02em;
+    border:1px solid transparent;
+  }
+  html[data-theme="classic"] .grade{border-radius:1px;font-family:var(--font-serif)}
+  .g-aplus{background:var(--accent);color:var(--accent-ink)}
+  .g-a{background:color-mix(in srgb, var(--accent) 62%, transparent);color:var(--accent-ink)}
+  .g-am{background:color-mix(in srgb, var(--accent) 30%, transparent);color:var(--text);border-color:var(--line-strong)}
+  .g-bp{background:var(--surface-2);color:var(--text);border-color:var(--line-strong)}
+  .g-b{background:transparent;color:var(--muted);border-color:var(--line-strong)}
+  .g-risk{background:transparent;color:var(--warn);border-color:color-mix(in srgb, var(--warn) 40%, transparent)}
+  .legend-row{display:flex;flex-wrap:wrap;gap:8px 18px;margin:16px 0 18px;font-size:12px;color:var(--muted)}
+  .legend-row span{display:flex;align-items:center;gap:7px}
+
+  /* roadmap */
+  .road{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;position:relative}
+  .phase{position:relative;padding-top:22px}
+  .phase::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--line-strong)}
+  .phase::after{content:"";position:absolute;top:-4px;left:0;width:10px;height:10px;border-radius:50%;background:var(--accent)}
+  html[data-theme="classic"] .phase::after{border-radius:0;transform:rotate(45deg)}
+  .phase .p-period{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;color:var(--accent);display:block;margin-bottom:8px}
+  .phase h3{font-size:18px;margin-bottom:14px}
+  .phase ul{margin:0;padding-left:0;list-style:none;display:grid;gap:9px}
+  .phase li{font-size:13.5px;color:var(--muted);line-height:1.75;padding-left:16px;position:relative}
+  .phase li::before{content:"";position:absolute;left:2px;top:10px;width:5px;height:5px;border-radius:50%;background:var(--accent);opacity:.65}
+  .phase .p-out{margin-top:16px;font-size:12.5px;padding-top:12px;border-top:1px dashed var(--line-strong);color:var(--text)}
+
+  /* org + red lines */
+  .org{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
+  .org-item{padding:18px;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--surface)}
+  .org-item b{display:block;font-size:13.5px;margin-bottom:6px}
+  .org-item span{font-size:12.5px;color:var(--muted);line-height:1.7}
+  .redline{border:1px solid color-mix(in srgb, var(--warn) 26%, var(--line));background:var(--warn-bg);border-radius:var(--radius);padding:24px 26px}
+  html[data-theme="classic"] .redline{border-radius:2px}
+  .redline h3{font-size:14px;color:var(--warn);letter-spacing:.04em;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+  .redline ol{margin:0;padding-left:20px;display:grid;gap:8px}
+  .redline li{font-size:13.5px;line-height:1.7;color:var(--text)}
+
+  /* kpi */
+  .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .kpi{padding:20px;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--surface)}
+  .kpi b{display:block;font-family:var(--font-mono);font-size:15px;letter-spacing:-.01em}
+  html[data-theme="classic"] .kpi b{font-family:var(--font-serif);letter-spacing:.04em}
+  .kpi span{display:block;font-size:12px;color:var(--muted);margin-top:6px;line-height:1.5}
+
+  /* disclaimer */
+  .disc{border-top:1px solid var(--line);padding-top:34px}
+  .disc h2{font-size:16px;letter-spacing:.02em;margin-bottom:16px;display:flex;gap:9px;align-items:center}
+  .disc ul{margin:0 0 22px;padding-left:18px;display:grid;gap:9px}
+  .disc li{font-size:12.8px;color:var(--muted);line-height:1.75}
+  .ca-box{
+    display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;
+    padding:16px 18px;border:1px dashed var(--line-strong);border-radius:var(--radius-sm);background:var(--surface-2);
+  }
+  .ca-box .ca-k{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:3px}
+  .ca-box code{font-family:var(--font-mono);font-size:12.5px;word-break:break-all;color:var(--text)}
+  .ca-stack{display:grid;gap:10px}
+  .ca-stack .ca-box{background:var(--surface)}
+  .copy{
+    border:1px solid var(--line-strong);background:var(--surface);color:var(--text);
+    font:inherit;font-size:12px;padding:6px 14px;border-radius:999px;cursor:pointer;white-space:nowrap;
+  }
+  html[data-theme="classic"] .copy{border-radius:2px}
+  .copy:hover{border-color:var(--accent);color:var(--accent)}
+  footer{padding:34px 0 54px;border-top:1px solid var(--line);margin-top:52px}
+  .foot{display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted)}
+  .foot .phil{font-size:12.5px;color:var(--text);letter-spacing:.01em}
+  .foot a{text-decoration:none;border-bottom:1px solid var(--line-strong);padding-bottom:1px}
+  .foot a:hover{color:var(--accent);border-color:var(--accent)}
+  .foot-mission{margin-top:14px;font-size:11.5px;color:var(--muted);line-height:1.8;opacity:.9;letter-spacing:.01em}
+
+  /* network layers */
+  .layers{display:grid;gap:10px}
+  .layer{
+    display:grid;grid-template-columns:56px 1fr;gap:18px;align-items:start;
+    padding:20px 22px;background:var(--surface);border:1px solid var(--line);
+    border-left:3px solid var(--accent);border-radius:var(--radius-sm);
+    transition:transform .25s, border-color .25s, background .35s;
+  }
+  html[data-theme="classic"] .layer{border-radius:2px}
+  .layer:hover{transform:translateX(3px);border-color:var(--line-strong)}
+  .layer:nth-child(2){border-left-color:color-mix(in srgb, var(--accent) 74%, var(--surface))}
+  .layer:nth-child(3){border-left-color:color-mix(in srgb, var(--accent) 48%, var(--surface))}
+  .layer:nth-child(4){border-left-color:color-mix(in srgb, var(--accent) 26%, var(--surface))}
+  .layer-no{font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;color:var(--accent);padding-top:5px}
+  .layer h3{font-size:16px;margin-bottom:6px}
+  .layer p{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:9px}
+  .layer-cities{font-size:12px;color:var(--text);line-height:1.9;opacity:.82}
+  .interchange{margin-top:14px;padding:22px;border:1px dashed var(--line-strong);border-radius:var(--radius-sm);background:var(--surface-2)}
+  .interchange>b{display:block;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  .ic-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .ic-grid div{font-size:12.5px;color:var(--muted);line-height:1.7}
+  .ic-grid b{display:block;color:var(--text);font-size:13px;margin-bottom:3px}
+
+  /* eCNH fit */
+  .ecnh{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
+  .ecnh div{padding:18px 20px;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--surface)}
+  .ecnh b{display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:7px}
+  .ecnh p{font-size:13px;color:var(--muted);line-height:1.78}
+
+  /* city detail rows */
+  .hint{font-size:12px;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:7px}
+  .hint::before{content:"";width:14px;height:1px;background:var(--accent)}
+  .city-row{cursor:pointer}
+  .city-row.open{background:var(--surface-2)}
+  .city-row.open .city-name{color:var(--accent)}
+  .detail-row td{padding:0!important;background:var(--surface-2);border-bottom:1px solid var(--line)}
+  .detail-inner{padding:15px 20px 17px;font-size:13px;line-height:1.8;color:var(--muted);display:flex;gap:12px;align-items:flex-start}
+  .detail-tag{font-family:var(--font-mono);font-size:10.5px;color:var(--accent);border:1px solid var(--line-strong);border-radius:4px;padding:1px 6px;white-space:nowrap;margin-top:3px}
+  html[data-theme="classic"] .detail-tag{border-radius:1px}
+  .region-index{display:grid;gap:12px;margin-top:20px;padding:20px 22px;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--surface)}
+  .region-index div{display:grid;grid-template-columns:64px 1fr;gap:14px;font-size:12.5px;color:var(--muted);line-height:1.9}
+  .region-index b{color:var(--text);font-size:12.5px;letter-spacing:.04em}
+
+  /* faq */
+  .faq-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:20px;flex-wrap:wrap}
+  .faq-count{font-size:12.5px;color:var(--muted);display:flex;align-items:center;gap:7px}
+  .faq-count b{font-family:var(--font-mono);color:var(--accent);font-size:13px}
+  html[data-theme="classic"] .faq-count b{font-family:var(--font-serif)}
+  .faq-toggle{
+    border:1px solid var(--line-strong);background:var(--surface);color:var(--text);
+    font:inherit;font-size:12.5px;padding:6px 15px;border-radius:999px;cursor:pointer;
+    transition:color .2s, border-color .2s, background .3s;
+  }
+  .faq-toggle:hover{border-color:var(--accent);color:var(--accent)}
+  html[data-theme="classic"] .faq-toggle{border-radius:2px;font-family:var(--font-serif)}
+  .faq-groups{display:grid;gap:26px}
+  .faq-gh{display:flex;align-items:baseline;gap:10px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+  .faq-gh b{font-size:13.5px;letter-spacing:.04em;color:var(--text)}
+  html[data-theme="classic"] .faq-gh b{font-family:var(--font-serif);letter-spacing:.08em}
+  .faq-gh span{font-family:var(--font-mono);font-size:11px;color:var(--muted);letter-spacing:.06em}
+  .faq-items{display:grid;gap:8px}
+  .qa{
+    border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--surface);
+    overflow:hidden;transition:border-color .2s, background .3s;
+  }
+  html[data-theme="classic"] .qa{border-radius:2px}
+  .qa:hover{border-color:var(--line-strong)}
+  .qa[open]{border-color:color-mix(in srgb, var(--accent) 38%, var(--line));background:var(--surface-2)}
+  .qa summary{
+    display:flex;align-items:flex-start;gap:11px;padding:13px 16px;
+    cursor:pointer;list-style:none;font-size:13.8px;line-height:1.6;color:var(--text);
+  }
+  .qa summary::-webkit-details-marker{display:none}
+  .qa summary:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+  .qa-no{font-family:var(--font-mono);font-size:10.5px;color:var(--accent);padding-top:3px;flex:0 0 auto;letter-spacing:.04em}
+  .qa-q{flex:1 1 auto}
+  .qa-ic{flex:0 0 auto;width:14px;height:14px;position:relative;margin-top:5px;color:var(--muted);transition:transform .25s}
+  .qa-ic::before,.qa-ic::after{content:"";position:absolute;background:currentColor;border-radius:1px;transition:transform .25s, opacity .25s}
+  .qa-ic::before{left:0;top:6.25px;width:14px;height:1.5px}
+  .qa-ic::after{left:6.25px;top:0;width:1.5px;height:14px}
+  .qa[open] .qa-ic{color:var(--accent)}
+  .qa[open] .qa-ic::after{transform:scaleY(0);opacity:0}
+  .qa-a{padding:0 18px 15px 42px;font-size:13px;line-height:1.9;color:var(--muted)}
+
+  /* faq search */
+  .faq-tools{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .faq-search{position:relative;display:flex;align-items:center}
+  .faq-search input{
+    font:inherit;font-size:12.8px;color:var(--text);background:var(--surface);
+    border:1px solid var(--line);border-radius:999px;padding:8px 34px 8px 33px;width:262px;
+    outline:none;transition:border-color .2s, box-shadow .2s, background .3s;
+    -webkit-appearance:none;appearance:none;
+  }
+  .faq-search input::-webkit-search-cancel-button{display:none}
+  .faq-search input::placeholder{color:var(--muted);opacity:.85}
+  .faq-search input:focus{
+    border-color:var(--accent);
+    box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 15%, transparent);
+  }
+  html[data-theme="classic"] .faq-search input{border-radius:2px;font-family:var(--font-serif)}
+  .faq-search .ic{
+    position:absolute;left:12px;width:11px;height:11px;border:1.5px solid var(--muted);
+    border-radius:50%;pointer-events:none;
+  }
+  .faq-search .ic::after{
+    content:"";position:absolute;right:-4px;bottom:-3px;width:6px;height:1.5px;
+    background:var(--muted);transform:rotate(45deg);border-radius:1px;
+  }
+  .faq-search .clr{
+    position:absolute;right:6px;width:22px;height:22px;border:0;border-radius:50%;
+    background:var(--surface-2);color:var(--muted);font:inherit;font-size:14px;line-height:1;
+    cursor:pointer;display:none;align-items:center;justify-content:center;padding:0;
+  }
+  .faq-search.has-q .clr{display:flex}
+  .faq-search .clr:hover{color:var(--accent)}
+  .faq-empty{
+    display:none;margin-top:14px;padding:30px 20px;text-align:center;
+    font-size:13px;color:var(--muted);border:1px dashed var(--line-strong);border-radius:var(--radius-sm);
+  }
+  .faq-empty.show{display:block}
+
+  /* reading progress + back to top */
+  .progress{position:fixed;top:0;left:0;right:0;height:2px;z-index:60;pointer-events:none;background:transparent}
+  .progress i{
+    display:block;height:100%;width:0;
+    background:linear-gradient(90deg, var(--accent), var(--accent-2));
+    transition:width .12s linear;
+  }
+  .to-top{
+    position:fixed;right:22px;bottom:22px;width:40px;height:40px;z-index:55;
+    border:1px solid var(--line-strong);border-radius:50%;background:var(--surface);color:var(--muted);
+    display:grid;place-items:center;cursor:pointer;box-shadow:var(--shadow);
+    opacity:0;visibility:hidden;transform:translateY(10px);
+    transition:opacity .25s, transform .25s, visibility .25s, color .2s, border-color .2s;
+  }
+  html[data-theme="classic"] .to-top{border-radius:2px}
+  .to-top.show{opacity:1;visibility:visible;transform:none}
+  .to-top:hover{color:var(--accent);border-color:var(--accent)}
+  .to-top::before{
+    content:"";width:9px;height:9px;
+    border-left:1.6px solid currentColor;border-top:1.6px solid currentColor;
+    transform:rotate(45deg) translate(2px,2px);
+  }
+
+  /* footer actions */
+  .foot-actions{margin-top:16px;display:flex;gap:10px;flex-wrap:wrap}
+  .print-btn{
+    border:1px solid var(--line-strong);background:var(--surface);color:var(--muted);
+    font:inherit;font-size:12px;padding:6px 15px;border-radius:999px;cursor:pointer;
+    transition:color .2s, border-color .2s;
+  }
+  .print-btn:hover{color:var(--accent);border-color:var(--accent)}
+  html[data-theme="classic"] .print-btn{border-radius:2px;font-family:var(--font-serif)}
+
+  /* nav scroll-spy */
+  .nav-links a.active{color:var(--text);background:var(--surface-2)}
+  .nav-links a.active::before{content:"";display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--accent);margin-right:6px;vertical-align:1px}
+
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .65s cubic-bezier(.2,.7,.2,1), transform .65s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ============ 6. Responsive ============ */
+  @media (max-width: 1180px){
+    .nav-in{gap:12px}
+    .nav-links a{padding:7px 8px;font-size:12.8px}
+  }
+  @media (max-width: 1000px){
+    .hero-grid{grid-template-columns:1fr;gap:36px}
+    .matrix-panel{max-width:460px}
+    .nav-links{display:none}
+    .branches{grid-template-columns:repeat(2,1fr)}
+    .grid-3{grid-template-columns:1fr}
+    .channels{grid-template-columns:1fr}
+    .channel.wide{grid-column:span 1}
+    .road{grid-template-columns:1fr;gap:26px}
+    .kpis{grid-template-columns:repeat(2,1fr)}
+    .seal{display:none!important}
+  }
+  @media (max-width: 720px){
+    .wrap{width:calc(100% - 32px)}
+    section{padding:52px 0}
+    .hero{padding:44px 0 20px}
+    .stats{grid-template-columns:repeat(2,1fr);gap:16px}
+    .sec-head{grid-template-columns:1fr;gap:8px}
+    .sec-num{border-top:0;padding-top:0}
+    .sec-num::after{content:"";display:none}
+    .branches{grid-template-columns:1fr}
+    .legs{grid-template-columns:1fr}
+    .ic-grid{grid-template-columns:1fr}
+    .ecnh{grid-template-columns:1fr}
+    .grid-2{grid-template-columns:1fr}
+    .org{grid-template-columns:1fr}
+    .kpis{grid-template-columns:1fr}
+    .cmp thead th:nth-child(3),.cmp td:nth-child(3){display:none}
+    .theme-label{display:none}
+    .brand-txt span{display:none}
+    .nav-in{height:60px;gap:10px}
+    table.city thead th{top:0}
+    .qa summary{font-size:13.4px;padding:12px 14px;gap:9px}
+    .qa-a{padding:0 14px 14px}
+    .faq-bar{gap:10px}
+    .faq-tools{width:100%;gap:10px}
+    .faq-search{flex:1 1 100%}
+    .faq-search input{width:100%}
+    .to-top{right:14px;bottom:14px;width:36px;height:36px}
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none!important;transition:none!important}
+    .reveal{opacity:1;transform:none}
+    html{scroll-behavior:auto}
+  }
+  @media print{
+    .nav,.filters,.copy,.seal,.progress,.to-top,.faq-search,.faq-toggle,.print-btn{display:none!important}
+    body{background:#fff;color:#000}
+    .card,.tbl-wrap,.cmp-wrap{box-shadow:none}
+    section{padding:24px 0;page-break-inside:avoid}
+    .qa{break-inside:avoid;background:#fff}
+    .qa .qa-a{padding-left:16px}
+  }
+</style>
+</head>
+<body>
+
+<div class="progress" aria-hidden="true"><i id="progressFill"></i></div>
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top">
+      <span class="brand-mark">E</span>
+      <span class="brand-txt">
+        <b>EACO</b>
+        <span data-i18n="nav.sub">亚非市场方法手册</span>
+      </span>
+    </a>
+    <nav class="nav-links">
+      <a href="#why" data-i18n="nav.l1">战略判断</a>
+      <a href="#stack" data-i18n="nav.l2">结算底座</a>
+      <a href="#rails" data-i18n="nav.l3">五条通道</a>
+      <a href="#network" data-i18n="nav.l3b">四层网络</a>
+      <a href="#latam" data-i18n="nav.l3c">拉美</a>
+      <a href="#cities" data-i18n="nav.l4">50 城榜单</a>
+      <a href="#road" data-i18n="nav.l5">推进路线</a>
+      <a href="#faq" data-i18n="nav.l6">问答</a>
+    </nav>
+    <div class="nav-right">
+      <span class="theme-label" data-i18n="nav.themeLabel">风格</span>
+      <div class="themes" role="group" aria-label="Theme">
+        <button class="theme-btn" data-set="green" aria-pressed="true" title="苹果绿 / Apple Green" aria-label="苹果绿"></button>
+        <button class="theme-btn" data-set="tech" aria-pressed="false" title="科技蓝 / Tech Blue" aria-label="科技蓝"></button>
+        <button class="theme-btn" data-set="classic" aria-pressed="false" title="华夏古典 / Classical" aria-label="华夏古典"></button>
+      </div>
+      <div class="seg" role="group" aria-label="Language">
+        <button data-lang="zh" aria-pressed="true">华语</button>
+        <button data-lang="en" aria-pressed="false">EN</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <div class="wrap">
+    <div class="seal" aria-hidden="true">亚非拉</div>
+    <section class="hero" style="padding-bottom:0">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow" data-i18n="hero.eyebrow">EACO · 亚非拉市场拓展方法</div>
+          <h1 data-i18n="hero.title">从 50 座城市，到一条可复用的结算路径</h1>
+          <p class="lead" data-i18n="hero.lead">以 EACO + Solana + SPL-USDT + eCNH 为底座，把「社群 — 通道 — 贸易」三层打通：亚洲做合规与流动性中枢，非洲做规模覆盖与场景刚需，拉丁美洲做第三增长极与多主体架构。</p>
+          <div class="hero-meta">
+            <span class="pill" data-i18n="hero.m1">版本 V0.1</span>
+            <span class="pill" data-i18n="hero.m2">整理日期 2026-11-12</span>
+            <span class="pill" data-i18n="hero.m3">资料口径：公开监管信息 + 社群实践</span>
+          </div>
+          <div class="stats">
+            <div class="stat"><b>50</b><span data-i18n="hero.s1">城市友好度评估</span></div>
+            <div class="stat"><b>5</b><span data-i18n="hero.s2">类落地通道</span></div>
+            <div class="stat"><b>3</b><span data-i18n="hero.s3">阶段推进路线</span></div>
+            <div class="stat"><b>3</b><span data-i18n="hero.s4">大洲结构差异模型</span></div>
+          </div>
+        </div>
+        <div class="matrix-panel">
+          <div class="matrix-head">
+            <b data-i18n="hero.matrix.t">亚非拉 50 城友好度矩阵</b>
+            <em id="matrixCount">—</em>
+          </div>
+          <div class="matrix" id="matrix" aria-hidden="true"></div>
+          <div class="matrix-legend">
+            <span><i style="background:var(--accent)"></i><span data-i18n="hero.matrix.lg1">A 级及以上</span></span>
+            <span><i style="background:color-mix(in srgb, var(--accent) 52%, var(--surface-2))"></i><span data-i18n="hero.matrix.lg2">B 级</span></span>
+            <span><i style="background:var(--surface-2);border:1px solid var(--line)"></i><span data-i18n="hero.matrix.lg3">观察区</span></span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- 01 WHY -->
+  <section id="why">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-num">01</div>
+        <div>
+          <h2 data-i18n="s1.title">三个真实需求，决定先打哪里</h2>
+          <p class="sec-sub" data-i18n="s1.sub">不做「全市场铺开」，而是沿着已经存在的资金流走。哪里的钱本来就在跨境流动，哪里才需要一个新的结算层。</p>
+        </div>
+      </div>
+      <div class="grid-3">
+        <div class="card demand reveal">
+          <span class="k">DEMAND 01</span>
+          <h3 data-i18n="s1.a.t">侨汇与小额跨境：最后一公里已经铺好了</h3>
+          <p data-i18n="s1.a.d">非洲的 M-Pesa、Tigo Pesa、Wave、Orange Money，亚洲的 GCash、DuitNow、PromptPay、MoMo，已经把用户的钱包入口建成。EACO 不需要重建支付网络，只需要接入它——用稳定币做中间层，把「链上价值」翻译成「本地钱包余额」。</p>
+        </div>
+        <div class="card demand reveal">
+          <span class="k">DEMAND 02</span>
+          <h3 data-i18n="s1.b.t">贸易去美元化：结算腿需要中立选项</h3>
+          <p data-i18n="s1.b.d">印尼在两年内拿到 300 亿元人民币熊猫债额度，二期发行上限上调至 120 亿元——主权层面正在主动调整外债币种结构。企业端同样需要一条不依赖单一美元清算的结算腿，eCNH 与合规稳定币正好占住这个位置。</p>
+        </div>
+        <div class="card demand reveal">
+          <span class="k">DEMAND 03</span>
+          <h3 data-i18n="s1.c.t">合规窗口打开：先持牌者得渠道</h3>
+          <p data-i18n="s1.c.d">香港稳定币条例、新加坡 MAS 牌照、南非 FSCA 的 CASP、尼日利亚 CBN 与 SEC 双轨，正在把「灰色兑换」推向「持牌经营」。窗口期内建立的服务商网络与合规记录，是两三年后最贵的资产。</p>
+        </div>
+      </div>
+      <div class="callout reveal">
+        <b data-i18n="s1.call.k">一个前置判断</b>
+        <p data-i18n="s1.call.d">把 EACO 当作「结算层的记账单位」，而不是「炒作的标的」。亚非市场愿意为「能用」付费，不为「能涨」付费——所有落地设计都应从「这笔钱要付给谁、多久到账、手续费多少」开始，而不是从价格开始。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 STACK -->
+  <section id="stack">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-num">02</div>
+        <div>
+          <h2 data-i18n="s2.title">结算底座：三条腿，绝不绑在一起</h2>
+          <p class="sec-sub" data-i18n="s2.sub">中间结算腿、贸易计价腿、本地落地腿必须分离。混在一起，汇率风险和合规风险会互相放大。</p>
+        </div>
+      </div>
+
+      <div class="legs reveal">
+        <div class="leg">
+          <b data-i18n="s2.leg1.t">中间结算腿</b>
+          <span data-i18n="s2.leg1.d">SPL-USDT。流动性最好、认知成本最低，承担链上换手与跨市场搬运。</span>
+        </div>
+        <div class="leg">
+          <b data-i18n="s2.leg2.t">贸易计价腿</b>
+          <span data-i18n="s2.leg2.d">eCNH 与 RWA 凭证。用于大额贸易计价与账期管理，不承担日常支付。</span>
+        </div>
+        <div class="leg">
+          <b data-i18n="s2.leg3.t">本地落地腿</b>
+          <span data-i18n="s2.leg3.d">各国法币、电子钱包与现金。决定用户体验，也决定合规边界。</span>
+        </div>
+      </div>
+
+      <div class="card stack-card reveal">
+        <div class="stack-row">
+          <div class="node"><b>EACO</b><span data-i18n="s2.n1">SPL · Solana</span></div>
+          <div class="arrow">→</div>
+          <div class="node"><b>Jupiter DEX</b><span data-i18n="s2.n2">聚合路由 · 自托管</span></div>
+          <div class="arrow">→</div>
+          <div class="node mid"><b>SPL-USDT</b><span data-i18n="s2.n3">中间结算币</span></div>
+        </div>
+        <div class="fork" aria-hidden="true"></div>
+        <div class="branches">
+          <div class="branch">
+            <em>A</em>
+            <b data-i18n="s2.b1.t">链上 RWA</b>
+            <p data-i18n="s2.b1.d">eCNH、黄金、大宗商品凭证。只在链内流转，兑付依赖发行方。</p>
+          </div>
+          <div class="branch">
+            <em>B</em>
+            <b data-i18n="s2.b2.t">持牌 VASP</b>
+            <p data-i18n="s2.b2.d">银行与电子钱包落地：SGD、MYR、THB、IDR、PHP、VND。</p>
+          </div>
+          <div class="branch">
+            <em>C</em>
+            <b data-i18n="s2.b3.t">社群 OTC</b>
+            <p data-i18n="s2.b3.d">现金与本地钱包交割：NGN、KES、XOF、IDR、美元现金。</p>
+          </div>
+          <div class="branch">
+            <em>D</em>
+            <b data-i18n="s2.b4.t">B 端网关</b>
+            <p data-i18n="s2.b4.d">贸易结算腿，两端服务商各自负责本地法币合规与 KYC。</p>
+          </div>
+        </div>
+        <p class="note" data-i18n="s2.note">关键区分：链上 CNH ≠ 离岸人民币存款，它是代币化凭证，兑付取决于发行方的储备与赎回能力。任何 RWA 都先看兑付，再看收益。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 RAILS -->
+  <section id="rails">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-num">03</div>
+        <div>
+          <h2 data-i18n="s3.title">五条通道，各有各的边界</h2>
+          <p class="sec-sub" data-i18n="s3.sub">通道没有优劣，只有适用场景。把大额贸易塞进社群 OTC，或者把散户导进 B 端网关，都会出问题。</p>
+        </div>
+      </div>
+      <div class="channels">
+        <div class="card channel reveal">
+          <div class="c-no"><span>CHANNEL 01</span><i data-i18n="s3.c1.no">自托管</i></div>
+          <h3 data-i18n="s3.c1.t">链内 DEX</h3>
+          <div class="c-en">Jupiter · Raydium · Orca</div>
+          <p><b data-i18n="s3.c1.k1">用在哪：</b><span data-i18n="s3.c1.d1">做市与换手。为 EACO/USDT 建池、提供深度、给社群一个公开可查的报价基准。</span></p>
+          <p><b data-i18n="s3.c1.k2">边界：</b><span data-i18n="s3.c1.d2">只能换到稳定币，出不了法币；深度不足时滑点会直接吃掉利润，必须先算池子再谈推广。</span></p>
+        </div>
+        <div class="card channel reveal">
+          <div class="c-no"><span>CHANNEL 02</span><i data-i18n="s3.c2.no">强 KYC</i></div>
+          <h3 data-i18n="s3.c2.t">持牌 VASP / CEX</h3>
+          <div class="c-en">MAS · SC · SEC · Bappebti · BSP</div>
+          <p><b data-i18n="s3.c2.k1">用在哪：</b><span data-i18n="s3.c2.d1">大额、需要银行落账的场景。新加坡、吉隆坡、曼谷、雅加达、马尼拉的持牌平台可直连本地清算。</span></p>
+          <p><b data-i18n="s3.c2.k2">边界：</b><span data-i18n="s3.c2.d2">上币门槛高。日韩交易所几乎不接新资产，别把主战场放在那里，把那里当品牌与研发据点更现实。</span></p>
+        </div>
+        <div class="card channel reveal">
+          <div class="c-no"><span>CHANNEL 03</span><i data-i18n="s3.c3.no">社群主力</i></div>
+          <h3 data-i18n="s3.c3.t">P2P / OTC</h3>
+          <div class="c-en">CEX P2P · Local Desks · TG</div>
+          <p><b data-i18n="s3.c3.k1">用在哪：</b><span data-i18n="s3.c3.d1">小额到中额，现金与本地钱包即时交割。雅加达、吉隆坡、曼谷、胡志明、金边的柜台是天然节点。</span></p>
+          <p><b data-i18n="s3.c3.k2">边界：</b><span data-i18n="s3.c3.d2">点差大、诈骗与冻卡风险高。必须白名单商家、单笔限额、小额试转、双人复核，四条缺一不可。</span></p>
+        </div>
+        <div class="card channel reveal">
+          <div class="c-no"><span>CHANNEL 04</span><i data-i18n="s3.c4.no">B 端</i></div>
+          <h3 data-i18n="s3.c4.t">Solana 原生汇款网关</h3>
+          <div class="c-en">B2B Settlement Rails</div>
+          <p><b data-i18n="s3.c4.k1">用在哪：</b><span data-i18n="s3.c4.d1">贸易与大宗结算。链上只做结算腿，两端由服务商兑付到 OVO、GCash、DuitNow、PromptPay 等本地轨道。</span></p>
+          <p><b data-i18n="s3.c4.k2">边界：</b><span data-i18n="s3.c4.d2">不开放散户，面向贸易商与汇款公司；合作前必须核验其两端牌照与反洗钱流程。</span></p>
+        </div>
+        <div class="card channel wide reveal">
+          <div class="c-no"><span>CHANNEL 05</span><i data-i18n="s3.c5.no">消费场景</i></div>
+          <h3 data-i18n="s3.c5.t">加密卡通道</h3>
+          <div class="c-en">Stablecoin-backed Prepaid Cards</div>
+          <p><b data-i18n="s3.c5.k1">用在哪：</b><span data-i18n="s3.c5.d1">差旅、日常消费、线下品牌曝光。持卡刷卡自动扣稳定币、结算当地法币，适合做用户「第一笔体验」。</span></p>
+          <p><b data-i18n="s3.c5.k2">边界：</b><span data-i18n="s3.c5.d2">只能消费、不能转账给他人，不承担结算职能。不要把它包装成汇款工具，也不要用于受制裁地区的资金流转。</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 COMPARE -->
+  <section id="compare">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-num">04</div>
+        <div>
+          <h2 data-i18n="s4.title">双洲结构差异：一个做中枢，一个做覆盖</h2>
+          <p class="sec-sub" data-i18n="s4.sub">同一套底座，两种打法。亚洲的复杂度在「逐国合规」，非洲的复杂度在「基础设施缺口」。</p>
+        </div>
+      </div>
+      <div class="cmp-wrap reveal">
+        <table class="cmp">
+          <thead>
+            <tr>
+              <th data-i18n="s4.th0">维度</th>
+              <th data-i18n="s4.th1">亚洲 Asia</th>
+              <th data-i18n="s4.th2">非洲 Africa</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th data-i18n="s4.r1">监管结构</th><td data-i18n="s4.r1a">梯度完整，A+ 到 C 连续分布，可按「试点—扩量—规模化」渐进推进。</td><td data-i18n="s4.r1b">两头强、中间薄。机构级合规集中在南非、毛里求斯、内罗毕；大量西非中非城市靠 OTC 支撑。</td></tr>
+            <tr><th data-i18n="s4.r2">币种结构</th><td data-i18n="s4.r2a">多主权币种，各自独立清算，需逐国打通通道，复用性低。</td><td data-i18n="s4.r2b">西非 XOF、中非 XAF 由区域央行统一发行，一条通道覆盖 8—14 国。</td></tr>
+            <tr><th data-i18n="s4.r3">美元依赖度</th><td data-i18n="s4.r3a">本币结算为主，美元集中在大宗与储备；中国香港、新加坡离岸 CNH 池深厚。</td><td data-i18n="s4.r3b">显著更高。金边、金沙萨、仰光等地硬通货直接参与日常结算；利隆圭、亚的斯亚贝巴外汇短缺，稳定币已成「事实上的美元替代」。</td></tr>
+            <tr><th data-i18n="s4.r4">支付基建</th><td data-i18n="s4.r4a">电子钱包 + 银行双轨：OVO、Gopay、PromptPay、DuitNow、GCash、MoMo。</td><td data-i18n="s4.r4b">移动货币为绝对主力：M-Pesa、Tigo Pesa、Orange Money、Wave。银行覆盖低，但移动端渗透极高，反而更适合纯链上轻量接入。</td></tr>
+            <tr><th data-i18n="s4.r5">结算场景</th><td data-i18n="s4.r5a">制造业中间品、跨境电商、劳务与侨汇、能源进口。</td><td data-i18n="s4.r5b">矿产与农产品出口、大宗预付款、侨汇、进口刚需（燃油、粮食、药品）；单笔更大、周期更长。</td></tr>
+            <tr><th data-i18n="s4.r6">通道成本</th><td data-i18n="s4.r6a">单国接入成本高，但单笔额度大、客单价高。</td><td data-i18n="s4.r6b">单点接入、区域摊薄，边际成本低，适合规模化复制。</td></tr>
+            <tr><th data-i18n="s4.r7">主要风险</th><td data-i18n="s4.r7a">牌照门槛、额度限制、跨境数据合规。</td><td data-i18n="s4.r7b">现金交割、外汇管制、政治与制裁风险、基础设施不稳定。</td></tr>
+            <tr><th data-i18n="s4.r8">推进节奏</th><td data-i18n="s4.r8a">先合规，后规模。用持牌合作方打开局面。</td><td data-i18n="s4.r8b">先覆盖，后合规。用社群与 OTC 补基础设施的空缺。</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="ecnh reveal">
+        <div>
+          <b data-i18n="s4.e1.k">eCNH 适配度 · 亚洲</b>
+          <p data-i18n="s4.e1.d">与 CNH 生态物理相邻：中国香港、新加坡离岸 CNH 池深厚，eCNH 溢价与折价收敛快，适合做市与基差业务。</p>
+        </div>
+        <div>
+          <b data-i18n="s4.e2.k">eCNH 适配度 · 非洲</b>
+          <p data-i18n="s4.e2.d">与 CNH 池距离远、赎回网关稀缺，eCNH 更多作为「贸易结算凭证」而非套利标的；溢价波动更大、赎回链条更长。</p>
+        </div>
+      </div>
+      <div class="callout reveal">
+        <b data-i18n="s4.call.k">组合结论</b>
+        <p data-i18n="s4.call.d">亚洲＝合规与流动性中枢（中国香港、新加坡、迪拜）＋ 贸易场景（雅加达、曼谷、吉隆坡）；非洲＝流量与刚需（拉各斯、内罗毕、阿克拉）＋ 区域货币杠杆（达喀尔、阿比让、杜阿拉）。两套引擎共用一条结算底座，不共用一套合规假设。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 NETWORK -->
+  <section id="network">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-num">05</div>
+        <div>
+          <h2 data-i18n="s4b.title">四层互补网络：谁管资金，谁管货，谁管人</h2>
+          <p class="sec-sub" data-i18n="s4b.sub">50 座城市不是一份清单，而是一张分工明确的网络。按层配置资源，才不会把合规能力浪费在小额场景，也不会把侨汇工具塞进大额贸易。</p>
+        </div>
+      </div>
+      <div class="layers">
+        <div class="layer reveal">
+          <div class="layer-no">L1</div>
+          <div>
+            <h3 data-i18n="s4b.l1.t">合规资金层</h3>
+            <p data-i18n="s4b.l1.d">承载机构级大额 RWA、CNH 与离岸资金周转，是 eCNH 铸造 / 赎回与合规落地的支点。这一层决定生态的「信用上限」。</p>
+            <div class="layer-cities" data-i18n="s4b.l1.c">新加坡 · 中国香港 · 迪拜 · 阿布扎比 · 约翰内斯堡 · 路易港 · 基加利 · 内罗毕</div>
+          </div>
+        </div>
+        <div class="layer reveal">
+          <div class="layer-no">L2</div>
+          <div>
+            <h3 data-i18n="s4b.l2.t">贸易结算层</h3>
+            <p data-i18n="s4b.l2.d">承接真实货物贸易与大宗商品结算，是 EACO + USDT + eCNH 组合使用频率最高的地带。这一层决定生态的「流水体量」。</p>
+            <div class="layer-cities" data-i18n="s4b.l2.c">雅加达 · 吉隆坡 · 曼谷 · 马尼拉 · 胡志明市 · 拉各斯 · 阿比让 · 达累斯萨拉姆 · 杜阿拉 · 卢萨卡</div>
+          </div>
+        </div>
+        <div class="layer reveal">
+          <div class="layer-no">L3</div>
+          <div>
+            <h3 data-i18n="s4b.l3.t">小额与侨汇层</h3>
+            <p data-i18n="s4b.l3.d">服务小微商户、劳务汇款与边境小额贸易，强调 7×24 可用与低门槛。这一层决定生态的「用户密度」。</p>
+            <div class="layer-cities" data-i18n="s4b.l3.c">金边 · 万象 · 坎帕拉 · 达喀尔 · 利隆圭 · 马普托 · 亚的斯亚贝巴</div>
+          </div>
+        </div>
+        <div class="layer reveal">
+          <div class="layer-no">L4</div>
+          <div>
+            <h3 data-i18n="s4b.l4.t">特殊通道层</h3>
+            <p data-i18n="s4b.l4.d">面向受限通道与友好经济体之间的点对点贸易。仅限信任社群，需严格风控与合规自查；不做宣传、不做规模化承诺。</p>
+            <div class="layer-cities" data-i18n="s4b.l4.c">莫斯科 · 德黑兰 · 伊斯坦布尔 · 阿拉木图 · 比什凯克 · 金沙萨 · 仰光</div>
+          </div>
+        </div>
+      </div>
+      <div class="interchange reveal">
+        <b data-i18n="s4b.ic.t">枢纽接口 · Interchange Nodes</b>
+        <div class="ic-grid">
+          <div>
+            <b data-i18n="s4b.ic1.t">三向互转</b>
+            <span data-i18n="s4b.ic1.d">迪拜 / 伊斯坦布尔 / 阿拉木图：亚洲—非洲—欧亚三个方向的资金互转。</span>
+          </div>
+          <div>
+            <b data-i18n="s4b.ic2.t">发行与合规端</b>
+            <span data-i18n="s4b.ic2.d">新加坡 / 中国香港 / 路易港：离岸合规架构与 RWA 发行端。</span>
+          </div>
+          <div>
+            <b data-i18n="s4b.ic3.t">非洲本地入口</b>
+            <span data-i18n="s4b.ic3.d">拉各斯 / 内罗毕：非洲本地流动性入口与移动钱包接入点。</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 LATAM -->
+  <section id="latam">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-num">06</div>
+        <div>
+          <h2 data-i18n="s4c.title">拉丁美洲 e33：三种资源分散在三个国家</h2>
+          <p class="sec-sub" data-i18n="s4c.sub">亚非可以找一个中枢统筹，拉美不行——体量在巴西、走廊在墨西哥、需求在阿根廷、身份在乌拉圭与萨尔瓦多。所以拉美的结构不是「一个中枢」，而是「多主体架构 + 一条共用的结算腿」。</p>
+        </div>
+      </div>
+      <div class="legs reveal">
+        <div class="card demand">
+          <span class="k">LAYER 01</span>
+          <h3 data-i18n="s4c.l1.t">合规与资本层</h3>
+          <p data-i18n="s4c.l1.d">圣保罗：巴西央行持牌运营与机构结算。蒙得维的亚：BCU 授权、南锥体区域总部。圣萨尔瓦多：DASP 成文牌照，3–6 个月可拿。</p>
+        </div>
+        <div class="card demand">
+          <span class="k">LAYER 02</span>
+          <h3 data-i18n="s4c.l2.t">结算与走廊层</h3>
+          <p data-i18n="s4c.l2.d">墨西哥城：对美侨汇 618 亿美元/年，传统通道 5–8%，链上不足 1%。圣地亚哥与利马：对华铜锂贸易与本币收款。布宜诺斯艾利斯：稳定币占交易量 60%+。</p>
+        </div>
+        <div class="card demand">
+          <span class="k">LAYER 03</span>
+          <h3 data-i18n="s4c.l3.t">社群与覆盖层</h3>
+          <p data-i18n="s4c.l3.d">波哥大：P2P 与微型商户，银行系比索稳定币 COPW 双轨并行。巴拿马城：美元财资、属地税制、自贸区结算。圣何塞：中美洲汇款沙盒。</p>
+        </div>
+      </div>
+      <div class="cmp-wrap reveal">
+        <table class="cmp">
+          <thead>
+            <tr>
+              <th data-i18n="s4c.h1">市场</th>
+              <th data-i18n="s4c.h2">已经发生的事实</th>
+              <th data-i18n="s4c.h3">对 EACO 的含义</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th data-i18n="s4c.r1">巴西</th>
+              <td data-i18n="s4c.r1a">牌照已成前置条件：VASP 授权申请 10 月 30 日截止；11 月 6 日起受监管机构不得与未持牌方交易；跨境侧 VASP 单笔上限 10 万美元，2027 年起 1 万美元以上转自托管延迟 24 小时。</td>
+              <td data-i18n="s4c.r1b">不能再走「境外代币 + 跨境套利」，只能并购或深度绑定持牌方。EACO 做价值与激励层，不做支付腿。</td>
+            </tr>
+            <tr>
+              <th data-i18n="s4c.r2">墨西哥</th>
+              <td data-i18n="s4c.r2a">发币进入刑责：2026 年 5 月 Murat 法案把比索稳定币发行限定给 IFPE 与银行，境外发行方须获央行事前授权并设本地代表，无照发行 5–15 年监禁。</td>
+              <td data-i18n="s4c.r2b">只做通道与结算层，与 IFPE 合作吃侨汇价差，绝不碰本地稳定币发行。</td>
+            </tr>
+            <tr>
+              <th data-i18n="s4c.r3">阿根廷</th>
+              <td data-i18n="s4c.r3a">最开放也最脆弱：CNV 强制登记门槛低（3–4 个月、净资产 3.5–15 万美元），合同可直接以稳定币计价；但外汇管制与 LIBRA 事件后的监管过敏仍在。</td>
+              <td data-i18n="s4c.r3b">做需求侧试验田，不做资金归集地。社群与小额场景先行，资金归集留在乌拉圭与巴拿马。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="region-index reveal">
+        <div>
+          <b data-i18n="s4c.z1.k">e33-BR</b>
+          <span data-i18n="s4c.z1.d">巴西单列。43.7% 的区域体量，值得独立核算、独立合规预算与独立负责人。</span>
+        </div>
+        <div>
+          <b data-i18n="s4c.z2.k">e33-MX</b>
+          <span data-i18n="s4c.z2.d">墨西哥、中美洲与多米尼加。北向侨汇走廊，以 IFPE 与汇款牌照为接口。</span>
+        </div>
+        <div>
+          <b data-i18n="s4c.z3.k">e33-SUR</b>
+          <span data-i18n="s4c.z3.d">南锥体：阿根廷、智利、乌拉圭、巴拉圭、秘鲁、玻利维亚。对华大宗与本币收款为主。</span>
+        </div>
+        <div>
+          <b data-i18n="s4c.z4.k">e33-CAR</b>
+          <span data-i18n="s4c.z4.d">加勒比岛国。以巴拿马城作财资、控股与自贸区结算接口。</span>
+        </div>
+      </div>
+      <div class="callout reveal">
+        <b data-i18n="s4c.call.k">三条红线</b>
+        <p data-i18n="s4c.call.d">一、委内瑞拉：391 亿美元、同比 +107.2%，拉美第四、增速第一，但制裁与政局不可对冲——只做研究，不做业务。二、巴拿马：无 VASP 专法，不得对外宣称「持牌」；2025 年 12 月已加入 CARF，2027 年起自动交换信息，税务不透明窗口正在关闭。三、华语市场边界：2026 年 2 月八部门 42 号文已明确禁止境外主体向境内提供虚拟货币相关服务，并把 RWA 代币化纳入监管；e20 只能覆盖中国香港、中国澳门、中国台湾与海外华人社群。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 CITIES -->
+  <section id="cities">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-num">07</div>
+        <div>
+          <h2 data-i18n="s5.title">50 城友好度榜单</h2>
+          <p class="sec-sub" data-i18n="s5.sub">五维加权：监管包容度、链上生态、法币落地、OTC 社群、贸易刚需。亚非拉 50 城同表排序，榜单是资源配置工具，不是交易许可清单。</p>
+        </div>
+      </div>
+      <div class="legend-row reveal">
+        <span><i class="grade g-aplus">A+</i><span data-i18n="s5.lg1">顶级友好：合规、流动性、用户三优</span></span>
+        <span><i class="grade g-a">A</i><span data-i18n="s5.lg2">高度友好：主通道成熟</span></span>
+        <span><i class="grade g-am">A-</i><span data-i18n="s5.lg3">较友好：需配套服务商</span></span>
+        <span><i class="grade g-bp">B+</i><span data-i18n="s5.lg4">中度友好：可行但需试点</span></span>
+        <span><i class="grade g-b">B</i><span data-i18n="s5.lg5">谨慎友好：小额试单</span></span>
+        <span><i class="grade g-risk">B-</i><span data-i18n="s5.lg7">观察位：仅社群点对点</span></span>
+        <span><i class="grade g-risk">C</i><span data-i18n="s5.lg6">高风险：仅信任社群点对点</span></span>
+      </div>
+      <div class="filters reveal" id="filters">
+        <button class="chip" data-filter="all" aria-pressed="true" data-i18n="s5.f1">全部 50 城</button>
+        <button class="chip" data-filter="asia" aria-pressed="false" data-i18n="s5.f2">亚洲</button>
+        <button class="chip" data-filter="africa" aria-pressed="false" data-i18n="s5.f3">非洲</button>
+        <button class="chip" data-filter="latam" aria-pressed="false" data-i18n="s5.f6">拉丁美洲</button>
+        <button class="chip" data-filter="top" aria-pressed="false" data-i18n="s5.f4">A 级及以上</button>
+        <button class="chip" data-filter="risk" aria-pressed="false" data-i18n="s5.f5">观察与高风险区</button>
+      </div>
+      <p class="hint" data-i18n="s5.hint">点击任意一行，展开该城市的落地说明</p>
+      <div class="tbl-wrap reveal">
+        <table class="city">
+          <thead>
+            <tr>
+              <th data-i18n="s5.h0">#</th>
+              <th data-i18n="s5.h1">城市 / 国家</th>
+              <th data-i18n="s5.h2">本币</th>
+              <th data-i18n="s5.h3">监管 / 牌照主体</th>
+              <th data-i18n="s5.h4">核心定位</th>
+              <th data-i18n="s5.h5">分级</th>
+            </tr>
+          </thead>
+          <tbody id="cityBody"></tbody>
+        </table>
+      </div>
+      <p class="note" data-i18n="s5.note">说明：分级为生态友好度参考，不代表交易许可或合规背书。亚非拉各国法规变动频繁，实际落地前须重新核验当地牌照、外汇与反洗钱要求。</p>
+      <div class="region-index reveal">
+        <div>
+          <b data-i18n="s5.ri.asia.k">亚洲</b>
+          <span data-i18n="s5.ri.asia.d">东亚：东京 · 首尔 · 中国香港｜东南亚：新加坡 · 吉隆坡 · 曼谷 · 雅加达 · 马尼拉 · 胡志明市 · 金边 · 万象 · 仰光｜南亚：班加罗尔｜西亚：迪拜 · 阿布扎比 · 德黑兰 · 伊斯坦布尔｜中亚：阿拉木图 · 比什凯克｜欧亚：莫斯科</span>
+        </div>
+        <div>
+          <b data-i18n="s5.ri.africa.k">非洲</b>
+          <span data-i18n="s5.ri.africa.d">北非：突尼斯市 · 卡萨布兰卡｜西非：达喀尔 · 阿克拉 · 阿比让 · 拉各斯｜中非：杜阿拉 · 金沙萨｜东非：内罗毕 · 坎帕拉 · 达累斯萨拉姆 · 亚的斯亚贝巴 · 基加利 · 卢萨卡 · 利隆圭 · 马普托｜南部非洲：约翰内斯堡 · 温得和克 · 哈博罗内｜印度洋岛国：路易港</span>
+        </div>
+        <div>
+          <b data-i18n="s5.ri.latam.k">拉丁美洲</b>
+          <span data-i18n="s5.ri.latam.d">南美：圣保罗 · 布宜诺斯艾利斯 · 圣地亚哥 · 利马 · 蒙得维的亚 · 波哥大｜中美：墨西哥城 · 圣何塞 · 圣萨尔瓦多｜运河区与加勒比：巴拿马城</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 ROADMAP -->
+  <section id="road">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-num">08</div>
+        <div>
+          <h2 data-i18n="s6.title">三阶段推进：先筑底座，再点状试点，最后区域复制</h2>
+          <p class="sec-sub" data-i18n="s6.sub">每一阶段都有明确的交付物与停止条件。没有跑通单城模型之前，不进第二个洲。</p>
+        </div>
+      </div>
+      <div class="road">
+        <div class="phase reveal">
+          <span class="p-period" data-i18n="s6.p1.period">PHASE 0 · 0—90 天</span>
+          <h3 data-i18n="s6.p1.t">筑基</h3>
+          <ul>
+            <li data-i18n="s6.p1.i1">建立「城市落地卡」数据库：牌照主体、可用通道、点差区间、KYC 门槛、额度上限，逐城录入。</li>
+            <li data-i18n="s6.p1.i2">锁定四个锚点：中国香港 / 新加坡（合规与流动性）、雅加达（贸易与熊猫债配套）、拉各斯（非洲流量）、内罗毕（移动钱包）。</li>
+            <li data-i18n="s6.p1.i3">完成 EACO/USDT 做市深度建设，设定滑点与单笔上限的运行阈值。</li>
+            <li data-i18n="s6.p1.i4">发布中英双语合规手册、风控 SOP、报价与话术模板。</li>
+          </ul>
+          <div class="p-out" data-i18n="s6.p1.out">交付物：可执行的城市落地卡 + 报价与风控 SOP</div>
+        </div>
+        <div class="phase reveal">
+          <span class="p-period" data-i18n="s6.p2.period">PHASE 1 · 3—6 个月</span>
+          <h3 data-i18n="s6.p2.t">点状试点</h3>
+          <ul>
+            <li data-i18n="s6.p2.i1">亚洲：吉隆坡、曼谷、马尼拉三城 OTC 试点，白名单商家、单笔限额、T+0 交割。</li>
+            <li data-i18n="s6.p2.i2">非洲：拉各斯、内罗毕、阿克拉三城移动钱包出入金试点，主攻侨汇与小微贸易。</li>
+            <li data-i18n="s6.p2.i3">与 1—2 家 Solana 原生汇款网关签 B 端试点，跑通一条真实贸易结算链。</li>
+            <li data-i18n="s6.p2.i4">建立城市大使机制：每城 3—5 人，按成交量与合规评分双维度结算激励。</li>
+          </ul>
+          <div class="p-out" data-i18n="s6.p2.out">交付物：单城月流水与点差基线 + 首批合规服务商名单</div>
+        </div>
+        <div class="phase reveal">
+          <span class="p-period" data-i18n="s6.p3.period">PHASE 2 · 12—24 个月</span>
+          <h3 data-i18n="s6.p3.t">区域复制</h3>
+          <ul>
+            <li data-i18n="s6.p3.i1">非洲切换区域通道：以西非 XOF、中非 XAF 为支点，一次覆盖 8—14 国。</li>
+            <li data-i18n="s6.p3.i2">亚洲推进持牌 VASP 深度合作与 RWA 试点（黄金、大宗、碳资产）。</li>
+            <li data-i18n="s6.p3.i3">eCNH 进入贸易计价试点，与人民币跨境结算及熊猫债叙事形成互证。</li>
+            <li data-i18n="s6.p3.i4">择一设立区域合规主体（中国香港 / 新加坡 / 迪拜），配套本地服务商网络。</li>
+          </ul>
+          <div class="p-out" data-i18n="s6.p3.out">交付物：可持续的 B 端收入结构与生态留存</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 09 ORG -->
+  <section id="org">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-num">09</div>
+        <div>
+          <h2 data-i18n="s7.title">组织与红线：能做多大，取决于守得多严</h2>
+          <p class="sec-sub" data-i18n="s7.sub">三层组织负责跑，六条红线负责不翻车。红线是前置条件，不是事后补救。</p>
+        </div>
+      </div>
+      <div class="org reveal">
+        <div class="org-item">
+          <b data-i18n="s7.o1.t">中枢</b>
+          <span data-i18n="s7.o1.d">合规、流动性、品牌与对外口径。统一话术、统一免责声明、统一审核发布。</span>
+        </div>
+        <div class="org-item">
+          <b data-i18n="s7.o2.t">区域</b>
+          <span data-i18n="s7.o2.d">城市经理 + 城市大使。负责本地服务商筛选、社群运营、活动与 KOL 协作。</span>
+        </div>
+        <div class="org-item">
+          <b data-i18n="s7.o3.t">地面</b>
+          <span data-i18n="s7.o3.d">OTC 商家、汇款网关、贸易商。负责真实交割，按成交量与投诉率双线考核。</span>
+        </div>
+      </div>
+      <div class="redline reveal">
+        <h3 data-i18n="s7.red.t">六条不可逾越的红线</h3>
+        <ol>
+          <li data-i18n="s7.red.i1">不做任何收益承诺、不预测价格、不承诺回购——所有对外内容只讲用途与路径。</li>
+          <li data-i18n="s7.red.i2">不引导用户进入未审计、无锁仓、无第三方托管的池子。</li>
+          <li data-i18n="s7.red.i3">不宣传、不协助任何受国际制裁地区的资金通道；伊朗、俄罗斯、缅甸等场景只做合规研究，不做业务推广。</li>
+          <li data-i18n="s7.red.i4">不做代客理财、不做资金池、不承诺保本，任何「帮我操作」的请求一律拒绝。</li>
+          <li data-i18n="s7.red.i5">KYC / AML 不可省、不可代过。宁可丢单，不可留痕风险。</li>
+          <li data-i18n="s7.red.i6">所有对外材料必须附免责声明与合约地址核验提示；发现假币或仿冒社群，第一时间公示。</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 KPI -->
+  <section id="kpi">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-num">10</div>
+        <div>
+          <h2 data-i18n="s8.title">用指标管理，而不是用口号</h2>
+          <p class="sec-sub" data-i18n="s8.sub">六个指标足以判断一个城市该加码还是撤退。数字是内部管理口径，不是业绩承诺。</p>
+        </div>
+      </div>
+      <div class="kpis reveal">
+        <div class="kpi"><b data-i18n="s8.k1">活跃城市数</b><span data-i18n="s8.k1d">月结算额 ≥ 阈值且无合规事件的城市数量</span></div>
+        <div class="kpi"><b data-i18n="s8.k2">单城月结算额</b><span data-i18n="s8.k2d">区分 B 端贸易与 C 端侨汇，两条线分开看</span></div>
+        <div class="kpi"><b data-i18n="s8.k3">平均点差 (bps)</b><span data-i18n="s8.k3d">含 DEX 滑点与 OTC 报价差，超过阈值即暂停推广</span></div>
+        <div class="kpi"><b data-i18n="s8.k4">贸易客户数</b><span data-i18n="s8.k4d">有真实报关或订单背景的 B 端客户，剔除刷量</span></div>
+        <div class="kpi"><b data-i18n="s8.k5">社群 30 日留存</b><span data-i18n="s8.k5d">新增用户中 30 天后仍有交互的比例</span></div>
+        <div class="kpi"><b data-i18n="s8.k6">合规事件</b><span data-i18n="s8.k6d">目标恒为 0；任何一起即触发城市级复盘</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 FAQ -->
+  <section id="faq">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-num">11</div>
+        <div>
+          <h2 data-i18n="s10.title">50 个常见问答</h2>
+          <p class="sec-sub" data-i18n="s10.sub">把最高频的疑问集中在这里：从 EACO 是什么、结算怎么走，到各市场能不能做、第一步该做什么。答案尽量短，便于直接转发给团队与合作方。</p>
+        </div>
+      </div>
+      <div class="faq-bar reveal">
+        <div class="faq-tools">
+          <div class="faq-search" id="faqSearchWrap">
+            <i class="ic" aria-hidden="true"></i>
+            <input id="faqSearch" type="search" autocomplete="off" data-i18n-ph="s10.ph" data-i18n-aria="s10.phAria"
+                   placeholder="搜索关键词，例如 巴西 / eCNH / 牌照" />
+            <button class="clr" id="faqClear" type="button" aria-label="清空搜索">×</button>
+          </div>
+          <div class="faq-count"><b id="faqCount">50</b><span id="faqCountLabel" data-i18n="s10.count">个问答 · 6 组主题</span></div>
+        </div>
+        <button class="faq-toggle" id="faqToggle" aria-pressed="false">展开全部</button>
+      </div>
+      <div class="faq-groups reveal" id="faqList"></div>
+      <p class="faq-empty" id="faqEmpty" data-i18n="s10.empty">没有匹配的问答，换个关键词试试。</p>
+      <p class="note" data-i18n="s10.note">说明：以下回答为通用口径，不构成投资建议或法律意见。涉及具体辖区的牌照、外汇与税务问题，须以当地持牌律师意见为准。</p>
+    </div>
+  </section>
+
+  <!-- DISCLAIMER -->
+  <section id="disc" style="padding-bottom:0">
+    <div class="wrap disc reveal">
+      <h2 data-i18n="s9.title">风险提示与免责声明</h2>
+      <ul>
+        <li data-i18n="s9.i1">本文为市场研究与生态路径梳理，不构成投资建议、要约或任何形式的承诺。</li>
+        <li data-i18n="s9.i2">加密资产价格波动剧烈，可能导致全部本金损失；参与前请自行评估风险承受能力。</li>
+        <li data-i18n="s9.i3">各司法辖区对加密资产、稳定币与跨境支付的监管差异极大，部分地区相关业务属限制或禁止；落地前须取得当地法律意见。</li>
+        <li data-i18n="s9.i4">文中涉及的国家、城市、牌照与通道信息来自公开资料与社群实践，可能存在滞后或误差，不构成合规背书。</li>
+        <li data-i18n="s9.i5">请认准官方合约地址，谨防假币与仿冒社群；一切信息以官方公示为准。</li>
+        <li data-i18n="s9.i6">eCNH 并非央行数字人民币 e-CNY，其兑付完全依赖发行方储备与赎回网关，存在兑付风险。</li>
+        <li data-i18n="s9.i7">文中「友好度分级」为生态评估，不代表当地法律许可任何相关业务；参与者须自行核实当地法规，风险自担。</li>
+      </ul>
+      <div class="ca-stack">
+        <div class="ca-box">
+          <div>
+            <span class="ca-k">EACO · Solana Mint</span>
+            <code>DqfoyZH96RnvZusSp3Cdncjpyp3C74ZmJzGhjmHnDHRH</code>
+          </div>
+          <button class="copy" data-ca="DqfoyZH96RnvZusSp3Cdncjpyp3C74ZmJzGhjmHnDHRH" data-i18n="s9.copy">复制地址</button>
+        </div>
+        <div class="ca-box">
+          <div>
+            <span class="ca-k" data-i18n="s9.ecnh">eCNH · Solana Mint（资料标注，以官方公示为准）</span>
+            <code>7GQnqthWKa5v2GqXYWhmgWZY5mCRrniwK3Xuinm9GKw5</code>
+          </div>
+          <button class="copy" data-ca="7GQnqthWKa5v2GqXYWhmgWZY5mCRrniwK3Xuinm9GKw5" data-i18n="s9.copy">复制地址</button>
+        </div>
+      </div>
+      <p class="note" data-i18n="s9.supply">总供应量 13.5 亿枚 · LP 10% 永久锁定 · 官网 ucoingroup.github.io/earths-best-coin</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot">
+        <div class="phil" data-i18n="foot.phil">EACO ＝ 正能量 × 积极态度 × 全球协作 × 持续优化</div>
+        <div data-i18n="foot.right">最高原则：一切文明为人类文明服务</div>
+      </div>
+      <p class="foot-mission" data-i18n="foot.mission">核心目标：提升个体认知 · 提升组织效率 · 推进社会文明 · 促进地球可持续发展 · 融合 100 种认知模型</p>
+      <div class="foot-actions">
+        <button class="print-btn" id="printBtn" type="button" data-i18n="foot.print">打印 / 存为 PDF</button>
+      </div>
+    </div>
+  </footer>
+</main>
+
+<button class="to-top" id="toTop" type="button" data-i18n-aria="nav.top" aria-label="回到顶部"></button>
+
+<script>
+/* ================= DATA ================= */
+const CITIES = [
+  {no:"亚-01", r:"asia", city:{zh:"新加坡",en:"Singapore"}, country:{zh:"新加坡",en:"Singapore"}, cur:"SGD", reg:{zh:"MAS",en:"MAS"}, pos:{zh:"亚洲合规枢纽、机构级大额兑换、生态总部",en:"Asia compliance hub; institutional-scale FX; ecosystem HQ"}, g:"A+"},
+  {no:"亚-02", r:"asia", city:{zh:"中国香港",en:"Hong Kong, China"}, country:{zh:"中国",en:"China"}, cur:"HKD / CNH", reg:{zh:"HKMA · SFC",en:"HKMA · SFC"}, pos:{zh:"稳定币与 RWA 规则清晰、eCNH 生态深厚、熊猫债联动",en:"Clear stablecoin & RWA rules; deep eCNH ecosystem; panda-bond synergy"}, g:"A+"},
+  {no:"亚-03", r:"asia", city:{zh:"迪拜",en:"Dubai"}, country:{zh:"阿联酋",en:"UAE"}, cur:"AED", reg:{zh:"VARA",en:"VARA"}, pos:{zh:"西亚—东南亚结算中继、卢布与伊朗经贸资金中转",en:"West Asia–SE Asia settlement relay; ruble and Iran trade flows"}, g:"A+"},
+  {no:"亚-04", r:"asia", city:{zh:"吉隆坡",en:"Kuala Lumpur"}, country:{zh:"马来西亚",en:"Malaysia"}, cur:"MYR", reg:{zh:"SC（VASP）",en:"SC (VASP)"}, pos:{zh:"DuitNow 通道成熟、华人社群与 TG 基础扎实",en:"Mature DuitNow rails; large Chinese community and strong TG base"}, g:"A"},
+  {no:"亚-05", r:"asia", city:{zh:"曼谷",en:"Bangkok"}, country:{zh:"泰国",en:"Thailand"}, cur:"THB", reg:{zh:"SEC 沙盒",en:"SEC sandbox"}, pos:{zh:"PromptPay 打通、中小贸易 7×24 链上结算",en:"PromptPay integration; 24/7 on-chain settlement for SMEs"}, g:"A"},
+  {no:"亚-06", r:"asia", city:{zh:"雅加达",en:"Jakarta"}, country:{zh:"印尼",en:"Indonesia"}, cur:"IDR", reg:{zh:"Bappebti",en:"Bappebti"}, pos:{zh:"QRIS / OVO 完善、熊猫债民间结算配套",en:"OVO / QRIS rails; panda-bond retail settlement synergy"}, g:"A"},
+  {no:"亚-07", r:"asia", city:{zh:"马尼拉",en:"Manila"}, country:{zh:"菲律宾",en:"Philippines"}, cur:"PHP", reg:{zh:"BSP（VASP）",en:"BSP (VASP)"}, pos:{zh:"GCash / Maya 普及、南向贸易结算节点",en:"GCash / Maya penetration; southbound trade settlement node"}, g:"A-"},
+  {no:"亚-08", r:"asia", city:{zh:"阿布扎比",en:"Abu Dhabi"}, country:{zh:"阿联酋",en:"UAE"}, cur:"AED", reg:{zh:"ADGM",en:"ADGM"}, pos:{zh:"大宗商品 RWA 试点、长期资产上链布局",en:"Commodity RWA pilots; long-term asset tokenization"}, g:"A"},
+  {no:"亚-09", r:"asia", city:{zh:"胡志明市",en:"Ho Chi Minh City"}, country:{zh:"越南",en:"Vietnam"}, cur:"VND", reg:{zh:"持牌服务商",en:"Licensed providers"}, pos:{zh:"MoMo 高渗透、人民币结算需求上行",en:"High MoMo penetration; rising RMB settlement demand"}, g:"B+"},
+  {no:"亚-10", r:"asia", city:{zh:"金边",en:"Phnom Penh"}, country:{zh:"柬埔寨",en:"Cambodia"}, cur:"USD / KHR", reg:{zh:"本地 VASP",en:"Local VASP"}, pos:{zh:"美元本位、多币种小额点对点流通",en:"Dollar-based market; small multi-currency P2P circulation"}, g:"B"},
+  {no:"亚-11", r:"asia", city:{zh:"东京",en:"Tokyo"}, country:{zh:"日本",en:"Japan"}, cur:"JPY", reg:{zh:"FSA",en:"FSA"}, pos:{zh:"合规稳定币与 Solana 研发生态、品牌孵化",en:"Compliant stablecoins; Solana R&D and brand incubation"}, g:"B+"},
+  {no:"亚-12", r:"asia", city:{zh:"首尔",en:"Seoul"}, country:{zh:"韩国",en:"South Korea"}, cur:"KRW", reg:{zh:"FSC",en:"FSC"}, pos:{zh:"用户基数巨大、KRW 出入金成熟、产品测试场",en:"Huge user base; mature KRW rails; product testing ground"}, g:"B+"},
+  {no:"亚-13", r:"asia", city:{zh:"班加罗尔",en:"Bengaluru"}, country:{zh:"印度",en:"India"}, cur:"INR", reg:{zh:"本土合规平台",en:"Local compliant platforms"}, pos:{zh:"Web3 人才高地、南亚市场拓展",en:"Web3 talent highland; South Asia expansion"}, g:"B+"},
+  {no:"亚-14", r:"asia", city:{zh:"伊斯坦布尔",en:"Istanbul"}, country:{zh:"土耳其",en:"Türkiye"}, cur:"TRY", reg:{zh:"本地 VASP",en:"Local VASP"}, pos:{zh:"欧亚十字路口、多币种民间兑换繁荣",en:"Eurasia crossroads; thriving multi-currency exchange"}, g:"B+"},
+  {no:"亚-15", r:"asia", city:{zh:"莫斯科",en:"Moscow"}, country:{zh:"俄罗斯",en:"Russia"}, cur:"RUB", reg:{zh:"数字金融资产立法",en:"Digital asset law"}, pos:{zh:"外贸稳定币结算试点、卢布 RWA 与 eCNH 配对（合规研究）",en:"Trade stablecoin pilots; ruble RWA paired with eCNH (research only)"}, g:"B+"},
+  {no:"亚-16", r:"asia", city:{zh:"德黑兰",en:"Tehran"}, country:{zh:"伊朗",en:"Iran"}, cur:"IRR", reg:{zh:"本地民间生态",en:"Local informal ecosystem"}, pos:{zh:"民生外贸结算刚需、点对点贸易链路（高风险）",en:"Livelihood trade demand; P2P links (high risk)"}, g:"B-"},
+  {no:"亚-17", r:"asia", city:{zh:"万象",en:"Vientiane"}, country:{zh:"老挝",en:"Laos"}, cur:"LAK", reg:{zh:"轻监管",en:"Light-touch"}, pos:{zh:"人民币跨境流通基础好、内陆边境贸易节点",en:"Solid RMB cross-border circulation; inland border-trade node"}, g:"B-"},
+  {no:"亚-18", r:"asia", city:{zh:"阿拉木图",en:"Almaty"}, country:{zh:"哈萨克斯坦",en:"Kazakhstan"}, cur:"KZT", reg:{zh:"AIFC",en:"AIFC"}, pos:{zh:"中亚金融中心、坚戈—卢布—CNH 三角枢纽",en:"Central Asia finance hub; KZT–RUB–CNH triangle"}, g:"B+"},
+  {no:"亚-19", r:"asia", city:{zh:"比什凯克",en:"Bishkek"}, country:{zh:"吉尔吉斯斯坦",en:"Kyrgyzstan"}, cur:"KGS", reg:{zh:"轻监管",en:"Light-touch"}, pos:{zh:"中亚次级结算中继、小额跨境贸易活跃",en:"Secondary Central Asia relay; active small-value trade"}, g:"B-"},
+  {no:"亚-20", r:"asia", city:{zh:"仰光",en:"Yangon"}, country:{zh:"缅甸",en:"Myanmar"}, cur:"MMK", reg:{zh:"体系薄弱",en:"Weak framework"}, pos:{zh:"民间美元与多币种 OTC、边境小额商贸（高风险）",en:"Informal USD and multi-currency OTC; border trade (high risk)"}, g:"C"},
+
+  {no:"非-01", r:"africa", city:{zh:"拉各斯",en:"Lagos"}, country:{zh:"尼日利亚",en:"Nigeria"}, cur:"NGN", reg:{zh:"CBN · SEC",en:"CBN · SEC"}, pos:{zh:"非洲 Web3 流量第一、奈拉出入金成熟、大宗结算",en:"Africa's No.1 Web3 hub; mature naira rails; commodity settlement"}, g:"A+"},
+  {no:"非-02", r:"africa", city:{zh:"约翰内斯堡",en:"Johannesburg"}, country:{zh:"南非",en:"South Africa"}, cur:"ZAR", reg:{zh:"FSCA（CASP）",en:"FSCA (CASP)"}, pos:{zh:"非洲最成熟监管、兰特稳定币基础设施完善",en:"Most mature regulator; deep rand stablecoin infrastructure"}, g:"A+"},
+  {no:"非-03", r:"africa", city:{zh:"内罗毕",en:"Nairobi"}, country:{zh:"肯尼亚",en:"Kenya"}, cur:"KES", reg:{zh:"VASP 沙盒",en:"VASP sandbox"}, pos:{zh:"M-Pesa 极高渗透、Kotani Pay 原生支持 Solana",en:"High M-Pesa penetration; Kotani Pay native Solana support"}, g:"A"},
+  {no:"非-04", r:"africa", city:{zh:"阿克拉",en:"Accra"}, country:{zh:"加纳",en:"Ghana"}, cur:"GHS", reg:{zh:"VARO 办公室",en:"VARO office"}, pos:{zh:"黄金背书 RWA 稳定币探索、西非创新中心",en:"Gold-backed RWA stablecoin exploration; West Africa innovation hub"}, g:"A-"},
+  {no:"非-05", r:"africa", city:{zh:"基加利",en:"Kigali"}, country:{zh:"卢旺达",en:"Rwanda"}, cur:"RWF", reg:{zh:"KIFC 沙盒",en:"KIFC sandbox"}, pos:{zh:"政策友好、东非合规试点高地、RWA 孵化",en:"Friendly policy; East Africa compliance pilot; RWA incubation"}, g:"A-"},
+  {no:"非-06", r:"africa", city:{zh:"达累斯萨拉姆",en:"Dar es Salaam"}, country:{zh:"坦桑尼亚",en:"Tanzania"}, cur:"TZS", reg:{zh:"本地监管",en:"Local regulator"}, pos:{zh:"M-Pesa / Tigo Pesa 普及、印度洋贸易口岸",en:"M-Pesa / Tigo Pesa adoption; Indian Ocean trade port"}, g:"B+"},
+  {no:"非-07", r:"africa", city:{zh:"坎帕拉",en:"Kampala"}, country:{zh:"乌干达",en:"Uganda"}, cur:"UGX", reg:{zh:"轻监管",en:"Light-touch"}, pos:{zh:"移动货币高渗透、内陆小额跨境结算活跃",en:"High mobile-money penetration; active inland small-value settlement"}, g:"B+"},
+  {no:"非-08", r:"africa", city:{zh:"达喀尔",en:"Dakar"}, country:{zh:"塞内加尔",en:"Senegal"}, cur:"XOF", reg:{zh:"BCEAO",en:"BCEAO"}, pos:{zh:"法语西非门户、Orange Money / Wave 成熟",en:"Francophone West Africa gateway; Orange Money / Wave"}, g:"B+"},
+  {no:"非-09", r:"africa", city:{zh:"卢萨卡",en:"Lusaka"}, country:{zh:"赞比亚",en:"Zambia"}, cur:"ZMW", reg:{zh:"虚拟资产法案",en:"Virtual asset act"}, pos:{zh:"铜资源外贸旺盛、大宗商品 + 链上 RWA",en:"Strong copper trade; commodities plus on-chain RWA"}, g:"B+"},
+  {no:"非-10", r:"africa", city:{zh:"阿比让",en:"Abidjan"}, country:{zh:"科特迪瓦",en:"Côte d'Ivoire"}, cur:"XOF", reg:{zh:"BCEAO",en:"BCEAO"}, pos:{zh:"西非经济龙头、CFA 法郎中心、大型贸易商聚集",en:"West Africa economic leader; CFA hub; large traders"}, g:"B+"},
+  {no:"非-11", r:"africa", city:{zh:"温得和克",en:"Windhoek"}, country:{zh:"纳米比亚",en:"Namibia"}, cur:"NAD", reg:{zh:"本地监管",en:"Local regulator"}, pos:{zh:"金融稳定、数字美元试点、矿产光伏外贸",en:"Financial stability; digital dollar pilots; minerals and solar trade"}, g:"B+"},
+  {no:"非-12", r:"africa", city:{zh:"突尼斯市",en:"Tunis"}, country:{zh:"突尼斯",en:"Tunisia"}, cur:"TND", reg:{zh:"央行研究先行",en:"Central bank research"}, pos:{zh:"CBDC 与稳定币研究、地中海—中东双向贸易",en:"CBDC and stablecoin research; Mediterranean–Middle East trade"}, g:"B+"},
+  {no:"非-13", r:"africa", city:{zh:"利隆圭",en:"Lilongwe"}, country:{zh:"马拉维",en:"Malawi"}, cur:"MWK", reg:{zh:"轻监管",en:"Light-touch"}, pos:{zh:"外汇短缺、稳定币用于侨汇与进口结算",en:"FX shortage; stablecoins for remittance and import settlement"}, g:"B-"},
+  {no:"非-14", r:"africa", city:{zh:"马普托",en:"Maputo"}, country:{zh:"莫桑比克",en:"Mozambique"}, cur:"MZN", reg:{zh:"本地监管",en:"Local regulator"}, pos:{zh:"能源矿产出口口岸、非美元结算诉求强",en:"Energy and minerals export gateway; strong de-dollarization demand"}, g:"B-"},
+  {no:"非-15", r:"africa", city:{zh:"杜阿拉",en:"Douala"}, country:{zh:"喀麦隆",en:"Cameroon"}, cur:"XAF", reg:{zh:"BEAC",en:"BEAC"}, pos:{zh:"中非水陆枢纽、双语市场、内陆多国资金中转",en:"Central Africa transport hub; bilingual market; inland relay"}, g:"B"},
+  {no:"非-16", r:"africa", city:{zh:"哈博罗内",en:"Gaborone"}, country:{zh:"博茨瓦纳",en:"Botswana"}, cur:"BWP", reg:{zh:"本地监管",en:"Local regulator"}, pos:{zh:"金融治理稳定、钻石贸易、中低风险 RWA 试点",en:"Stable governance; diamond trade; low-risk RWA pilots"}, g:"B+"},
+  {no:"非-17", r:"africa", city:{zh:"亚的斯亚贝巴",en:"Addis Ababa"}, country:{zh:"埃塞俄比亚",en:"Ethiopia"}, cur:"ETB", reg:{zh:"本地监管",en:"Local regulator"}, pos:{zh:"人口大国、跨境电商与劳务侨汇体量巨大",en:"Large population; e-commerce and labour remittance volume"}, g:"B-"},
+  {no:"非-18", r:"africa", city:{zh:"金沙萨",en:"Kinshasa"}, country:{zh:"刚果（金）",en:"DR Congo"}, cur:"CDF", reg:{zh:"体系薄弱",en:"Weak framework"}, pos:{zh:"矿产出口大国、银行薄弱、链上点对点刚需极强",en:"Major mineral exporter; weak banks; strong P2P demand (high risk)"}, g:"C"},
+  {no:"非-19", r:"africa", city:{zh:"卡萨布兰卡",en:"Casablanca"}, country:{zh:"摩洛哥",en:"Morocco"}, cur:"MAD", reg:{zh:"本地监管 + 沙盒",en:"Regulator + sandbox"}, pos:{zh:"北非金融中心、对欧出口、欧非资金中继",en:"North Africa finance hub; exports to Europe; Europe–Africa relay"}, g:"B+"},
+  {no:"非-20", r:"africa", city:{zh:"路易港",en:"Port Louis"}, country:{zh:"毛里求斯",en:"Mauritius"}, cur:"MUR", reg:{zh:"FSC（VASP）",en:"FSC (VASP)"}, pos:{zh:"离岸金融特区、非洲少有合规离岸窗口",en:"Offshore financial zone; rare compliant offshore window in Africa"}, g:"A"},
+  {no:"拉-01", r:"latam", city:{zh:"圣保罗",en:"São Paulo"}, country:{zh:"巴西",en:"Brazil"}, cur:"BRL", reg:{zh:"BCB（VASP）",en:"BCB (VASP)"}, pos:{zh:"拉美体量第一、持牌运营与机构结算中枢",en:"Largest LatAm market; licensed operations and institutional settlement hub"}, g:"A+"},
+  {no:"拉-02", r:"latam", city:{zh:"布宜诺斯艾利斯",en:"Buenos Aires"}, country:{zh:"阿根廷",en:"Argentina"}, cur:"ARS", reg:{zh:"CNV（PSAV）",en:"CNV (PSAV)"}, pos:{zh:"稳定币占交易 60%+、合同可用稳定币计价",en:"Stablecoins are 60%+ of volume; contracts may be denominated in them"}, g:"A"},
+  {no:"拉-03", r:"latam", city:{zh:"墨西哥城",en:"Mexico City"}, country:{zh:"墨西哥",en:"Mexico"}, cur:"MXN", reg:{zh:"CNBV · Banxico",en:"CNBV · Banxico"}, pos:{zh:"对美侨汇全球第二、IFPE 通道成熟",en:"World's No.2 remittance corridor; mature IFPE rails"}, g:"A-"},
+  {no:"拉-04", r:"latam", city:{zh:"波哥大",en:"Bogotá"}, country:{zh:"哥伦比亚",en:"Colombia"}, cur:"COP", reg:{zh:"SFC · URF",en:"SFC · URF"}, pos:{zh:"银行系比索稳定币 COPW、P2P 双轨",en:"Bank-issued peso stablecoin COPW plus a P2P track"}, g:"B+"},
+  {no:"拉-05", r:"latam", city:{zh:"圣地亚哥",en:"Santiago"}, country:{zh:"智利",en:"Chile"}, cur:"CLP", reg:{zh:"CMF（Ley 21.521）",en:"CMF (Law 21.521)"}, pos:{zh:"对华铜锂贸易、本币收款痛点明确",en:"Copper and lithium trade with China; clear local-currency gap"}, g:"B+"},
+  {no:"拉-06", r:"latam", city:{zh:"巴拿马城",en:"Panama City"}, country:{zh:"巴拿马",en:"Panama"}, cur:"USD", reg:{zh:"UAF（无 VASP 专法）",en:"UAF (no VASP law)"}, pos:{zh:"美元化财资与控股、属地税制",en:"Dollarised treasury and holding base; territorial tax"}, g:"B"},
+  {no:"拉-07", r:"latam", city:{zh:"圣萨尔瓦多",en:"San Salvador"}, country:{zh:"萨尔瓦多",en:"El Salvador"}, cur:"USD", reg:{zh:"CNAD（DASP）",en:"CNAD (DASP)"}, pos:{zh:"成文牌照最快、数字资产免税",en:"Fastest statutory licence; digital assets exempt from tax"}, g:"B"},
+  {no:"拉-08", r:"latam", city:{zh:"蒙得维的亚",en:"Montevideo"}, country:{zh:"乌拉圭",en:"Uruguay"}, cur:"UYU", reg:{zh:"BCU（Circular 2507）",en:"BCU (Circular 2507)"}, pos:{zh:"南锥体合规总部、法治稳定",en:"Southern Cone compliance base; stable rule of law"}, g:"B"},
+  {no:"拉-09", r:"latam", city:{zh:"利马",en:"Lima"}, country:{zh:"秘鲁",en:"Peru"}, cur:"PEN", reg:{zh:"UIF（仅部分规范）",en:"UIF (partial rules)"}, pos:{zh:"侨汇与华人商贸、无专法灰区",en:"Remittances and Chinese trade community; grey zone"}, g:"B-"},
+  {no:"拉-10", r:"latam", city:{zh:"圣何塞",en:"San José"}, country:{zh:"哥斯达黎加",en:"Costa Rica"}, cur:"CRC", reg:{zh:"无 VASP 专法",en:"No VASP law"}, pos:{zh:"中美洲汇款沙盒、法治稳定",en:"Central American remittance sandbox; stable rule of law"}, g:"B-"}
+];
+
+/* region + long description for each city */
+const DETAIL = {
+  "亚-01":{s:{zh:"东亚",en:"East Asia"},d:{zh:"MAS 牌照体系成熟，拥有离岸 CNH 池与 RWA 沙盒。适合机构级大额兑换与生态总部，是多币种协作的窗口。",en:"Mature MAS licensing, an offshore CNH pool and an RWA sandbox — the base for institutional-scale exchange, ecosystem HQ and multi-currency collaboration."}},
+  "亚-02":{s:{zh:"东亚",en:"East Asia"},d:{zh:"稳定币与 RWA 规则清晰，Solana 与债券代币化试点活跃，eCNH 生态深厚，是东西方资本桥梁，适合债券发行叠加链上结算。",en:"Clear stablecoin and RWA rules, active Solana and bond-tokenization pilots, a deep eCNH ecosystem and an East–West capital bridge — suited to issuance plus on-chain settlement."}},
+  "亚-03":{s:{zh:"西亚",en:"West Asia"},d:{zh:"VARA 框架完整、税负低、姿态开放，服务欧亚—非洲贸易中的卢布与伊朗资金流，是西亚—东南亚的结算中继。",en:"A complete VARA framework, low taxation and an open stance; serves Eurasia–Africa trade with active ruble and Iranian flows — the West Asia–SE Asia relay."}},
+  "亚-04":{s:{zh:"东南亚",en:"Southeast Asia"},d:{zh:"SC 发放 VASP 牌照，DuitNow 本地通道成熟，华语社群庞大，EACO 亚洲 TG 基础扎实，本币流动性深。",en:"SC VASP licensing, mature DuitNow rails, a large Chinese-speaking community and a strong EACO Asia Telegram base, with deep local-currency liquidity."}},
+  "亚-05":{s:{zh:"东南亚",en:"Southeast Asia"},d:{zh:"SEC 沙盒安排与 PromptPay 深度打通，小商户跨境贸易需求强，适合 7×24 链上结算。",en:"SEC sandbox arrangements with deep PromptPay integration; strong small-merchant cross-border demand makes 24/7 on-chain settlement a good fit."}},
+  "亚-06":{s:{zh:"东南亚",en:"Southeast Asia"},d:{zh:"Bappebti 持牌交易所 + OVO / Gopay / QRIS 全覆盖，是 EACO 关键市场，与熊猫债民间结算天然配套。",en:"Bappebti-licensed exchanges plus ubiquitous OVO, Gopay and QRIS wallets — a key EACO market and a natural companion to panda-bond retail settlement."}},
+  "亚-07":{s:{zh:"东南亚",en:"Southeast Asia"},d:{zh:"BSP 发放 VASP 牌照，GCash / Maya 渗透高，华人贸易社群活跃，是南向东南亚结算节点。",en:"BSP VASP licensing, high GCash and Maya penetration and an active Chinese trade community — a southbound Southeast Asian settlement node."}},
+  "亚-08":{s:{zh:"西亚",en:"West Asia"},d:{zh:"ADGM 金融自由区开展大宗商品与 RWA 代币化试点，服务中亚与西亚贸易伙伴，适合长期资产上链。",en:"The ADGM free zone runs commodity and RWA tokenization pilots and serves Central and West Asian partners — suited to long-term asset tokenization."}},
+  "亚-09":{s:{zh:"东南亚",en:"Southeast Asia"},d:{zh:"持牌服务商 + 成熟 OTC 社群，MoMo 渗透高，人民币结算需求持续上行。",en:"Licensed providers plus a mature OTC community and high MoMo penetration, with steadily rising RMB settlement demand."}},
+  "亚-10":{s:{zh:"东南亚",en:"Southeast Asia"},d:{zh:"美元本位市场，非正式容忍度高，跨境商贸密集，适合小额多币种点对点流通。",en:"A dollar-based market with high informal tolerance and dense cross-border commerce — suited to small multi-currency P2P flows."}},
+  "亚-11":{s:{zh:"东亚",en:"East Asia"},d:{zh:"FSA 注册、合规稳定币与 Solana 开发者生态强，日元通道稳定，适合技术研发与品牌孵化。",en:"FSA registration, compliant stablecoins and a strong Solana developer ecosystem with stable JPY rails — suited to R&D and brand incubation."}},
+  "亚-12":{s:{zh:"东亚",en:"East Asia"},d:{zh:"Web3 用户基数庞大、基础设施成熟、KRW 通道完善，适合社群共识建设与产品测试。",en:"An enormous Web3 user base, mature infrastructure and KRW rails — suited to community building and product testing."}},
+  "亚-13":{s:{zh:"南亚",en:"South Asia"},d:{zh:"亚洲 Web3 人才高地，创新文化浓厚，面向南亚扩张与区域贸易。",en:"Asia's Web3 talent highland with an innovative culture, oriented to South Asian expansion and regional trade."}},
+  "亚-14":{s:{zh:"西亚",en:"West Asia"},d:{zh:"欧亚十字路口，面向俄罗斯、中亚与中东，多币种民间兑换繁荣，承担跨区域资金中转。",en:"The Eurasia crossroads facing Russia, Central Asia and the Middle East, with a thriving multi-currency informal market and a cross-region fund relay role."}},
+  "亚-15":{s:{zh:"欧亚",en:"Eurasia"},d:{zh:"数字金融资产立法已生效，外贸稳定币结算试点开放，卢布 RWA 需求强，与 eCNH 天然配对（仅合规研究，不做推广）。",en:"Digital financial asset legislation is in force with open foreign-trade stablecoin pilots; strong ruble RWA demand pairs naturally with eCNH (compliance research only, no promotion)."}},
+  "亚-16":{s:{zh:"西亚",en:"West Asia"},d:{zh:"民生与外贸结算需求强，非正式稳定币生态成熟，是友好经济体之间的点对点贸易节点（高风险，不做推广）。",en:"Strong livelihood and trade settlement needs with a mature informal stablecoin ecosystem — a P2P node among friendly economies (high risk, no promotion)."}},
+  "亚-17":{s:{zh:"东南亚",en:"Southeast Asia"},d:{zh:"轻监管下人民币跨境流通基础扎实，是中南半岛内陆边境贸易节点。",en:"A solid base for RMB cross-border circulation under light regulation — an inland Indochina border-trade node."}},
+  "亚-18":{s:{zh:"中亚",en:"Central Asia"},d:{zh:"中亚金融中心，已具备人民币清算，连接俄罗斯与中亚，是坚戈—卢布—CNH 三角枢纽。",en:"A Central Asian financial centre with RMB clearing in place, linking Russia and Central Asia as a tenge–ruble–CNH triangle hub."}},
+  "亚-19":{s:{zh:"中亚",en:"Central Asia"},d:{zh:"非正式兑换文化开放，小额跨境贸易活跃，是中亚次级结算中继。",en:"An open informal exchange culture with active small cross-border trade — a secondary Central Asian settlement relay."}},
+  "亚-20":{s:{zh:"东南亚",en:"Southeast Asia"},d:{zh:"传统银行体系薄弱，但美元与多币种 OTC 成熟，适合边境小额点对点（高风险，仅信任社群）。",en:"A weak banking system but a mature informal USD and multi-currency OTC market — suited to border small trade P2P (high risk, trusted community only)."}},
+
+  "非-01":{s:{zh:"西非",en:"West Africa"},d:{zh:"非洲 Web3 流量第一重镇，Solana 生态活跃，奈拉出入金成熟，外贸与侨汇需求巨大，适合 EACO、USDT、eCNH 对非大宗商品结算链路落地。",en:"Africa's No.1 Web3 traffic hub with an active Solana ecosystem, mature naira on/off-ramps and huge trade and remittance demand — ideal for landing EACO + USDT + eCNH settlement in African commodity trade."}},
+  "非-02":{s:{zh:"南部非洲",en:"Southern Africa"},d:{zh:"非洲监管最成熟市场，FSCA 发放 CASP 牌照，兰特稳定币基础设施完善，机构资金充足，是南部非洲跨区结算枢纽。",en:"Africa's most mature regulatory market with FSCA-issued CASP licences, well-developed rand stablecoin infrastructure and ample institutional capital — the Southern African settlement hub."}},
+  "非-03":{s:{zh:"东非",en:"East Africa"},d:{zh:"M-Pesa 普及率极高，VASP 沙盒落地，Kotani Pay 原生支持 Solana，是东非跨境汇款与小微贸易的核心节点。",en:"Extremely high M-Pesa penetration, an operating VASP sandbox and Kotani Pay's native Solana support — the core node for East African remittances and small trade."}},
+  "非-04":{s:{zh:"西非",en:"West Africa"},d:{zh:"设立 VARO 数字资产监管办公室，探索黄金背书 RWA 稳定币，是西非金融创新中心，适合资源类资产代币化合作。",en:"Established the VARO digital asset regulatory office and is exploring gold-backed RWA stablecoins — a West African fintech innovation centre suited to resource tokenization."}},
+  "非-05":{s:{zh:"东非",en:"East Africa"},d:{zh:"基加利国际金融中心沙盒开放，政策友好、营商环境稳定，是东非合规试点高地，适合中长期 RWA 项目孵化。",en:"An open Kigali International Financial Centre sandbox with friendly policy and a stable business environment — an East African compliance pilot highland for RWA incubation."}},
+  "非-06":{s:{zh:"东非",en:"East Africa"},d:{zh:"M-Pesa、Tigo Pesa 支付普及，民间 OTC 流动性充足，是东非海岸贸易口岸，对接印度洋跨境商贸。",en:"Widely adopted M-Pesa and Tigo Pesa with deep informal OTC liquidity — an East African coastal trade port connected to Indian Ocean commerce."}},
+  "非-07":{s:{zh:"东非",en:"East Africa"},d:{zh:"移动货币渗透率高、监管宽松、乌干达先令出入金顺畅，东非内陆小额跨境结算市场活跃。",en:"High mobile-money penetration, light-touch regulation and smooth UGX on/off-ramp — an active East African inland market for small-value settlement."}},
+  "非-08":{s:{zh:"西非",en:"West Africa"},d:{zh:"法语西非门户，CFA 法郎流通，Orange Money、Wave 支付成熟，可打通整个法属西非区域社群。",en:"The francophone West African gateway with CFA franc circulation and mature Orange Money and Wave payments, bridging the whole French-speaking West African community."}},
+  "非-09":{s:{zh:"东非",en:"East Africa"},d:{zh:"正式出台虚拟资产法案，监管清晰，铜资源外贸旺盛，适合大宗商品 + 链上 RWA 结算场景。",en:"A formally enacted virtual asset act with clear regulation and thriving copper exports — well suited to commodity plus on-chain RWA settlement."}},
+  "非-10":{s:{zh:"西非",en:"West Africa"},d:{zh:"西非经济龙头，CFA 法郎中心，大宗商品出口量大，西非大型贸易商聚集，多币种兑换需求旺盛。",en:"West Africa's economic leader and CFA franc centre, with large commodity exports, clusters of major traders and strong multi-currency demand."}},
+  "非-11":{s:{zh:"南部非洲",en:"Southern Africa"},d:{zh:"金融稳定、低通胀，数字美元试点推进，矿产与光伏外贸潜力大，是西南非优质合作窗口。",en:"Financial stability, low inflation, an advancing digital-dollar pilot and strong mineral and solar export potential — a quality South-West African window."}},
+  "非-12":{s:{zh:"北非",en:"North Africa"},d:{zh:"北非 Web3 创新城市，CBDC 与稳定币研究先行，面向地中海与中东双向贸易，可衔接阿拉伯资金链路。",en:"A North African Web3 innovation city and forerunner in CBDC and stablecoin research, oriented to Mediterranean and Middle East trade and able to bridge Arab funding links."}},
+  "非-13":{s:{zh:"东非",en:"East Africa"},d:{zh:"外汇短缺、本币波动大，民间稳定币用于侨汇与进口结算，社群接受度高。",en:"Foreign-exchange shortages and a volatile currency make community stablecoins essential for remittances and import settlement, with high acceptance."}},
+  "非-14":{s:{zh:"东非",en:"East Africa"},d:{zh:"东非海岸能源、矿产出口口岸，外贸商家有强烈的非美元结算诉求，OTC 社群持续增长。",en:"An East African coastal energy and mineral export gateway with strong non-dollar settlement demand; its OTC community keeps growing."}},
+  "非-15":{s:{zh:"中非",en:"Central Africa"},d:{zh:"中非水陆贸易枢纽，法语 + 英语双语市场，CFA 法郎流通，是内陆多国资金中转节点。",en:"A Central African land-and-sea trade hub, a bilingual French/English market with CFA circulation and a fund transit node for landlocked countries."}},
+  "非-16":{s:{zh:"南部非洲",en:"Southern Africa"},d:{zh:"金融治理稳定，外汇管理相对宽松，钻石贸易发达，适合中低风险 RWA 结算试点。",en:"Stable financial governance, relatively liberal FX management and a strong diamond trade — suitable for low-to-medium-risk RWA pilots."}},
+  "非-17":{s:{zh:"东非",en:"East Africa"},d:{zh:"东非人口大国，跨境电商与劳务侨汇体量巨大，民间稳定币需求快速上升。",en:"An East African demographic giant with vast cross-border e-commerce and labour remittance volumes, where stablecoin demand is rising fast."}},
+  "非-18":{s:{zh:"中非",en:"Central Africa"},d:{zh:"矿产资源出口大国，银行体系薄弱，链上点对点结算刚需极强（风险偏高，仅限信任社群 OTC）。",en:"A major mineral exporter with a weak banking system and very strong on-chain P2P settlement needs (higher risk, trusted-community OTC only)."}},
+  "非-19":{s:{zh:"北非",en:"North Africa"},d:{zh:"北非金融中心，面向欧洲出口贸易，Web3 沙盒正在推进，是欧非资金中继站。",en:"A North African financial centre with export trade to Europe and an advancing Web3 sandbox — a Europe–Africa fund relay station."}},
+  "非-20":{s:{zh:"印度洋岛国",en:"Indian Ocean"},d:{zh:"离岸金融特区，VASP 牌照体系成熟，是非洲少有的合规离岸窗口，适合大额机构级 RWA 资金周转。",en:"An offshore financial zone with a mature VASP regime — one of Africa's rare compliant offshore windows, suited to large institutional RWA flows."}},
+  "拉-01":{s:{zh:"南美",en:"South America"},d:{zh:"巴西央行 519/520/521 号决议已落地，VASP 授权申请 10 月 30 日截止，11 月 6 日起受监管机构不得与未持牌方交易。体量占拉美 43.7%，是区域唯一具备机构级深度的市场；跨境侧单笔上限 10 万美元，须以持牌主体加本地银行合作推进。",en:"BCB resolutions 519/520/521 are in force, VASP authorisation closed on 30 October and from 6 November regulated institutions may not transact with unlicensed providers. At 43.7% of LatAm volume this is the region's only institutional-depth market; cross-border caps at USD 100k mean a licensed entity plus local bank partnership."}},
+  "拉-02":{s:{zh:"南美",en:"South America"},d:{zh:"CNV 依 27,739 号法与 RG 1058/2025 强制 PSAV 登记，门槛低、无最低资本、3–4 个月可完成。合同可直接以稳定币计价，稳定币占交易量 60%+。适合做需求侧试验田，但外汇管制与 LIBRA 事件后的监管过敏须计入成本。",en:"CNV mandates PSAV registration under Law 27,739 and RG 1058/2025 — low threshold, no minimum capital, 3–4 months. Contracts may be denominated in stablecoins and stablecoins are 60%+ of volume. A demand-side testbed, though FX controls and post-LIBRA regulatory sensitivity are a real cost."}},
+  "拉-03":{s:{zh:"中美",en:"Central America"},d:{zh:"2018 年金融科技法为拉美最成熟框架，但 Banxico 4/2019 禁止银行与 IFPE 面向客户提供虚拟资产服务。2026 年 5 月 Murat 法案把比索稳定币发行限定给 IFPE 与银行，境外发行方须获授权并设本地代表。侨汇 618 亿美元/年，只宜做通道。",en:"The 2018 Fintech Law is LatAm's most mature framework, but Banxico 4/2019 bars banks and IFPEs from serving clients in virtual assets. The May 2026 Murat bill limits peso stablecoin issuance to IFPEs and banks, with foreign issuers needing authorisation and a local representative. With USD 61.8bn of remittances, treat it as a corridor only."}},
+  "拉-04":{s:{zh:"南美",en:"South America"},d:{zh:"SFC 沙盒自 2021 年运行，Bancolombia 旗下 Wenia 的 COPW 是拉美首个商业银行比索稳定币；2026 年 URF 起草数字资产法案，将从沙盒转为牌照制。适合银行合作加 P2P 双轨试点。",en:"The SFC sandbox has run since 2021 and Bancolombia's Wenia COPW was LatAm's first commercial-bank peso stablecoin; URF drafted a digital asset bill in 2026 to move from sandbox to licensing. Suited to a bank partnership plus P2P dual-track pilot."}},
+  "拉-05":{s:{zh:"南美",en:"South America"},d:{zh:"Ley 21.521 金融科技法要求 CMF 注册，另需 UAF 反洗钱登记。监管路径硬但清晰；中智贸易 669 亿美元、中国连续多年为第一大伙伴，本币收款是明确痛点，适合 B 端贸易结算而非零售。",en:"Law 21.521 requires CMF registration plus UAF AML registration — a demanding but clear path. With USD 66.9bn of China–Chile trade and China the top partner for years, local-currency collection is the clear gap: B2B trade settlement rather than retail."}},
+  "拉-06":{s:{zh:"中美",en:"Central America"},d:{zh:"无 VASP 专法，SMV 三次裁定加密不属证券、无需牌照，仅需依 2015 年第 23 号法向 UAF 做反洗钱登记。美元化经济、属地税制，适合控股与财资；但 2025 年 12 月已加入 CARF，2027 年起自动交换，且不得对外宣称持牌。",en:"No VASP statute; SMV has ruled three times that crypto is not a security and needs no licence, with only UAF AML registration under Law 23 of 2015. A dollarised economy and territorial tax make it a holding and treasury base — but CARF accession in December 2025 means automatic exchange from 2027, and no licensed status may be claimed."}},
+  "拉-07":{s:{zh:"中美",en:"Central America"},d:{zh:"LEAD 643 号《数字资产发行法》加 CNAD 的 DASP 牌照，3–6 个月可落地，稳定币发行最低实缴 10 万美元，数字资产资本利得与收入免税、属地税制。比特币 2025 年 1 月修法后已失去法币地位。适合作为最快拿到成文牌照的注册地。",en:"LEAD decree 643 plus CNAD's DASP licence, achievable in 3–6 months, with USD 100k minimum paid-in capital for stablecoin issuance and tax exemption on digital asset gains and income under a territorial system. Bitcoin lost legal tender status in January 2025. The fastest route to a statutory licence."}},
+  "拉-08":{s:{zh:"南美",en:"South America"},d:{zh:"Ley 20.345 加 BCU 2507/2508 号通告，2026 年 9 月 1 日至 2027 年 3 月 31 日受理申请，托管类最低资本 100 万 UI，稳定币按电子货币监管，税负 12%/25%。法治稳定、区域声誉好，适合南锥体合规总部。",en:"Law 20.345 plus BCU Circulars 2507/2508, with applications open 1 September 2026 to 31 March 2027, minimum capital of 1m indexed units for custody, stablecoins regulated as e-money and tax of 12%/25%. Stable rule of law and a good regional reputation: the Southern Cone compliance base."}},
+  "拉-09":{s:{zh:"南美",en:"South America"},d:{zh:"仅有 UIF 部分规范，无专门牌照路径，属灰区。美元化程度高、华人商贸社群深厚，适合社群运营与小额试单，不建议作为主落地地。",en:"Only partial UIF rules and no dedicated licensing path — a grey zone. High dollarisation and a deep Chinese trade community make it good for community operations and small pilots, not a primary landing market."}},
+  "拉-10":{s:{zh:"中美",en:"Central America"},d:{zh:"无 VASP 专法，是中美仅存未建牌照制度的辖区之一，但稳定币汇款沙盒活跃、法治稳定。适合作为中美洲观察点与汇款场景试点，不做资金归集。",en:"No VASP statute — one of the last Central American jurisdictions without a licensing regime — but stablecoin remittance sandboxes are active and the rule of law is stable. An observation point and remittance pilot, not a treasury location."}}
+};
+
+/* ================= FAQ ================= */
+const FAQ = [
+  {k:{zh:"一 · 基本认知",en:"I · Basics"}, items:[
+    {no:"01",q:{zh:"EACO 是什么？",en:"What is EACO?"},
+     a:{zh:"EACO 全称 Earth's Best Coin，中文名「地球最好币」，是 Solana 链上定位 AI + RWA + Web3 的代币。它的目标是把真实结算需求与链上价值连起来，而不是做一个纯话题标的。",en:"EACO, short for Earth's Best Coin, is a token on Solana positioned across AI, RWA and Web3. Its goal is to connect real settlement demand with on-chain value rather than to be a pure narrative asset."}},
+    {no:"02",q:{zh:"EACO 和普通 meme 币有什么区别？",en:"How is EACO different from a typical meme coin?"},
+     a:{zh:"三点：一是有明确的结算场景（贸易、侨汇、小额跨境）；二是四要素与五个核心目标可当作治理原则执行；三是对外材料一律附风险提示，不做价格承诺。",en:"Three differences: a defined settlement use case (trade, remittances, small cross-border payments); four elements and five goals that work as governance principles; and a disclosure-first approach with no price promises."}},
+    {no:"03",q:{zh:"EACO 的总供应量是多少？",en:"What is EACO's total supply?"},
+     a:{zh:"13.5 亿枚（1.35 billion），其中 LP 的 10% 永久锁定。除此之外没有公布任何增发计划。",en:"1.35 billion tokens, with 10% of liquidity permanently locked. No additional issuance plan has been published."}},
+    {no:"04",q:{zh:"怎么确认拿到的是真的 EACO？",en:"How do I verify I received real EACO?"},
+     a:{zh:"认准 Solana 合约地址 DqfoyZH96RnvZusSp3Cdncjpyp3C74ZmJzGhjmHnDHRH，逐字比对大小写；只从官网 ucoingroup.github.io/earths-best-coin 与官方公示的社群入口进入。",en:"Match the Solana mint DqfoyZH96RnvZusSp3Cdncjpyp3C74ZmJzGhjmHnDHRH character by character, and only enter through the official site ucoingroup.github.io/earths-best-coin or officially listed community channels."}},
+    {no:"05",q:{zh:"四要素是什么意思？",en:"What do the four elements mean?"},
+     a:{zh:"EACO ＝ 正能量 × 积极态度 × 全球协作 × 持续优化。四个词是乘法关系：任何一项为零，整体就是零。",en:"EACO = Positive Energy × Positive Attitude × Global Collaboration × Continuous Optimization. They multiply: if any one is zero, the whole is zero."}},
+    {no:"06",q:{zh:"五个核心目标是什么？",en:"What are the five core goals?"},
+     a:{zh:"提升个体认知、提升组织效率、推动社会文明进步、促进地球可持续发展、融合 100 个认知模型。",en:"Elevate individual cognition, improve organisational efficiency, advance social civilisation, promote sustainable development of the Earth, and integrate 100 cognitive models."}},
+    {no:"07",q:{zh:"「一切文明为人类文明服务」怎么理解？",en:"How should 'all civilisation serves human civilisation' be read?"},
+     a:{zh:"这是最高原则，也是对 EACO 自身的约束：工具不能凌驾于目的，包括 EACO 在内。",en:"It is the highest principle and a constraint on EACO itself: no tool outranks its purpose — EACO included."}},
+    {no:"08",q:{zh:"为什么选 Solana？",en:"Why build on Solana?"},
+     a:{zh:"手续费低、确认快，小额与高频结算才成立；生态里 USDT、RWA 与支付类项目密度高，接入成本低。",en:"Low fees and fast finality make small-ticket, high-frequency settlement viable; the ecosystem already has dense USDT, RWA and payment projects, so integration cost is low."}},
+    {no:"09",q:{zh:"官方信息在哪里看？",en:"Where are official updates published?"},
+     a:{zh:"官网 ucoingroup.github.io/earths-best-coin 是唯一权威来源；合约地址、供应量与社群入口均以官网公示为准。",en:"The official site ucoingroup.github.io/earths-best-coin is the single authoritative source for the contract address, supply and community entry points."}},
+    {no:"10",q:{zh:"EACO 会涨吗？能给个价格预测吗？",en:"Will EACO go up? Can you give a price forecast?"},
+     a:{zh:"不会。本手册不提供价格预测、收益承诺或买卖建议。EACO 的价值取决于结算场景是否真的跑起来，这需要时间验证。",en:"No. This playbook gives no price forecasts, return promises or trading advice. EACO's value depends on whether the settlement use cases actually run — that takes time to prove."}}
+  ]},
+  {k:{zh:"二 · 结算与技术",en:"II · Settlement and tech"}, items:[
+    {no:"11",q:{zh:"SPL-USDT 在体系里是什么角色？",en:"What role does SPL-USDT play?"},
+     a:{zh:"中间结算腿。它负责搬运价值，不负责计价，也不负责落地；流动性与认知成本最低，所以用来做中间层。",en:"The middle settlement leg. It moves value, it does not price it and it does not land it. Lowest liquidity and cognitive cost, which is exactly why it sits in the middle."}},
+    {no:"12",q:{zh:"为什么三条腿一定要分开？",en:"Why must the three legs stay separate?"},
+     a:{zh:"绑在一起时，汇率风险和合规风险会互相放大：一笔业务既受币价波动影响，又受某国牌照限制，出问题无法定位责任。",en:"Bundled together, FX risk and compliance risk amplify each other: one transaction is exposed to price moves and to a single country's licensing at once, and when it breaks nobody can isolate the cause."}},
+    {no:"13",q:{zh:"eCNH 是央行数字人民币吗？",en:"Is eCNH the central-bank digital renminbi?"},
+     a:{zh:"不是。eCNH 是链上的离岸人民币计价工具，属于代币化债权凭证，与 e-CNY 无关；兑付依赖发行方储备与赎回网关。",en:"No. eCNH is an on-chain offshore RMB unit of account — a tokenised claim, unrelated to e-CNY; redemption depends on the issuer's reserves and redemption gateway."}},
+    {no:"14",q:{zh:"eCNH 的风险在哪里？",en:"Where is the risk in eCNH?"},
+     a:{zh:"兑付风险与网关风险：赎回通道不畅时，账面上的 eCNH 无法及时换回法币。所以只用于贸易计价与账期管理，不做投机持有。",en:"Redemption and gateway risk: when redemption rails are congested, on-screen eCNH cannot be converted back in time. Use it for trade invoicing and tenor management, never as a speculative holding."}},
+    {no:"15",q:{zh:"什么是 RWA？EACO 为什么关注它？",en:"What is RWA and why does it matter here?"},
+     a:{zh:"RWA 是把真实资产（债券、大宗商品、应收账款）代币化。EACO 关注它，是因为贸易结算需要一个有底层资产的计价单位，而不是纯情绪标的。",en:"RWA is the tokenisation of real assets — bonds, commodities, receivables. It matters because trade settlement needs a unit of account backed by real assets rather than pure sentiment."}},
+    {no:"16",q:{zh:"为什么不用银行电汇？",en:"Why not just use bank wires?"},
+     a:{zh:"电汇慢（1–5 个工作日）、贵（中转行扣费）、周末不通。小额场景下成本占比过高，链上中间腿可以做到分钟级、费用不足 1%。",en:"Wires are slow (1–5 business days), costly (intermediary charges) and closed at weekends. On small tickets the cost ratio is prohibitive; an on-chain middle leg settles in minutes for under 1%."}},
+    {no:"17",q:{zh:"一笔钱从 A 到 B 要多久？",en:"How long does a transfer take end to end?"},
+     a:{zh:"链上部分通常几十秒；落地取决于本地通道——钱包实时，银行 T+0/T+1，现金交割看柜台时间。对外统一口径是「分钟到当天」，不承诺秒到。",en:"The on-chain leg takes tens of seconds; landing depends on the local rail — instant to a wallet, T+0/T+1 to a bank, counter hours for cash. Communicate 'minutes to same day', never 'instant'."}},
+    {no:"18",q:{zh:"手续费大概多少？",en:"What do the fees look like?"},
+     a:{zh:"Solana 链上手续费可以忽略（远低于 0.01 美元）；主要成本在兑换点差与本地出金费。实际以通道报价为准，不对外承诺固定费率。",en:"Solana fees are negligible (well under USD 0.01). The real cost sits in the FX spread and the local payout fee. Quote per rail; never promise a fixed rate."}},
+    {no:"19",q:{zh:"EACO 自己做支付公司吗？",en:"Does EACO run its own payment company?"},
+     a:{zh:"不做。EACO 做价值层与激励层，支付腿交给持牌方：银行、VASP、汇款网关、钱包。这是分工，也是合规边界。",en:"No. EACO works at the value and incentive layer; the payment leg belongs to licensed parties — banks, VASPs, remittance gateways, wallets. That is both division of labour and the compliance boundary."}},
+    {no:"20",q:{zh:"Solana 出故障怎么办？",en:"What if Solana goes down?"},
+     a:{zh:"任何单链都有停机风险。做法是准备备用路径（其他链的 USDT 或本地 OTC），并把「单链依赖」写进风险台账，不做单点押注。",en:"Every single chain can halt. Keep a fallback path — USDT on another chain or local OTC — and log single-chain dependency in the risk register. Never bet on one point of failure."}}
+  ]},
+  {k:{zh:"三 · 五条通道",en:"III · The five rails"}, items:[
+    {no:"21",q:{zh:"五条通道是哪五条？",en:"What are the five rails?"},
+     a:{zh:"链内 DEX、持牌 VASP 与交易所、P2P/OTC、B 端汇款网关、加密卡。每条都有明确的适用场景与边界。",en:"On-chain DEX, licensed VASP and exchanges, P2P/OTC, B2B remittance gateways, and crypto cards. Each has a defined use case and a defined boundary."}},
+    {no:"22",q:{zh:"什么时候用 DEX，什么时候用交易所？",en:"When to use a DEX and when an exchange?"},
+     a:{zh:"DEX 用于做市、周转与公开报价基准；交易所用于必须落到银行账户的大额。前者拿不到法币，后者门槛高。",en:"DEX for market making, turnover and a public quote benchmark; exchanges for large tickets that must land in a bank account. The first cannot reach fiat, the second has high listing gates."}},
+    {no:"23",q:{zh:"P2P/OTC 最大的风险是什么？",en:"What is the biggest risk in P2P/OTC?"},
+     a:{zh:"诈骗与冻卡。四条硬规则：白名单商户、单笔限额、先小额试单、双人复核，缺一条就不做。",en:"Fraud and frozen bank accounts. Four hard rules: whitelisted merchants, per-ticket caps, a small test transfer first, and dual approval. If one is missing, do not trade."}},
+    {no:"24",q:{zh:"B 端汇款网关适合谁用？",en:"Who should use a B2B remittance gateway?"},
+     a:{zh:"贸易商与汇款公司。链上只走结算腿，两端由各自的服务商落地法币；不对零售开放。",en:"Traders and remittance companies. Only the settlement leg is on-chain; providers on each end handle local fiat. Not open to retail."}},
+    {no:"25",q:{zh:"加密卡能当汇款工具吗？",en:"Can a crypto card be used for remittances?"},
+     a:{zh:"不能。卡只能消费，不能转账、不能结算。把它当汇款工具，同时踩到产品边界与合规红线。",en:"No. A card can spend, but it cannot transfer or settle. Treating it as a remittance tool breaks both the product boundary and compliance limits."}},
+    {no:"26",q:{zh:"小额试单一般多大？",en:"How large should a test ticket be?"},
+     a:{zh:"首次不超过等值 200–500 美元，跑通「发起到落地」全链路后再放大。每接一个新通道，都要重新试一次。",en:"No more than USD 200–500 equivalent on the first run; scale only after the full originate-to-land path works. Repeat the test for every new rail."}},
+    {no:"27",q:{zh:"大额贸易为什么不能走社群 OTC？",en:"Why not route large trade through community OTC?"},
+     a:{zh:"价差、对手方风险与资金来源都无法核验。一旦涉案，整条通道会被切断，损失远大于省下的费用。",en:"Spread, counterparty risk and source of funds cannot be verified. One incident can cut off the entire rail — a far larger loss than the fee saved."}}
+  ]},
+  {k:{zh:"四 · 市场判断",en:"IV · Market calls"}, items:[
+    {no:"28",q:{zh:"亚洲和非洲为什么打法不同？",en:"Why do Asia and Africa need different plays?"},
+     a:{zh:"亚洲的难点是逐国牌照，非洲的难点是基础设施缺失。前者先合规后规模，后者先覆盖后合规。",en:"Asia's constraint is country-by-country licensing; Africa's is missing infrastructure. Asia goes compliance first, Africa coverage first."}},
+    {no:"29",q:{zh:"为什么说亚洲做中枢、非洲做覆盖？",en:"Why a hub in Asia and coverage in Africa?"},
+     a:{zh:"亚洲有成熟银行与钱包、清晰的牌照路径，适合做流动性与合规中枢；非洲移动货币是绝对主入口，一个货币联盟可覆盖多国，适合做规模。",en:"Asia has mature banks, wallets and clear licensing paths — good for liquidity and compliance. In Africa mobile money is the dominant entry point and one currency union covers many countries — good for scale."}},
+    {no:"30",q:{zh:"为什么把拉美定为第三个重点？",en:"Why is Latin America the third priority?"},
+     a:{zh:"体量（巴西占区域 43.7%）、走廊（墨西哥对美侨汇 618 亿美元/年）、需求（阿根廷稳定币占交易量 60%+）三者同时成立，且监管正在成形。",en:"Volume (Brazil is 43.7% of the region), corridor (USD 61.8bn of US–Mexico remittances a year) and demand (stablecoins are 60%+ of Argentine volume) hold at the same time, while regulation is still forming."}},
+    {no:"31",q:{zh:"巴西现在还能做吗？",en:"Can we still operate in Brazil?"},
+     a:{zh:"能做，但模式变了。VASP 授权申请已于 10 月 30 日截止，11 月 6 日起受监管机构不得与未持牌方交易；只能并购或深度绑定持牌方。",en:"Yes, but the model has changed. VASP applications closed on 30 October and from 6 November regulated institutions may not transact with unlicensed providers — so acquire or deeply partner with a licensed entity."}},
+    {no:"32",q:{zh:"墨西哥为什么不能发本地稳定币？",en:"Why can't we issue a local stablecoin in Mexico?"},
+     a:{zh:"2026 年 5 月 Murat 法案把比索稳定币发行限定给 IFPE 与银行，境外发行方须获央行事前授权并设本地代表，无照发行可判 5–15 年。",en:"The May 2026 Murat bill limits peso stablecoin issuance to IFPEs and banks; foreign issuers need prior central-bank authorisation and a local representative, with 5–15 years for unlicensed issuance."}},
+    {no:"33",q:{zh:"阿根廷最适合做什么？",en:"What is Argentina best used for?"},
+     a:{zh:"需求侧试验田：合同可直接以稳定币计价、稳定币占交易量 60%+。但不适合做资金归集地——外汇管制与通胀仍在。",en:"A demand-side testbed: contracts may be denominated in stablecoins and they are 60%+ of volume. Not a treasury location, given FX controls and inflation."}},
+    {no:"34",q:{zh:"巴拿马能对外说「持牌」吗？",en:"Can we claim to be licensed in Panama?"},
+     a:{zh:"不能。巴拿马没有 VASP 专法，只有反洗钱登记。它的价值是控股、财资与自贸区结算，不是牌照。",en:"No. Panama has no VASP statute, only AML registration. Its value is holding, treasury and free-zone settlement — not licensing."}},
+    {no:"35",q:{zh:"委内瑞拉能不能做业务？",en:"Can we do business in Venezuela?"},
+     a:{zh:"不做。体量 391 亿美元、增速拉美第一，但制裁与政局风险不可对冲，只列入研究清单，不进入落地清单。",en:"No. At USD 39.1bn and the region's fastest growth it is tempting, but sanctions and political risk cannot be hedged: research list only, never the rollout list."}},
+    {no:"36",q:{zh:"非洲为什么一条通道能覆盖多国？",en:"Why can one rail cover several African countries?"},
+     a:{zh:"XOF 与 XAF 两个货币联盟分别覆盖 8 个和 6 个国家，共用一个央行与固定汇率，一次接入可覆盖 14 国。",en:"The XOF and XAF unions cover 8 and 6 countries respectively, sharing a central bank and a fixed exchange rate — one integration reaches 14 countries."}},
+    {no:"37",q:{zh:"中国香港在体系里是什么角色？",en:"What role does Hong Kong, China play?"},
+     a:{zh:"稳定币与 RWA 规则最清晰、eCNH 生态最深的枢纽，也是对接熊猫债与机构资金的门户。",en:"The hub with the clearest stablecoin and RWA rules and the deepest eCNH ecosystem, and the gateway to panda bonds and institutional capital."}},
+    {no:"38",q:{zh:"中国大陆可以做吗？",en:"Can we serve mainland China?"},
+     a:{zh:"不可以。2026 年 2 月八部门 42 号文明确禁止境外主体向境内提供虚拟货币相关服务，并把 RWA 代币化纳入监管。华语市场只覆盖中国香港、中国澳门、中国台湾与海外华人社群。",en:"No. The February 2026 joint notice from eight ministries bans overseas entities from providing virtual-currency services into mainland China and brings RWA tokenisation under supervision. The Chinese-language market covers Hong Kong China, Macao China, Taiwan China and overseas Chinese communities only."}}
+  ]},
+  {k:{zh:"五 · 落地执行",en:"V · Execution"}, items:[
+    {no:"39",q:{zh:"第一步应该做什么？",en:"What is the first step?"},
+     a:{zh:"先定架构，再谈城市：一个持牌运营主体 + 一个控股财资主体，然后才选第一个试点城市。",en:"Structure first, cities second: one licensed operating entity plus one holding and treasury entity, then pick the first pilot city."}},
+    {no:"40",q:{zh:"一个城市要投多少人？",en:"How many people does one city need?"},
+     a:{zh:"起步 2–3 人（1 商务 + 1 运营 + 半个合规），跑通再扩。先加人再加城，是最常见的错误。",en:"Start with 2–3 people — one business, one operations, half a compliance — and expand after the rail works. Adding headcount before adding cities is the most common mistake."}},
+    {no:"41",q:{zh:"怎么判断一个城市该加码还是撤退？",en:"How do we decide to scale or withdraw in a city?"},
+     a:{zh:"看六个指标：活跃城市数、单城月结算额、平均点差、贸易客户数、社群 30 日留存、合规事件。合规事件一旦非零，立即停。",en:"Six metrics: active cities, monthly volume per city, average spread, trade clients, 30-day community retention, compliance incidents. Any non-zero compliance incident means stop immediately."}},
+    {no:"42",q:{zh:"90 天能交付什么？",en:"What can be delivered in 90 days?"},
+     a:{zh:"法律意见书、主体架构图、通道成本模型，以及一条跑通的最小链路——小额进出各一次，附完整凭证。",en:"A legal opinion, an entity structure chart, a rail cost model, and one working minimum path: a small inbound and outbound transaction with full documentation."}},
+    {no:"43",q:{zh:"为什么要双主体架构？",en:"Why a dual-entity structure?"},
+     a:{zh:"运营主体拿牌照、承担本地合规；控股主体管资金与知识产权。混在一个主体里，一个辖区出事会拖垮全局。",en:"The operating entity holds the licence and local compliance; the holding entity owns capital and IP. Combined in one entity, a single jurisdiction's problem drags down everything."}},
+    {no:"44",q:{zh:"社群从 0 到 1 怎么做？",en:"How do we build a community from zero?"},
+     a:{zh:"先找 3–5 个有真实结算需求的商户，把他们的痛点做成案例，再复制。先做用例，不先做人数。",en:"Find three to five merchants with genuine settlement needs, turn their pain points into cases, then replicate. Use cases first, headcount later."}},
+    {no:"45",q:{zh:"需要哪些牌照？",en:"Which licences are required?"},
+     a:{zh:"视业务而定：兑换与转账看 VASP/PSP，汇款看 MTO，托管看托管牌照。没有「通用牌照」，必须逐国核。",en:"It depends: exchange and transfer point to VASP/PSP, remittances to MTO, custody to a custody licence. There is no universal licence — check country by country."}}
+  ]},
+  {k:{zh:"六 · 风险与合规",en:"VI · Risk and compliance"}, items:[
+    {no:"46",q:{zh:"这个专题最大的风险是什么？",en:"What is the biggest risk in this whole playbook?"},
+     a:{zh:"三个：把「友好度」当成「许可」、把高增速市场（如委内瑞拉）当成机会、把社群 OTC 当成主力通道。",en:"Three: mistaking friendliness for a licence, mistaking a fast-growing market such as Venezuela for an opportunity, and treating community OTC as a primary rail."}},
+    {no:"47",q:{zh:"遇到假币或仿冒社群怎么办？",en:"What if we encounter a fake token or an impersonating community?"},
+     a:{zh:"立即停止交互、截图存证、在官方渠道公示，并提醒社群只认官方合约地址。不要「先小额试一下」。",en:"Stop interacting, capture evidence, publish through official channels, and remind the community to check the official contract address only. Never 'try a small amount first'."}},
+    {no:"48",q:{zh:"参与需要 KYC 吗？",en:"Is KYC required?"},
+     a:{zh:"走链上 DEX 不需要，走持牌通道必须。KYC 的强度由落地辖区的法律决定，不由 EACO 决定。",en:"Not on a DEX; always on a licensed rail. The depth of KYC is set by local law, not by EACO."}},
+    {no:"49",q:{zh:"手册里的数据可靠吗？多久更新？",en:"How reliable is this data, and how often is it updated?"},
+     a:{zh:"数据来自公开监管信息与社群实践，口径截至 2026-11-12。监管变动频繁，落地前必须重新核验，建议每季度更新一次。",en:"Drawn from public regulatory sources and community practice, current to 12 November 2026. Regulation moves fast: re-verify before any launch and refresh quarterly."}},
+    {no:"50",q:{zh:"有没有投资建议？",en:"Is there any investment advice here?"},
+     a:{zh:"没有。本手册是市场结构与合规路径研究，不构成投资建议、法律意见或任何承诺。加密资产波动剧烈，风险自担。",en:"No. This is research on market structure and compliance paths, not investment advice, legal opinion or any commitment. Crypto assets are highly volatile; you bear the risk."}}
+  ]}
+];
+
+/* ================= I18N ================= */
+const I18N = {
+  zh: {
+    "nav.sub":"亚非拉市场方法手册",
+    "nav.l1":"战略判断","nav.l2":"结算底座","nav.l3":"五条通道","nav.l3b":"四层网络","nav.l3c":"拉美","nav.l4":"50 城榜单","nav.l5":"推进路线","nav.l6":"问答",
+    "nav.themeLabel":"风格",
+    "hero.eyebrow":"EACO · 亚非拉市场拓展方法",
+    "hero.title":"从 50 座城市，到一条可复用的结算路径",
+    "hero.lead":"以 EACO + Solana + SPL-USDT + eCNH 为底座，把「社群 — 通道 — 贸易」三层打通：亚洲做合规与流动性中枢，非洲做规模覆盖与场景刚需，拉丁美洲做第三增长极与多主体架构。",
+    "hero.m1":"版本 V0.1","hero.m2":"整理日期 2026-11-12","hero.m3":"资料口径：公开监管信息 + 社群实践",
+    "hero.s1":"城市友好度评估","hero.s2":"类落地通道","hero.s3":"阶段推进路线","hero.s4":"大洲结构差异模型",
+    "hero.matrix.t":"亚非拉 50 城友好度矩阵","hero.matrix.lg1":"A 级及以上","hero.matrix.lg2":"B 级","hero.matrix.lg3":"观察区",
+
+    "s1.title":"三个真实需求，决定先打哪里",
+    "s1.sub":"不做「全市场铺开」，而是沿着已经存在的资金流走。哪里的钱本来就在跨境流动，哪里才需要一个新的结算层。",
+    "s1.a.t":"侨汇与小额跨境：最后一公里已经铺好了",
+    "s1.a.d":"非洲的 M-Pesa、Tigo Pesa、Wave、Orange Money，亚洲的 GCash、DuitNow、PromptPay、MoMo，已经把用户的钱包入口建成。EACO 不需要重建支付网络，只需要接入它——用稳定币做中间层，把「链上价值」翻译成「本地钱包余额」。",
+    "s1.b.t":"贸易去美元化：结算腿需要中立选项",
+    "s1.b.d":"印尼在两年内拿到 300 亿元人民币熊猫债额度，二期发行上限上调至 120 亿元——主权层面正在主动调整外债币种结构。企业端同样需要一条不依赖单一美元清算的结算腿，eCNH 与合规稳定币正好占住这个位置。",
+    "s1.c.t":"合规窗口打开：先持牌者得渠道",
+    "s1.c.d":"香港稳定币条例、新加坡 MAS 牌照、南非 FSCA 的 CASP、尼日利亚 CBN 与 SEC 双轨，正在把「灰色兑换」推向「持牌经营」。窗口期内建立的服务商网络与合规记录，是两三年后最贵的资产。",
+    "s1.call.k":"一个前置判断",
+    "s1.call.d":"把 EACO 当作「结算层的记账单位」，而不是「炒作的标的」。亚非市场愿意为「能用」付费，不为「能涨」付费——所有落地设计都应从「这笔钱要付给谁、多久到账、手续费多少」开始，而不是从价格开始。",
+
+    "s2.title":"结算底座：三条腿，绝不绑在一起",
+    "s2.sub":"中间结算腿、贸易计价腿、本地落地腿必须分离。混在一起，汇率风险和合规风险会互相放大。",
+    "s2.leg1.t":"中间结算腿","s2.leg1.d":"SPL-USDT。流动性最好、认知成本最低，承担链上换手与跨市场搬运。",
+    "s2.leg2.t":"贸易计价腿","s2.leg2.d":"eCNH 与 RWA 凭证。用于大额贸易计价与账期管理，不承担日常支付。",
+    "s2.leg3.t":"本地落地腿","s2.leg3.d":"各国法币、电子钱包与现金。决定用户体验，也决定合规边界。",
+    "s2.n1":"SPL · Solana","s2.n2":"聚合路由 · 自托管","s2.n3":"中间结算币",
+    "s2.b1.t":"链上 RWA","s2.b1.d":"eCNH、黄金、大宗商品凭证。只在链内流转，兑付依赖发行方。",
+    "s2.b2.t":"持牌 VASP","s2.b2.d":"银行与电子钱包落地：SGD、MYR、THB、IDR、PHP、VND。",
+    "s2.b3.t":"社群 OTC","s2.b3.d":"现金与本地钱包交割：NGN、KES、XOF、IDR、美元现金。",
+    "s2.b4.t":"B 端网关","s2.b4.d":"贸易结算腿，两端服务商各自负责本地法币合规与 KYC。",
+    "s2.note":"关键区分：链上 CNH ≠ 离岸人民币存款，它是代币化凭证，兑付取决于发行方的储备与赎回能力。任何 RWA 都先看兑付，再看收益。",
+
+    "s3.title":"五条通道，各有各的边界",
+    "s3.sub":"通道没有优劣，只有适用场景。把大额贸易塞进社群 OTC，或者把散户导进 B 端网关，都会出问题。",
+    "s3.c1.no":"自托管","s3.c1.t":"链内 DEX","s3.c1.k1":"用在哪：","s3.c1.d1":"做市与换手。为 EACO/USDT 建池、提供深度、给社群一个公开可查的报价基准。","s3.c1.k2":"边界：","s3.c1.d2":"只能换到稳定币，出不了法币；深度不足时滑点会直接吃掉利润，必须先算池子再谈推广。",
+    "s3.c2.no":"强 KYC","s3.c2.t":"持牌 VASP / CEX","s3.c2.k1":"用在哪：","s3.c2.d1":"大额、需要银行落账的场景。新加坡、吉隆坡、曼谷、雅加达、马尼拉的持牌平台可直连本地清算。","s3.c2.k2":"边界：","s3.c2.d2":"上币门槛高。日韩交易所几乎不接新资产，别把主战场放在那里，把那里当品牌与研发据点更现实。",
+    "s3.c3.no":"社群主力","s3.c3.t":"P2P / OTC","s3.c3.k1":"用在哪：","s3.c3.d1":"小额到中额，现金与本地钱包即时交割。雅加达、吉隆坡、曼谷、胡志明、金边的柜台是天然节点。","s3.c3.k2":"边界：","s3.c3.d2":"点差大、诈骗与冻卡风险高。必须白名单商家、单笔限额、小额试转、双人复核，四条缺一不可。",
+    "s3.c4.no":"B 端","s3.c4.t":"Solana 原生汇款网关","s3.c4.k1":"用在哪：","s3.c4.d1":"贸易与大宗结算。链上只做结算腿，两端由服务商兑付到 OVO、GCash、DuitNow、PromptPay 等本地轨道。","s3.c4.k2":"边界：","s3.c4.d2":"不开放散户，面向贸易商与汇款公司；合作前必须核验其两端牌照与反洗钱流程。",
+    "s3.c5.no":"消费场景","s3.c5.t":"加密卡通道","s3.c5.k1":"用在哪：","s3.c5.d1":"差旅、日常消费、线下品牌曝光。持卡刷卡自动扣稳定币、结算当地法币，适合做用户「第一笔体验」。","s3.c5.k2":"边界：","s3.c5.d2":"只能消费、不能转账给他人，不承担结算职能。不要把它包装成汇款工具，也不要用于受制裁地区的资金流转。",
+
+    "s4.title":"双洲结构差异：一个做中枢，一个做覆盖",
+    "s4.sub":"同一套底座，两种打法。亚洲的复杂度在「逐国合规」，非洲的复杂度在「基础设施缺口」。",
+    "s4.th0":"维度","s4.th1":"亚洲 Asia","s4.th2":"非洲 Africa",
+    "s4.r1":"监管结构","s4.r1a":"梯度完整，A+ 到 C 连续分布，可按「试点—扩量—规模化」渐进推进。","s4.r1b":"两头强、中间薄。机构级合规集中在南非、毛里求斯、内罗毕；大量西非中非城市靠 OTC 支撑。",
+    "s4.r2":"币种结构","s4.r2a":"多主权币种，各自独立清算，需逐国打通通道，复用性低。","s4.r2b":"西非 XOF、中非 XAF 由区域央行统一发行，一条通道覆盖 8—14 国。",
+    "s4.r3":"美元依赖度","s4.r3a":"本币结算为主，美元集中在大宗与储备；中国香港、新加坡离岸 CNH 池深厚。","s4.r3b":"显著更高。金边、金沙萨、仰光等地硬通货直接参与日常结算；利隆圭、亚的斯亚贝巴外汇短缺，稳定币已成「事实上的美元替代」。",
+    "s4.r4":"支付基建","s4.r4a":"电子钱包 + 银行双轨：OVO、Gopay、PromptPay、DuitNow、GCash、MoMo。","s4.r4b":"移动货币为绝对主力：M-Pesa、Tigo Pesa、Orange Money、Wave。银行覆盖低，但移动端渗透极高，反而更适合纯链上轻量接入。",
+    "s4.r5":"结算场景","s4.r5a":"制造业中间品、跨境电商、劳务与侨汇、能源进口。","s4.r5b":"矿产与农产品出口、大宗预付款、侨汇、进口刚需（燃油、粮食、药品）；单笔更大、周期更长。",
+    "s4.r6":"通道成本","s4.r6a":"单国接入成本高，但单笔额度大、客单价高。","s4.r6b":"单点接入、区域摊薄，边际成本低，适合规模化复制。",
+    "s4.r7":"主要风险","s4.r7a":"牌照门槛、额度限制、跨境数据合规。","s4.r7b":"现金交割、外汇管制、政治与制裁风险、基础设施不稳定。",
+    "s4.r8":"推进节奏","s4.r8a":"先合规，后规模。用持牌合作方打开局面。","s4.r8b":"先覆盖，后合规。用社群与 OTC 补基础设施的空缺。",
+    "s4.e1.k":"eCNH 适配度 · 亚洲","s4.e1.d":"与 CNH 生态物理相邻：中国香港、新加坡离岸 CNH 池深厚，eCNH 溢价与折价收敛快，适合做市与基差业务。",
+    "s4.e2.k":"eCNH 适配度 · 非洲","s4.e2.d":"与 CNH 池距离远、赎回网关稀缺，eCNH 更多作为「贸易结算凭证」而非套利标的；溢价波动更大、赎回链条更长。",
+    "s4b.title":"四层互补网络：谁管资金，谁管货，谁管人",
+    "s4b.sub":"50 座城市不是一份清单，而是一张分工明确的网络。按层配置资源，才不会把合规能力浪费在小额场景，也不会把侨汇工具塞进大额贸易。",
+    "s4b.l1.t":"合规资金层","s4b.l1.d":"承载机构级大额 RWA、CNH 与离岸资金周转，是 eCNH 铸造 / 赎回与合规落地的支点。这一层决定生态的「信用上限」。","s4b.l1.c":"新加坡 · 中国香港 · 迪拜 · 阿布扎比 · 约翰内斯堡 · 路易港 · 基加利 · 内罗毕",
+    "s4b.l2.t":"贸易结算层","s4b.l2.d":"承接真实货物贸易与大宗商品结算，是 EACO + USDT + eCNH 组合使用频率最高的地带。这一层决定生态的「流水体量」。","s4b.l2.c":"雅加达 · 吉隆坡 · 曼谷 · 马尼拉 · 胡志明市 · 拉各斯 · 阿比让 · 达累斯萨拉姆 · 杜阿拉 · 卢萨卡",
+    "s4b.l3.t":"小额与侨汇层","s4b.l3.d":"服务小微商户、劳务汇款与边境小额贸易，强调 7×24 可用与低门槛。这一层决定生态的「用户密度」。","s4b.l3.c":"金边 · 万象 · 坎帕拉 · 达喀尔 · 利隆圭 · 马普托 · 亚的斯亚贝巴",
+    "s4b.l4.t":"特殊通道层","s4b.l4.d":"面向受限通道与友好经济体之间的点对点贸易。仅限信任社群，需严格风控与合规自查；不做宣传、不做规模化承诺。","s4b.l4.c":"莫斯科 · 德黑兰 · 伊斯坦布尔 · 阿拉木图 · 比什凯克 · 金沙萨 · 仰光",
+    "s4b.ic.t":"枢纽接口 · Interchange Nodes",
+    "s4b.ic1.t":"三向互转","s4b.ic1.d":"迪拜 / 伊斯坦布尔 / 阿拉木图：亚洲—非洲—欧亚三个方向的资金互转。",
+    "s4b.ic2.t":"发行与合规端","s4b.ic2.d":"新加坡 / 中国香港 / 路易港：离岸合规架构与 RWA 发行端。",
+    "s4b.ic3.t":"非洲本地入口","s4b.ic3.d":"拉各斯 / 内罗毕：非洲本地流动性入口与移动钱包接入点。",
+    "s4.call.k":"组合结论",
+    "s4.call.d":"亚洲＝合规与流动性中枢（中国香港、新加坡、迪拜）＋ 贸易场景（雅加达、曼谷、吉隆坡）；非洲＝流量与刚需（拉各斯、内罗毕、阿克拉）＋ 区域货币杠杆（达喀尔、阿比让、杜阿拉）。两套引擎共用一条结算底座，不共用一套合规假设。",
+
+        "s4c.title":"拉丁美洲 e33：三种资源分散在三个国家",
+    "s4c.sub":"亚非可以找一个中枢统筹，拉美不行——体量在巴西、走廊在墨西哥、需求在阿根廷、身份在乌拉圭与萨尔瓦多。所以拉美的结构不是「一个中枢」，而是「多主体架构 + 一条共用的结算腿」。",
+    "s4c.l1.t":"合规与资本层","s4c.l1.d":"圣保罗：巴西央行持牌运营与机构结算。蒙得维的亚：BCU 授权、南锥体区域总部。圣萨尔瓦多：DASP 成文牌照，3–6 个月可拿。",
+    "s4c.l2.t":"结算与走廊层","s4c.l2.d":"墨西哥城：对美侨汇 618 亿美元/年，传统通道 5–8%，链上不足 1%。圣地亚哥与利马：对华铜锂贸易与本币收款。布宜诺斯艾利斯：稳定币占交易量 60%+。",
+    "s4c.l3.t":"社群与覆盖层","s4c.l3.d":"波哥大：P2P 与微型商户，银行系比索稳定币 COPW 双轨并行。巴拿马城：美元财资、属地税制、自贸区结算。圣何塞：中美洲汇款沙盒。",
+    "s4c.h1":"市场","s4c.h2":"已经发生的事实","s4c.h3":"对 EACO 的含义",
+    "s4c.r1":"巴西","s4c.r1a":"牌照已成前置条件：VASP 授权申请 10 月 30 日截止；11 月 6 日起受监管机构不得与未持牌方交易；跨境侧 VASP 单笔上限 10 万美元，2027 年起 1 万美元以上转自托管延迟 24 小时。","s4c.r1b":"不能再走「境外代币 + 跨境套利」，只能并购或深度绑定持牌方。EACO 做价值与激励层，不做支付腿。",
+    "s4c.r2":"墨西哥","s4c.r2a":"发币进入刑责：2026 年 5 月 Murat 法案把比索稳定币发行限定给 IFPE 与银行，境外发行方须获央行事前授权并设本地代表，无照发行 5–15 年监禁。","s4c.r2b":"只做通道与结算层，与 IFPE 合作吃侨汇价差，绝不碰本地稳定币发行。",
+    "s4c.r3":"阿根廷","s4c.r3a":"最开放也最脆弱：CNV 强制登记门槛低（3–4 个月、净资产 3.5–15 万美元），合同可直接以稳定币计价；但外汇管制与 LIBRA 事件后的监管过敏仍在。","s4c.r3b":"做需求侧试验田，不做资金归集地。社群与小额场景先行，资金归集留在乌拉圭与巴拿马。",
+    "s4c.z1.k":"e33-BR","s4c.z1.d":"巴西单列。43.7% 的区域体量，值得独立核算、独立合规预算与独立负责人。",
+    "s4c.z2.k":"e33-MX","s4c.z2.d":"墨西哥、中美洲与多米尼加。北向侨汇走廊，以 IFPE 与汇款牌照为接口。",
+    "s4c.z3.k":"e33-SUR","s4c.z3.d":"南锥体：阿根廷、智利、乌拉圭、巴拉圭、秘鲁、玻利维亚。对华大宗与本币收款为主。",
+    "s4c.z4.k":"e33-CAR","s4c.z4.d":"加勒比岛国。以巴拿马城作财资、控股与自贸区结算接口。",
+    "s4c.call.k":"三条红线","s4c.call.d":"一、委内瑞拉：391 亿美元、同比 +107.2%，拉美第四、增速第一，但制裁与政局不可对冲——只做研究，不做业务。二、巴拿马：无 VASP 专法，不得对外宣称「持牌」；2025 年 12 月已加入 CARF，2027 年起自动交换信息，税务不透明窗口正在关闭。三、华语市场边界：2026 年 2 月八部门 42 号文已明确禁止境外主体向境内提供虚拟货币相关服务，并把 RWA 代币化纳入监管；e20 只能覆盖中国香港、中国澳门、中国台湾与海外华人社群。",
+
+    "s5.title":"50 城友好度榜单",
+    "s5.sub":"五维加权：监管包容度、链上生态、法币落地、OTC 社群、贸易刚需。亚非拉 50 城同表排序，榜单是资源配置工具，不是交易许可清单。",
+    "s5.lg1":"顶级友好：合规、流动性、用户三优","s5.lg2":"高度友好：主通道成熟","s5.lg3":"较友好：需配套服务商","s5.lg4":"中度友好：可行但需试点","s5.lg5":"谨慎友好：小额试单","s5.lg7":"观察位：仅社群点对点","s5.lg6":"高风险：仅信任社群点对点",
+    "s5.f1":"全部 50 城","s5.f2":"亚洲","s5.f3":"非洲","s5.f6":"拉丁美洲","s5.f4":"A 级及以上","s5.f5":"观察与高风险区",
+    "s5.h0":"#","s5.h1":"城市 / 国家","s5.h2":"本币","s5.h3":"监管 / 牌照主体","s5.h4":"核心定位","s5.h5":"分级",
+    "s5.note":"说明：分级为生态友好度参考，不代表交易许可或合规背书。亚非拉各国法规变动频繁，实际落地前须重新核验当地牌照、外汇与反洗钱要求。",
+    "s5.hint":"点击任意一行，展开该城市的落地说明",
+    "s5.ri.asia.k":"亚洲","s5.ri.asia.d":"东亚：东京 · 首尔 · 中国香港｜东南亚：新加坡 · 吉隆坡 · 曼谷 · 雅加达 · 马尼拉 · 胡志明市 · 金边 · 万象 · 仰光｜南亚：班加罗尔｜西亚：迪拜 · 阿布扎比 · 德黑兰 · 伊斯坦布尔｜中亚：阿拉木图 · 比什凯克｜欧亚：莫斯科",
+    "s5.ri.africa.k":"非洲","s5.ri.africa.d":"北非：突尼斯市 · 卡萨布兰卡｜西非：达喀尔 · 阿克拉 · 阿比让 · 拉各斯｜中非：杜阿拉 · 金沙萨｜东非：内罗毕 · 坎帕拉 · 达累斯萨拉姆 · 亚的斯亚贝巴 · 基加利 · 卢萨卡 · 利隆圭 · 马普托｜南部非洲：约翰内斯堡 · 温得和克 · 哈博罗内｜印度洋岛国：路易港",
+    "s5.ri.latam.k":"拉丁美洲","s5.ri.latam.d":"南美：圣保罗 · 布宜诺斯艾利斯 · 圣地亚哥 · 利马 · 蒙得维的亚 · 波哥大｜中美：墨西哥城 · 圣何塞 · 圣萨尔瓦多｜运河区与加勒比：巴拿马城",
+
+    "s6.title":"三阶段推进：先筑底座，再点状试点，最后区域复制",
+    "s6.sub":"每一阶段都有明确的交付物与停止条件。没有跑通单城模型之前，不进第二个洲。",
+    "s6.p1.period":"PHASE 0 · 0—90 天","s6.p1.t":"筑基",
+    "s6.p1.i1":"建立「城市落地卡」数据库：牌照主体、可用通道、点差区间、KYC 门槛、额度上限，逐城录入。",
+    "s6.p1.i2":"锁定四个锚点：中国香港 / 新加坡（合规与流动性）、雅加达（贸易与熊猫债配套）、拉各斯（非洲流量）、内罗毕（移动钱包）。",
+    "s6.p1.i3":"完成 EACO/USDT 做市深度建设，设定滑点与单笔上限的运行阈值。",
+    "s6.p1.i4":"发布中英双语合规手册、风控 SOP、报价与话术模板。",
+    "s6.p1.out":"交付物：可执行的城市落地卡 + 报价与风控 SOP",
+    "s6.p2.period":"PHASE 1 · 3—6 个月","s6.p2.t":"点状试点",
+    "s6.p2.i1":"亚洲：吉隆坡、曼谷、马尼拉三城 OTC 试点，白名单商家、单笔限额、T+0 交割。",
+    "s6.p2.i2":"非洲：拉各斯、内罗毕、阿克拉三城移动钱包出入金试点，主攻侨汇与小微贸易。",
+    "s6.p2.i3":"与 1—2 家 Solana 原生汇款网关签 B 端试点，跑通一条真实贸易结算链。",
+    "s6.p2.i4":"建立城市大使机制：每城 3—5 人，按成交量与合规评分双维度结算激励。",
+    "s6.p2.out":"交付物：单城月流水与点差基线 + 首批合规服务商名单",
+    "s6.p3.period":"PHASE 2 · 12—24 个月","s6.p3.t":"区域复制",
+    "s6.p3.i1":"非洲切换区域通道：以西非 XOF、中非 XAF 为支点，一次覆盖 8—14 国。",
+    "s6.p3.i2":"亚洲推进持牌 VASP 深度合作与 RWA 试点（黄金、大宗、碳资产）。",
+    "s6.p3.i3":"eCNH 进入贸易计价试点，与人民币跨境结算及熊猫债叙事形成互证。",
+    "s6.p3.i4":"择一设立区域合规主体（中国香港 / 新加坡 / 迪拜），配套本地服务商网络。",
+    "s6.p3.out":"交付物：可持续的 B 端收入结构与生态留存",
+
+    "s7.title":"组织与红线：能做多大，取决于守得多严",
+    "s7.sub":"三层组织负责跑，六条红线负责不翻车。红线是前置条件，不是事后补救。",
+    "s7.o1.t":"中枢","s7.o1.d":"合规、流动性、品牌与对外口径。统一话术、统一免责声明、统一审核发布。",
+    "s7.o2.t":"区域","s7.o2.d":"城市经理 + 城市大使。负责本地服务商筛选、社群运营、活动与 KOL 协作。",
+    "s7.o3.t":"地面","s7.o3.d":"OTC 商家、汇款网关、贸易商。负责真实交割，按成交量与投诉率双线考核。",
+    "s7.red.t":"六条不可逾越的红线",
+    "s7.red.i1":"不做任何收益承诺、不预测价格、不承诺回购——所有对外内容只讲用途与路径。",
+    "s7.red.i2":"不引导用户进入未审计、无锁仓、无第三方托管的池子。",
+    "s7.red.i3":"不宣传、不协助任何受国际制裁地区的资金通道；伊朗、俄罗斯、缅甸等场景只做合规研究，不做业务推广。",
+    "s7.red.i4":"不做代客理财、不做资金池、不承诺保本，任何「帮我操作」的请求一律拒绝。",
+    "s7.red.i5":"KYC / AML 不可省、不可代过。宁可丢单，不可留痕风险。",
+    "s7.red.i6":"所有对外材料必须附免责声明与合约地址核验提示；发现假币或仿冒社群，第一时间公示。",
+
+    "s8.title":"用指标管理，而不是用口号",
+    "s8.sub":"六个指标足以判断一个城市该加码还是撤退。数字是内部管理口径，不是业绩承诺。",
+    "s8.k1":"活跃城市数","s8.k1d":"月结算额 ≥ 阈值且无合规事件的城市数量",
+    "s8.k2":"单城月结算额","s8.k2d":"区分 B 端贸易与 C 端侨汇，两条线分开看",
+    "s8.k3":"平均点差 (bps)","s8.k3d":"含 DEX 滑点与 OTC 报价差，超过阈值即暂停推广",
+    "s8.k4":"贸易客户数","s8.k4d":"有真实报关或订单背景的 B 端客户，剔除刷量",
+    "s8.k5":"社群 30 日留存","s8.k5d":"新增用户中 30 天后仍有交互的比例",
+    "s8.k6":"合规事件","s8.k6d":"目标恒为 0；任何一起即触发城市级复盘",
+
+    "s9.title":"风险提示与免责声明",
+    "s9.i1":"本文为市场研究与生态路径梳理，不构成投资建议、要约或任何形式的承诺。",
+    "s9.i2":"加密资产价格波动剧烈，可能导致全部本金损失；参与前请自行评估风险承受能力。",
+    "s9.i3":"各司法辖区对加密资产、稳定币与跨境支付的监管差异极大，部分地区相关业务属限制或禁止；落地前须取得当地法律意见。",
+    "s9.i4":"文中涉及的国家、城市、牌照与通道信息来自公开资料与社群实践，可能存在滞后或误差，不构成合规背书。",
+    "s9.i5":"请认准官方合约地址，谨防假币与仿冒社群；一切信息以官方公示为准。",
+    "s9.i6":"eCNH 并非央行数字人民币 e-CNY，其兑付完全依赖发行方储备与赎回网关，存在兑付风险。",
+    "s9.i7":"文中「友好度分级」为生态评估，不代表当地法律许可任何相关业务；参与者须自行核实当地法规，风险自担。",
+    "s9.copy":"复制地址","s9.ecnh":"eCNH · Solana Mint（资料标注，以官方公示为准）","s9.supply":"总供应量 13.5 亿枚 · LP 10% 永久锁定 · 官网 ucoingroup.github.io/earths-best-coin",
+    "s10.title":"50 个常见问答",
+    "s10.sub":"把最高频的疑问集中在这里：从 EACO 是什么、结算怎么走，到各市场能不能做、第一步该做什么。答案尽量短，便于直接转发给团队与合作方。",
+    "s10.count":"个问答 · 6 组主题",
+    "s10.toggle":"展开全部","s10.toggleClose":"收起全部",
+    "s10.ph":"搜索关键词，例如 巴西 / eCNH / 牌照",
+    "s10.phAria":"搜索问答",
+    "s10.matched":"条匹配结果",
+    "s10.empty":"没有匹配的问答，换个关键词试试。",
+    "nav.top":"回到顶部",
+    "foot.print":"打印 / 存为 PDF",
+    "s10.note":"说明：以下回答为通用口径，不构成投资建议或法律意见。涉及具体辖区的牌照、外汇与税务问题，须以当地持牌律师意见为准。",
+    "foot.mission":"核心目标：提升个体认知 · 提升组织效率 · 推进社会文明 · 促进地球可持续发展 · 融合 100 种认知模型",
+    "foot.phil":"EACO ＝ 正能量 × 积极态度 × 全球协作 × 持续优化",
+    "foot.right":"最高原则：一切文明为人类文明服务"
+  },
+
+  en: {
+    "nav.sub":"Asia–Africa–LATAM Playbook",
+    "nav.l1":"Judgement","nav.l2":"Stack","nav.l3":"Rails","nav.l3b":"Network","nav.l3c":"LATAM","nav.l4":"50 Cities","nav.l5":"Roadmap","nav.l6":"FAQ",
+    "nav.themeLabel":"Style",
+    "hero.eyebrow":"EACO · Asia–Africa–LATAM Playbook",
+    "hero.title":"From 50 cities to one reusable settlement path",
+    "hero.lead":"Built on EACO + Solana + SPL-USDT + eCNH, this playbook connects three layers — community, rails, trade. Asia anchors compliance and liquidity; Africa scales coverage and real demand; Latin America becomes the third growth pole on a multi-entity structure.",
+    "hero.m1":"Version 0.1","hero.m2":"Compiled 2026-11-12","hero.m3":"Sources: public regulatory data + community practice",
+    "hero.s1":"cities assessed","hero.s2":"settlement rails","hero.s3":"phase roadmap","hero.s4":"structural models",
+    "hero.matrix.t":"50-city friendliness matrix","hero.matrix.lg1":"Grade A and above","hero.matrix.lg2":"Grade B","hero.matrix.lg3":"Watch zone",
+
+    "s1.title":"Three real demands decide where to start",
+    "s1.sub":"Do not spread across every market. Follow the money that already moves across borders — only there does a new settlement layer earn its place.",
+    "s1.a.t":"Remittances and micro cross-border: the last mile already exists",
+    "s1.a.d":"M-Pesa, Tigo Pesa, Wave and Orange Money in Africa; GCash, DuitNow, PromptPay and MoMo in Asia have already built the wallet layer. EACO does not need to rebuild payments — it needs to plug in, using stablecoins as the middle layer that turns on-chain value into a local wallet balance.",
+    "s1.b.t":"Trade de-dollarisation: the settlement leg needs a neutral option",
+    "s1.b.d":"Indonesia secured a RMB 30 billion panda-bond quota over two years and raised its second tranche ceiling to RMB 12 billion — sovereign borrowers are actively rebalancing their external debt by currency. Corporates need the same: a settlement leg that does not depend on a single dollar clearing channel. eCNH and compliant stablecoins sit exactly there.",
+    "s1.c.t":"A compliance window is open: licensed players take the rails",
+    "s1.c.d":"Hong Kong's stablecoin ordinance, MAS licensing, South Africa's FSCA CASP regime and Nigeria's CBN/SEC dual track are pushing informal exchange toward licensed operation. The provider network and compliance record built inside this window will be the most valuable asset two or three years out.",
+    "s1.call.k":"One prior judgement",
+    "s1.call.d":"Treat EACO as a unit of account for settlement, not a vehicle to trade. Asian and African markets pay for usefulness, not for upside — every rollout decision should start with who gets paid, how fast, and at what fee, never with price.",
+
+    "s2.title":"The settlement stack: three legs, never bundled",
+    "s2.sub":"The settlement leg, the invoicing leg and the local off-ramp must stay separate. Bundled together, FX risk and compliance risk amplify each other.",
+    "s2.leg1.t":"Settlement leg","s2.leg1.d":"SPL-USDT. Deepest liquidity, lowest cognitive cost; carries on-chain turnover and cross-market movement.",
+    "s2.leg2.t":"Invoicing leg","s2.leg2.d":"eCNH and RWA instruments. For large trade invoicing and tenor management, not daily payments.",
+    "s2.leg3.t":"Local off-ramp","s2.leg3.d":"Local currency, e-wallets and cash. Determines user experience — and the compliance boundary.",
+    "s2.n1":"SPL · Solana","s2.n2":"Aggregated routing","s2.n3":"Settlement asset",
+    "s2.b1.t":"On-chain RWA","s2.b1.d":"eCNH, gold and commodity instruments. On-chain only; redemption depends on the issuer.",
+    "s2.b2.t":"Licensed VASP","s2.b2.d":"Bank and e-wallet off-ramp: SGD, MYR, THB, IDR, PHP, VND.",
+    "s2.b3.t":"Community OTC","s2.b3.d":"Cash and local wallet delivery: NGN, KES, XOF, IDR, USD cash.",
+    "s2.b4.t":"B2B gateway","s2.b4.d":"Trade settlement leg; each side's provider owns local fiat compliance and KYC.",
+    "s2.note":"Key distinction: on-chain CNH is not an offshore RMB deposit. It is a tokenised claim, and redemption depends on the issuer's reserves and redemption capacity. For any RWA, check redemption before yield.",
+
+    "s3.title":"Five rails, each with its own boundary",
+    "s3.sub":"No rail is better than another — only better suited. Forcing large trade through community OTC, or routing retail into a B2B gateway, both end badly.",
+    "s3.c1.no":"Self-custody","s3.c1.t":"On-chain DEX","s3.c1.k1":"Use it for: ","s3.c1.d1":"Market making and turnover. Build the EACO/USDT pool, supply depth, and give the community a publicly verifiable quote benchmark.","s3.c1.k2":"Boundary: ","s3.c1.d2":"It only gets you stablecoins, never fiat. Thin depth means slippage eats the margin — size the pool before you promote.",
+    "s3.c2.no":"Full KYC","s3.c2.t":"Licensed VASP / CEX","s3.c2.k1":"Use it for: ","s3.c2.d1":"Large tickets that must land in a bank account. Licensed platforms in Singapore, Kuala Lumpur, Bangkok, Jakarta and Manila connect directly to local clearing.","s3.c2.k2":"Boundary: ","s3.c2.d2":"Listing gates are high. Japanese and Korean exchanges rarely take new assets — use them as brand and R&D outposts, not the main battlefield.",
+    "s3.c3.no":"Community core","s3.c3.t":"P2P / OTC","s3.c3.k1":"Use it for: ","s3.c3.d1":"Small to mid tickets with instant cash or wallet delivery. Desks in Jakarta, Kuala Lumpur, Bangkok, Ho Chi Minh City and Phnom Penh are natural nodes.","s3.c3.k2":"Boundary: ","s3.c3.d2":"Wide spreads, fraud and frozen-bank-account risk. Whitelisted merchants, per-ticket caps, small test transfers and dual approval — all four, no exceptions.",
+    "s3.c4.no":"B2B","s3.c4.t":"Solana-native remittance gateways","s3.c4.k1":"Use it for: ","s3.c4.d1":"Trade and commodity settlement. The chain carries only the settlement leg; providers on each end pay out to OVO, GCash, DuitNow or PromptPay.","s3.c4.k2":"Boundary: ","s3.c4.d2":"Closed to retail; built for traders and remittance companies. Verify licences and AML processes on both ends before signing.",
+    "s3.c5.no":"Spending","s3.c5.t":"Crypto card rail","s3.c5.k1":"Use it for: ","s3.c5.d1":"Travel, daily spending and offline brand exposure. The card debits stablecoins and settles in local currency — a good first experience for new users.","s3.c5.k2":"Boundary: ","s3.c5.d2":"Spending only, no transfers to others, no settlement function. Never frame it as a remittance tool, and never use it for flows in sanctioned regions.",
+
+    "s4.title":"Two continents, two plays: hub versus coverage",
+    "s4.sub":"One stack, two operating models. Asia's complexity is country-by-country licensing; Africa's is missing infrastructure.",
+    "s4.th0":"Dimension","s4.th1":"Asia","s4.th2":"Africa",
+    "s4.r1":"Regulatory shape","s4.r1a":"A complete gradient from A+ to C, enabling a pilot → scale → replicate path.","s4.r1b":"Strong at both ends, thin in the middle. Institutional compliance concentrates in South Africa, Mauritius and Nairobi; much of West and Central Africa runs on OTC.",
+    "s4.r2":"Currency structure","s4.r2a":"Many sovereign currencies, each cleared separately; country-by-country integration with low reuse.","s4.r2b":"West African XOF and Central African XAF are issued by regional central banks — one rail covers 8 to 14 countries.",
+    "s4.r3":"Dollar dependence","s4.r3a":"Local-currency settlement dominates; dollars concentrate in commodities and reserves, with deep offshore CNH pools in Hong Kong and Singapore.","s4.r3b":"Markedly higher. Hard currency circulates directly in Phnom Penh, Kinshasa and Yangon; FX shortages in Lilongwe and Addis Ababa have turned stablecoins into a de facto dollar substitute.",
+    "s4.r4":"Payment infrastructure","s4.r4a":"Dual track of e-wallets and banks: OVO, Gopay, PromptPay, DuitNow, GCash, MoMo.","s4.r4b":"Mobile money dominates: M-Pesa, Tigo Pesa, Orange Money, Wave. Low bank coverage but extremely high mobile penetration actually favours lightweight, purely on-chain integration.",
+    "s4.r5":"Settlement scenarios","s4.r5a":"Intermediate manufactured goods, cross-border e-commerce, labour remittances, energy imports.","s4.r5b":"Mineral and agricultural exports, commodity prepayments, remittances and essential imports (fuel, grain, medicine) — larger tickets, longer cycles.",
+    "s4.r6":"Cost structure","s4.r6a":"High per-country integration cost, offset by larger tickets and higher revenue per client.","s4.r6b":"Single integration, region-wide amortisation, low marginal cost — built for replication.",
+    "s4.r7":"Main risks","s4.r7a":"Licensing thresholds, transaction caps, cross-border data compliance.","s4.r7b":"Cash settlement, FX controls, political and sanctions risk, unstable infrastructure.",
+    "s4.r8":"Sequencing","s4.r8a":"Compliance first, then scale — open the door with licensed partners.","s4.r8b":"Coverage first, then compliance — use community and OTC to fill the infrastructure gap.",
+    "s4.e1.k":"eCNH fit · Asia","s4.e1.d":"Physically adjacent to the CNH ecosystem: deep offshore CNH pools in Hong Kong and Singapore keep eCNH premiums and discounts tight, supporting market-making and basis trades.",
+    "s4.e2.k":"eCNH fit · Africa","s4.e2.d":"Distant from CNH pools with scarce redemption gateways, eCNH works there as a trade settlement instrument rather than an arbitrage target; premiums are more volatile and redemption chains longer.",
+    "s4b.title":"A four-layer network: who moves money, who moves goods, who moves people",
+    "s4b.sub":"The 50 cities are not a list — they are a network with clear division of labour. Allocate resources by layer, so compliance capacity is not wasted on micro flows and remittance tools are not forced into large trade.",
+    "s4b.l1.t":"Compliant capital layer","s4b.l1.d":"Institutional-scale RWA, CNH and offshore fund flows — the anchor for eCNH minting, redemption and compliant execution. This layer sets the ecosystem's credit ceiling.","s4b.l1.c":"Singapore · Hong Kong · Dubai · Abu Dhabi · Johannesburg · Port Louis · Kigali · Nairobi",
+    "s4b.l2.t":"Trade settlement layer","s4b.l2.d":"Real goods trade and commodity settlement, where the EACO + USDT + eCNH combination runs most intensively. This layer sets throughput.","s4b.l2.c":"Jakarta · Kuala Lumpur · Bangkok · Manila · Ho Chi Minh City · Lagos · Abidjan · Dar es Salaam · Douala · Lusaka",
+    "s4b.l3.t":"Small-value and remittance layer","s4b.l3.d":"Micro-merchants, labour remittances and small border trade, built for 24/7 availability and low thresholds. This layer sets user density.","s4b.l3.c":"Phnom Penh · Vientiane · Kampala · Dakar · Lilongwe · Maputo · Addis Ababa",
+    "s4b.l4.t":"Special-channel layer","s4b.l4.d":"Peer-to-peer trade between restricted channels and friendly economies. Trusted community only, with strict risk control and self-compliance; no promotion, no scale promises.","s4b.l4.c":"Moscow · Tehran · Istanbul · Almaty · Bishkek · Kinshasa · Yangon",
+    "s4b.ic.t":"Interchange nodes",
+    "s4b.ic1.t":"Three-way relay","s4b.ic1.d":"Dubai / Istanbul / Almaty — capital moving across Asia, Africa and Eurasia in three directions.",
+    "s4b.ic2.t":"Issuance and compliance","s4b.ic2.d":"Singapore / Hong Kong / Port Louis — offshore compliance structures and the RWA issuance end.",
+    "s4b.ic3.t":"Africa entry points","s4b.ic3.d":"Lagos / Nairobi — local liquidity entry and mobile-wallet access points in Africa.",
+    "s4.call.k":"Combined conclusion",
+    "s4.call.d":"Asia = compliance and liquidity hub (Hong Kong, Singapore, Dubai) plus trade corridors (Jakarta, Bangkok, Kuala Lumpur). Africa = traffic and real demand (Lagos, Nairobi, Accra) plus regional-currency leverage (Dakar, Abidjan, Douala). Two engines share one settlement stack — never one set of compliance assumptions.",
+
+        "s4c.title":"Latin America e33: three resources, three countries",
+    "s4c.sub":"Asia and Africa can be run from a single hub; Latin America cannot. Volume sits in Brazil, the corridor in Mexico, demand in Argentina and the licence in Uruguay and El Salvador. The structure is therefore not one hub but a multi-entity setup sharing a single settlement leg.",
+    "s4c.l1.t":"Compliance and capital","s4c.l1.d":"São Paulo: BCB-licensed operations and institutional settlement. Montevideo: BCU authorisation and the Southern Cone base. San Salvador: a DASP statutory licence in 3–6 months.",
+    "s4c.l2.t":"Settlement and corridors","s4c.l2.d":"Mexico City: USD 61.8bn of US remittances a year, where traditional rails cost 5–8% against under 1% on-chain. Santiago and Lima: copper and lithium trade with China, plus local-currency collection. Buenos Aires: stablecoins are 60%+ of volume.",
+    "s4c.l3.t":"Community and coverage","s4c.l3.d":"Bogotá: P2P and micro-merchants alongside the bank-issued peso stablecoin COPW. Panama City: dollar treasury, territorial tax and free-zone settlement. San José: a Central American remittance sandbox.",
+    "s4c.h1":"Market","s4c.h2":"What has already happened","s4c.h3":"What it means for EACO",
+    "s4c.r1":"Brazil","s4c.r1a":"Licensing is now a precondition: VASP applications closed on 30 October, and from 6 November regulated institutions may not transact with unlicensed providers. Cross-border caps sit at USD 100k per VASP transaction, with transfers above USD 10k to self-custody delayed 24 hours from 2027.","s4c.r1b":"The offshore-token-plus-arbitrage model is over. Either acquire or deeply partner with a licensed entity; EACO sits in the value and incentive layer, not the payment leg.",
+    "s4c.r2":"Mexico","s4c.r2a":"Issuance is now a criminal matter: the May 2026 Murat bill limits peso stablecoin issuance to IFPEs and banks, requires prior central-bank authorisation and a local representative for foreign issuers, and carries 5–15 years for unlicensed issuance.","s4c.r2b":"Corridor and settlement layer only. Partner with an IFPE to capture the remittance spread and never touch local stablecoin issuance.",
+    "s4c.r3":"Argentina","s4c.r3a":"The most open and the most fragile: CNV registration is light-touch (3–4 months, USD 35–150k net worth) and contracts may be denominated in stablecoins, but FX controls and post-LIBRA regulatory sensitivity remain.","s4c.r3b":"A demand-side testbed, not a treasury location. Community and small-value scenarios first; treasury stays in Uruguay and Panama.",
+    "s4c.z1.k":"e33-BR","s4c.z1.d":"Brazil, standalone. 43.7% of regional volume justifies its own P&L, compliance budget and owner.",
+    "s4c.z2.k":"e33-MX","s4c.z2.d":"Mexico, Central America and the Dominican Republic. The northbound remittance corridor, interfaced through IFPE and remittance licences.",
+    "s4c.z3.k":"e33-SUR","s4c.z3.d":"The Southern Cone: Argentina, Chile, Uruguay, Paraguay, Peru and Bolivia. China-bound commodities and local-currency collection.",
+    "s4c.z4.k":"e33-CAR","s4c.z4.d":"Caribbean states. Panama City as the treasury, holding and free-zone settlement interface.",
+    "s4c.call.k":"Three red lines","s4c.call.d":"First, Venezuela: USD 39.1bn, up 107.2% year on year — fourth in the region and the fastest grower — but sanctions and political risk cannot be hedged, so research only. Second, Panama: no VASP statute, so licensed status must never be claimed; it joined CARF in December 2025, with automatic exchange from 2027, closing the tax-opacity window. Third, the Chinese-language boundary: the February 2026 joint notice from eight ministries bans overseas entities from providing virtual-currency services into mainland China and brings RWA tokenisation under supervision; e20 covers Hong Kong China, Macao China, Taiwan China and overseas Chinese communities only.",
+
+    "s5.title":"The 50-city friendliness index",
+    "s5.sub":"Weighted across five dimensions: regulatory openness, on-chain ecosystem, fiat off-ramp, OTC community and trade demand. All 50 cities ranked in one table — a capital-allocation tool, not a licence list.",
+    "s5.lg1":"Top tier: compliance, liquidity and users all strong","s5.lg2":"Highly friendly: main rails mature","s5.lg3":"Friendly: needs provider support","s5.lg4":"Moderate: workable with pilots","s5.lg5":"Cautious: small test tickets only","s5.lg7":"Watch zone: community P2P only","s5.lg6":"High risk: trusted-community P2P only",
+    "s5.f1":"All 50 cities","s5.f2":"Asia","s5.f3":"Africa","s5.f6":"Latin America","s5.f4":"Grade A and above","s5.f5":"Watch / high risk",
+    "s5.h0":"#","s5.h1":"City / Country","s5.h2":"Currency","s5.h3":"Regulator / Licence","s5.h4":"Core positioning","s5.h5":"Grade",
+    "s5.note":"Note: grades reflect ecosystem friendliness only — not a trading licence or compliance endorsement. Regulations across Asia, Africa and Latin America change frequently; re-verify licensing, FX and AML requirements before any launch.",
+    "s5.hint":"Click any row to expand that city's landing note",
+    "s5.ri.asia.k":"Asia","s5.ri.asia.d":"East Asia: Tokyo · Seoul · Hong Kong｜Southeast Asia: Singapore · Kuala Lumpur · Bangkok · Jakarta · Manila · Ho Chi Minh City · Phnom Penh · Vientiane · Yangon｜South Asia: Bengaluru｜West Asia: Dubai · Abu Dhabi · Tehran · Istanbul｜Central Asia: Almaty · Bishkek｜Eurasia: Moscow",
+    "s5.ri.africa.k":"Africa","s5.ri.africa.d":"North Africa: Tunis · Casablanca｜West Africa: Dakar · Accra · Abidjan · Lagos｜Central Africa: Douala · Kinshasa｜East Africa: Nairobi · Kampala · Dar es Salaam · Addis Ababa · Kigali · Lusaka · Lilongwe · Maputo｜Southern Africa: Johannesburg · Windhoek · Gaborone｜Indian Ocean: Port Louis",
+    "s5.ri.latam.k":"Latin America","s5.ri.latam.d":"South America: São Paulo · Buenos Aires · Santiago · Lima · Montevideo · Bogotá｜Central America: Mexico City · San José · San Salvador｜Canal zone and Caribbean: Panama City",
+
+    "s6.title":"Three phases: build the base, pilot in spots, replicate by region",
+    "s6.sub":"Each phase has explicit deliverables and stop conditions. Do not enter the second continent before the single-city model works.",
+    "s6.p1.period":"PHASE 0 · DAY 0–90","s6.p1.t":"Foundation",
+    "s6.p1.i1":"Build a city landing-card database: licence holder, available rails, spread range, KYC threshold and ticket cap, city by city.",
+    "s6.p1.i2":"Lock four anchors: Hong Kong / Singapore (compliance and liquidity), Jakarta (trade and panda-bond adjacency), Lagos (African traffic), Nairobi (mobile wallets).",
+    "s6.p1.i3":"Complete EACO/USDT market-making depth and set operating thresholds for slippage and ticket size.",
+    "s6.p1.i4":"Publish the bilingual compliance handbook, risk SOP, and quote/script templates.",
+    "s6.p1.out":"Deliverable: executable city landing cards + quoting and risk SOP",
+    "s6.p2.period":"PHASE 1 · MONTH 3–6","s6.p2.t":"Spot pilots",
+    "s6.p2.i1":"Asia: OTC pilots in Kuala Lumpur, Bangkok and Manila — whitelisted merchants, ticket caps, T+0 delivery.",
+    "s6.p2.i2":"Africa: wallet on/off-ramp pilots in Lagos, Nairobi and Accra, focused on remittances and small trade.",
+    "s6.p2.i3":"Sign B2B pilots with one or two Solana-native remittance gateways and settle one real trade chain end to end.",
+    "s6.p2.i4":"Launch a city-ambassador programme: three to five per city, rewarded on both volume and compliance score.",
+    "s6.p2.out":"Deliverable: per-city monthly volume and spread baseline + first list of compliant providers",
+    "s6.p3.period":"PHASE 2 · MONTH 12–24","s6.p3.t":"Regional replication",
+    "s6.p3.i1":"Africa shifts to regional rails: XOF in the west, XAF in the centre — 8 to 14 countries per integration.",
+    "s6.p3.i2":"Asia deepens licensed VASP partnerships and runs RWA pilots (gold, commodities, carbon).",
+    "s6.p3.i3":"eCNH enters trade-invoicing pilots, corroborating the RMB cross-border settlement and panda-bond narrative.",
+    "s6.p3.i4":"Establish one regional compliance entity (Hong Kong / Singapore / Dubai) with a local provider network.",
+    "s6.p3.out":"Deliverable: durable B2B revenue structure and ecosystem retention",
+
+    "s7.title":"Organisation and red lines: how far you go depends on how strictly you hold",
+    "s7.sub":"Three layers execute; six red lines keep it from crashing. Red lines are preconditions, not after-the-fact repairs.",
+    "s7.o1.t":"Core","s7.o1.d":"Compliance, liquidity, brand and external messaging. One script, one disclaimer, one approval gate.",
+    "s7.o2.t":"Regional","s7.o2.d":"City managers and ambassadors. Local provider screening, community operations, events and KOL collaboration.",
+    "s7.o3.t":"Ground","s7.o3.d":"OTC desks, remittance gateways and traders. Real delivery, scored on both volume and complaint rate.",
+    "s7.red.t":"Six red lines that cannot be crossed",
+    "s7.red.i1":"No return promises, no price forecasts, no buyback commitments — external content covers use and path only.",
+    "s7.red.i2":"Never route users into unaudited pools without lockups or third-party custody.",
+    "s7.red.i3":"Do not promote or facilitate funding channels in sanctioned regions; Iran, Russia and Myanmar are compliance-research only, never business promotion.",
+    "s7.red.i4":"No discretionary asset management, no pooled funds, no capital guarantees — decline any 'just trade it for me' request.",
+    "s7.red.i5":"KYC and AML are never skipped or bypassed. Better to lose an order than to leave a trace of risk.",
+    "s7.red.i6":"Every external document carries a disclaimer and a contract-address verification notice; fake tokens or impersonating communities are disclosed immediately.",
+
+    "s8.title":"Manage with metrics, not slogans",
+    "s8.sub":"Six metrics decide whether a city gets more resource or gets cut. These are internal management thresholds, not performance promises.",
+    "s8.k1":"Active cities","s8.k1d":"Cities above the monthly volume threshold with zero compliance incidents",
+    "s8.k2":"Monthly volume per city","s8.k2d":"Split B2B trade and C2C remittance — read them separately",
+    "s8.k3":"Average spread (bps)","s8.k3d":"Including DEX slippage and OTC quotes; pause promotion above threshold",
+    "s8.k4":"Trade clients","s8.k4d":"B2B clients with real customs or order background, net of wash volume",
+    "s8.k5":"30-day community retention","s8.k5d":"Share of new users still active after 30 days",
+    "s8.k6":"Compliance incidents","s8.k6d":"Target is always zero; any single incident triggers a city-level review",
+
+    "s9.title":"Risk disclosure and disclaimer",
+    "s9.i1":"This document is market research and an ecosystem path outline. It is not investment advice, an offer, or any form of commitment.",
+    "s9.i2":"Crypto asset prices are highly volatile and may result in the loss of all principal. Assess your own risk tolerance before participating.",
+    "s9.i3":"Regulation of crypto assets, stablecoins and cross-border payments varies widely by jurisdiction; some activities are restricted or prohibited. Obtain local legal advice before launching.",
+    "s9.i4":"Country, city, licensing and rail information is drawn from public sources and community practice, may be outdated or inaccurate, and does not constitute a compliance endorsement.",
+    "s9.i5":"Verify the official contract address and beware of fake tokens and impersonating communities. Official disclosures prevail.",
+    "s9.i6":"eCNH is not the central-bank digital renminbi e-CNY; redemption depends entirely on the issuer's reserves and redemption gateway, and carries redemption risk.",
+    "s9.i7":"Friendliness grades are an ecosystem assessment and do not imply that local law permits any related business. Participants must verify local regulations themselves and bear their own risks.",
+    "s9.copy":"Copy address","s9.ecnh":"eCNH · Solana Mint (per source documents; verify officially)","s9.supply":"Total supply 1.35 billion · 10% of LP permanently locked · Website ucoingroup.github.io/earths-best-coin",
+    "s10.title":"50 frequently asked questions",
+    "s10.sub":"Every recurring question in one place: what EACO is, how settlement works, which markets are workable, and what to do first. Answers stay short so they can be forwarded straight to a team or a partner.",
+    "s10.count":"questions · 6 themes",
+    "s10.toggle":"Expand all","s10.toggleClose":"Collapse all",
+    "s10.ph":"Search, e.g. Brazil / eCNH / licensing",
+    "s10.phAria":"Search the FAQ",
+    "s10.matched":"matching results",
+    "s10.empty":"No questions match that keyword — try another.",
+    "nav.top":"Back to top",
+    "foot.print":"Print / Save as PDF",
+    "s10.note":"Note: these are general answers, not investment advice or legal opinion. Licensing, FX and tax questions in any specific jurisdiction require advice from a locally qualified lawyer.",
+    "foot.mission":"Mission: Elevate individual cognition · Improve organisational efficiency · Advance social civilisation · Promote sustainable development of the Earth · Integrate 100 cognitive models",
+    "foot.phil":"EACO = Positive Energy × Positive Attitude × Global Collaboration × Continuous Optimization",
+    "foot.right":"Highest principle: all civilisation serves human civilisation"
+  }
+};
+
+/* ================= STATE ================= */
+const THEMES = ["green", "tech", "classic"];
+const DEFAULT_THEME = "green";                 /* 默认风格：苹果绿 */
+const THEME_KEY = "eaco-theme-v2";             /* 换键：旧版记住的主题不再覆盖新默认值 */
+const LANG_KEY = "eaco-lang";
+
+const storedTheme = (() => { try { return localStorage.getItem(THEME_KEY); } catch (e) { return null; } })();
+const storedLang  = (() => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } })();
+
+let LANG  = (storedLang === "zh" || storedLang === "en") ? storedLang : "zh";
+let THEME = THEMES.includes(storedTheme) ? storedTheme : DEFAULT_THEME;
+let FILTER = "all";
+let FAQ_Q = "";
+
+const $ = (s, el=document) => el.querySelector(s);
+const $$ = (s, el=document) => [...el.querySelectorAll(s)];
+
+/* ================= THEME ================= */
+function applyTheme(t){
+  if (!THEMES.includes(t)) t = DEFAULT_THEME;
+  THEME = t;
+  document.documentElement.dataset.theme = t;
+  try { localStorage.setItem(THEME_KEY, t); } catch (e) {}
+  $$(".theme-btn").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.set === t)));
+}
+
+/* ================= LANG ================= */
+function applyLang(l){
+  LANG = l;
+  document.documentElement.lang = l === "zh" ? "zh-CN" : "en";
+  try { localStorage.setItem(LANG_KEY, l); } catch (e) {}
+  const dict = I18N[l];
+  $$("[data-i18n]").forEach(el => {
+    const k = el.dataset.i18n;
+    if (dict[k] !== undefined) el.innerHTML = dict[k];
+  });
+  $$("[data-i18n-ph]").forEach(el => {
+    const k = el.dataset.i18nPh;
+    if (dict[k] !== undefined) el.placeholder = dict[k];
+  });
+  $$("[data-i18n-aria]").forEach(el => {
+    const k = el.dataset.i18nAria;
+    if (dict[k] !== undefined) el.setAttribute("aria-label", dict[k]);
+  });
+  $$(".seg button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === l)));
+  renderCities();
+  renderMatrix();
+  renderFAQ();
+}
+
+/* ================= CITIES ================= */
+function gradeClass(g){
+  if (g === "A+") return "g-aplus";
+  if (g === "A") return "g-a";
+  if (g === "A-") return "g-am";
+  if (g === "B+") return "g-bp";
+  if (g === "B") return "g-b";
+  return "g-risk";
+}
+
+function renderCities(){
+  const body = $("#cityBody");
+  if (!body) return;
+  const rows = CITIES.filter(c => {
+    if (FILTER === "all") return true;
+    if (FILTER === "asia" || FILTER === "africa" || FILTER === "latam") return c.r === FILTER;
+    if (FILTER === "top") return c.g.startsWith("A");
+    if (FILTER === "risk") return c.g === "B-" || c.g === "C";
+    return true;
+  }).map(c => ({
+    ...c,
+    noRaw: c.no,
+    no: LANG === "zh" ? c.no : c.no.replace("亚-", "AS-").replace("非-", "AF-").replace("拉-", "LA-")
+  }));
+  body.innerHTML = rows.map(c => {
+    const d = DETAIL[c.noRaw] || { s: { zh: "", en: "" }, d: { zh: "", en: "" } };
+    return `
+    <tr class="city-row" data-no="${c.no}" tabindex="0" aria-expanded="false">
+      <td class="num">${c.no}</td>
+      <td>
+        <div class="city-name">${c.city[LANG]}</div>
+        <div class="city-country">${d.s[LANG]} · ${c.country[LANG]}</div>
+      </td>
+      <td class="cur">${c.cur}</td>
+      <td class="reg">${c.reg[LANG]}</td>
+      <td class="pos">${c.pos[LANG]}</td>
+      <td><span class="grade ${gradeClass(c.g)}">${c.g}</span></td>
+    </tr>
+    <tr class="detail-row" hidden>
+      <td colspan="6"><div class="detail-inner"><span class="detail-tag">${c.no}</span><span>${d.d[LANG]}</span></div></td>
+    </tr>`;
+  }).join("");
+}
+
+function renderMatrix(){
+  const m = $("#matrix");
+  if (!m) return;
+  m.innerHTML = CITIES.map(c => {
+    const cls = c.g.startsWith("A") ? "dot hot" : (c.g === "B+" ? "dot warm" : "dot");
+    return `<span class="${cls}" title="${c.city[LANG]} · ${c.g}"></span>`;
+  }).join("");
+  const top = CITIES.filter(c => c.g.startsWith("A")).length;
+  const cnt = $("#matrixCount");
+  if (cnt) cnt.textContent = LANG === "zh" ? `${top} / ${CITIES.length} 座 A 级以上` : `${top} / ${CITIES.length} grade A or above`;
+}
+
+/* ================= FAQ RENDER ================= */
+function faqHit(it){
+  if (!FAQ_Q) return true;
+  const hay = `${it.no} ${it.q.zh} ${it.q.en} ${it.a.zh} ${it.a.en}`.toLowerCase();
+  return hay.includes(FAQ_Q);
+}
+
+function renderFAQ(){
+  const box = $("#faqList");
+  if (!box) return;
+  const toggle = $("#faqToggle");
+  const wasOpen = toggle ? toggle.getAttribute("aria-pressed") === "true" : false;
+  if (toggle) toggle.textContent = I18N[LANG][wasOpen ? "s10.toggleClose" : "s10.toggle"];
+
+  const searching = FAQ_Q.length > 0;
+  const forceOpen = searching;
+  let shown = 0;
+
+  box.innerHTML = FAQ.map(g => {
+    const items = g.items.filter(faqHit);
+    if (!items.length) return "";
+    shown += items.length;
+    return `
+    <div class="faq-group">
+      <div class="faq-gh"><b>${g.k[LANG]}</b><span>${items.length} Q</span></div>
+      <div class="faq-items">
+        ${items.map(it => `
+          <details class="qa"${wasOpen || forceOpen ? " open" : ""}>
+            <summary>
+              <span class="qa-no">${it.no}</span>
+              <span class="qa-q">${it.q[LANG]}</span>
+              <i class="qa-ic" aria-hidden="true"></i>
+            </summary>
+            <div class="qa-a">${it.a[LANG]}</div>
+          </details>`).join("")}
+      </div>
+    </div>`;
+  }).join("");
+
+  const cnt = $("#faqCount");
+  if (cnt) cnt.textContent = String(shown);
+  const lbl = $("#faqCountLabel");
+  if (lbl) lbl.textContent = I18N[LANG][searching ? "s10.matched" : "s10.count"];
+  const empty = $("#faqEmpty");
+  if (empty) empty.classList.toggle("show", shown === 0);
+}
+
+/* ================= INTERACTIONS ================= */
+$$(".theme-btn").forEach(b => b.addEventListener("click", () => applyTheme(b.dataset.set)));
+$$(".seg button").forEach(b => b.addEventListener("click", () => applyLang(b.dataset.lang)));
+
+const filtersEl = $("#filters");
+if (filtersEl) filtersEl.addEventListener("click", e => {
+  const btn = e.target.closest(".chip");
+  if (!btn) return;
+  FILTER = btn.dataset.filter;
+  $$("#filters .chip").forEach(b => b.setAttribute("aria-pressed", String(b === btn)));
+  renderCities();
+});
+
+/* faq: expand / collapse all */
+const faqToggle = $("#faqToggle");
+if (faqToggle) {
+  faqToggle.addEventListener("click", () => {
+    const open = faqToggle.getAttribute("aria-pressed") !== "true";
+    faqToggle.setAttribute("aria-pressed", String(open));
+    faqToggle.textContent = I18N[LANG][open ? "s10.toggleClose" : "s10.toggle"];
+    $$("#faqList details.qa").forEach(d => { d.open = open; });
+  });
+}
+
+/* faq: search */
+const faqSearch = $("#faqSearch");
+const faqSearchWrap = $("#faqSearchWrap");
+const faqClear = $("#faqClear");
+let faqTimer = null;
+
+function syncFaqSearchUI(){
+  if (faqSearchWrap) faqSearchWrap.classList.toggle("has-q", FAQ_Q.length > 0);
+}
+if (faqSearch) {
+  faqSearch.addEventListener("input", () => {
+    clearTimeout(faqTimer);
+    const v = faqSearch.value.trim().toLowerCase();
+    syncFaqSearchUI();
+    faqTimer = setTimeout(() => { FAQ_Q = v; renderFAQ(); }, 120);
+  });
+  faqSearch.addEventListener("keydown", e => {
+    if (e.key === "Escape") { faqSearch.value = ""; FAQ_Q = ""; syncFaqSearchUI(); renderFAQ(); faqSearch.blur(); }
+  });
+}
+if (faqClear) {
+  faqClear.addEventListener("click", () => {
+    if (faqSearch) { faqSearch.value = ""; faqSearch.focus(); }
+    FAQ_Q = ""; syncFaqSearchUI(); renderFAQ();
+  });
+}
+
+/* faq: collapse all on Esc */
+document.addEventListener("keydown", e => {
+  if (e.key !== "Escape") return;
+  const active = document.activeElement;
+  if (active && active.id === "faqSearch") return;
+  if (faqToggle && faqToggle.getAttribute("aria-pressed") === "true") {
+    faqToggle.setAttribute("aria-pressed", "false");
+    faqToggle.textContent = I18N[LANG]["s10.toggle"];
+    $$("#faqList details.qa").forEach(d => { d.open = false; });
+  }
+});
+
+/* print: open every answer while printing, restore afterwards */
+let printOpenList = [];
+window.addEventListener("beforeprint", () => {
+  printOpenList = $$("#faqList details.qa").filter(d => !d.open);
+  printOpenList.forEach(d => { d.open = true; });
+});
+window.addEventListener("afterprint", () => {
+  printOpenList.forEach(d => { d.open = false; });
+  printOpenList = [];
+});
+const printBtn = $("#printBtn");
+if (printBtn) printBtn.addEventListener("click", () => window.print());
+
+/* reading progress + back to top + scroll spy */
+const progressFill = $("#progressFill");
+const toTop = $("#toTop");
+const navAnchors = $$(".nav-links a").map(a => ({ a, el: document.querySelector(a.getAttribute("href")) })).filter(x => x.el);
+
+function onScroll(){
+  const doc = document.documentElement;
+  const max = doc.scrollHeight - window.innerHeight;
+  const p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+  if (progressFill) progressFill.style.width = (p * 100).toFixed(2) + "%";
+  if (toTop) toTop.classList.toggle("show", window.scrollY > 720);
+
+  let current = null;
+  navAnchors.forEach(x => { if (x.el.getBoundingClientRect().top <= 130) current = x; });
+  navAnchors.forEach(x => x.a.classList.toggle("active", current !== null && x.a === current.a));
+}
+
+let scrollTick = false;
+window.addEventListener("scroll", () => {
+  if (scrollTick) return;
+  scrollTick = true;
+  requestAnimationFrame(() => { onScroll(); scrollTick = false; });
+}, { passive: true });
+window.addEventListener("resize", onScroll, { passive: true });
+
+if (toTop) toTop.addEventListener("click", () => {
+  const smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  window.scrollTo({ top: 0, behavior: smooth ? "smooth" : "auto" });
+});
+
+/* expandable city rows */
+const cityBody = $("#cityBody");
+function toggleRow(tr){
+  if (!tr) return;
+  const det = tr.nextElementSibling;
+  if (!det || !det.classList.contains("detail-row")) return;
+  const open = !det.hidden;
+  det.hidden = open;
+  tr.classList.toggle("open", !open);
+  tr.setAttribute("aria-expanded", String(!open));
+}
+if (cityBody) {
+  cityBody.addEventListener("click", e => toggleRow(e.target.closest("tr.city-row")));
+  cityBody.addEventListener("keydown", e => {
+    if (e.key === "Enter" || e.key === " ") {
+      const tr = e.target.closest("tr.city-row");
+      if (tr) { e.preventDefault(); toggleRow(tr); }
+    }
+  });
+}
+
+document.addEventListener("click", async e => {
+  const btn = e.target.closest(".copy");
+  if (!btn) return;
+  const ca = btn.dataset.ca || "";
+  try {
+    await navigator.clipboard.writeText(ca);
+  } catch (err) {
+    const ta = document.createElement("textarea");
+    ta.value = ca; document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy"); } catch (e2) {}
+    document.body.removeChild(ta);
+  }
+  btn.textContent = LANG === "zh" ? "已复制 ✓" : "Copied ✓";
+  setTimeout(() => { btn.textContent = I18N[LANG]["s9.copy"]; }, 1800);
+});
+
+/* reveal on scroll */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(en => {
+    if (en.isIntersecting){ en.target.classList.add("in"); io.unobserve(en.target); }
+  });
+}, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
+$$(".reveal").forEach(el => io.observe(el));
+
+/* init */
+applyTheme(THEME);
+applyLang(LANG);
+onScroll();
+</script>
+</body>
+</html>
