@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-i18n="appTitle">全球前30大数字资产与主权货币行情板</title>
+<style>
+/* ============ 三套设计风格：通过 body[data-theme] 切换 CSS 变量 ============ */
+:root{
+  --font-main: -apple-system,"Segoe UI","Microsoft YaHei","Noto Sans",Roboto,sans-serif;
+  --font-serif: "Noto Serif SC","Source Han Serif SC",Georgia,"Times New Roman",serif;
+  --mono: "JetBrains Mono",Consolas,"Courier New",monospace;
+}
+body[data-theme="minimal"]{
+  --bg:#f7f8fa; --panel:#ffffff; --panel2:#f0f2f5; --text:#1a2233; --text2:#5a6478;
+  --border:#e3e7ee; --accent:#2563eb; --accent2:#0ea5e9; --up:#dc2626; --down:#16a34a;
+  --shadow:0 1px 3px rgba(20,30,60,.08); --radius:12px; --font:var(--font-main);
+}
+body[data-theme="terminal"]{
+  --bg:#0b0f14; --panel:#111820; --panel2:#0e141b; --text:#d7e2ee; --text2:#7d8ea0;
+  --border:#1e2a36; --accent:#00d4aa; --accent2:#f5b942; --up:#ff5c5c; --down:#35d07f;
+  --shadow:0 2px 10px rgba(0,0,0,.5); --radius:6px; --font:var(--mono);
+}
+body[data-theme="editorial"]{
+  --bg:#f6f1e7; --panel:#fffdf7; --panel2:#efe8d8; --text:#2b2117; --text2:#6d5f4b;
+  --border:#ddd2bc; --accent:#8b2616; --accent2:#1d5c3f; --up:#8b2616; --down:#1d5c3f;
+  --shadow:0 1px 4px rgba(80,60,20,.12); --radius:2px; --font:var(--font-serif);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.6;transition:background .3s,color .3s}
+body[dir="rtl"]{text-align:right}
+.wrap{max-width:1180px;margin:0 auto;padding:24px 20px 60px}
+header{padding:28px 0 18px;border-bottom:2px solid var(--accent);margin-bottom:24px}
+h1{font-size:1.7rem;font-weight:800;letter-spacing:.5px}
+body[data-theme="editorial"] h1{font-family:var(--font-serif);font-weight:900}
+.subtitle{color:var(--text2);margin-top:6px;font-size:.95rem}
+.updated{margin-top:10px;font-size:.85rem;color:var(--accent);font-weight:600}
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;align-items:center}
+.controls label{font-size:.8rem;color:var(--text2)}
+select{background:var(--panel);color:var(--text);border:1px solid var(--border);border-radius:var(--radius);padding:7px 12px;font-family:var(--font);font-size:.9rem;cursor:pointer}
+.style-btns{display:flex;gap:6px}
+.style-btns button{border:1px solid var(--border);background:var(--panel);color:var(--text);border-radius:var(--radius);padding:7px 14px;cursor:pointer;font-family:var(--font);font-size:.85rem}
+.style-btns button.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+section{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;margin-bottom:22px}
+h2{font-size:1.15rem;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+h2 .dot{width:10px;height:10px;border-radius:2px;background:var(--accent);display:inline-block}
+.sec-sub{color:var(--text2);font-size:.82rem;margin-bottom:14px}
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+th{text-align:left;padding:8px 10px;color:var(--text2);font-weight:600;border-bottom:2px solid var(--border);white-space:nowrap;font-size:.8rem}
+td{padding:8px 10px;border-bottom:1px solid var(--border);white-space:nowrap}
+tr:hover td{background:var(--panel2)}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+body[data-theme="editorial"] .num{font-family:var(--font-serif)}
+.up{color:var(--up);font-weight:600}.down{color:var(--down);font-weight:600}
+.badge{display:inline-block;padding:1px 8px;border-radius:10px;font-size:.72rem;background:var(--panel2);color:var(--text2);border:1px solid var(--border)}
+.badge.stable{background:transparent}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.card{background:var(--panel2);border:1px solid var(--border);border-radius:var(--radius);padding:16px}
+.card h3{font-size:1rem;margin-bottom:8px;color:var(--accent)}
+.card ul{padding-inline-start:18px;font-size:.88rem}
+.card li{margin-bottom:6px}
+.fcard-num{display:flex;align-items:flex-start;gap:10px}
+.fnum{flex:0 0 30px;height:30px;border-radius:8px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.95rem;font-family:var(--mono)}
+body[data-theme="editorial"] .fnum{font-family:var(--font-serif);border-radius:2px}
+.card p{font-size:.85rem;color:var(--text2);margin-top:6px}
+.src-list{font-size:.86rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px}
+.src-item{background:var(--panel2);border:1px solid var(--border);border-radius:var(--radius);padding:12px}
+.src-item b{color:var(--accent)}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+footer{border-top:2px solid var(--accent);margin-top:34px;padding-top:22px}
+.footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px;margin-bottom:20px}
+.fcard{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:18px}
+.fcard h3{font-size:1.05rem;margin-bottom:8px}
+.fcard .tagline{color:var(--text2);font-size:.86rem;margin-bottom:10px}
+.fcard dl{font-size:.85rem}
+.fcard dt{color:var(--text2);font-size:.76rem;margin-top:8px}
+.fcard dd{font-family:var(--mono);word-break:break-all;font-size:.8rem}
+body[data-theme="editorial"] .fcard dd{font-family:var(--font-serif)}
+.fcard ul{padding-inline-start:18px;font-size:.86rem}
+.disclaimer{background:var(--panel2);border:1px dashed var(--border);border-radius:var(--radius);padding:14px;font-size:.8rem;color:var(--text2)}
+.lang-note{font-size:.8rem;color:var(--text2);margin-top:8px;font-style:italic}
+@media(max-width:640px){h1{font-size:1.3rem}.wrap{padding:16px 12px 40px}}
+</style>
+</head>
+<body data-theme="minimal" lang="zh-CN">
+<div class="wrap">
+
+<header>
+  <h1 data-i18n="appTitle">全球前30大数字资产与主权货币行情板</h1>
+  <div class="subtitle" data-i18n="appSubtitle">按市值排名的加密资产 Top 30 × 按 IMF 储备地位与国际支付重要性的主权货币 Top 30</div>
+  <div class="updated" id="updatedLine">—</div>
+  <div class="controls">
+    <div class="style-btns" id="styleBtns">
+      <button data-style="minimal" class="active" data-i18n="styleMinimal">简约浅色</button>
+      <button data-style="terminal" data-i18n="styleTerminal">金融终端暗色</button>
+      <button data-style="editorial" data-i18n="styleEditorial">经典财经报刊</button>
+    </div>
+    <label for="langSel" data-i18n="langLabel">语言</label>
+    <select id="langSel">
+      <option value="zh">中文</option><option value="en">English</option>
+      <option value="hi">हिन्दी</option><option value="es">Español</option>
+      <option value="fr">Français</option><option value="ar">العربية</option>
+      <option value="pt">Português</option><option value="ru">Русский</option>
+      <option value="ja">日本語</option><option value="de">Deutsch</option>
+    </select>
+  </div>
+</header>
+
+<section>
+  <h2><span class="dot"></span><span data-i18n="secCrypto">全球前30大数字资产</span></h2>
+  <div class="sec-sub" data-i18n="secCryptoSub">数据源 Coinlore（主源）/ Helius（Solana 生态备用源）· 价格单位 USD · 分层说明见类型列</div>
+  <div class="tbl-wrap"><table id="cryptoTable"></table></div>
+  <div class="lang-note" id="cryptoNote"></div>
+</section>
+
+<section>
+  <h2><span class="dot"></span><span data-i18n="secFx">全球前30大主权货币（兑美元）</span></h2>
+  <div class="sec-sub" data-i18n="secFxSub">数据源 open.er-api.com（主源）+ Frankfurter 欧央行参考价（交叉校验，差异 &lt;0.4%）</div>
+  <div class="tbl-wrap"><table id="fxTable"></table></div>
+</section>
+
+<section>
+  <h2><span class="dot"></span><span data-i18n="secAnalysis">走势研判（3 / 12 / 36 个月）</span></h2>
+  <div class="sec-sub" data-i18n="secAnalysisSub">情景框架分析，非价格预测，不构成投资建议</div>
+  <div class="grid" id="analysisGrid"></div>
+</section>
+
+<section>
+  <h2><span class="dot"></span><span data-i18n="secFactors">影响货币走势的前十大因素</span></h2>
+  <div class="sec-sub" data-i18n="secFactorsSub">按综合影响力排序 · 影响权重随时间维度变化（见底部说明）</div>
+  <div class="grid" id="factorsGrid"></div>
+  <div class="lang-note" id="factorsNote" style="margin-top:12px"></div>
+</section>
+
+<section>
+  <h2><span class="dot"></span><span data-i18n="secLens">货币走势的三重视角：亚洲 · 地球村 · 星际文明</span></h2>
+  <div class="sec-sub" data-i18n="lensSub">同一套汇率市场，三种空间尺度的分析框架</div>
+  <div class="grid" id="lensGrid"></div>
+  <div class="lang-note" id="lensNote" style="margin-top:12px"></div>
+</section>
+
+<section>
+  <h2><span class="dot"></span><span data-i18n="secSources">数据源与每周更新机制</span></h2>
+  <div class="src-list" id="srcList"></div>
+</section>
+
+<section>
+  <h2><span class="dot"></span><span data-i18n="secHistory">每周价格记录（自动归档）</span></h2>
+  <div class="sec-sub" data-i18n="secHistorySub">每周日 09:00 定时采集，每周一行；同日重跑自动覆盖</div>
+  <div class="tbl-wrap"><table id="historyTable"></table></div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="fcard">
+      <h3>🌍 EACO — Earth's Best Coin（地球最好币）</h3>
+      <div class="tagline">Solana 链上「地球最好的 AI + RWA + Web3 代币」｜ EACO = 正能量 × 积极态度 × 全球协作 × 持续优化</div>
+      <dl>
+        <dt>CA（Solana Mint）— 认准合约地址，谨防假币</dt>
+        <dd>DqfoyZH96RnvZusSp3Cdncjpyp3C74ZmJzGhjmHnDHRH</dd>
+        <dt data-i18n="eacoSupply">总供应量</dt><dd>13.5 亿枚（LP 10% 永久锁定）</dd>
+      </dl>
+      <ul>
+        <li>官网：<a href="https://ucoingroup.github.io/earths-best-coin/" target="_blank" rel="noopener">ucoingroup.github.io/earths-best-coin</a></li>
+        <li>EACO = Positive Energy × Positive Mindset × Global Collaboration × Continuous Optimization</li>
+        <li>五大目标：提升个体认知 · 提升组织效率 · 推动社会文明进步 · 促进地球可持续发展 · 融合 100 个认知模型</li>
+        <li>最高原则：一切文明为人类文明服务，包括 EACO。</li>
+      </ul>
+    </div>
+    <div class="fcard">
+      <h3>🇨🇳 eCNH — 离岸人民币（Offshore RMB）</h3>
+      <div class="tagline" data-i18n="ecnhTagline">在境外离岸市场（香港、新加坡、伦敦等）自由交易的人民币，汇率由市场供需决定</div>
+      <ul>
+        <li data-i18n="ecnhF1">与在岸人民币（CNY）同属人民币体系：CNY 在境内受管制使用，CNH 在离岸市场可自由兑换；两者通常接近 1:1 但可出现价差。</li>
+        <li data-i18n="ecnhF2">区别于数字人民币（e-CNY）：e-CNY 是中国人民银行发行的央行数字货币（CBDC），属法定货币的数字化形态，主要面向境内零售与批发支付。</li>
+        <li data-i18n="ecnhF3">离岸枢纽为香港；配套跨境基础设施包括 CIPS 跨境支付系统（2026 年一季度联网金融机构已达 1,791 家）。</li>
+        <li data-i18n="ecnhF4">据 SWIFT 2026 年 6 月统计，人民币在全球支付中占比约 3%（美元约 51%、欧元约 22%）。</li>
+        <li>参考链接：<a href="http://www.pbc.gov.cn/" target="_blank" rel="noopener">中国人民银行</a> · <a href="https://www.hkma.gov.hk/" target="_blank" rel="noopener">香港金融管理局</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="disclaimer" id="disclaimerBox"></div>
+</footer>
+
+</div>
+
+<!-- DATA:START（由 update_page.js 每周自动注入，请勿手工修改本标记内内容） -->
+<script id="page-data" type="application/json">{"updated":"2026-11-14","source":{"crypto":"coinlore","fx":"open.er-api.com+frankfurter(cross-check)"},"crypto":{"assets":{"BTC":{"name":"Bitcoin","rank":1,"price_usd":"64452.35","market_cap_usd":"1287168258814.40","chg_24h":"-5.84","chg_7d":"-15.34"},"ETH":{"name":"Ethereum","rank":2,"price_usd":"1773.42","market_cap_usd":"217021894359.59","chg_24h":"-8.26","chg_7d":"-21.09"},"USDT":{"name":"Tether","rank":3,"price_usd":"1.00","market_cap_usd":"183590438384.42","chg_24h":"0.05","chg_7d":"0.24"},"BNB":{"name":"Binance Coin","rank":4,"price_usd":"577.32","market_cap_usd":"80355409117.86","chg_24h":"-8.88","chg_7d":"-17.03"},"USDC":{"name":"USD Coin","rank":5,"price_usd":"1.00","market_cap_usd":"74020410348.35","chg_24h":"-0.03","chg_7d":"-0.04"},"XRP":{"name":"XRP","rank":6,"price_usd":"0.913738","market_cap_usd":"54620723790.71","chg_24h":"-9.56","chg_7d":"-22.08"},"SOL":{"name":"Solana","rank":7,"price_usd":"69.90","market_cap_usd":"37966743954.83","chg_24h":"-11.75","chg_7d":"-22.43"},"TRX":{"name":"TRON","rank":8,"price_usd":"0.307684","market_cap_usd":"29127263577.32","chg_24h":"-1.62","chg_7d":"-3.60"},"HYPE":{"name":"Hyperliquid","rank":9,"price_usd":"62.08","market_cap_usd":"20730139985.97","chg_24h":"-14.61","chg_7d":"-21.12"},"STETH":{"name":"Staked Ether","rank":10,"price_usd":"1773.64","market_cap_usd":"15167660442.31","chg_24h":"-8.39","chg_7d":"-21.04"},"USDe":{"name":"Ethena USDe","rank":11,"price_usd":"1.00","market_cap_usd":"14081032073.81","chg_24h":"0.01","chg_7d":"0.05"},"ZEC":{"name":"Zcash","rank":12,"price_usd":"819.35","market_cap_usd":"13295099734.93","chg_24h":"-13.02","chg_7d":"-38.19"},"DOGE":{"name":"Dogecoin","rank":13,"price_usd":"0.056823","market_cap_usd":"9555464985.00","chg_24h":"-12.39","chg_7d":"-21.13"},"XMR":{"name":"Monero","rank":14,"price_usd":"469.22","market_cap_usd":"8655617727.54","chg_24h":"-11.50","chg_7d":"-23.37"},"DHN":{"name":"Dohrnii","rank":15,"price_usd":"482.75","market_cap_usd":"8242988478.03","chg_24h":"-2.68","chg_7d":"-7.19"},"WBTC":{"name":"Wrapped Bitcoin","rank":16,"price_usd":"63419.73","market_cap_usd":"8079927193.94","chg_24h":"-5.69","chg_7d":"-16.71"},"WSTETH":{"name":"Wrapped stETH","rank":17,"price_usd":"2226.16","market_cap_usd":"6980406970.23","chg_24h":"-7.97","chg_7d":"-20.65"},"WBETH":{"name":"Wrapped Beacon ETH","rank":18,"price_usd":"1971.15","market_cap_usd":"6434207920.19","chg_24h":"-8.11","chg_7d":"-20.95"},"sUSDe":{"name":"Ethena Staked USDe","rank":19,"price_usd":"1.24","market_cap_usd":"6321574084.85","chg_24h":"0.00","chg_7d":"-2.22"},"WETH":{"name":"WETH","rank":20,"price_usd":"1827.12","market_cap_usd":"6167096831.23","chg_24h":"-5.66","chg_7d":"-18.61"},"LINK":{"name":"ChainLink","rank":21,"price_usd":"8.76","market_cap_usd":"5942564419.67","chg_24h":"-11.53","chg_7d":"-19.28"},"DAI":{"name":"Dai","rank":22,"price_usd":"0.999761","market_cap_usd":"5364098970.35","chg_24h":"0.00","chg_7d":"0.02"},"ADA":{"name":"Cardano","rank":23,"price_usd":"0.147107","market_cap_usd":"5266508616.96","chg_24h":"-13.02","chg_7d":"-19.94"},"XLM":{"name":"Stellar","rank":24,"price_usd":"0.132614","market_cap_usd":"4295473689.17","chg_24h":"-9.78","chg_7d":"-13.59"},"BCH":{"name":"Bitcoin Cash","rank":25,"price_usd":"200.44","market_cap_usd":"4003887823.23","chg_24h":"-10.29","chg_7d":"-23.13"},"NEAR":{"name":"NEAR Protocol","rank":26,"price_usd":"2.94","market_cap_usd":"3675360924.68","chg_24h":"-16.17","chg_7d":"-21.07"},"AVAX":{"name":"Avalanche","rank":27,"price_usd":"7.12","market_cap_usd":"3005917721.24","chg_24h":"-14.63","chg_7d":"-14.42"},"UNI":{"name":"Uniswap","rank":28,"price_usd":"4.72","market_cap_usd":"2975394210.21","chg_24h":"-18.18","chg_7d":"-32.88"},"TON":{"name":"TON Coin","rank":29,"price_usd":"1.04","market_cap_usd":"2635567380.38","chg_24h":"-6.90","chg_7d":"-6.30"},"SUI":{"name":"Sui","rank":30,"price_usd":"0.690617","market_cap_usd":"2464696037.93","chg_24h":"-13.67","chg_7d":"-20.30"}},"order":["BTC","ETH","USDT","BNB","USDC","XRP","SOL","TRX","HYPE","STETH","USDe","ZEC","DOGE","XMR","DHN","WBTC","WSTETH","WBETH","sUSDe","WETH","LINK","DAI","ADA","XLM","BCH","NEAR","AVAX","UNI","TON","SUI"]},"fx":{"rates":{"USD":1,"EUR":0.905954,"JPY":159.799454,"GBP":0.756419,"CNY":6.684938,"AUD":1.475083,"CAD":1.426026,"CHF":0.838606,"HKD":7.846025,"SGD":1.287798,"SEK":10.06553,"NOK":9.566938,"NZD":1.809216,"KRW":1336.179911,"INR":94.289707,"MXN":18.561557,"BRL":5.648277,"RUB":82.504954,"ZAR":16.898089,"TRY":50.369257,"PLN":3.989114,"THB":33.882849,"IDR":18231.963325,"MYR":4.086467,"PHP":63.857758,"DKK":6.764725,"HUF":330.574421,"CZK":22.089471,"ILS":3.207553,"CLP":992.125487},"order":["USD","EUR","JPY","GBP","CNY","AUD","CAD","CHF","HKD","SGD","SEK","NOK","NZD","KRW","INR","MXN","BRL","RUB","ZAR","TRY","PLN","THB","IDR","MYR","PHP","DKK","HUF","CZK","ILS","CLP"]},"history":[{"date":"2026-11-14","BTC":"64452.35","ETH":"1773.42","SOL":"69.90","EUR":"0.905954","JPY":"159.799454","CNY":"6.684938"}]}</script>
+<!-- DATA:END -->
+
+<script>
+/* ==================== 三重视角：亚洲 · 地球村 · 星际文明 ==================== */
+/* zh/en 每项含 [标题, 描述]；其余语言仅含标题（描述见中英文） */
+const LENS = {
+  asia: {
+    zh:[["日元套息交易","日元是全球最大融资货币，套息平仓曾引发亚洲汇率与股市连锁震荡"],["人民币国际化与离岸 CNH","CIPS 与香港离岸枢纽扩大人民币结算半径，重塑亚洲贸易计价"],["中美利差与资本流动","中美国债利差主导东亚货币的流向与估值"],["出口与技术周期链条","韩元、新台币、马币与全球半导体周期高度联动"],["东盟本地货币结算","本币结算与清迈倡议多边化降低对美元中介的依赖"],["亚洲外储护城河","全球最大外汇储备集群是抵御资本外逃的核心缓冲"],["印度的人口与服务业崛起","人口红利 + 软件服务出口支撑卢比的长期叙事"],["区域安全与台海风险","安全溢价直接映射到东亚风险资产的汇率折价"],["能源进口依赖","日、韩、印、泰等净进口国货币对油价与 LNG 价格敏感"],["人口结构分化","日韩中老龄化 vs 印尼印度年轻化，决定长期增长与汇率趋势"]],
+    en:[["Yen Carry Trade","JPY is the world's largest funding currency; unwinding shocks Asian FX and equities"],["RMB Internationalization & Offshore CNH","CIPS and the HK offshore hub expand RMB settlement, reshaping Asian trade invoicing"],["US–China Rate Differential & Capital Flows","The Treasury yield gap drives East Asian FX direction and valuations"],["Export & Tech-Cycle Chain","KRW, TWD and MYR track the global semiconductor cycle closely"],["ASEAN Local-Currency Settlement","Local-currency settlement and the Chiang Mai Initiative reduce USD intermediation"],["Asia's Reserve Moat","The world's largest FX reserve cluster buffers against capital flight"],["India's Demographic & Services Rise","Demographic dividend plus software exports underpin the INR narrative"],["Regional Security & Taiwan Strait Risk","Security premia price directly into East Asian risk-FX discounts"],["Energy Import Dependence","Net importers (JP/KR/IN/TH) are sensitive to oil and LNG prices"],["Demographic Divergence","Aging JP/KR/CN vs young IN/ID shape long-term growth and FX trends"]],
+    hi:["येन कैरी ट्रेड","युआन अंतर्राष्ट्रीयकरण और ऑफशोर CNH","अमेरिका-चीन ब्याज अंतर और पूंजी प्रवाह","निर्यात श्रृंखला और टेक चक्र","आसियान स्थानीय मुद्रा सेटलमेंट","एशियाई FX भंडार की दीवार","भारत का जनसांख्यिकीय और सेवा उत्कर्ष","क्षेत्रीय सुरक्षा और ताइवान जलडमरूमध्य जोखिम","ऊर्जा आयात निर्भरता","जनसांख्यिकी विचलन"],
+    es:["Carry trade del yen","Internacionalización del RMB y CNH offshore","Diferencial de tipos EE.UU.–China y flujos de capital","Cadena exportadora y ciclo tecnológico","Liquidación en moneda local de la ASEAN","Muralla de reservas asiáticas","Ascenso demográfico y de servicios de India","Riesgo de seguridad regional y estrecho de Taiwán","Dependencia de importación de energía","Divergencia demográfica"],
+    fr:["Carry trade du yen","Internationalisation du RMB et CNH offshore","Écart de taux États-Unis–Chine et flux de capitaux","Chaîne exportatrice et cycle technologique","Règlement en monnaie locale de l'ASEAN","Muraille de réserves asiatiques","Ascension démographique et services de l'Inde","Risques sécuritaires régionaux et détroit de Taïwan","Dépendance aux importations d'énergie","Divergence démographique"],
+    ar:["تجارة الفائدة بالين","تدويل اليوان وCNH الخارجي","فارق الفائدة أمريكا-الصين وتدفقات رأس المال","سلسلة الصادرات ودورة التكنولوجيا","التسوية بالعملة المحلية لآسيان","جدار الاحتياطيات الآسيوية","صعود الهند الديموغرافي والخدمي","مخاطر الأمن الإقليمي ومضيق تايوان","الاعتماد على استيراد الطاقة","التباين الديموغرافي"],
+    pt:["Carry trade do iene","Internacionalização do RMB e CNH offshore","Diferencial de juros EUA–China e fluxos de capital","Cadeia exportadora e ciclo tecnológico","Liquidação em moeda local da ASEAN","Muralha de reservas asiáticas","Ascensão demográfica e de serviços da Índia","Risco de segurança regional e estreito de Taiwan","Dependência de importação de energia","Divergência demográfica"],
+    ru:["Керри-трейд иены","Интернационализация юаня и офшорный CNH","Дифференциал ставок США–Китай и потоки капитала","Экспортная цепочка и технологический цикл","Расчёты в местных валютах АСЕАН","Стена азиатских резервов","Демографический и сервисный подъём Индии","Региональная безопасность и тайваньский риск","Зависимость от импорта энергоносителей","Демографическая дивергенция"],
+    ja:["円キャリートレード","人民元国際化とオフショア CNH","米中金利差と資本フロー","輸出・テクノロジー循環チェーン","ASEAN 現地通貨決済","アジア外貨準備の防壁","インドの人口・サービス台頭","地域安全・台湾海峡リスク","エネルギー輸入依存","人口構造の分化"],
+    de:["Yen-Carry-Trade","RMB-Internationalisierung & Offshore-CNH","Zinsdifferenz USA–China & Kapitalflüsse","Export- und Techzyklus-Kette","ASEAN-Local-Currency-Settlement","Asiatische Reservemauer","Indiens demografischer und Service-Aufstieg","Regionale Sicherheit und Taiwanstraßen-Risiko","Abhängigkeit von Energieimporten","Demografische Divergenz"]
+  },
+  earth: {
+    zh:[["美元周期","美联储加息/降息决定全球流动性潮汐，是所有货币的第一背景变量"],["储备货币多极化","IMF COFER 显示美元份额缓降，多极化是十年级慢变量"],["全球贸易格局重组","关税、友岸外包与区域贸易集团重构货币需求网络"],["支付基础设施竞争","SWIFT、CIPS 与加密支付轨道争夺跨境结算标准"],["CBDC 竞赛","数字人民币、数字欧元等主权数字货币改变货币形态与边界"],["能源转型","化石能源向可再生能源过渡将重估石油货币与绿色资本流"],["全球人口与移民","人口流动与汇款走廊是新兴市场货币的稳定需求源"],["气候变化与灾害定价","气候风险溢价开始进入长期汇率与主权利差"],["主权债务超级周期","全球债务水平决定各货币的财政脆弱度排序"],["AI 与生产率跃迁","AI 驱动的生产率差距将重新分配增长与利率的相对位置"]],
+    en:[["Dollar Cycle","Fed hikes/cuts set the global liquidity tide — the background variable for all currencies"],["Reserve Multipolarity","IMF COFER shows a slow USD share decline; multipolarity is a decade-scale slow variable"],["Global Trade Realignment","Tariffs, friendshoring and blocs rebuild currency demand networks"],["Payment Infrastructure Competition","SWIFT, CIPS and crypto rails compete to set the cross-border standard"],["CBDC Race","Sovereign digital currencies (e-CNY, digital euro) reshape money's form and borders"],["Energy Transition","The fossil-to-renewable shift revalues petro-currencies and green capital inflows"],["Global Demographics & Migration","Migration and remittance corridors anchor EM currency demand"],["Climate & Disaster Pricing","Climate risk premia enter long-term FX and sovereign spreads"],["Sovereign Debt Supercycle","Global debt ranks currencies by fiscal fragility"],["AI & Productivity Leap","AI-driven productivity gaps redistribute relative growth and rates"]],
+    hi:["डॉलर चक्र","आरक्षित मुद्रा बहुध्रुवीकरण","वैश्विक व्यापार पुनर्गठन","भुगतान अवसंरचना प्रतिस्पर्धा","CBDC प्रतियोगिता","ऊर्जा संक्रमण","वैश्विक जनसांख्यिकी और आप्रवासन","जलवायु और आपदा मूल्य निर्धारण","संप्रभु ऋण महाचक्र","AI और उत्पादकता छलांग"],
+    es:["Ciclo del dólar","Multipolaridad de reservas","Realineamiento comercial global","Competencia de infraestructura de pago","Carrera de CBDC","Transición energética","Demografía global y migración","Precificación climática y de desastres","Superciclo de deuda soberana","IA y salto de productividad"],
+    fr:["Cycle du dollar","Multipolarité des réserves","Réalignement commercial mondial","Concurrence des infrastructures de paiement","Course aux CBDC","Transition énergétique","Démographie mondiale et migration","Tarification climatique et catastrophes","Supercycle de la dette souveraine","IA et saut de productivité"],
+    ar:["دورة الدولار","تعدد أقطاب الاحتياطيات","إعادة تشكيل التجارة العالمية","منافسة البنية التحتية للدفع","سباق العملات الرقمية للبنوك المركزية","التحول الطاقي","الديموغرافيا العالمية والهجرة","تسعير المناخ والكوارث","دورة الديون السيادية الكبرى","الذكاء الاصطناعي وقفزة الإنتاجية"],
+    pt:["Ciclo do dólar","Multipolaridade das reservas","Realinhamento comercial global","Competição de infraestrutura de pagamento","Corrida das CBDCs","Transição energética","Demografia global e migração","Precificação climática e de desastres","Superciclo da dívida soberana","IA e salto de produtividade"],
+    ru:["Долларовый цикл","Мультиполярность резервов","Перестройка мировой торговли","Конкуренция платёжной инфраструктуры","Гонка CBDC","Энергопереход","Мировая демография и миграция","Климатическое ценообразование","Суперцикл суверенного долга","ИИ и скачок производительности"],
+    ja:["ドルサイクル","準備通貨の多極化","グローバル貿易の再編","決済インフラ競争","CBDC 競争","エネルギー転換","世界の人口動態と移住","気候変動・災害の価格化","主権債務スーパーサイクル","AI と生産性跳躍"],
+    de:["Dollarzyklus","Reserven-Multipolarität","Globale Handelsneuordnung","Wettbewerb der Zahlungsinfrastrukturen","CBDC-Rennen","Energiewende","Globale Demografie und Migration","Klima- und Katastrophenpreisbildung","Superzyklus souveräner Schulden","KI und Produktivitätssprung"]
+  },
+  space: {
+    zh:[["地外资源定价","小行星采矿、月球氦-3 若成规模，将成为新的「商品锚」候选"],["空间经济规模","卫星网络与轨道资产构成新价值网络，催生太空原生计价单位"],["光速通信延迟","星际尺度上支付无法实时清算，催生自主与延迟容忍型货币系统"],["行星际支付网络","跨星球经济需要不依附单一主权国家的价值传输协议"],["密码学稀缺性","数字稀缺有望成为跨文明通用的价值原语"],["能源本位货币","卡尔达肖夫等级：文明对能量的掌控力可能是终极「货币锚」"],["多行星货币主权","火星定居点若获自治，将出现脱离地球主权的新货币实验"],["太空法律与条约","《外层空间条约》的演进决定星际资产的产权与货币管辖"],["行星尺度统一叙事","人类共同身份的货币化——从国家信用走向文明信用"],["时间尺度转换","以百年计的价值协调：货币是文明级别的协作技术"]],
+    en:[["Extraterrestrial Resource Pricing","Asteroid mining and lunar helium-3 could become new 'commodity anchors'"],["Scale of the Space Economy","Satellite networks and orbital assets form value networks birthing space-native units"],["Light-Speed Communication Latency","Interstellar payment cannot clear in real time — favoring autonomous, latency-tolerant money"],["Interplanetary Payment Networks","Cross-planet economies need value protocols not bound to one sovereign"],["Cryptographic Scarcity","Digital scarcity as a universal value primitive across civilizations"],["Energy-Standard Money","Kardashev scale: a civilization's energy mastery may be the ultimate 'currency anchor'"],["Multi-Planetary Monetary Sovereignty","Autonomous Mars settlements would seed new currency experiments beyond Earth sovereignty"],["Space Law & Treaties","Outer Space Treaty evolution defines property rights and monetary jurisdiction"],["Planetary-Scale Unified Narrative","Monetizing shared human identity — from national credit to civilizational credit"],["Time-Horizon Shift","Value coordination over centuries: money as civilization-scale collaboration technology"]],
+    hi:["पृथ्वी बाह्य संसाधन मूल्य निर्धारण","अंतरिक्ष अर्थव्यवस्था का आकार","प्रकाश-गति संचार विलंबता","ग्रहांतरिक भुगतान नेटवर्क","क्रिप्टोग्राफिक दुर्लभता","ऊर्जा-मानक मुद्रा","बहु-ग्रह मौद्रिक संप्रभुता","अंतरिक्ष कानून और संधियाँ","ग्रहीय स्तर का एकीकृत आख्यान","समय-क्षितिज का रूपांतरण"],
+    es:["Precios de recursos extraterrestres","Escala de la economía espacial","Latencia de comunicación a velocidad luz","Redes de pago interplanetarias","Escasez criptográfica","Dinero con patrón energético","Soberanía monetaria multiplanetaria","Ley y tratados espaciales","Narrativa unificada planetaria","Cambio de horizonte temporal"],
+    fr:["Valorisation des ressources extraterrestres","Échelle de l'économie spatiale","Latence des communications à vitesse lumière","Réseaux de paiement interplanétaires","Rareté cryptographique","Monnaie à étalon énergétique","Souveraineté monétaire multiplanétaire","Droit spatial et traités","Narratif unifié à l'échelle planétaire","Changement d'horizon temporel"],
+    ar:["تسعير الموارد خارج الأرض","حجم الاقتصاد الفضائي","تأخر الاتصال بسرعة الضوء","شبكات الدفع بين الكواكب","الندرة التشفيرية","عملة بمعيار الطاقة","السيادة النقدية متعددة الكواكب","قانون الفضاء والمعاهدات","سرد موحد على مستوى الكوكب","تحول الأفق الزمني"],
+    pt:["Precificação de recursos extraterrestres","Escala da economia espacial","Latência de comunicação à velocidade da luz","Redes de pagamento interplanetárias","Escassez criptográfica","Moeda com padrão energético","Soberania monetária multiplanetária","Direito espacial e tratados","Narrativa unificada planetária","Mudança de horizonte temporal"],
+    ru:["Ценообразование внеземных ресурсов","Масштаб космической экономики","Задержка связи на скоростях света","Межпланетные платёжные сети","Криптографическая редкость","Деньги с энергетическим стандартом","Мультипланетарный валютный суверенитет","Космическое право и договоры","Планетарный единый нарратив","Смена временного горизонта"],
+    ja:["地球外資源のプライシング","宇宙経済の規模","光速通信の遅延","惑星間決済ネットワーク","暗号学的希少性","エネルギー本位通貨","多惑星通貨主権","宇宙法・条約","惑星規模の統一ナラティブ","時間スケールの転換"],
+    de:["Preisbildung außerirdischer Ressourcen","Skala der Raumfahrtökonomie","Latenz bei Lichtgeschwindigkeit","Interplanetare Zahlungsnetzwerke","Kryptografische Knappheit","Geld mit Energiestandard","Multiplanetare Währungssouveränität","Weltraumrecht und Verträge","Planetarische einheitliche Narrative","Wechsel des Zeithorizonts"]
+  }
+};
+
+/* ==================== 数据 ==================== */
+const PAGE_DATA = JSON.parse(document.getElementById("page-data").textContent);
+
+/* 资产分类（静态映射） */
+const CAT = {
+  BTC:"L1", ETH:"L1", WBTC:"WRAP", WETH:"WRAP", STETH:"STK", WSTETH:"STK", WBETH:"STK",
+  SOL:"L2", BNB:"L2", TRX:"L2", TON:"L2", AVAX:"L2", SUI:"L2", NEAR:"L2",
+  XRP:"APP", XLM:"APP", LINK:"APP", UNI:"APP", HYPE:"APP",
+  DOGE:"MEME", ZEC:"PRIV", XMR:"PRIV",
+  USDT:"STB", USDC:"STB", USDe:"STB", DAI:"STB", sUSDe:"STB", DHN:"OTH"
+};
+
+/* 货币中英文名 */
+const FXNAMES = {
+  USD:["美元","US Dollar"],EUR:["欧元","Euro"],JPY:["日元","Japanese Yen"],GBP:["英镑","British Pound"],
+  CNY:["人民币（在岸）","Chinese Yuan (onshore)"],AUD:["澳元","Australian Dollar"],CAD:["加元","Canadian Dollar"],
+  CHF:["瑞士法郎","Swiss Franc"],HKD:["港元","Hong Kong Dollar"],SGD:["新加坡元","Singapore Dollar"],
+  SEK:["瑞典克朗","Swedish Krona"],NOK:["挪威克朗","Norwegian Krone"],NZD:["新西兰元","New Zealand Dollar"],
+  KRW:["韩元","South Korean Won"],INR:["印度卢比","Indian Rupee"],MXN:["墨西哥比索","Mexican Peso"],
+  BRL:["巴西雷亚尔","Brazilian Real"],RUB:["俄罗斯卢布","Russian Ruble"],ZAR:["南非兰特","South African Rand"],
+  TRY:["土耳其里拉","Turkish Lira"],PLN:["波兰兹罗提","Polish Zloty"],THB:["泰铢","Thai Baht"],
+  IDR:["印尼盾","Indonesian Rupiah"],MYR:["马来西亚林吉特","Malaysian Ringgit"],PHP:["菲律宾比索","Philippine Peso"],
+  DKK:["丹麦克朗","Danish Krone"],HUF:["匈牙利福林","Hungarian Forint"],CZK:["捷克克朗","Czech Koruna"],
+  ILS:["以色列谢克尔","Israeli Shekel"],CLP:["智利比索","Chilean Peso"]
+};
+
+/* ==================== 10 语言翻译 ==================== */
+const I18N = {
+zh:{appTitle:"全球前30大数字资产与主权货币行情板",appSubtitle:"按市值排名的加密资产 Top 30 × 按 IMF 储备地位与国际支付重要性的主权货币 Top 30",lastUpdated:"数据更新时间",styleMinimal:"简约浅色",styleTerminal:"金融终端暗色",styleEditorial:"经典财经报刊",langLabel:"语言",secCrypto:"全球前30大数字资产",secCryptoSub:"数据源 Coinlore（主源）/ Helius（Solana 生态备用源）· 价格单位 USD",secFx:"全球前30大主权货币（兑美元）",secFxSub:"数据源 open.er-api.com（主源）+ Frankfurter 欧央行参考价交叉校验",secAnalysis:"走势研判（3 / 12 / 36 个月）",secAnalysisSub:"情景框架分析，非价格预测，不构成投资建议",secSources:"数据源与每周更新机制",secHistory:"每周价格记录（自动归档）",secHistorySub:"每周日 09:00 定时采集，每周一行；同日重跑自动覆盖",thRank:"排名",thAsset:"资产",thPrice:"价格 (USD)",thMcap:"市值",th24h:"24h",th7d:"7天",thType:"类型",thCur:"货币",thName:"名称",thRate:"兑 1 USD",thDate:"日期",thWeek:"记录要点",t3:"3 个月 · 出清与筑底期",t12:"12 个月 · 周期定位期",t36:"36 个月 · 结构性叙事期",b3a:"急跌后通常进入 4~10 周震荡筑底；关注稳定币总市值（先行指标）",b3b:"主流资产与山寨弹性资产分化，跌幅逐级放大",b3c:"宏观流动性宽松则 V 型修复，清算连锁则继续跑输",b12a:"核心是判断当前处于 4 年周期律的什么位置（ETF 机构化后规律是否延续：待澄清）",b12b:"有真实收入的平台链与纯情绪资产差距拉开",b12c:"ZEC 等事件驱动资产不可线性外推",b36a:"稳定币/支付合规化、平台链份额竞争、主权监管落地三主线",b36b:"市场集中度上升：BTC+ETH+稳定币占比趋于提高",b36c:"法币端：美元多极化渐进、人民币国际化、数字化结算侵蚀代理行体系",src1t:"加密行情主源",src1:"Coinlore API（免密钥）：市值排名 Top 30、价格、涨跌幅",src2t:"加密备用源",src2:"Helius（dashboard.helius.dev 免费计划，100 万 credits/月）：主源故障时自动接管 Solana 生态代币（JUP/JTO/BONK/WIF/RAY/ORCA），仅覆盖 Solana，不能覆盖 BTC/ETH 与法币",src3t:"法币汇率主源",src3:"open.er-api.com（免密钥，160+ 币种兑 USD）",src4t:"法币交叉校验",src4:"Frankfurter（欧央行参考价），双源差异 <0.4%",src5t:"采集与更新",src5:"collect_prices.py 每周日 09:00 定时采集 → 写入 data/*.csv → update_page.js（Node.js）自动重建本页数据",src6t:"说明",src6:"orbmarkets.io 经核查为 Solana 生态浏览器，仅覆盖 Solana 代币且无公开 API，故未采用",noHistory:"尚无每周记录数据。",disc:"免责声明：本页内容为信息整理与情景框架分析，不构成任何投资建议。加密资产波动剧烈，汇率受宏观政策影响巨大；所有情景均为可能性描述而非预测。EACO 相关内容不构成投资建议、不含价格预测与收益承诺；请自行核实 CA 合约地址与当地合规要求。数据仅供参考，请以官方渠道为准。",analysisLangNote:"",up:"涨",down:"跌",flat:"持平",secFactors:"影响货币走势的前十大因素",secFactorsSub:"按综合影响力排序 · 影响权重随时间维度变化（见底部说明）",factorsNote:"权重随时间维度变化：3 个月看利率差与投机仓位，12 个月看增长与通胀差，36 个月看结构性趋势（生产率、债务水平、地缘格局、数字化结算）。",f1t:"利率与货币政策",f1d:"央行加息推升本币，两国利差是短期汇率最主要的驱动力",f2t:"通货膨胀",f2d:"高通胀侵蚀购买力，实际利率（名义利率减通胀）决定货币吸引力",f3t:"经济增长",f3d:"GDP、PMI、就业数据强劲支撑本币，衰退预期引发贬值压力",f4t:"贸易与经常账户",f4d:"顺差国货币需求上升（如出口结汇），逆差国货币供给压力增大",f5t:"资本流动与外汇储备",f5d:"外资流入推升本币；储备不足的国家更易遭遇货币危机",f6t:"政治与地缘风险",f6d:"选举、冲突、制裁引发避险切换，美元、瑞郎、日元受益于避险需求",f7t:"财政政策与政府债务",f7d:"高债务国家货币长期承压；财政扩张短期或提振增长预期",f8t:"市场情绪与投机仓位",f8d:"风险偏好（Risk-on/off）主导短期波动，杠杆仓位放大趋势",f9t:"大宗商品价格",f9d:"澳元、加元、挪威克朗等资源型货币与商品价格高度相关",f10t:"央行干预与资本管制",f10d:"直接入市干预、外汇管制可在短期内扭转汇率走势",secLens:"货币走势的三重视角：亚洲 · 地球村 · 星际文明",lensSub:"同一套汇率市场，三种空间尺度的分析框架",lensAsia:"亚洲版图",lensEarth:"地球村版图",lensSpace:"星际文明版图（前瞻推演）",lensNote:"注：亚洲与地球村视角基于现实市场因素；星际文明视角为前瞻性思想实验（时间尺度：数十年以上），仅供文明叙事参考，与现实市场无直接关联，不构成任何投资建议。描述文本提供中英文双语。"},
+en:{appTitle:"Global Top-30 Digital Assets & Sovereign Currencies Dashboard",appSubtitle:"Crypto Top 30 by market cap × Sovereign currencies Top 30 by IMF reserve status & payment importance",lastUpdated:"Data updated",styleMinimal:"Minimal Light",styleTerminal:"Dark Terminal",styleEditorial:"Classic Editorial",langLabel:"Language",secCrypto:"Global Top-30 Digital Assets",secCryptoSub:"Source: Coinlore (primary) / Helius (Solana backup) · Prices in USD",secFx:"Global Top-30 Sovereign Currencies (vs USD)",secFxSub:"Source: open.er-api.com (primary) + Frankfurter (ECB) cross-check",secAnalysis:"Outlook (3 / 12 / 36 months)",secAnalysisSub:"Scenario framework — not price predictions, not investment advice",secSources:"Data Sources & Weekly Update Mechanism",secHistory:"Weekly Price Records (auto-archived)",secHistorySub:"Collected every Sunday 09:00, one row per week; same-day re-runs overwrite",thRank:"Rank",thAsset:"Asset",thPrice:"Price (USD)",thMcap:"Market Cap",th24h:"24h",th7d:"7d",thType:"Type",thCur:"Currency",thName:"Name",thRate:"Per 1 USD",thDate:"Date",thWeek:"Key records",t3:"3 months · Flush & base-building",t12:"12 months · Cycle positioning",t36:"36 months · Structural narratives",b3a:"After a sharp selloff, expect 4–10 weeks of range-building; watch total stablecoin market cap as a leading indicator",b3b:"Majors and altcoins diverge, with drawdowns amplifying down the risk curve",b3c:"Loose liquidity → V-shaped recovery; liquidation cascades → continued underperformance",b12a:"Key question: where we sit in the 4-year cycle (post-ETF institutionalization: to be verified)",b12b:"Platforms with real revenue decouple from pure sentiment assets",b12c:"Event-driven assets (e.g. ZEC) cannot be extrapolated linearly",b36a:"Three themes: stablecoin/payment compliance, platform share competition, sovereign regulation",b36b:"Concentration rises: BTC+ETH+stablecoins gain share",b36c:"FX side: gradual USD multipolarity, RMB internationalization, digital settlement eroding correspondent banking",src1t:"Crypto primary source",src1:"Coinlore API (keyless): top-30 by market cap, prices, changes",src2t:"Crypto backup source",src2:"Helius (free plan, 1M credits/mo): auto-takeover for Solana tokens (JUP/JTO/BONK/WIF/RAY/ORCA) if primary fails; Solana-only, cannot cover BTC/ETH or FX",src3t:"FX primary source",src3:"open.er-api.com (keyless, 160+ currencies vs USD)",src4t:"FX cross-check",src4:"Frankfurter (ECB reference rates); dual-source diff <0.4%",src5t:"Collection & update",src5:"collect_prices.py runs Sundays 09:00 → writes data/*.csv → update_page.js (Node.js) rebuilds this page automatically",src6t:"Note",src6:"orbmarkets.io is a Solana-only explorer with no public API, hence not adopted",noHistory:"No weekly records yet.",disc:"Disclaimer: This page is information curation and scenario analysis, not investment advice. Crypto is highly volatile and FX is macro-sensitive; scenarios are possibilities, not predictions. EACO content is not investment advice and contains no price forecasts or return promises; verify the CA contract address and local compliance yourself. Data for reference only.",analysisLangNote:"",up:"up",down:"down",flat:"flat",secFactors:"Top 10 Factors Driving Currency Movements",secFactorsSub:"Ranked by combined impact · Weights shift over time horizons (see note below)",factorsNote:"Weights vary by horizon: 3 months — rate differentials and speculative positioning; 12 months — growth and inflation gaps; 36 months — structural trends (productivity, debt levels, geopolitics, digital settlement).",f1t:"Interest Rates & Monetary Policy",f1d:"Rate hikes lift a currency; bilateral rate differentials are the primary short-term FX driver",f2t:"Inflation",f2d:"High inflation erodes purchasing power; real rates (nominal minus inflation) determine currency appeal",f3t:"Economic Growth",f3d:"Strong GDP, PMI and jobs data support the currency; recession expectations pressure it lower",f4t:"Trade & Current Account",f4d:"Surplus countries see currency demand (export conversion); deficits add supply pressure",f5t:"Capital Flows & FX Reserves",f5d:"Foreign inflows lift the currency; low reserves make countries prone to currency crises",f6t:"Political & Geopolitical Risk",f6d:"Elections, conflicts and sanctions trigger risk-off rotation; USD, CHF and JPY gain on safe-haven demand",f7t:"Fiscal Policy & Government Debt",f7d:"High-debt currencies weaken over time; fiscal expansion may boost growth expectations short term",f8t:"Market Sentiment & Positioning",f8d:"Risk-on/off dominates short-term moves; leveraged positions amplify trends",f9t:"Commodity Prices",f9d:"Resource currencies (AUD, CAD, NOK) correlate closely with commodity prices",f10t:"Central Bank Intervention & Capital Controls",f10d:"Direct FX intervention and capital controls can reverse exchange-rate trends short term",secLens:"Three Lenses on Currency Movements: Asia · Global Village · Interstellar",lensSub:"One FX market, three spatial scales of analysis",lensAsia:"Asia",lensEarth:"Global Village",lensSpace:"Interstellar Civilization (speculative)",lensNote:"Note: Asia and Global Village lenses are based on real market factors; the Interstellar lens is a forward-looking thought experiment (decade-plus horizons) for civilizational narrative only, with no direct link to current markets and no investment implication. Factor descriptions are provided in Chinese and English."},
+hi:{appTitle:"ग्लोबल टॉप-30 डिजिटल एसेट और संप्रभु मुद्राएँ डैशबोर्ड",appSubtitle:"बाज़ार पूंजीकरण से क्रिप्टो टॉप 30 × IMF रिज़र्व स्थिति से संप्रभु मुद्राएँ टॉप 30",lastUpdated:"डेटा अपडेट",styleMinimal:"मिनिमल लाइट",styleTerminal:"डार्क टर्मिनल",styleEditorial:"क्लासिक एडिटोरियल",langLabel:"भाषा",secCrypto:"ग्लोबल टॉप-30 डिजिटल एसेट",secCryptoSub:"स्रोत: Coinlore (प्राथमिक) / Helius (Solana बैकअप) · मूल्य USD में",secFx:"ग्लोबल टॉप-30 संप्रभु मुद्राएँ (USD के मुक़ाबले)",secFxSub:"स्रोत: open.er-api.com + Frankfurter (ECB) क्रॉस-चेक",secAnalysis:"आउटलुक (3 / 12 / 36 महीने)",secAnalysisSub:"परिदृश्य विश्लेषण — मूल्य भविष्यवाणी नहीं, निवेश सलाह नहीं",secSources:"डेटा स्रोत और साप्ताहिक अपडेट",secHistory:"साप्ताहिक मूल्य रिकॉर्ड (स्वतः संग्रहित)",secHistorySub:"हर रविवार 09:00 संग्रह, सप्ताह में एक पंक्ति",thRank:"क्रम",thAsset:"एसेट",thPrice:"मूल्य (USD)",thMcap:"मार्केट कैप",th24h:"24 घं.",th7d:"7 दिन",thType:"प्रकार",thCur:"मुद्रा",thName:"नाम",thRate:"प्रति 1 USD",thDate:"तारीख",thWeek:"मुख्य रिकॉर्ड",t3:"3 महीने · फ्लश और बेस-बिल्डिंग",t12:"12 महीने · साइकिल पोज़िशनिंग",t36:"36 महीने · संरचनात्मक थीम",b3a:"तेज़ गिरावट के बाद 4–10 सप्ताह की सीमा-निर्माण अपेक्षित; स्टेबलकॉइन कुल मार्केट कैप देखें",b3b:"मेजर और ऑल्टकॉइन में अंतर, जोखिम के साथ गिरावट बढ़ती है",b3c:"उदार तरलता → V-आकार रिकवरी; लिक्विडेशन → निरंतर अंडरपरफॉर्मेंस",b12a:"मुख्य प्रश्न: 4-वर्षीय चक्र में स्थिति (ETF संस्थागत: सत्यापित करना बाकी)",b12b:"वास्तविक राजस्व वाले प्लेटफ़ॉर्म भावना-आधारित एसेट से अलग होंगे",b12c:"इवेंट-संचालित एसेट (जैसे ZEC) रैखिक रूप से बाहर नहीं निकाले जा सकते",b36a:"तीन थीम: स्टेबलकॉइन अनुपालन, प्लेटफ़ॉर्म प्रतिस्पर्धा, संप्रभु विनियमन",b36b:"एकाग्रता बढ़ती है: BTC+ETH+स्टेबलकॉइन का हिस्सा बढ़ेगा",b36c:"FX: USD बहुध्रुवीकरण, RMB अंतर्राष्ट्रीयकरण, डिजिटल सेटलमेंट",src1t:"क्रिप्टो मुख्य स्रोत",src1:"Coinlore API (की-रहित): टॉप-30, मूल्य, बदलाव",src2t:"क्रिप्टो बैकअप स्रोत",src2:"Helius (मुफ़्त, 1M credits/माह): Solana टोकन के लिए स्वतः बैकअप; केवल Solana",src3t:"FX मुख्य स्रोत",src3:"open.er-api.com (की-रहित, 160+ मुद्राएँ)",src4t:"FX क्रॉस-चेक",src4:"Frankfurter (ECB); अंतर <0.4%",src5t:"संग्रह और अपडेट",src5:"collect_prices.py रविवार 09:00 → data/*.csv → update_page.js (Node.js) इस पेज को फिर से बनाता है",src6t:"नोट",src6:"orbmarkets.io केवल Solana एक्सप्लोरर है, अपनाया नहीं गया",noHistory:"अभी कोई साप्ताहिक रिकॉर्ड नहीं।",disc:"अस्वीकरण: यह पेज सूचना संकलन और परिदृश्य विश्लेषण है, निवेश सलाह नहीं। क्रिप्टो अत्यधिक अस्थिर है; परिदृश्य संभावनाएँ हैं, भविष्यवाणियाँ नहीं। EACO सामग्री निवेश सलाह नहीं है; CA पता और स्थानीय अनुपालन स्वयं सत्यापित करें।",analysisLangNote:"",up:"ऊपर",down:"नीचे",flat:"सपाट",secFactors:"मुद्रा आंदोलनों को प्रभावित करने वाले शीर्ष 10 कारक",secFactorsSub:"संयुक्त प्रभाव से क्रमबद्ध · समय-सीमा के साथ भार बदलते हैं (नीचे नोट देखें)",factorsNote:"समय-सीमा के अनुसार भार: 3 महीने — ब्याज दर अंतर और सट्टेबाजी पोजीशनिंग; 12 महीने — वृद्धि और महंगाई अंतर; 36 महीने — संरचनात्मक प्रवृत्तियाँ (उत्पादकता, ऋण, भूराजनीति, डिजिटल सेटलमेंट)।",f1t:"ब्याज दरें और मौद्रिक नीति",f1d:"दर वृद्धि मुद्रा को बढ़ावा देती है; द्विपक्षीय दर अंतर सबसे बड़ा अल्पकालिक FX ड्राइवर है",f2t:"महंगाई",f2d:"उच्च महंगाई क्रय शक्ति को कम करती है; वास्तविक दरें मुद्रा की अपील तय करती हैं",f3t:"आर्थिक विकास",f3d:"मजबूत GDP, PMI और रोजगार डेटा मुद्रा का समर्थन करते हैं; मंदी की उम्मीदें दबाव डालती हैं",f4t:"व्यापार और चालू खाता",f4d:"बचत देशों की मुद्रा की मांग बढ़ती है; घाटे आपूर्ति दबाव बढ़ाते हैं",f5t:"पूंजी प्रवाह और FX भंडार",f5d:"विदेशी निवेश मुद्रा बढ़ाता है; कम भंडार वाले देश मुद्रा संकट के लिए प्रवण हैं",f6t:"राजनीतिक और भू-राजनीतिक जोखिम",f6d:"चुनाव, संघर्ष और प्रतिबंध risk-off रोटेशन ट्रिगर करते हैं; USD, CHF, JPY को सुरक्षित आश्रय से लाभ",f7t:"राजकोषीय नीति और सरकारी ऋण",f7d:"उच्च-ऋण मुद्राएँ समय के साथ कमजोर होती हैं; राजकोषीय विस्तार अल्पकालिक वृद्धि अपेक्षाएँ बढ़ा सकता है",f8t:"बाज़ार भावना और पोजीशनिंग",f8d:"Risk-on/off अल्पकालिक चाल को निर्धारित करता है; लीवरेज्ड पोजीशन रुझान बढ़ाते हैं",f9t:"कमोडिटी कीमतें",f9d:"संसाधन मुद्राएँ (AUD, CAD, NOK) कमोडिटी कीमतों से निकटतः सहसंबद्ध हैं",f10t:"केंद्रीय बैंक हस्तक्षेप और पूंजी नियंत्रण",f10d:"सीधे FX हस्तक्षेप और पूंजी नियंत्रण अल्पकालिक रुझान बदल सकते हैं",secLens:"मुद्रा आंदोलनों के तीन दृष्टिकोण: एशिया · वैश्विक गाँव · तारांतरिक सभ्यता",lensSub:"एक ही FX बाज़ार, तीन स्थानिक पैमानों का विश्लेषण",lensAsia:"एशियाई क्षेत्र",lensEarth:"वैश्विक गाँव",lensSpace:"तारांतरिक सभ्यता (अनुमानित)",lensNote:"नोट: एशिया और वैश्विक गाँव दृष्टिकोण वास्तविक बाज़ार कारकों पर आधारित हैं; तारांतरिक दृष्टिकोण एक दूरदर्शी विचार-प्रयोग (दशकों का क्षितिज) है, केवल सभ्यता-आख्यान के लिए, निवेश सलाह नहीं।"},
+es:{appTitle:"Panel Global de los 30 Principales Activos Digitales y Monedas Soberanas",appSubtitle:"Cripto Top 30 por capitalización × Monedas soberanas Top 30 por reservas del FMI e importancia de pago",lastUpdated:"Datos actualizados",styleMinimal:"Minimalista claro",styleTerminal:"Terminal oscura",styleEditorial:"Editorial clásico",langLabel:"Idioma",secCrypto:"Top 30 Global de Activos Digitales",secCryptoSub:"Fuente: Coinlore (principal) / Helius (respaldo Solana) · Precios en USD",secFx:"Top 30 Global de Monedas Soberanas (vs USD)",secFxSub:"Fuente: open.er-api.com + verificación cruzada Frankfurter (BCE)",secAnalysis:"Perspectivas (3 / 12 / 36 meses)",secAnalysisSub:"Marco de escenarios — no predicciones de precios, no asesoría de inversión",secSources:"Fuentes de datos y mecanismo de actualización semanal",secHistory:"Registros semanales de precios (archivo automático)",secHistorySub:"Recolección cada domingo 09:00, una fila por semana",thRank:"Nº",thAsset:"Activo",thPrice:"Precio (USD)",thMcap:"Cap. mercado",th24h:"24h",th7d:"7d",thType:"Tipo",thCur:"Moneda",thName:"Nombre",thRate:"Por 1 USD",thDate:"Fecha",thWeek:"Registros clave",t3:"3 meses · Depuración y consolidación",t12:"12 meses · Posicionamiento de ciclo",t36:"36 meses · Narrativas estructurales",b3a:"Tras una caída fuerte, se esperan 4–10 semanas de construcción de rango; vigilar la capitalización total de stablecoins",b3b:"Majors y altcoins divergen, las caídas se amplían por nivel de riesgo",b3c:"Liquidez flexible → recuperación en V; cascadas de liquidación → bajo rendimiento continuo",b12a:"Pregunta clave: posición en el ciclo de 4 años (institucionalización ETF: por verificar)",b12b:"Plataformas con ingresos reales se desacoplan de activos sentimentales",b12c:"Activos impulsados por eventos (ej. ZEC) no se extrapolan linealmente",b36a:"Tres temas: cumplimiento de stablecoins, competencia de plataformas, regulación soberana",b36b:"La concentración aumenta: BTC+ETH+stablecoins ganan cuota",b36c:"Divisas: multipolaridad gradual del USD, internacionalización del RMB, liquidación digital",src1t:"Fuente cripto principal",src1:"Coinlore API (sin clave): top-30, precios, cambios",src2t:"Fuente cripto de respaldo",src2:"Helius (plan gratuito, 1M créditos/mes): respaldo automático para tokens Solana; solo Solana",src3t:"Fuente FX principal",src3:"open.er-api.com (sin clave, 160+ monedas)",src4t:"Verificación cruzada FX",src4:"Frankfurter (BCE); diferencia <0.4%",src5t:"Recolección y actualización",src5:"collect_prices.py domingos 09:00 → data/*.csv → update_page.js (Node.js) reconstruye esta página",src6t:"Nota",src6:"orbmarkets.io es un explorador solo Solana, no adoptado",noHistory:"Aún no hay registros semanales.",disc:"Aviso: esta página es compilación de información y análisis de escenarios, no asesoría de inversión. Las cripto son muy volátiles; los escenarios son posibilidades, no predicciones. El contenido de EACO no es asesoría de inversión; verifique la dirección CA y el cumplimiento local.",analysisLangNote:"",up:"sube",down:"baja",flat:"plano",secFactors:"Los 10 Factores Principales que Impulsan las Divisas",secFactorsSub:"Ordenados por impacto combinado · Los pesos cambian según el horizonte (ver nota)",factorsNote:"Los pesos varían según el horizonte: 3 meses — diferenciales de tipos y posicionamiento especulativo; 12 meses — brechas de crecimiento e inflación; 36 meses — tendencias estructurales (productividad, deuda, geopolítica, liquidación digital).",f1t:"Tipos de Interés y Política Monetaria",f1d:"Las subidas de tipos impulsan la divisa; el diferencial de tipos es el principal motor FX a corto plazo",f2t:"Inflación",f2d:"La inflación alta erosiona el poder de compra; los tipos reales determinan el atractivo de la divisa",f3t:"Crecimiento Económico",f3d:"Datos fuertes de PIB, PMI y empleo apoyan la divisa; las expectativas de recesión la presionan",f4t:"Comercio y Cuenta Corriente",f4d:"Los países superavitarios ven demanda de divisa; los déficits añaden presión de oferta",f5t:"Flujos de Capital y Reservas FX",f5d:"Las entradas extranjeras impulsan la divisa; reservas bajas predisponen a crisis cambiarias",f6t:"Riesgo Político y Geopolítico",f6d:"Elecciones, conflictos y sanciones activan rotaciones de riesgo; USD, CHF y JPY ganan como refugio",f7t:"Política Fiscal y Deuda Pública",f7d:"Las divisas de alta deuda se debilitan con el tiempo; la expansión fiscal puede impulsar expectativas de crecimiento a corto plazo",f8t:"Sentimiento y Posicionamiento",f8d:"Risk-on/off domina los movimientos a corto plazo; las posiciones apalancadas amplifican las tendencias",f9t:"Precios de Materias Primas",f9d:"Las divisas de recursos (AUD, CAD, NOK) se correlacionan estrechamente con las materias primas",f10t:"Intervención del Banco Central y Controles de Capital",f10d:"La intervención directa en FX y los controles de capital pueden invertir tendencias a corto plazo",secLens:"Tres Lentes sobre los Movimientos de Divisas: Asia · Aldea Global · Civilización Interestelar",lensSub:"Un mismo mercado FX, tres escalas espaciales de análisis",lensAsia:"Ámbito asiático",lensEarth:"Aldea global",lensSpace:"Civilización interestelar (especulativo)",lensNote:"Nota: las lentes de Asia y la Aldea Global se basan en factores reales; la interestelar es un experimento de pensamiento prospectivo (horizontes de décadas), solo narrativa civilizatoria, sin implicación de inversión."},
+fr:{appTitle:"Tableau de Bord Mondial des 30 Principaux Actifs Numériques et Monnaies Souveraines",appSubtitle:"Crypto Top 30 par capitalisation × Monnaies souveraines Top 30 par réserves FMI et importance des paiements",lastUpdated:"Données mises à jour",styleMinimal:"Minimal clair",styleTerminal:"Terminal sombre",styleEditorial:"Éditorial classique",langLabel:"Langue",secCrypto:"Top 30 Mondial des Actifs Numériques",secCryptoSub:"Source : Coinlore (principale) / Helius (secours Solana) · Prix en USD",secFx:"Top 30 Mondial des Monnaies Souveraines (vs USD)",secFxSub:"Source : open.er-api.com + contre-vérification Frankfurter (BCE)",secAnalysis:"Perspectives (3 / 12 / 36 mois)",secAnalysisSub:"Cadre de scénarios — pas de prédictions de prix, pas de conseil en investissement",secSources:"Sources de données et mécanisme de mise à jour hebdomadaire",secHistory:"Registres hebdomadaires des prix (archivage auto)",secHistorySub:"Collecte chaque dimanche à 09h00, une ligne par semaine",thRank:"Rang",thAsset:"Actif",thPrice:"Prix (USD)",thMcap:"Capitalisation",th24h:"24h",th7d:"7j",thType:"Type",thCur:"Monnaie",thName:"Nom",thRate:"Pour 1 USD",thDate:"Date",thWeek:"Registres clés",t3:"3 mois · Assainissement et construction de plancher",t12:"12 mois · Positionnement cyclique",t36:"36 mois · Narratifs structurels",b3a:"Après une forte baisse, 4–10 semaines de consolidation attendues ; surveiller la capitalisation totale des stablecoins",b3b:"Les majors et les altcoins divergent, les baisses s'amplifient avec le risque",b3c:"Liquidité souple → reprise en V ; cascades de liquidation → sous-performance continue",b12a:"Question clé : position dans le cycle de 4 ans (institutionnalisation ETF : à vérifier)",b12b:"Les plateformes à revenus réels se dissocient des actifs sentimentaux",b12c:"Les actifs événementiels (ex. ZEC) ne s'extrapolent pas linéairement",b36a:"Trois thèmes : conformité des stablecoins, concurrence des plateformes, réglementation souveraine",b36b:"La concentration augmente : BTC+ETH+stablecoins gagnent des parts",b36c:"Devises : multipolarité graduelle du USD, internationalisation du RMB, règlement numérique",src1t:"Source crypto principale",src1:"API Coinlore (sans clé) : top-30, prix, variations",src2t:"Source crypto de secours",src2:"Helius (plan gratuit, 1M crédits/mois) : secours automatique pour tokens Solana ; Solana uniquement",src3t:"Source FX principale",src3:"open.er-api.com (sans clé, 160+ monnaies)",src4t:"Contre-vérification FX",src4:"Frankfurter (BCE) ; écart <0.4%",src5t:"Collecte et mise à jour",src5:"collect_prices.py dimanches 09h00 → data/*.csv → update_page.js (Node.js) reconstruit cette page",src6t:"Note",src6:"orbmarkets.io est un explorateur Solana uniquement, non adopté",noHistory:"Pas encore de registres hebdomadaires.",disc:"Avertissement : cette page est une compilation d'informations et une analyse de scénarios, pas un conseil en investissement. Les cryptos sont très volatiles ; les scénarios sont des possibilités, pas des prédictions. Le contenu EACO n'est pas un conseil en investissement ; vérifiez l'adresse CA et la conformité locale.",analysisLangNote:"",up:"hausse",down:"baisse",flat:"stable",secFactors:"Les 10 Facteurs Principaux Influant sur les Devises",secFactorsSub:"Classés par impact combiné · Les poids varient selon l'horizon (voir note)",factorsNote:"Les poids varient selon l'horizon : 3 mois — différentiels de taux et positionnement spéculatif ; 12 mois — écarts de croissance et d'inflation ; 36 mois — tendances structurelles (productivité, dette, géopolitique, règlement numérique).",f1t:"Taux d'Intérêt et Politique Monétaire",f1d:"Les hausses de taux soutiennent la devise ; les différentiels de taux sont le principal moteur du change à court terme",f2t:"Inflation",f2d:"Une inflation élevée érode le pouvoir d'achat ; les taux réels déterminent l'attrait de la devise",f3t:"Croissance Économique",f3d:"PIB, PMI et emploi solides soutiennent la devise ; les anticipations de récession la pèsent",f4t:"Commerce et Balance Courante",f4d:"Les pays excédentaires voient la demande de devise augmenter ; les déficits accroissent la pression de l'offre",f5t:"Flux de Capitaux et Réserves de Change",f5d:"Les entrées étrangères soutiennent la devise ; des réserves faibles exposent aux crises monétaires",f6t:"Risque Politique et Géopolitique",f6d:"Élections, conflits et sanctions déclenchent des rotations défensives ; USD, CHF et JPY profitent du refuge",f7t:"Politique Budgétaire et Dette Publique",f7d:"Les devises très endettées s'affaiblissent à long terme ; l'expansion budgétaire peut soutenir les attentes de croissance à court terme",f8t:"Sentiment et Positionnement",f8d:"Le risk-on/off domine les mouvements courts ; les positions levées amplifient les tendances",f9t:"Prix des Matières Premières",f9d:"Les devises de ressources (AUD, CAD, NOK) sont étroitement corrélées aux matières premières",f10t:"Intervention de la Banque Centrale et Contrôles des Capitaux",f10d:"Les interventions directes et les contrôles de capitaux peuvent inverser les tendances à court terme",secLens:"Trois Perspectives sur les Devises : Asie · Village Mondial · Civilisation Interstellaire",lensSub:"Un même marché des changes, trois échelles spatiales d'analyse",lensAsia:"Asie",lensEarth:"Village mondial",lensSpace:"Civilisation interstellaire (spéculatif)",lensNote:"Note : les perspectives Asie et Village mondial reposent sur des facteurs réels ; la perspective interstellaire est une expérience de pensée prospective (horizons de décennies), sans lien direct avec les marchés ni implication d'investissement."},
+ar:{appTitle:"لوحة عالمية لأفضل 30 أصلًا رقميًا وعملات سيادية",appSubtitle:"أفضل 30 عملة رقمية بالقيمة السوقية × أفضل 30 عملة سيادية حسب احتياطيات صندوق النقد",lastUpdated:"تاريخ التحديث",styleMinimal:"فاتح بسيط",styleTerminal:"طرفية داكنة",styleEditorial:"تحريري كلاسيكي",langLabel:"اللغة",secCrypto:"أفضل 30 أصلًا رقميًا عالميًا",secCryptoSub:"المصدر: Coinlore (أساسي) / Helius (احتياطي Solana) · الأسعار بالدولار",secFx:"أفضل 30 عملة سيادية عالميًا (مقابل الدولار)",secFxSub:"المصدر: open.er-api.com + تحقق متقاطع Frankfurter (البنك المركزي الأوروبي)",secAnalysis:"التوقعات (3 / 12 / 36 شهرًا)",secAnalysisSub:"إطار السيناريوهات — ليس تنبؤًا بالأسعار ولا نصيحة استثمارية",secSources:"مصادر البيانات وآلية التحديث الأسبوعي",secHistory:"سجلات الأسعار الأسبوعية (أرشفة تلقائية)",secHistorySub:"الجمع كل يوم أحد 09:00، صف واحد أسبوعيًا",thRank:"الترتيب",thAsset:"الأصل",thPrice:"السعر (USD)",thMcap:"القيمة السوقية",th24h:"24 ساعة",th7d:"7 أيام",thType:"النوع",thCur:"العملة",thName:"الاسم",thRate:"لكل 1 دولار",thDate:"التاريخ",thWeek:"السجلات الرئيسية",t3:"3 أشهر · تصفية وبناء قاعدة",t12:"12 شهرًا · تحديد الموقع في الدورة",t36:"36 شهرًا · الروايات الهيكلية",b3a:"بعد الانخفاض الحاد، يُتوقع 4–10 أسابيع من التماسك؛ راقب القيمة السوقية الإجمالية للعملات المستقرة",b3b:"العملات الرئيسية والبديلة تتباعد، والخسائر تتفاقم مع المخاطر",b3c:"سيولة مرنة → تعافٍ سريع؛ سلاسل التصفية → ضعف مستمر",b12a:"السؤال الرئيسي: الموقع في دورة 4 سنوات (المؤسسية ETF: قيد التحقق)",b12b:"المنصات ذات الإيرادات الحقيقية تنفصل عن أصول المشاعر",b12c:"الأصول المدفوعة بالأحداث (مثل ZEC) لا تُستقرأ خطيًا",b36a:"ثلاثة محاور: امتثال العملات المستقرة، منافسة المنصات، التنظيم السيادي",b36b:"التركيز يرتفع: BTC+ETH+العملات المستقرة تكتسب حصة",b36c:"العملات: تعدد أقطاب الدولار تدريجيًا، تدويل اليوان، التسوية الرقمية",src1t:"المصدر الأساسي للعملات الرقمية",src1:"Coinlore API (بدون مفتاح): أفضل 30، الأسعار، التغييرات",src2t:"المصدر الاحتياطي",src2:"Helius (خطة مجانية، مليون رصيد/شهر): احتياطي تلقائي لرموز Solana؛ Solana فقط",src3t:"المصدر الأساسي للعملات",src3:"open.er-api.com (بدون مفتاح، 160+ عملة)",src4t:"التحقق المتقاطع",src4:"Frankfurter (البنك المركزي الأوروبي)؛ الفرق <0.4%",src5t:"الجمع والتحديث",src5:"collect_prices.py الأحد 09:00 → data/*.csv → update_page.js (Node.js) يعيد بناء هذه الصفحة",src6t:"ملاحظة",src6:"orbmarkets.io مستكشف Solana فقط، لم يُعتمد",noHistory:"لا توجد سجلات أسبوعية بعد.",disc:"إخلاء مسؤولية: هذه الصفحة تجميع معلومات وتحليل سيناريوهات، وليست نصيحة استثمارية. العملات الرقمية شديدة التقلب؛ السيناريوهات احتمالات وليست تنبؤات. محتوى EACO ليس نصيحة استثمارية؛ تحقق من عنوان CA والامتثال المحلي بنفسك.",analysisLangNote:"",up:"صعود",down:"هبوط",flat:"ثابت",secFactors:"العوامل العشرة الرئيسية المؤثرة على حركة العملات",secFactorsSub:"مرتبة حسب التأثير المشترك · الأوزان تتغير حسب الأفق الزمني (انظر الملاحظة)",factorsNote:"تتغير الأوزان حسب الأفق: 3 أشهر — فوارق الفائدة والمواقع المضاربة؛ 12 شهرًا — فجوات النمو والتضخم؛ 36 شهرًا — الاتجاهات الهيكلية (الإنتاجية، الديون، الجغرافيا السياسية، التسوية الرقمية).",f1t:"أسعار الفائدة والسياسة النقدية",f1d:"رفع الفائدة يعزز العملة؛ فوارق الفائدة بين الدول هي المحرك الرئيسي لأسعار الصرف قصير الأجل",f2t:"التضخم",f2d:"التضخم المرتفع يؤدي إلى تآكل القوة الشرائية؛ الفائدة الحقيقية تحدد جاذبية العملة",f3t:"النمو الاقتصادي",f3d:"بيانات قوية للناتج المحلي وPMI والتوظيف تدعم العملة؛ توقعات الركود تضغط عليها نزولًا",f4t:"التجارة والحساب الجاري",f4d:"الفوائض تزيد الطلب على العملة؛ العجز يزيد ضغط العرض",f5t:"تدفقات رأس المال والاحتياطيات",f5d:"التدفقات الأجنبية تعزز العملة؛ الاحتياطيات المنخفضة تعرض للضرائب لأزمات العملة",f6t:"المخاطر السياسية والجيوسياسية",f6d:"الانتخابات والصراعات والعقوبات تطلق تحولات الهروب إلى الأمان؛ USD وCHF وJPY تستفيد",f7t:"السياسة المالية والديون الحكومية",f7d:"عملات الديون المرتفعة تضعف مع الوقت؛ التوسع المالي قد يعزز توقعات النمو قصير الأجل",f8t:"معنويات السوق والمواقع",f8d:"تحمل/تجنب المخاطر يهيمن على التحركات قصيرة الأجل؛ المراكز المرفوعة تضخم الاتجاهات",f9t:"أسعار السلع الأساسية",f9d:"عملات الموارد (AUD، CAD، NOK) ترتبط ارتباطًا وثيقًا بأسعار السلع",f10t:"تدخل البنك المركزي وضوابط رأس المال",f10d:"التدخل المباشر في الصرف وضوابط رأس المال يمكن أن تعكس الاتجاهات قصير الأجل",secLens:"ثلاث عدسات لحركة العملات: آسيا · القرية العالمية · حضارة بين النجوم",lensSub:"سوق صرف واحد، ثلاثة مقاييس فضائية للتحليل",lensAsia:"النطاق الآسيوي",lensEarth:"القرية العالمية",lensSpace:"حضارة بين النجوم (تخميني)",lensNote:"ملاحظة: عدستا آسيا والقرية العالمية تعتمدان على عوامل سوق حقيقية؛ عدسة بين النجوم تجربة فكرية مستقبلية (آفاق عقود) للسرد الحضاري فقط، دون دلالة استثمارية."},
+pt:{appTitle:"Painel Global dos 30 Principais Ativos Digitais e Moedas Soberanas",appSubtitle:"Cripto Top 30 por capitalização × Moedas soberanas Top 30 por reservas do FMI e importância de pagamento",lastUpdated:"Dados atualizados",styleMinimal:"Minimalista claro",styleTerminal:"Terminal escuro",styleEditorial:"Editorial clássico",langLabel:"Idioma",secCrypto:"Top 30 Global de Ativos Digitais",secCryptoSub:"Fonte: Coinlore (primária) / Helius (backup Solana) · Preços em USD",secFx:"Top 30 Global de Moedas Soberanas (vs USD)",secFxSub:"Fonte: open.er-api.com + verificação cruzada Frankfurter (BCE)",secAnalysis:"Perspectivas (3 / 12 / 36 meses)",secAnalysisSub:"Estrutura de cenários — sem previsões de preço, sem consultoria de investimento",secSources:"Fontes de dados e mecanismo de atualização semanal",secHistory:"Registros semanais de preços (arquivo automático)",secHistorySub:"Coleta todos os domingos às 09:00, uma linha por semana",thRank:"Pos.",thAsset:"Ativo",thPrice:"Preço (USD)",thMcap:"Cap. mercado",th24h:"24h",th7d:"7d",thType:"Tipo",thCur:"Moeda",thName:"Nome",thRate:"Por 1 USD",thDate:"Data",thWeek:"Registros principais",t3:"3 meses · Depuração e construção de base",t12:"12 meses · Posicionamento de ciclo",t36:"36 meses · Narrativas estruturais",b3a:"Após queda forte, 4–10 semanas de consolidação esperadas; observar capitalização total de stablecoins",b3b:"Majors e altcoins divergem, quedas se ampliam pelo risco",b3c:"Liquidez frouxa → recuperação em V; cascatas de liquidação → baixo desempenho contínuo",b12a:"Pergunta-chave: posição no ciclo de 4 anos (institucionalização ETF: a verificar)",b12b:"Plataformas com receita real se desacoplam de ativos sentimentais",b12c:"Ativos orientados a eventos (ex. ZEC) não se extrapolam linearmente",b36a:"Três temas: conformidade de stablecoins, competição de plataformas, regulamentação soberana",b36b:"A concentração aumenta: BTC+ETH+stablecoins ganham participação",b36c:"Moedas: multipolaridade gradual do USD, internacionalização do RMB, liquidação digital",src1t:"Fonte cripto primária",src1:"Coinlore API (sem chave): top-30, preços, variações",src2t:"Fonte cripto de backup",src2:"Helius (plano gratuito, 1M créditos/mês): backup automático para tokens Solana; apenas Solana",src3t:"Fonte FX primária",src3:"open.er-api.com (sem chave, 160+ moedas)",src4t:"Verificação cruzada FX",src4:"Frankfurter (BCE); diferença <0.4%",src5t:"Coleta e atualização",src5:"collect_prices.py domingos 09:00 → data/*.csv → update_page.js (Node.js) reconstrói esta página",src6t:"Nota",src6:"orbmarkets.io é um explorador apenas Solana, não adotado",noHistory:"Ainda sem registros semanais.",disc:"Aviso: esta página é compilação de informações e análise de cenários, não consultoria de investimento. Cripto é altamente volátil; cenários são possibilidades, não previsões. Conteúdo EACO não é consultoria; verifique o endereço CA e a conformidade local.",analysisLangNote:"",up:"sobe",down:"cai",flat:"estável",secFactors:"Os 10 Principais Fatores que Influenciam Moedas",secFactorsSub:"Ordenados por impacto combinado · Pesos mudam conforme o horizonte (ver nota)",factorsNote:"Pesos variam por horizonte: 3 meses — diferenciais de juros e posicionamento especulativo; 12 meses — disparidades de crescimento e inflação; 36 meses — tendências estruturais (produtividade, dívida, geopolítica, liquidação digital).",f1t:"Taxas de Juros e Política Monetária",f1d:"Altas de juros impulsionam a moeda; diferenciais de juros são o principal motor cambial de curto prazo",f2t:"Inflação",f2d:"Inflação alta corrói o poder de compra; taxas reais determinam o atrativo da moeda",f3t:"Crescimento Econômico",f3d:"Dados fortes de PIB, PMI e emprego sustentam a moeda; expectativas de recessão a pressionam",f4t:"Comércio e Transações Correntes",f4d:"Países superavitários veem demanda pela moeda; déficits aumentam a pressão de oferta",f5t:"Fluxos de Capital e Reservas FX",f5d:"Entradas estrangeiras impulsionam a moeda; reservas baixas predispõem a crises cambiais",f6t:"Risco Político e Geopolítico",f6d:"Eleições, conflitos e sanções disparam rotações de risco; USD, CHF e JPY ganham como refúgio",f7t:"Política Fiscal e Dívida Pública",f7d:"Moedas de alta dívida enfraquecem ao longo do tempo; expansão fiscal pode impulsionar expectativas de crescimento no curto prazo",f8t:"Sentimento e Posicionamento",f8d:"Risk-on/off domina movimentos de curto prazo; posições alavancadas amplificam tendências",f9t:"Preços de Commodities",f9d:"Moedas de recursos (AUD, CAD, NOK) correlacionam-se estreitamente com commodities",f10t:"Intervenção do Banco Central e Controles de Capital",f10d:"Intervenção direta no câmbio e controles de capital podem reverter tendências de curto prazo",secLens:"Três Lentes sobre os Movimentos das Moedas: Ásia · Aldeia Global · Civilização Interestelar",lensSub:"Um mesmo mercado cambial, três escalas espaciais de análise",lensAsia:"Âmbito asiático",lensEarth:"Aldeia global",lensSpace:"Civilização interestelar (especulativo)",lensNote:"Nota: as lentes Ásia e Aldeia Global baseiam-se em fatores reais; a interestelar é um experimento de pensamento prospectivo (horizontes de décadas), apenas narrativa civilizacional, sem implicação de investimento."},
+ru:{appTitle:"Глобальная панель Топ-30 цифровых активов и суверенных валют",appSubtitle:"Крипто Топ-30 по капитализации × Суверенные валюты Топ-30 по резервам МВФ и значимости платежей",lastUpdated:"Данные обновлены",styleMinimal:"Минималистичный светлый",styleTerminal:"Тёмный терминал",styleEditorial:"Классическая редакция",langLabel:"Язык",secCrypto:"Топ-30 мировых цифровых активов",secCryptoSub:"Источник: Coinlore (основной) / Helius (резерв Solana) · Цены в USD",secFx:"Топ-30 мировых суверенных валют (к USD)",secFxSub:"Источник: open.er-api.com + перекрёстная проверка Frankfurter (ЕЦБ)",secAnalysis:"Прогнозы (3 / 12 / 36 месяцев)",secAnalysisSub:"Сценарный анализ — не ценовые прогнозы, не инвестиционная рекомендация",secSources:"Источники данных и механизм еженедельного обновления",secHistory:"Еженедельные записи цен (автоархив)",secHistorySub:"Сбор каждое воскресенье 09:00, одна строка в неделю",thRank:"№",thAsset:"Актив",thPrice:"Цена (USD)",thMcap:"Капитализация",th24h:"24ч",th7d:"7д",thType:"Тип",thCur:"Валюта",thName:"Название",thRate:"За 1 USD",thDate:"Дата",thWeek:"Ключевые записи",t3:"3 месяца · Сброс и формирование дна",t12:"12 месяцев · Позиционирование в цикле",t36:"36 месяцев · Структурные нарративы",b3a:"После резкого падения ожидается 4–10 недель консолидации; следить за общей капитализацией стейблкоинов",b3b:"Мейджоры и альткоины расходятся, падение усиливается по уровню риска",b3c:"Мягкая ликвидность → V-образное восстановление; каскады ликвидаций → продолжение отставания",b12a:"Ключевой вопрос: положение в 4-летнем цикле (ETF-институционализация: требует проверки)",b12b:"Платформы с реальной выручкой отделяются от чисто эмоциональных активов",b12c:"Событийные активы (напр. ZEC) не поддаются линейной экстраполяции",b36a:"Три темы: комплаенс стейблкоинов, конкуренция платформ, суверенное регулирование",b36b:"Концентрация растёт: BTC+ETH+стейблкоины наращивают долю",b36c:"Валюты: постепенная мультиполярность USD, интернационализация юаня, цифровые расчёты",src1t:"Основной крипто-источник",src1:"Coinlore API (без ключа): топ-30, цены, изменения",src2t:"Резервный крипто-источник",src2:"Helius (бесплатный план, 1M кредитов/мес): автоматический резерв для токенов Solana; только Solana",src3t:"Основной валютный источник",src3:"open.er-api.com (без ключа, 160+ валют)",src4t:"Перекрёстная проверка валют",src4:"Frankfurter (ЕЦБ); расхождение <0.4%",src5t:"Сбор и обновление",src5:"collect_prices.py воскресенья 09:00 → data/*.csv → update_page.js (Node.js) перестраивает эту страницу",src6t:"Примечание",src6:"orbmarkets.io — только Solana-эксплорер, не принят",noHistory:"Еженедельных записей пока нет.",disc:"Отказ от ответственности: эта страница — подбор информации и сценарный анализ, а не инвестиционная рекомендация. Криптовалюты крайне волатильны; сценарии — возможности, а не прогнозы. Содержание EACO не является инвестиционной рекомендацией; проверьте адрес CA и местное соответствие требованиям.",analysisLangNote:"",up:"рост",down:"падение",flat:"без изм.",secFactors:"Топ-10 факторов, влияющих на курсы валют",secFactorsSub:"Ранжировано по совокупному влиянию · Вес факторов меняется по горизонтам (см. примечание)",factorsNote:"Веса по горизонтам: 3 месяца — дифференциалы ставок и спекулятивные позиции; 12 месяцев — разрывы роста и инфляции; 36 месяцев — структурные тренды (производительность, долг, геополитика, цифровые расчёты).",f1t:"Процентные ставки и денежно-кредитная политика",f1d:"Повышение ставок укрепляет валюту; дифференциалы ставок — главный краткосрочный драйвер FX",f2t:"Инфляция",f2d:"Высокая инфляция подтачивает покупательную способность; реальные ставки определяют привлекательность валюты",f3t:"Экономический рост",f3d:"Сильные данные ВВП, PMI и занятости поддерживают валюту; ожидания рецессии давят на неё",f4t:"Торговля и счёт текущих операций",f4d:"У стран с профицитом растёт спрос на валюту; дефициты увеличивают давление предложения",f5t:"Потоки капитала и валютные резервы",f5d:"Приток иностранного капитала укрепляет валюту; низкие резервы повышают риск валютных кризисов",f6t:"Политические и геополитические риски",f6d:"Выборы, конфликты и санкции запускают бегство в надёжные активы; USD, CHF и JPY выигрывают",f7t:"Бюджетная политика и госдолг",f7d:"Валюты стран с высоким долгом слабеют со временем; бюджетная экспансия может поддержать ожидания роста",f8t:"Настроения и рыночные позиции",f8d:"Risk-on/off определяет краткосрочные движения; плечи усиливают тренды",f9t:"Цены сырьевых товаров",f9d:"Валюты сырьевых стран (AUD, CAD, NOK) тесно коррелируют с сырьём",f10t:"Интервенции центробанков и контроль капитала",f10d:"Прямые интервенции и валютный контроль могут разворачивать тренды в краткосрочной перспективе",secLens:"Три ракурса движения валют: Азия · Глобальная деревня · Межзвёздная цивилизация",lensSub:"Один валютный рынок — три пространственных масштаба анализа",lensAsia:"Азиатский регион",lensEarth:"Глобальная деревня",lensSpace:"Межзвёздная цивилизация (спекулятивный)",lensNote:"Примечание: ракурсы «Азия» и «Глобальная деревня» основаны на реальных рыночных факторах; межзвёздный ракурс — перспективный мысленный эксперимент (горизонты в десятилетия), только цивилизационный нарратив, без инвестиционного значения."},
+ja:{appTitle:"世界トップ30デジタル資産・主権通貨ダッシュボード",appSubtitle:"時価総額によるクリプト トップ30 × IMF準備地位・決済重要性による主権通貨 トップ30",lastUpdated:"データ更新日時",styleMinimal:"ミニマル・ライト",styleTerminal:"ダーク・ターミナル",styleEditorial:"クラシック・エディトリアル",langLabel:"言語",secCrypto:"世界トップ30デジタル資産",secCryptoSub:"ソース: Coinlore（メイン）/ Helius（Solana バックアップ）· 価格は USD",secFx:"世界トップ30主権通貨（対 USD）",secFxSub:"ソース: open.er-api.com + Frankfurter（ECB）クロスチェック",secAnalysis:"相場見通し（3 / 12 / 36 ヶ月）",secAnalysisSub:"シナリオ分析であり価格予測・投資助言ではありません",secSources:"データソースと週次更新メカニズム",secHistory:"週次価格記録（自動アーカイブ）",secHistorySub:"毎週日曜 09:00 に収集、週1行・同日再実行は上書き",thRank:"順位",thAsset:"資産",thPrice:"価格 (USD)",thMcap:"時価総額",th24h:"24時間",th7d:"7日",thType:"分類",thCur:"通貨",thName:"名称",thRate:"1 USD あたり",thDate:"日付",thWeek:"記録要点",t3:"3 ヶ月 · セリング終了と底値形成",t12:"12 ヶ月 · サイクル位置づけ",t36:"36 ヶ月 · 構造的ナラティブ",b3a:"急落後は 4〜10 週間のレンジ形成を想定；ステーブルコイン総時価総額を先行指標として注視",b3b:"メジャーとアルトコインが乖離し、リスク曲線に沿って下落が拡大",b3c:"流動性緩和なら V 字回復、清算連鎖なら相対的弱含み継続",b12a:"核心は 4 年サイクルのどの位置にいるか（ETF 機関化後の法則性は検証待ち）",b12b:"実収入のあるプラットフォームと純センチメント資産の格差拡大",b12c:"イベント駆動型資産（ZEC 等）は線形外挿不可",b36a:"3 つのテーマ：ステーブルコイン規制対応、プラットフォーム競争、主権的規制",b36b:"集中度上昇：BTC+ETH+ステーブルコインの構成比が上昇",b36c:"通貨面：USD の多極化・人民元国際化・デジタル決済が correspondent banking を侵食",src1t:"クリプト主要ソース",src1:"Coinlore API（キー不要）：トップ30・価格・変動率",src2t:"クリプト予備ソース",src2:"Helius（無料プラン、100万クレジット/月）：Solana トークンの自動バックアップ；Solana のみ対応",src3t:"FX 主要ソース",src3:"open.er-api.com（キー不要、160+ 通貨）",src4t:"FX クロスチェック",src4:"Frankfurter（ECB）；差異 <0.4%",src5t:"収集と更新",src5:"collect_prices.py 日曜 09:00 → data/*.csv → update_page.js（Node.js）が本ページを再構築",src6t:"注記",src6:"orbmarkets.io は Solana 専用エクスプローラのため未採用",noHistory:"週次記録はまだありません。",disc:"免責事項：本ページは情報整理とシナリオ分析であり、投資助言ではありません。クリプトは極めて変動が大きく、シナリオは可能性の記述です。EACO コンテンツは投資助言ではなく価格予測・収益保証を含みません；CA アドレスと現地コンプライアンスを必ずご自身でご確認ください。",analysisLangNote:"",up:"上昇",down:"下落",flat:"横ばい",secFactors:"通貨相場に影響するトップ10要因",secFactorsSub:"総合的な影響度順 · 期間により重要度が変化（下部の注記参照）",factorsNote:"期間別の重要度：3 ヶ月 — 金利差と投機的ポジション；12 ヶ月 — 成長率・インフレ格差；36 ヶ月 — 構造的トレンド（生産性、債務水準、地政学、デジタル決済）。",f1t:"金利と金融政策",f1d:"利上げは通貨を支える；二国間の金利差は短期的な為替最大のドライバー",f2t:"インフレ",f2d:"高インフレは購買力を侵食；実質金利（名目金利−インフレ）が通貨の魅力を決定",f3t:"経済成長",f3d:"GDP・PMI・雇用の強いデータは通貨を支え、景気後退予想は下押し圧力に",f4t:"貿易と経常収支",f4d:"黒字国は通貨需要が増加（輸出決済等）；赤字国は供給圧力が増大",f5t:"資本フローと外貨準備",f5d:"海外資本流入は通貨を支える；準備が乏しい国は通貨危機のリスクが高い",f6t:"政治・地政学リスク",f6d:"選挙・紛争・制裁はリスクオフの回転を誘発；USD・CHF・JPY が安全資産需要の恩恵を受ける",f7t:"財政政策と政府債務",f7d:"高債務国の通貨は長期的に下圧；財政拡張は短期的に成長期待を高めうる",f8t:"市場センチメントとポジション",f8d:"リスクオン・オフが短期変動を支配；レバレッジポジションがトレンドを増幅",f9t:"商品価格",f9d:"資源国通貨（AUD・CAD・NOK）は商品価格と高い相関を持つ",f10t:"中央銀行介入と資本規制",f10d:"為替介入や資本規制は短期のトレンドを反転させうる",secLens:"通貨相場の三重視点：アジア · 地球村 · 星間文明",lensSub:"同一の為替市場を三つの空間スケールで分析",lensAsia:"アジア圏",lensEarth:"地球村",lensSpace:"星間文明（思索的）",lensNote:"注：アジアと地球村の視点は現実の市場要因に基づく；星間文明の視点は前向きの思考実験（数十年スパン）であり文明ナラティブ目的のみ、投資助言を含まない。"},
+de:{appTitle:"Globales Dashboard der Top-30 Digital Assets und souveränen Währungen",appSubtitle:"Krypto Top 30 nach Marktkapitalisierung × Souveräne Währungen Top 30 nach IWF-Reservestatus und Zahlungsbedeutung",lastUpdated:"Daten aktualisiert",styleMinimal:"Minimalistisch hell",styleTerminal:"Dunkles Terminal",styleEditorial:"Klassische Finanzredaktion",langLabel:"Sprache",secCrypto:"Globale Top-30 Digital Assets",secCryptoSub:"Quelle: Coinlore (primär) / Helius (Solana-Backup) · Preise in USD",secFx:"Globale Top-30 souveräne Währungen (gegen USD)",secFxSub:"Quelle: open.er-api.com + Gegenprüfung Frankfurter (EZB)",secAnalysis:"Ausblick (3 / 12 / 36 Monate)",secAnalysisSub:"Szenario-Rahmen — keine Preisprognosen, keine Anlageberatung",secSources:"Datenquellen & wöchentlicher Aktualisierungsmechanismus",secHistory:"Wöchentliche Preisaufzeichnungen (auto-archiviert)",secHistorySub:"Erfassung jeden Sonntag 09:00, eine Zeile pro Woche",thRank:"Rang",thAsset:"Asset",thPrice:"Preis (USD)",thMcap:"Marktkap.",th24h:"24Std",th7d:"7T",thType:"Typ",thCur:"Währung",thName:"Name",thRate:"Pro 1 USD",thDate:"Datum",thWeek:"Kernaufzeichnungen",t3:"3 Monate · Bereinigung und Bodenbildung",t12:"12 Monate · Zykluspositionierung",t36:"36 Monate · Strukturelle Narrative",b3a:"Nach starkem Abverkauf 4–10 Wochen Konsolidierung erwartet; Gesamtmarktkapitalisierung der Stablecoins beobachten",b3b:"Majors und Altcoins divergieren, Verluste verstärken sich mit dem Risiko",b3c:"Lockere Liquidität → V-förmige Erholung; Liquidationsketten → anhaltende Unterperformance",b12a:"Kernfrage: Position im 4-Jahres-Zyklus (ETF-Institutionalisierung: zu verifizieren)",b12b:"Plattformen mit echten Einnahmen entkoppeln von reinen Sentiment-Assets",b12c:"Ereignisgetriebene Assets (z.B. ZEC) sind nicht linear extrapolierbar",b36a:"Drei Themen: Stablecoin-Compliance, Plattformwettbewerb, souveräne Regulierung",b36b:"Konzentration steigt: BTC+ETH+Stablecoins gewinnen Anteil",b36c:"Devisen: allmähliche Multipolarität des USD, Internationalisierung des RMB, digitale Abwicklung",src1t:"Krypto-Primärquelle",src1:"Coinlore API (schlüssellos): Top-30, Preise, Veränderungen",src2t:"Krypto-Backup-Quelle",src2:"Helius (Gratisplan, 1M Credits/Monat): automatisches Backup für Solana-Token; nur Solana",src3t:"Devisen-Primärquelle",src3:"open.er-api.com (schlüssellos, 160+ Währungen)",src4t:"Devisen-Gegenprüfung",src4:"Frankfurter (EZB); Abweichung <0.4%",src5t:"Erfassung & Update",src5:"collect_prices.py sonntags 09:00 → data/*.csv → update_page.js (Node.js) baut diese Seite neu auf",src6t:"Hinweis",src6:"orbmarkets.io ist ein rein Solana-Explorer, nicht übernommen",noHistory:"Noch keine wöchentlichen Aufzeichnungen.",disc:"Haftungsausschluss: Diese Seite ist Informationsaufbereitung und Szenarioanalyse, keine Anlageberatung. Krypto ist hochvolatil; Szenarien sind Möglichkeiten, keine Prognosen. EACO-Inhalte sind keine Anlageberatung und enthalten keine Preisprognosen; CA-Adresse und lokale Compliance bitte selbst prüfen.",analysisLangNote:"",up:"steigt",down:"fällt",flat:"unverändert",secFactors:"Die 10 wichtigsten Faktoren für Währungsbewegungen",secFactorsSub:"Nach Gesamtimpact geordnet · Gewichte verschieben sich mit dem Horizont (siehe Hinweis)",factorsNote:"Gewichte nach Horizont: 3 Monate — Zinsdifferenzen und spekulative Positionen; 12 Monate — Wachstums- und Inflationsabstände; 36 Monate — strukturelle Trends (Produktivität, Schulden, Geopolitik, digitale Abwicklung).",f1t:"Zinssätze & Geldpolitik",f1d:"Zinserhöhungen stützen die Währung; bilaterale Zinsdifferenzen sind der wichtigste kurzfristige Devisentreiber",f2t:"Inflation",f2d:"Hohe Inflation untergräbt die Kaufkraft; Realzinsen bestimmen die Attraktivität einer Währung",f3t:"Wirtschaftswachstum",f3d:"Starke BIP-, Einkaufsmanager- und Arbeitsmarktdaten stützen die Währung; Rezessionserwartungen belasten sie",f4t:"Handel & Leistungsbilanz",f4d:"Überschussländer sehen Währungsnachfrage (Exportkonversion); Defizite erhöhen den Angebotsdruck",f5t:"Kapitalflüsse & Devisenreserven",f5d:"Ausländische Zuflüsse stützen die Währung; geringe Reserven begünstigen Währungskrisen",f6t:"Politische & geopolitische Risiken",f6d:"Wahlen, Konflikte und Sanktionen lösen Risk-off-Rotationen aus; USD, CHF und JPY profitieren als sicherer Hafen",f7t:"Fiskalpolitik & Staatsverschuldung",f7d:"Währungen hochverschuldeter Länder schwächen sich langfristig; Fiskalexpansion kann kurzfristig Wachstumserwartungen heben",f8t:"Marktstimmung & Positionierung",f8d:"Risk-on/off bestimmt kurzfristige Bewegungen; gehebelte Positionen verstärken Trends",f9t:"Rohstoffpreise",f9d:"Ressourcenwährungen (AUD, CAD, NOK) korrelieren eng mit Rohstoffpreisen",f10t:"Zentralbankintervention & Kapitalkontrollen",f10d:"Direkte Deviseninterventionen und Kapitalkontrollen können kurzfristige Trends umkehren",secLens:"Drei Perspektiven auf Währungsbewegungen: Asien · Globales Dorf · Interstellare Zivilisation",lensSub:"Ein Devisenmarkt, drei räumliche Analysemaßstäbe",lensAsia:"Asiatischer Raum",lensEarth:"Globales Dorf",lensSpace:"Interstellare Zivilisation (spekulativ)",lensNote:"Hinweis: Die Perspektiven Asien und Globales Dorf beruhen auf realen Marktfaktoren; die interstellare Perspektive ist ein zukunftsgerichtetes Gedankenexperiment (Jahrzehnte-Horizont) nur für zivilisatorische Narrative, ohne Anlagebedeutung."}
+};
+const CATI18N = {
+  zh:{"L1":"储备层","L2":"平台层","APP":"应用/支付","MEME":"情绪类","PRIV":"隐私类","STB":"稳定币","STK":"质押衍生品","WRAP":"包装资产","OTH":"其他"},
+  en:{"L1":"Reserve","L2":"Platform","APP":"App/Payment","MEME":"Sentiment","PRIV":"Privacy","STB":"Stablecoin","STK":"Staked derivative","WRAP":"Wrapped","OTH":"Other"}
+};
+
+/* ==================== 渲染逻辑 ==================== */
+let LANG = "zh";
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function fmtNum(v, digits){
+  if (v === "" || v == null) return "—";
+  const n = Number(v);
+  if (isNaN(n)) return esc(v);
+  const abs = Math.abs(n);
+  if (abs >= 1e12) return (n/1e12).toFixed(2) + "T";
+  if (abs >= 1e9) return (n/1e9).toFixed(2) + "B";
+  if (abs >= 1e6) return (n/1e6).toFixed(2) + "M";
+  if (abs >= 1000) return n.toLocaleString("en-US", {maximumFractionDigits: digits ?? 2});
+  if (abs >= 1) return n.toFixed(digits ?? 4);
+  return n.toPrecision(4);
+}
+function pct(v){
+  if (v === "" || v == null || isNaN(Number(v))) return "—";
+  const n = Number(v);
+  const cls = n > 0 ? "up" : n < 0 ? "down" : "flat";
+  return `<span class="${cls}">${n > 0 ? "+" : ""}${n.toFixed(2)}%</span>`;
+}
+
+function catBadge(sym, lang){
+  const c = CAT[sym] || "OTH";
+  const dict = CATI18N[lang] || CATI18N[lang.startsWith("zh") ? "zh" : "en"] || CATI18N.en;
+  return `<span class="badge">${esc(dict[c] || c)}</span>`;
+}
+
+function renderAll(){
+  const t = I18N[LANG];
+  document.documentElement.lang = LANG;
+  const body = document.body;
+  body.lang = LANG;
+  body.dir = LANG === "ar" ? "rtl" : "ltr";
+  document.querySelectorAll("[data-i18n]").forEach(el => { el.textContent = t[el.dataset.i18n] ?? el.textContent; });
+
+  /* 更新时间 */
+  $("updatedLine").textContent = t.lastUpdated + ": " + (PAGE_DATA.updated || "—");
+
+  /* 加密表 */
+  const assets = PAGE_DATA.crypto?.assets || {};
+  const symbols = PAGE_DATA.crypto?.order || Object.keys(assets);
+  const ct = $("cryptoTable");
+  if (!symbols.length){
+    ct.innerHTML = `<tr><td>${esc(t.noHistory)}</td></tr>`;
+  } else {
+    ct.innerHTML = `<thead><tr>
+      <th>${t.thRank}</th><th>${t.thAsset}</th><th>${t.thPrice}</th><th>${t.thMcap}</th>
+      <th>${t.th24h}</th><th>${t.th7d}</th><th>${t.thType}</th></tr></thead><tbody>` +
+      symbols.map(sym => {
+        const a = assets[sym] || {};
+        return `<tr><td class="num">${esc(a.rank ?? "")}</td>
+          <td><b>${esc(sym)}</b> <span style="color:var(--text2);font-size:.78rem">${esc((a.name||"").replace(/\s*\(.*\)$/,""))}</span></td>
+          <td class="num">${fmtNum(a.price_usd)}</td>
+          <td class="num">${fmtNum(a.market_cap_usd)}</td>
+          <td class="num">${pct(a.chg_24h)}</td>
+          <td class="num">${pct(a.chg_7d)}</td>
+          <td>${catBadge(sym, LANG)}</td></tr>`;
+      }).join("") + "</tbody>";
+  }
+  $("cryptoNote").textContent = PAGE_DATA.crypto?.note || "";
+
+  /* 法币表 */
+  const fx = PAGE_DATA.fx?.rates || {};
+  const order = PAGE_DATA.fx?.order || Object.keys(fx);
+  $("fxTable").innerHTML = `<thead><tr><th>${t.thRank}</th><th>${t.thCur}</th><th>${t.thName}</th><th>${t.thRate}</th></tr></thead><tbody>` +
+    order.map((c, i) => {
+      const names = FXNAMES[c] || [c, c];
+      const nm = LANG === "zh" ? names[0] : names[1];
+      return `<tr><td class="num">${i+1}</td><td><b>${esc(c)}</b></td><td>${esc(nm)}</td>
+        <td class="num">${c === "USD" ? "1" : fmtNum(fx[c], 4)}</td></tr>`;
+    }).join("") + "</tbody>";
+
+  /* 分析卡片 */
+  const cards = [["t3", ["b3a","b3b","b3c"]], ["t12", ["b12a","b12b","b12c"]], ["t36", ["b36a","b36b","b36c"]]];
+  $("analysisGrid").innerHTML = cards.map(([title, keys]) => `
+    <div class="card"><h3>${t[title]}</h3><ul>${keys.map(k => `<li>${t[k]}</li>`).join("")}</ul></div>`).join("");
+
+  /* 十大因素 */
+  const factorKeys = [1,2,3,4,5,6,7,8,9,10];
+  $("factorsGrid").innerHTML = factorKeys.map(n => `
+    <div class="card fcard-num"><span class="fnum">${n}</span>
+      <div><h3 style="margin:0">${t["f"+n+"t"]}</h3><p>${t["f"+n+"d"]}</p></div>
+    </div>`).join("");
+  $("factorsNote").textContent = t.factorsNote;
+
+  /* 三重视角 */
+  const lensList = [["lensAsia","asia"],["lensEarth","earth"],["lensSpace","space"]];
+  const langHasDesc = LANG === "zh" || LANG === "en";
+  $("lensGrid").innerHTML = lensList.map(([lk, dk]) => {
+    const items = LENS[dk][LANG] || LENS[dk][LANG === "zh" ? "zh" : "en"];
+    const lis = items.map((it, i) => {
+      const title = langHasDesc ? it[0] : it;
+      const desc = langHasDesc ? it[1] : "";
+      return `<li><b>${esc(title)}</b>${desc ? `<span style="color:var(--text2)"> — ${esc(desc)}</span>` : ""}</li>`;
+    }).join("");
+    return `<div class="card"><h3>${t[lk]}</h3><ol style="padding-inline-start:20px;font-size:.86rem">${lis}</ol></div>`;
+  }).join("");
+  $("lensNote").textContent = t.lensNote;
+
+  /* 数据源 */
+  const srcs = [["src1t","src1"],["src2t","src2"],["src3t","src3"],["src4t","src4"],["src5t","src5"],["src6t","src6"]];
+  $("srcList").innerHTML = srcs.map(([h, b]) => `<div class="src-item"><b>${t[h]}</b><br>${t[b]}</div>`).join("");
+
+  /* 每周记录 */
+  const hist = PAGE_DATA.history || [];
+  const ht = $("historyTable");
+  if (!hist.length){
+    ht.innerHTML = `<tr><td>${t.noHistory}</td></tr>`;
+  } else {
+    ht.innerHTML = `<thead><tr><th>${t.thDate}</th><th>BTC</th><th>ETH</th><th>SOL</th><th>EUR</th><th>JPY</th><th>CNY</th></tr></thead><tbody>` +
+      hist.map(r => `<tr><td class="num">${esc(r.date)}</td>
+        <td class="num">${fmtNum(r.BTC)}</td><td class="num">${fmtNum(r.ETH)}</td><td class="num">${fmtNum(r.SOL)}</td>
+        <td class="num">${fmtNum(r.EUR, 4)}</td><td class="num">${fmtNum(r.JPY, 2)}</td><td class="num">${fmtNum(r.CNY, 4)}</td></tr>`).join("") + "</tbody>";
+  }
+
+  /* 免责声明 */
+  $("disclaimerBox").textContent = t.disc;
+}
+
+/* 控件事件 */
+$("langSel").addEventListener("change", e => { LANG = e.target.value; renderAll(); });
+$("styleBtns").addEventListener("click", e => {
+  const b = e.target.closest("button[data-style]");
+  if (!b) return;
+  document.body.dataset.theme = b.dataset.style;
+  document.querySelectorAll("#styleBtns button").forEach(x => x.classList.toggle("active", x === b));
+});
+
+renderAll();
+</script>
+</body>
+</html>
