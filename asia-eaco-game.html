@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EACO × Solana · 亚洲游戏带打小组 双方案 / Asia Game Boosting Guild · Two Schemes</title>
+<style>
+*{box-sizing:border-box}
+:root{--bg:#F5F3FF;--panel:#FFFFFF;--ink:#241F3A;--muted:#7C7595;--line:#E6E0FA;--accent:#6C4CF1;--accent2:#F062A0;--soft:#EFEAFF;--radius:20px;--shadow:0 12px 30px rgba(108,76,241,.11);--font:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;--head:var(--font);--bw:1px}
+body[data-theme="jp"]{--bg:#F5F2EA;--panel:#FFFDF8;--ink:#302C25;--muted:#8B8577;--line:#DCD5C4;--accent:#A8462E;--accent2:#6E7F5B;--soft:#EBE5D7;--radius:3px;--shadow:0 1px 0 rgba(48,44,37,.06);--font:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;--head:"Hiragino Mincho ProN","Songti SC","Noto Serif CJK SC",Georgia,serif;--bw:1px}
+body[data-theme="kr"]{--bg:#F5F3FF;--panel:#FFFFFF;--ink:#241F3A;--muted:#7C7595;--line:#E7E1FB;--accent:#6C4CF1;--accent2:#F062A0;--soft:#EFEAFF;--radius:20px;--shadow:0 12px 30px rgba(108,76,241,.11);--font:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;--head:var(--font);--bw:1px}
+body[data-theme="cn"]{--bg:#FAF4E7;--panel:#FFFDF6;--ink:#3B2618;--muted:#8B7455;--line:#DCC69C;--accent:#B73529;--accent2:#AE842A;--soft:#F3E7CE;--radius:5px;--shadow:0 3px 0 rgba(183,53,41,.07);--font:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;--head:"STKaiti","KaiTi","Noto Serif CJK SC",serif;--bw:1px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased;transition:background .25s,color .25s}
+body[data-theme="jp"]{background-image:repeating-linear-gradient(0deg,rgba(120,110,90,.025) 0 1px,transparent 1px 4px)}
+body[data-theme="kr"]{background-image:radial-gradient(900px 420px at 88% -8%,rgba(240,98,160,.13),transparent 70%),radial-gradient(760px 420px at 4% 100%,rgba(108,76,241,.12),transparent 70%)}
+body[data-theme="cn"]{background-image:repeating-linear-gradient(45deg,rgba(183,53,41,.022) 0 1px,transparent 1px 12px)}
+h1,h2,h3,h4{font-family:var(--head);margin:0;font-weight:700;letter-spacing:.01em}
+h1{font-size:24px}h2{font-size:18px}h3{font-size:15px}
+p{margin:0}a{color:var(--accent)}
+button,input,select,textarea{font-family:inherit;font-size:14px;color:var(--ink)}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.app{display:flex;min-height:100vh}
+.side{width:232px;flex:0 0 232px;background:var(--panel);border-right:var(--bw) solid var(--line);padding:20px 14px;display:flex;flex-direction:column;gap:16px;position:sticky;top:0;height:100vh;overflow:auto}
+.brand{display:flex;gap:11px;align-items:center;padding:4px 6px 14px;border-bottom:var(--bw) solid var(--line)}
+.logo{width:38px;height:38px;flex:0 0 38px;border-radius:var(--radius);background:var(--accent);color:#fff;display:grid;place-items:center;font-family:var(--head);font-size:20px;font-weight:700;box-shadow:var(--shadow)}
+body[data-theme="cn"] .logo{border-radius:50%}
+.brand b{display:block;font-family:var(--head);font-size:15px;line-height:1.3}
+.brand small{color:var(--muted);font-size:11px;letter-spacing:.02em}
+.nav{display:flex;flex-direction:column;gap:5px}
+.nav button{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:transparent;border:var(--bw) solid transparent;color:var(--muted);padding:9px 11px;border-radius:var(--radius);font-weight:600;transition:.15s}
+.nav button:hover{background:var(--soft);color:var(--ink)}
+.nav button.on{background:var(--accent);color:#fff;box-shadow:var(--shadow)}
+.nav .ico{width:18px;height:18px;flex:0 0 18px;opacity:.9}
+.nav .num{margin-left:auto;font-size:11px;opacity:.75;font-variant-numeric:tabular-nums}
+.side-foot{margin-top:auto;border-top:var(--bw) solid var(--line);padding-top:14px}
+.unit-badge{background:var(--soft);border:var(--bw) solid var(--line);border-radius:var(--radius);padding:10px;font-size:12px}
+.unit-badge b{display:block;font-size:16px;color:var(--accent);font-family:var(--head)}
+.disclaimer{font-size:10.5px;color:var(--muted);line-height:1.55;margin-top:10px}
+main{flex:1;min-width:0}
+.topbar{min-height:62px;border-bottom:var(--bw) solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:14px;padding:10px 22px;background:var(--panel);position:sticky;top:0;z-index:6;flex-wrap:wrap}
+.crumb{font-size:12px;color:var(--muted)}
+.crumb b{display:block;color:var(--ink);font-size:15px;font-family:var(--head)}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.seg{display:flex;background:var(--soft);border:var(--bw) solid var(--line);border-radius:var(--radius);padding:3px;gap:2px}
+.seg button{border:0;background:transparent;color:var(--muted);padding:5px 10px;border-radius:calc(var(--radius) - 4px);font-size:12px;font-weight:600;white-space:nowrap}
+.seg button.on{background:var(--panel);color:var(--accent);box-shadow:var(--shadow)}
+.seg-lbl{font-size:11px;color:var(--muted);margin-right:2px}
+.content{padding:22px;max-width:1320px;margin:0 auto}
+.btn{border:var(--bw) solid var(--line);background:var(--panel);color:var(--ink);padding:8px 13px;border-radius:var(--radius);font-weight:600;font-size:13px;transition:.15s}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.pri:hover{filter:brightness(1.08);color:#fff}
+.btn.warn{color:#A33;border-color:#DDB}
+.btn.sm{padding:5px 9px;font-size:12px;border-radius:calc(var(--radius) - 6px)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.card{background:var(--panel);border:var(--bw) solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);position:relative}
+body[data-theme="cn"] .card::before{content:"";position:absolute;inset:4px;border:1px solid var(--line);border-radius:2px;pointer-events:none;opacity:.55}
+body[data-theme="jp"] .card{border-top:2px solid var(--accent)}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.g23{grid-template-columns:minmax(0,2fr) minmax(0,3fr)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.spread{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.muted{color:var(--muted)}
+.tiny{font-size:11.5px}
+.mono{font-variant-numeric:tabular-nums;font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+.page-head{margin-bottom:16px}
+.page-head p{color:var(--muted);font-size:12.5px;margin-top:4px}
+.kpi{padding:14px 16px}
+.kpi .lb{font-size:11.5px;color:var(--muted);letter-spacing:.03em}
+.kpi .vl{font-size:26px;font-family:var(--head);font-weight:700;margin-top:3px;line-height:1.25}
+.kpi .sub{font-size:11px;color:var(--muted)}
+.chip{display:inline-flex;align-items:center;gap:5px;padding:2px 9px;border-radius:999px;background:var(--soft);border:var(--bw) solid var(--line);font-size:11px;font-weight:600;white-space:nowrap}
+.chip.a{background:var(--accent);border-color:var(--accent);color:#fff}
+.chip.g{color:#287A4A;border-color:#BFE3CC;background:#EAF7EF}
+.chip.r{color:#A33;border-color:#EBC4C4;background:#FBEFEF}
+.chip.y{color:#8A6514;border-color:#EAD9A8;background:#FCF5E3}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{text-align:left;color:var(--muted);font-size:11px;font-weight:700;letter-spacing:.04em;padding:9px 10px;border-bottom:var(--bw) solid var(--line);white-space:nowrap}
+td{padding:9px 10px;border-bottom:var(--bw) solid var(--line);vertical-align:middle}
+tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--soft)}
+.tw{overflow-x:auto}
+label.fl{display:block;font-size:11.5px;color:var(--muted);font-weight:600;margin-bottom:5px}
+input[type=text],input[type=number],select,textarea{width:100%;background:var(--panel);border:var(--bw) solid var(--line);border-radius:calc(var(--radius) - 6px);padding:8px 10px;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--accent)}
+textarea{min-height:110px;resize:vertical;line-height:1.6}
+.field{margin-bottom:12px}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.notice{background:var(--soft);border:var(--bw) solid var(--line);border-left:3px solid var(--accent);border-radius:var(--radius);padding:10px 12px;font-size:12px;color:var(--muted)}
+.notice b{color:var(--ink)}
+.flow{display:flex;gap:6px;align-items:stretch;flex-wrap:wrap}
+.flow .step{flex:1 1 120px;background:var(--soft);border:var(--bw) solid var(--line);border-radius:var(--radius);padding:10px;min-width:112px}
+.flow .step .n{font-family:var(--head);font-size:18px;color:var(--accent);font-weight:700}
+.flow .step .tx{font-size:11.5px;font-weight:600;margin-top:2px}
+.flow .step .sb{font-size:10.5px;color:var(--muted)}
+.svc{display:flex;flex-direction:column;gap:5px;border:var(--bw) solid var(--line);border-radius:var(--radius);padding:13px;background:var(--panel);box-shadow:var(--shadow)}
+.svc .cat{font-size:10.5px;color:var(--accent);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.svc .nm{font-family:var(--head);font-weight:700;font-size:14.5px}
+.svc .pr{font-size:18px;font-weight:700;color:var(--accent);font-family:var(--head)}
+.quote-line{display:flex;justify-content:space-between;padding:8px 0;border-bottom:var(--bw) dashed var(--line);font-size:13px}
+.quote-line.big{font-size:18px;font-weight:700;font-family:var(--head);border-bottom:0;color:var(--accent);padding-top:12px}
+.mask{position:fixed;inset:0;background:rgba(24,20,40,.44);backdrop-filter:blur(3px);display:grid;place-items:center;padding:18px;z-index:50}
+.dlg{background:var(--panel);border:var(--bw) solid var(--line);border-radius:var(--radius);box-shadow:0 24px 70px rgba(0,0,0,.22);width:min(460px,100%);max-height:88vh;overflow:auto;padding:20px}
+.dlg h2{margin-bottom:4px}
+.dlg .foot{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}
+.toast{position:fixed;right:20px;bottom:20px;z-index:80;background:var(--ink);color:var(--panel);padding:11px 16px;border-radius:var(--radius);box-shadow:0 14px 34px rgba(0,0,0,.2);font-size:13px;opacity:0;transform:translateY(10px);pointer-events:none;transition:.22s;max-width:330px}
+.toast.on{opacity:1;transform:translateY(0)}
+pre.txt{background:var(--soft);border:var(--bw) solid var(--line);border-radius:var(--radius);padding:13px;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:11.5px;line-height:1.6;white-space:pre-wrap;word-break:break-word;max-height:340px;overflow:auto;color:var(--ink);margin:0}
+.bar{height:7px;background:var(--soft);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:99px}
+.pos{color:#287A4A;font-weight:700}.neg{color:#B33A3A;font-weight:700}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:11.5px;color:var(--muted)}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px}
+.dossier{margin-top:34px;padding-top:24px;border-top:2px solid var(--line)}
+.dossier-head{margin-bottom:16px}
+.dossier-head h1{font-size:22px;color:var(--accent)}
+.dossier-head p{color:var(--muted);font-size:12.5px;margin-top:5px}
+.dossier .card{margin-bottom:0}
+.dossier a.btn{text-decoration:none;display:inline-flex;align-items:center}
+@media(max-width:900px){.g4{grid-template-columns:repeat(2,minmax(0,1fr))}.g3,.g23,.g2{grid-template-columns:1fr}.side{width:100%;height:auto;position:static;flex:none;border-right:0;border-bottom:var(--bw) solid var(--line)}.nav{flex-direction:row;overflow-x:auto}.nav button{width:auto;white-space:nowrap}.side-foot{display:none}.topbar{position:static}.content{padding:14px}}
+</style>
+</head>
+<body data-theme="kr">
+<div class="app">
+  <aside class="side">
+    <div class="brand">
+      <div class="logo">E</div>
+      <div><b data-i18n="app.title"></b><small data-i18n="app.sub"></small></div>
+    </div>
+    <nav class="nav" id="nav"></nav>
+    <div class="side-foot">
+      <div class="unit-badge" id="unitBadge"></div>
+      <p class="disclaimer" data-i18n="disclaimer.short"></p>
+    </div>
+  </aside>
+  <main>
+    <header class="topbar">
+      <div class="crumb"><b id="crumbT"></b><span id="crumbS"></span></div>
+      <div class="tools" id="tools"></div>
+    </header>
+    <div class="content" id="view"></div>
+  </main>
+</div>
+<div id="modalRoot"></div>
+<div class="toast" id="toast"></div>
+<input type="file" id="importFile" accept=".txt,text/plain" hidden>
+<script>
+"use strict";
+/* ============================================================
+   EACO · 亚洲游戏带打小组 / Asia Game Boosting Guild
+   Single-file, offline, no dependencies.
+   EACO = internal Web3-style group points (friendly regions)
+   CNH  = offshore-RMB accounting points (Web3-restricted regions)
+   ALL payments / wallets / signatures are LOCAL SIMULATIONS.
+   ============================================================ */
+
+/* ---------- 1. i18n dictionary (zh / en parity) ---------- */
+const DICT = {
+ 'app.title':['EACO 亚洲游戏带打小组','EACO Asia Boosting Guild'],
+ 'app.sub':['双方案 · EACO + Solana / CNH · 带打记账 · TXT 记忆','Two schemes · EACO + Solana / CNH · boosting ledger · TXT memory'],
+ 'disclaimer.short':['演示系统：EACO 为小组内部积分、CNH 为记账点数；Solana 签名与交易号均为本地模拟，不发起链上交易。所有支付与钱包均为模拟，不涉及真实资金、代币发行或投资建议；地区映射为示例，不构成法律意见。','Demo only: EACO is an internal group point, CNH an accounting point. Solana signatures and transaction IDs are local simulations; no on-chain transaction is sent. No real funds, token issuance or investment advice; region mapping is illustrative, not legal advice.'],
+ 'disclaimer.full':['合规提示 / Compliance','Compliance notice'],
+ 'disclaimer.body':['本页为业务原型：EACO 与 CNH 均为小组内部记账单位，按 1:1 锚定，不可提现为法币、不可对外流通；在线支付、Web3 钱包签名与扫码全部为本地模拟动作，不连接任何真实支付网关或区块链。地区友好度为演示用示例配置，请在真实业务中以当地法律与持牌要求为准。','This is a business prototype: EACO and CNH are internal accounting units anchored 1:1, not redeemable for fiat and not publicly transferable. Online payment, Web3 wallet signature and QR scan are all local simulated actions with no real payment gateway or blockchain connection. Region friendliness is an illustrative demo mapping; follow local law and licensing in real operations.'],
+ 'nav.dash':['工作台','Dashboard'],'nav.services':['服务与下单','Services & Order'],'nav.orders':['订单与派单','Orders & Dispatch'],'nav.ledger':['支付与记账','Payment & Ledger'],'nav.team':['小组与地区','Guild & Regions'],'nav.memory':['TXT 记忆','TXT Memory'],
+ 'theme.label':['风格','Style'],'lang.label':['语言','Lang'],'theme.jp':['和风','Wabi'],'theme.kr':['韩潮','K-Gloss'],'theme.cn':['国潮','Guochao'],
+ 'theme.desc.jp':['和风极简 · 留白、纸质、朱红与抹茶','Japanese minimal · whitespace, paper, vermilion & matcha'],
+ 'theme.desc.kr':['韩系渐变 · 玻璃卡片、圆角、紫粉霓虹','Korean gradient · glass cards, pill shapes, violet-pink neon'],
+ 'theme.desc.cn':['中式国潮 · 米宣、朱红描金、双线回纹','Chinese Guochao · rice paper, vermilion & gold, double-line frame'],
+ 'btn.export':['导出记忆 TXT','Export memory TXT'],'btn.import':['导入 TXT','Import TXT'],'btn.copy':['复制','Copy'],'btn.download':['下载 .txt','Download .txt'],'btn.reset':['重置演示数据','Reset demo data'],'btn.close':['关闭','Close'],'btn.cancel':['取消','Cancel'],'btn.confirm':['确认','Confirm'],'btn.save':['保存','Save'],'btn.add':['新增','Add'],'btn.all':['全部','All'],'btn.search':['搜索','Search'],'btn.details':['明细','Details'],
+ 'save.state':['本地记忆','Local memory'],'save.ok':['已同步','synced'],'unit.badge':['当前默认结算单位','Default settlement unit'],'region.label':['地区','Region'],'region.auto':['按地区自动判定','Auto-detected by region'],
+ 'web3.friendly':['Web3 友好','Web3-friendly'],'web3.neutral':['中性 / 审慎','Neutral / cautious'],'web3.restricted':['Web3 不友好','Web3-restricted'],'web3.note':['合规映射','Compliance note'],
+ 'dash.title':['业务工作台','Business dashboard'],'dash.sub':['从开户充值到结算归档的一条闭环','One closed loop from top-up to archival'],
+ 'kpi.orders':['订单总数','Total orders'],'kpi.done':['已完成','Completed'],'kpi.working':['进行中','In progress'],'kpi.pending':['待支付','Unpaid'],'kpi.eaco':['EACO 流水','EACO turnover'],'kpi.cnh':['CNH 流水','CNH turnover'],'kpi.pool':['小组公共池','Guild pool'],'kpi.members':['小组成员','Guild members'],
+ 'chart.7d':['近 7 日分录活跃度','Journal activity · last 7 days'],'chart.split':['流水单位占比','Turnover by unit'],'flow.title':['业务闭环','Closed loop'],'recent.title':['最近分录','Recent journal lines'],'dash.tip':['方案 A：Web3 友好地区用 EACO + Solana Web3 积分；方案 B：其他地区自动切到 CNH 链下记账点数。两套账本各自平衡。','Scheme A: Web3-friendly regions use EACO + Solana Web3 points. Scheme B: all others fall back to off-chain CNH accounting. Both ledgers balance independently.'],
+ 'flow.1':['开户 + 充值','Onboard + top-up'],'flow.2':['选服务报价','Quote service'],'flow.3':['在线支付 / 抵扣','Pay / redeem points'],'flow.4':['派单带打','Dispatch booster'],'flow.5':['完成验收','Deliver & verify'],'flow.6':['佣金 + 返利结算','Commission + reward'],'flow.7':['TXT 记忆归档','Archive to TXT'],
+ 'svc.title':['服务目录与下单','Service catalog & order'],'svc.sub':['价格以 CNH 记账点为基准，按成员所在地区自动换算为对应积分单位。','Base prices in CNH points; the member region decides the settlement unit.'],
+ 'svc.catalog':['带打服务','Services'],'svc.builder':['生成报价','Build a quote'],'svc.member':['客户','Client'],'svc.service':['服务项目','Service'],'svc.qty':['数量 / 局数','Qty'],'svc.diff':['难度系数','Difficulty'],'svc.base':['原价','Base'],'svc.discount':['积分抵扣','Points offset'],'svc.payable':['应付','Payable'],'svc.unit':['结算单位','Unit'],'svc.usePoints':['使用账户积分抵扣（最多 30%）','Use account points (up to 30%)'],'svc.place':['确认下单','Place order'],'svc.regionFollow':['结算地区跟随成员','Region follows client'],'svc.quote':['报价单','Quote'],'svc.noBalance':['该客户积分余额为 0，可先到「支付与记账」充值。','This client has no balance; top up in Payment & Ledger first.'],'svc.choose':['请选择','Select'],'svc.per':['单价','unit price'],
+ 'diff.normal':['普通 ×1.00','Standard ×1.00'],'diff.advanced':['进阶 ×1.35','Advanced ×1.35'],'diff.hard':['高难 ×1.80','Hard ×1.80'],
+ 'ord.title':['订单与派单','Orders & dispatch'],'ord.sub':['待支付 → 已支付 → 已派单 → 进行中 → 已完成，全流程可回溯。','Unpaid → paid → assigned → in progress → completed, fully traceable.'],
+ 'ord.id':['订单号','Order'],'ord.client':['客户','Client'],'ord.booster':['带打员','Booster'],'ord.service':['服务','Service'],'ord.quote':['原价','Base'],'ord.offset':['抵扣','Offset'],'ord.payable':['实付','Paid'],'ord.status':['状态','Status'],'ord.created':['创建时间','Created'],'ord.action':['操作','Actions'],'ord.pay':['在线支付','Pay online'],'ord.assign':['派单','Assign'],'ord.start':['开始带打','Start'],'ord.finish':['完成验收','Complete'],'ord.cancel':['取消','Cancel'],'ord.refund':['取消并退款','Cancel & refund'],'ord.empty':['暂无订单，去「服务与下单」创建第一单。','No orders yet. Create one in Services & Order.'],'ord.settle':['结算明细','Settlement'],'ord.channel':['支付通道','Payment channel'],'ord.ref':['交易参考号','Reference'],'ord.confirmPay':['确认模拟支付','Confirm simulated payment'],'ord.payTitle':['在线支付','Online payment'],'ord.assignTitle':['派单给带打员','Assign booster'],'ord.chooseBooster':['选择带打员','Choose booster'],'ord.sameUnit':['仅显示与订单相同结算单位的成员，避免跨单位入账。','Only members with the same settlement unit are listed, to avoid cross-unit posting.'],'ord.settleTitle':['验收结算','Settlement'],'ord.commission':['带打员佣金 70%','Booster commission 70%'],'ord.reward':['客户返利 5%','Client reward 5%'],'ord.retain':['平台留存','Guild retained'],'ord.refundWarn':['已支付款项原路退回，已抵扣积分返还客户账户，并生成红冲分录。','Paid amount is refunded to the channel, offset points return to the client, and reversing entries are posted.'],'ord.amountDue':['本次应付','Amount due'],
+ 'st.pending':['待支付','Unpaid'],'st.paid':['已支付','Paid'],'st.assigned':['已派单','Assigned'],'st.working':['进行中','In progress'],'st.done':['已完成','Completed'],'st.cancelled':['已取消','Cancelled'],
+ 'led.title':['支付、钱包与复式记账','Payment, wallet & double-entry ledger'],'led.sub':['每一笔业务生成借贷平衡的分录；跨单位兑换通过桥接账户保持各单位独立平衡。','Every operation posts balanced debit/credit lines; cross-unit exchange uses a bridge account so each unit balances independently.'],
+ 'led.balance':['余额','Balance'],'led.type':['类型','Type'],'led.account':['账户','Account'],'led.change':['变动','Change'],'led.balanceAfter':['变动后余额','Balance after'],'led.ref':['交易号','Ref'],'led.note':['备注','Note'],'led.time':['时间','Time'],'led.filter':['筛选','Filter'],'led.all':['全部类型','All types'],'led.search':['搜索账号 / 备注 / 交易号','Search account, note or ref'],'led.topup':['充值','Top-up'],'led.exchange':['兑换','Exchange'],'led.withdraw':['结算提现','Withdraw / settle'],'led.check':['借贷平衡校验','Debit / credit check'],'led.checkOk':['通过：各单位净额均为 0.00','PASS: net zero in every unit'],'led.checkBad':['不平：请检查分录','IMBALANCE: check journal lines'],
+ 'ty.topup':['充值','Top-up'],'ty.offset':['积分抵扣','Points offset'],'ty.payment':['在线支付','Online payment'],'ty.commission':['带打佣金','Commission'],'ty.reward':['客户返利','Client reward'],'ty.refund':['退款红冲','Refund'],'ty.withdraw':['结算提现','Withdrawal'],'ty.exchange':['积分兑换','Exchange'],
+ 'led.topupTitle':['积分充值','Top up points'],'led.amount':['金额','Amount'],'led.exchangeTitle':['EACO ⇄ CNH 兑换','Exchange'],'led.direction':['方向','Direction'],'led.c2e':['CNH → EACO','CNH → EACO'],'led.e2c':['EACO → CNH','EACO → CNH'],'led.exchangeNote':['按 1:1 锚定，仅 Web3 友好地区成员可兑换；CNH 专属地区锁定为单单位记账。','Anchored 1:1. Only Web3-friendly members may exchange; CNH-only regions stay single-unit.'],
+ 'led.withdrawTitle':['结算提现','Settle out'],'led.noEaco':['该地区为 Web3 不友好 / 中性，EACO 功能锁定，仅使用 CNH 记账。','Web3-restricted or neutral region: EACO is locked, CNH accounting only.'],'led.platform':['小组公共池','Guild pool'],'led.ext':['外部支付通道','External channel'],'led.bridge':['兑换桥接账户','Exchange bridge'],'led.wallet':['成员钱包','Member wallets'],'led.tools':['钱包操作','Wallet actions'],'led.lines':['分录条数','Journal lines'],'led.vol':['累计流水','Gross volume'],
+ 'team.title':['小组成员与地区合规','Guild members & region compliance'],'team.sub':['成员结算单位由所在地区自动判定，改地区会重新校验积分持仓。','Settlement unit is derived from region; changing region re-validates point holdings.'],
+ 'team.members':['成员名单','Members'],'team.add':['新增成员','Add member'],'team.name':['名称','Name'],'team.role':['角色','Role'],'team.region':['地区','Region'],'team.unit':['积分单位','Unit'],'team.eaco':['EACO 余额','EACO'],'team.cnh':['CNH 余额','CNH'],'team.orders':['订单数','Orders'],'team.action':['操作','Actions'],'role.client':['客户','Client'],'role.booster':['带打员','Booster'],'role.admin':['管理员','Admin'],'team.regionTable':['亚洲地区合规映射','Asia compliance map'],'team.web3':['Web3 环境','Web3 stance'],'team.note':['说明','Note'],'team.changeRegion':['切换地区','Change region'],'team.regionBlocked':['该成员仍有 EACO 余额，请先兑换或提现后再切换到 CNH 地区。','This member still holds EACO. Exchange or withdraw before switching to a CNH region.'],'team.group':['小组覆盖','Guild coverage'],'team.initial':['初始充值','Initial top-up'],'team.addTitle':['新增小组成员','Add member'],'team.delete':['移除','Remove'],'team.delWarn':['移除后该成员历史订单与分录仍会完整保留。','Past orders and journal lines are kept after removal.'],'team.coverage':['个地区 / 条合规映射','regions mapped'],
+ 'mem.title':['自带 TXT 记忆','Built-in TXT memory'],'mem.sub':['所有状态自动写入浏览器本地存储并同步生成可读 TXT；导出的文件内含状态快照，重新导入即可完整恢复。','All state is auto-saved to local storage and mirrored as readable TXT. Exported files embed a state snapshot, so re-import restores everything.'],
+ 'mem.auto':['自动记忆','Auto memory'],'mem.log':['事件记忆','Event log'],'mem.notes':['手动备忘','Manual notes'],'mem.notesPh':['在这里记录排班、客户偏好、交接事项……内容会实时写入 TXT 记忆。','Log shift schedules, client preferences, hand-over notes here. Saved into TXT memory live.'],'mem.preview':['TXT 记忆文件预览','TXT preview'],'mem.export':['下载 .txt 文件','Download .txt'],'mem.import':['导入 .txt 恢复','Import .txt to restore'],'mem.copy':['复制全文','Copy all'],'mem.clearLog':['清空事件','Clear events'],'mem.reset':['重置演示数据','Reset demo data'],'mem.glossary':['中英业务术语','CN-EN glossary'],'mem.term':['术语','Term'],'mem.zh':['华语 / 中文','Chinese'],'mem.en':['English','English'],'mem.explain':['说明','Meaning'],'mem.imported':['已导入并恢复状态','state restored'],'mem.importText':['未检测到状态快照，已作为纯文本备忘导入。','No state snapshot found; imported as plain-text notes.'],'mem.cleared':['事件记忆已清空','Event log cleared'],'mem.resetWarn':['将清空当前全部订单、分录与事件，恢复到初始演示数据。此操作不可撤销。','This erases all current orders, journal lines and events and restores the initial demo data. Cannot be undone.'],'mem.clearWarn':['仅清空事件记忆，不影响订单与账本。','Clears event log only; orders and ledger are untouched.'],'mem.size':['TXT 体积','TXT size'],'mem.synced':['同步于','Synced at'],'mem.emptyLog':['暂无事件','No events yet'],'mem.state':['状态快照','State snapshot'],
+ 'msg.required':['请完整填写表单','Please complete the form'],'msg.saved':['已保存','Saved'],'msg.paid':['支付成功，分录已入账','Payment posted to ledger'],'msg.assigned':['派单成功','Booster assigned'],'msg.started':['带打已开始','Boosting started'],'msg.finished':['验收完成，佣金与返利已结算','Delivered; commission and reward settled'],'msg.cancelled':['订单已取消并退款','Order cancelled and refunded'],'msg.topup':['充值成功','Top-up posted'],'msg.exchange':['兑换成功','Exchange posted'],'msg.withdraw':['结算提现完成','Withdrawal posted'],'msg.memberAdded':['成员已加入','Member added'],'msg.memberDeleted':['成员已移除','Member removed'],'msg.regionChanged':['地区与结算单位已更新','Region and unit updated'],'msg.insufficient':['余额不足','Insufficient balance'],'msg.orderCreated':['订单已创建，等待支付','Order created, awaiting payment'],'msg.copied':['已复制到剪贴板','Copied to clipboard'],'msg.importFail':['文件读取失败','Failed to read file'],'msg.confirm':['确认执行？','Confirm?'],'msg.noMember':['请先新增成员','Add a member first'],'msg.sameRegion':['已是该地区','Already in this region'],'msg.negative':['金额必须大于 0','Amount must be positive'],'msg.pickBooster':['请选择一个带打员','Pick a booster'],'msg.demo':['演示数据已重置','Demo data reset'],'msg.export':['TXT 记忆已下载','TXT memory downloaded'],
+ 'nav.scheme':['双方案','Two schemes'],
+ 'scheme.title':['两个方案 · 双轨架构','Two schemes · dual-rail architecture'],
+ 'scheme.sub':['按地区自动分流：方案 A 走 EACO + Solana Web3，方案 B 走 CNH 链下记账；两套账本各自平衡、汇总统一。','Region-based routing: Scheme A uses EACO + Solana Web3, Scheme B uses off-chain CNH accounting. Both ledgers balance independently and roll up into one view.'],
+ 'scheme.a':['方案 A','Scheme A'],'scheme.b':['方案 B','Scheme B'],
+ 'scheme.aName':['EACO + Solana Web3 积分','EACO + Solana Web3 points'],'scheme.bName':['CNH 记账积分','CNH accounting points'],
+ 'scheme.aTag':['Web3 友好地区','Web3-friendly regions'],'scheme.bTag':['Web3 不友好 / 中性地区','Web3-restricted / neutral regions'],
+ 'scheme.activeA':['A 轨活跃','Rail A active'],'scheme.activeB':['B 轨活跃','Rail B active'],
+ 'scheme.compare':['两方案对照','Scheme comparison'],'scheme.col':['对照项','Item'],'scheme.valA':['方案 A','Scheme A'],'scheme.valB':['方案 B','Scheme B'],
+ 'scheme.regions':['适用地区清单','Applicable regions'],'scheme.choose':['按成员所在地区自动判定，不可手工绕过','Determined by member region; cannot be overridden manually'],
+ 'chain.solana':['Solana（模拟）','Solana (simulated)'],'chain.off':['链下 CNH','Off-chain CNH'],'chain.col':['凭证轨道','Receipt rail'],
+ 'sol.title':['Solana Web3 轨道','Solana Web3 rail'],
+ 'sol.sub':['EACO 官方合约仅作资料引用；本页所有签名、交易号与区块信息均为本地模拟，不发起任何链上交易。','The official EACO contract is cited for reference only. All signatures, transaction IDs and slots here are locally simulated; no on-chain transaction is sent.'],
+ 'sol.ca':['合约地址 CA','Contract address (CA)'],'sol.copy':['复制 CA','Copy CA'],
+ 'sol.network':['网络','Network'],'sol.supply':['总量（官方资料）','Total supply (official)'],'sol.lp':['流动性','Liquidity'],'sol.formula':['四词公式','Four-word formula'],'sol.principle':['最高原则','Highest principle'],'sol.goals':['五个核心目标','Five core goals'],
+ 'led.rail':['轨道','Rail'],
+ 'dos.title':['EACO 资料与延伸阅读','EACO reference & further reading'],
+ 'dos.sub':['页面底部资料区：EACO 官方口径摘要、用户提供的三个链接，以及围绕亚洲轻资产与正能量方向的三组分析。','Bottom-of-page dossier: a summary of official EACO wording, the three links you provided, and three analyses on Asia asset-light sectors and positive-sum directions.'],
+ 'dos.q1':['亚洲前 20 大轻资产分别有哪些？','Which 20 asset-light tracks stand out in Asia?'],
+ 'dos.q2':['如何结合 EACO Web3 发展？','How to grow together with EACO Web3?'],
+ 'dos.q3':['亚洲 EACO Web3 能做哪些高维、正能量的事情？','What high-dimensional, positive-sum things can Asia EACO Web3 do?'],
+ 'dos.links':['资料链接','Reference links'],'dos.official':['EACO 官方基本信息','Official EACO facts'],
+ 'dos.source':['资料来源：用户提供的三个链接（仅作事实引用，不含价格、收益或估值信息）','Sources: the three links you provided (factual citation only; no price, yield or valuation data)'],
+ 'dos.note':['本区为整理与观点表达，不构成投资建议、证券发行或募资承诺；「前 20」为代表性赛道梳理，非官方排名。','This section is curation and opinion, not investment advice, a securities offering or a fundraising promise. The top 20 is a curated list of representative tracks, not an official ranking.'],
+ 'dos.goto':['EACO 资料','EACO dossier'],
+ 'asset.no':['#','#'],'asset.track':['轻资产赛道','Asset-light track'],'asset.hub':['亚洲代表地区','Representative Asian hubs'],'asset.combine':['与 EACO Web3 的结合点','EACO Web3 linkage'],
+ 'dev.title':['结合路径','Integration paths'],'pos.title':['高维 · 正能量方向','High-dimensional, positive-sum directions'],
+ 'msg.caCopied':['合约地址已复制','Contract address copied']
+};
+function t(k){const e=DICT[k];if(!e)return k;const v=state.lang==='zh'?e[0]:e[1];return typeof v==='string'?v:(typeof e[0]==='string'?e[0]:k)}
+function bi(zh,en){return {zh:zh,en:en}}
+function L(x){if(!x)return '';if(typeof x==='string')return x;return state.lang==='zh'?x.zh:x.en}
+function esc(s){return String(s==null?'':s).replace(/&/g,'&#38;').replace(/</g,'&#60;').replace(/>/g,'&#62;').replace(/"/g,'&#34;').replace(/'/g,'&#39;')}
+function noteOf(r){return state.lang==='zh'?r.n[0]:r.n[1]}
+
+/* ---------- 2. static reference data ---------- */
+const REGIONS=[
+ {c:'SG',zh:'新加坡',en:'Singapore',w:'friendly',n:['持牌框架下开放 Web3 积分','Licensed framework, Web3 points allowed']},
+ {c:'HK',zh:'中国香港',en:'Hong Kong, China',w:'friendly',n:['持牌虚拟资产框架','Licensed virtual-asset framework']},
+ {c:'JP',zh:'日本',en:'Japan',w:'friendly',n:['合规登记后可用','Usable after compliant registration']},
+ {c:'KR',zh:'韩国',en:'South Korea',w:'friendly',n:['实名制组内积分','Real-name internal points']},
+ {c:'PH',zh:'菲律宾',en:'Philippines',w:'friendly',n:['友好，组内积分','Friendly, internal points']},
+ {c:'TH',zh:'泰国',en:'Thailand',w:'friendly',n:['持牌框架下开放','Open under licensed framework']},
+ {c:'MY',zh:'马来西亚',en:'Malaysia',w:'neutral',n:['审慎，改用 CNH 记账','Cautious, fall back to CNH']},
+ {c:'MO',zh:'中国澳门',en:'Macao, China',w:'neutral',n:['审慎，改用 CNH 记账','Cautious, fall back to CNH']},
+ {c:'TW',zh:'中国台湾',en:'Taiwan, China',w:'neutral',n:['审慎，改用 CNH 记账','Cautious, fall back to CNH']},
+ {c:'VN',zh:'越南',en:'Vietnam',w:'restricted',n:['Web3 不友好，CNH 记账','Web3-restricted, CNH accounting']},
+ {c:'ID',zh:'印度尼西亚',en:'Indonesia',w:'restricted',n:['Web3 不友好，CNH 记账','Web3-restricted, CNH accounting']},
+ {c:'IN',zh:'印度',en:'India',w:'restricted',n:['Web3 不友好，CNH 记账','Web3-restricted, CNH accounting']},
+ {c:'CN',zh:'中国内地',en:'Chinese Mainland',w:'restricted',n:['Web3 不友好，CNH 记账','Web3-restricted, CNH accounting']},
+ {c:'KH',zh:'柬埔寨',en:'Cambodia',w:'restricted',n:['Web3 不友好，CNH 记账','Web3-restricted, CNH accounting']}
+];
+const SERVICES=[
+ {id:'S1',cat:'rank',zh:'排位上分',en:'Ranked boost',p:120},
+ {id:'S2',cat:'rank',zh:'段位定级赛',en:'Placement matches',p:88},
+ {id:'S3',cat:'dungeon',zh:'副本通关',en:'Raid & dungeon clear',p:65},
+ {id:'S4',cat:'daily',zh:'日常托管',en:'Daily quest care',p:35},
+ {id:'S5',cat:'coach',zh:'陪玩陪练',en:'Co-play coaching',p:58},
+ {id:'S6',cat:'gear',zh:'装备养成',en:'Gear farming',p:96},
+ {id:'S7',cat:'esports',zh:'赛季冲榜',en:'Season ladder push',p:260},
+ {id:'S8',cat:'care',zh:'账号安全体检',en:'Account security check',p:28}
+];
+const CATS={rank:['段位','Rank'],dungeon:['副本','Dungeon'],daily:['日常','Daily'],coach:['陪玩','Co-play'],gear:['养成','Gear'],esports:['竞赛','Ladder'],care:['服务','Care']};
+const DIFF=[{v:1,k:'diff.normal'},{v:1.35,k:'diff.advanced'},{v:1.8,k:'diff.hard'}];
+const GLOSS=[
+ ['游戏带打 / 带玩','Game boosting / carry service','由带打员代客户完成段位、副本或陪玩服务。','A booster completes ranked, dungeon or co-play services for a client.'],
+ ['EACO Web3 积分','EACO Web3 points','Web3 友好地区使用的组内积分，模拟链上参考号。','Internal points for Web3-friendly regions, with simulated on-chain refs.'],
+ ['CNH 记账点数','CNH accounting points','Web3 不友好地区使用的离岸人民币记账单位。','Offshore-RMB accounting unit for Web3-restricted regions.'],
+ ['在线支付','Online payment','本地模拟的收款通道，不连接真实网关。','Locally simulated payment channel, no real gateway.'],
+ ['复式记账','Double-entry ledger','每笔业务生成借贷平衡分录。','Every operation posts balanced debit and credit lines.'],
+ ['积分抵扣','Points offset','用账户余额冲抵最多 30% 订单原价。','Use account balance for up to 30% of the base price.'],
+ ['派单','Dispatch','把已支付订单分配给同单位的带打员。','Assign a paid order to a booster with the same unit.'],
+ ['结算','Settlement','验收后发放佣金、返利与平台留存。','Commission, client reward and guild retention after delivery.'],
+ ['TXT 记忆','TXT memory','可读文本 + 状态快照，可导出并完整恢复。','Readable text plus a state snapshot; export and fully restore.'],
+ ['Solana Web3 轨道','Solana Web3 rail','方案 A 的模拟链上凭证轨道，签名与交易号均在本地生成。','Scheme A simulated on-chain receipt rail; signatures and tx IDs are generated locally.'],
+ ['方案 A / 方案 B','Scheme A / Scheme B','按地区自动分流的两套积分与记账方案。','Two region-routed points and accounting schemes.']
+];
+
+/* ---- EACO official facts, cited from the three user-provided links ---- */
+const EACO={
+ ca:'DqfoyZH96RnvZusSp3Cdncjpyp3C74ZmJzGhjmHnDHRH',
+ chain:'Solana',
+ nameZh:'地球最好币 · Earth\u0027s Best Coin',nameEn:'Earth\u0027s Best Coin',
+ supply:'1,350,000,000 EACO',lpZh:'10% 永久锁定',lpEn:'10% permanently locked',
+ formulaZh:'正能量 × 积极态度 × 全球协作 × 持续优化',
+ formulaEn:'Positive Energy × Positive Mindset × Global Collaboration × Continuous Optimization',
+ principleZh:'一切文明为人类文明服务，包括 EACO。',
+ principleEn:'All civilisation serves humanity, including EACO.',
+ goals:[
+  ['提升个体认知','Raise individual awareness'],
+  ['提升组织效率','Improve organisational efficiency'],
+  ['推动社会文明进步','Advance social civilisation'],
+  ['促进地球可持续发展','Support planetary sustainability'],
+  ['融合 100 个认知模型','Integrate 100 cognitive models']
+ ],
+ links:[
+  ['Orb Markets · 代币市场页','Orb Markets · token page','https://orbmarkets.io/token/DqfoyZH96RnvZusSp3Cdncjpyp3C74ZmJzGhjmHnDHRH'],
+  ['EACO Agent · 官方资料','EACO Agent · official dossier','https://ucoingroup.github.io/eacoagent/'],
+  ['Solana 靓号地址工具（本地离线）','Solana vanity tool (offline)','https://ucoingroup.github.io/eacoagent/solana-vanity.html']
+ ]
+};
+/* 20 representative asset-light tracks in Asia — curated, NOT an official ranking */
+const ASSET20=[
+ ['游戏带打与陪玩服务','Game boosting & co-play','中国内地、韩国、东南亚','Chinese Mainland, South Korea, SE Asia','订单与验收生成链上凭证，双轨积分结算','On-chain order and delivery proofs, dual-rail settlement'],
+ ['电竞内容与赛事运营','Esports content & events','韩国、中国内地、东南亚','South Korea, Chinese Mainland, SE Asia','门票、打赏与贡献记录可核验','Verifiable tickets, tips and contribution records'],
+ ['数字原生 IP 授权','Digital-native IP licensing','日本、泰国、印度尼西亚','Japan, Thailand, Indonesia','授权分账与来源可追溯','Traceable royalty splits and provenance'],
+ ['创作者经济与 MCN','Creator economy & MCN','中国内地、东南亚','Chinese Mainland, SE Asia','微奖励与作品存证','Micro-rewards and work attestation'],
+ ['垂直行业 SaaS','Vertical SaaS','新加坡、印度、越南','Singapore, India, Vietnam','订阅制积分与 API 用量计量','Subscription points and metered API usage'],
+ ['AI 智能体与工具','AI agents & tooling','新加坡、日本、中国内地','Singapore, Japan, Chinese Mainland','调用量结算与贡献计量','Usage settlement and contribution metering'],
+ ['跨境电商与独立站','Cross-border e-commerce','中国内地、东南亚','Chinese Mainland, SE Asia','订单存证与会员积分','Order proofs and loyalty points'],
+ ['数字支付与钱包服务','Digital payments & wallets','新加坡、中国香港、东南亚','Singapore, Hong Kong, China, SE Asia','双轨清算与自动对账','Dual-rail clearing and reconciliation'],
+ ['嵌入式金融','Embedded finance','新加坡、马来西亚、印度尼西亚','Singapore, Malaysia, Indonesia','收入凭证支持普惠信用','Income proofs for financial inclusion'],
+ ['零工与远程服务撮合','Gig & remote-work marketplaces','菲律宾、印度、越南','Philippines, India, Vietnam','可携带的劳动声誉凭证','Portable work-reputation credentials'],
+ ['在线教育与技能陪练','Online education & coaching','中国内地、韩国、东南亚','Chinese Mainland, South Korea, SE Asia','课程凭证与助学激励','Course credentials and learning incentives'],
+ ['数字营销与代运营','Digital marketing & agency','新加坡、马来西亚、泰国','Singapore, Malaysia, Thailand','效果可验证的结算','Verifiable performance settlement'],
+ ['知识付费与会员社群','Paid knowledge & membership','华语圈与东南亚','Chinese-speaking markets, SE Asia','贡献度记账与治理记录','Contribution ledger and governance records'],
+ ['轻资产加盟与品牌授权','Asset-light franchising & licensing','日本、韩国、东南亚','Japan, South Korea, SE Asia','授权费与合规准入记录','Licence fees and compliance-gate records'],
+ ['旅游与本地体验平台','Travel & local experiences','泰国、日本、东南亚','Thailand, Japan, SE Asia','跨境积分互通','Cross-border points interoperability'],
+ ['物流科技与调度平台','Logistics tech & dispatch','印度尼西亚、越南、印度','Indonesia, Vietnam, India','运单存证与司机结算','Waybill proofs and driver settlement'],
+ ['健康与身心科技','Health & wellness tech','日本、韩国、新加坡','Japan, South Korea, Singapore','隐私保护的正向激励','Privacy-preserving positive incentives'],
+ ['气候与碳账软件','Climate & carbon accounting','新加坡、东南亚','Singapore, SE Asia','可追溯的绿色贡献','Traceable green contributions'],
+ ['Web3 工具与开发者服务','Web3 tooling & developer services','新加坡、中国香港、日本、韩国','Singapore, Hong Kong, China, Japan, South Korea','开源贡献即积分','Open-source contribution as points'],
+ ['数据与 AI 标注服务','Data & AI annotation services','菲律宾、印度、越南','Philippines, India, Vietnam','任务量与质量凭证','Task-volume and quality proofs']
+];
+const DEV_PATHS=[
+ ['双轨分层','Dual rails','方案 A / 方案 B 按地区自动分流，账本各自平衡、汇总为统一报表。','Scheme A and B are routed by region; each ledger balances independently and rolls up into one report.'],
+ ['Solana 链上凭证','Solana attestations','订单、验收与佣金生成模拟签名与交易号，链下账本与凭证一一对应。','Orders, delivery and commissions produce simulated signatures matched one-to-one with off-chain entries.'],
+ ['带打员可携带声誉','Portable booster reputation','完成率、准时率与评价沉淀为技能凭证，跨小组可验证。','Completion, punctuality and ratings become verifiable skill credentials across guilds.'],
+ ['一人公司工具包','One-person-company toolkit','借鉴 EACO Agent 的 OPC 2026 思路，让带打员独立接单、记账、留痕。','Adopt the OPC 2026 idea so a booster can invoice, bookkeep and archive solo.'],
+ ['城市配额与合规准入','City quota & compliance gate','参考华人友好 / Web3 友好 / 低收入帮扶三维评分，先合规后开通 EACO。','Use a three-dimensional readiness score; enable EACO only after compliance checks.'],
+ ['开源零依赖工具链','Zero-dependency toolchain','单文件 HTML 与 TXT 记忆、离线可归档，降低中小小组数字化门槛。','Single-file HTML and TXT memory, archivable offline, lowering the entry barrier.'],
+ ['正能量治理','Positive-sum governance','以四词公式作为贡献评价维度，规则公开，拒绝价格与收益叙事。','Use the four-word formula as a contribution lens with open rules and no price or yield narratives.']
+];
+const POSITIVE=[
+ ['提升个体认知','Raise individual awareness','面向带打员与青少年的数字技能、私钥安全与反诈公益课。','Free digital-skill, key-safety and anti-fraud classes for boosters and young people.'],
+ ['提升组织效率','Improve organisational efficiency','开源派单、复式记账与 TXT 归档工具，供小微小组免费复用。','Open-source dispatch, double-entry and TXT archival tools for small guilds.'],
+ ['推动社会文明进步','Advance social civilisation','合约地址核验教育与公开规则，降低假币与冒名风险。','Contract-address verification education and open rules to reduce impersonation risk.'],
+ ['促进地球可持续发展','Support planetary sustainability','低碳行为与公益捐助的可追溯记录，不涉任何估值。','Traceable records of low-carbon actions and charitable giving, with no valuation claims.'],
+ ['全球协作','Global collaboration','多语言合规知识库，覆盖华语与英语及亚洲多地区。','A multilingual compliance knowledge base in Chinese and English across Asian markets.'],
+ ['劳动尊严','Dignity of labour','为零工沉淀可携带的收入与技能凭证，支持保障申请。','Portable income and skill proofs that support gig workers applying for protections.'],
+ ['低收入帮扶','Support for low-income groups','可核验的技能配额与助学名额，参考三维评分中的帮扶维度。','Verifiable skill quotas and learning grants, echoing the assistance dimension.'],
+ ['认知模型共建','Co-build cognitive models','100 个认知模型的开放索引与共读社群。','An open index of 100 cognitive models and shared reading circles.'],
+ ['透明治理','Transparent governance','规则开源、贡献可审计，双轨账本随时导出核对。','Open rules and auditable contributions; both ledgers exportable at any time.'],
+ ['合规先行','Compliance first','不做价格、收益或募资表述，按所在地法律决定方案 A 是否可用。','No price, return or fundraising claims; local law decides whether Scheme A applies.']
+];
+const SCHEME_ROWS=[
+ ['适用地区','Applicable regions','6 个 Web3 友好地区','6 Web3-friendly regions','8 个中性 / 不友好地区','8 neutral / restricted regions'],
+ ['积分载体','Points unit','EACO（Solana 链上风格凭证 + 组内账本）','EACO (Solana-style proof + internal ledger)','CNH 记账点数','CNH accounting points'],
+ ['技术轨道','Technical rail','Solana mainnet-beta 为资料引用，签名本地模拟','Solana mainnet-beta cited; signatures simulated locally','纯链下双栏账本','Pure off-chain ledger'],
+ ['在线支付','Online payment','组内钱包 / Solana 钱包签名 / Solana Pay 二维码（均模拟）','Group wallet / Solana wallet signature / Solana Pay QR (all simulated)','微信 / 支付宝 / 银行转账（均模拟）','WeChat Pay / Alipay / bank transfer (all simulated)'],
+ ['凭证格式','Receipt format','Base58 模拟签名 + 模拟 slot','Base58 simulated signature + simulated slot','VCH-YYYYMMDD-NNNN 凭证号','VCH-YYYYMMDD-NNNN voucher'],
+ ['记账方式','Accounting','复式分录，Solana 轨道标记','Double-entry with Solana rail flag','复式分录，链下标记','Double-entry with off-chain flag'],
+ ['兑换','Conversion','可与 CNH 1:1 锚定兑换（桥接账户）','1:1 anchored exchange with CNH via bridge','锁定单单位，EACO 功能禁用','Single unit locked; EACO disabled'],
+ ['合规边界','Compliance boundary','需持牌 / 实名 / 当地允许','Licensing, real-name and local permission required','不触碰 Web3，仅内部记账','No Web3 exposure; internal bookkeeping only']
+];
+const CH_EACO=[['W1','EACO 组内钱包','EACO group wallet'],['W2','Solana 钱包模拟签名（Phantom）','Solana wallet signature (Phantom, simulated)'],['W3','Solana Pay 二维码（模拟）','Solana Pay QR (simulated)'],['W4','扫码支付（模拟）','QR payment (simulated)']];
+const CH_CNH=[['P1','微信支付（模拟）','WeChat Pay (simulated)'],['P2','支付宝（模拟）','Alipay (simulated)'],['P3','银行转账（模拟）','Bank transfer (simulated)']];
+const SYS={__EXT__:['外部支付通道','External channel'],__PLATFORM__:['小组公共池','Guild pool'],__BRIDGE__:['兑换桥接账户','Exchange bridge']};
+const KEY='asia_eaco_game_state_v2', TXTKEY='asia_eaco_game_memory_txt';
+const B58='123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
+const VIEWS=['dash','scheme','services','orders','ledger','team','memory'];
+const ICONS={dash:'M3 3h7v7H3zM14 3h7v4h-7zM14 10h7v11h-7zM3 13h7v8H3z',scheme:'M4 4h7v16H4zM13 4h7v7h-7zM13 13h7v7h-7z',services:'M4 4h16v4H4zM4 10h16v4H4zM4 16h10v4H4z',orders:'M5 3h14v18l-3-2-4 2-4-2-3 2zM8 8h8M8 12h8',ledger:'M3 5h18v14H3zM3 10h18M8 5v14M15 5v14',team:'M8 11a3 3 0 100-6 3 3 0 000 6zM2 20c0-3 3-5 6-5s6 2 6 5M16 8a3 3 0 100-6M17 14c2 1 4 3 4 6',memory:'M6 3h9l4 4v14H6zM15 3v4h4M9 12h7M9 16h7'};
+
+/* ---------- 3. state ---------- */
+let state=null, uidN=0, toastTimer=null, searchTimer=null;
+function uid(p){uidN++;return p+'-'+Date.now().toString(36).toUpperCase()+'-'+uidN.toString(36).toUpperCase()}
+function round(n){return Math.round((n+Number.EPSILON)*100)/100}
+function money(n){const v=Math.abs(round(n));return (n<0?'-':'')+v.toLocaleString(state.lang==='zh'?'zh-CN':'en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}
+function tsStr(x){const d=new Date(x),p=n=>String(n).padStart(2,'0');return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes())}
+function dayKey(x){const d=new Date(x),p=n=>String(n).padStart(2,'0');return p(d.getMonth()+1)+'/'+p(d.getDate())}
+function region(c){return REGIONS.find(r=>r.c===c)||REGIONS[0]}
+function unitOf(c){return region(c).w==='friendly'?'EACO':'CNH'}
+function canWeb3(c){return region(c).w==='friendly'}
+function schemeOf(c){return canWeb3(c)?'A':'B'}
+function schemeChip(s){return '<span class="chip '+(s==='A'?'a':'y')+'">'+t('scheme.'+s.toLowerCase())+'</span>'}
+function b58(n){let s='';for(let i=0;i<n;i++)s+=B58[Math.floor(Math.random()*B58.length)];return s}
+function chainOf(unit){return unit==='EACO'?'solana':'offchain'}
+function member(id){return state.members.find(m=>m.id===id)}
+function service(id){return SERVICES.find(s=>s.id===id)||SERVICES[0]}
+function accountName(a){if(SYS[a])return state.lang==='zh'?SYS[a][0]:SYS[a][1];const m=member(a);return m?m.name:(a||'-')}
+function svcName(s){return state.lang==='zh'?s.zh:s.en}
+function regionName(r){return state.lang==='zh'?r.zh:r.en}
+function roleName(r){return t('role.'+r)}
+function catName(c){const x=CATS[c]||[c,c];return state.lang==='zh'?x[0]:x[1]}
+
+function freshState(){
+ return {v:1,lang:state?state.lang:'zh',theme:state?state.theme:'kr',view:'dash',
+  members:[],orders:[],entries:[],log:[],notes:'',
+  draft:{memberId:'',serviceId:'S1',qty:1,diff:1,usePoints:true},
+  filters:{unit:'ALL',type:'ALL',q:''},seq:1};
+}
+function balOf(a,u){let b=0;for(const e of state.entries)if(e.a===a&&e.unit===u)b+=e.d;return round(b)}
+function logEvent(zh,en){
+ state.log.push({ts:Date.now(),m:bi(zh,en)});
+ if(state.log.length>400)state.log=state.log.slice(-400);
+}
+function save(){
+ try{
+  localStorage.setItem(KEY,JSON.stringify(state));
+  localStorage.setItem(TXTKEY,buildTxt());
+  const c=document.getElementById('saveChip');
+  if(c)c.textContent=t('save.state')+' · '+t('save.ok')+' '+new Date().toLocaleTimeString(state.lang==='zh'?'zh-CN':'en-US',{hour:'2-digit',minute:'2-digit'});
+ }catch(err){console.warn('localStorage unavailable',err)}
+}
+function toast(msg){if(!msg)return;const el=document.getElementById('toast');el.textContent=msg;el.classList.add('on');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('on'),2600)}
+
+/* ---------- 4. ledger core: balanced double-entry ---------- */
+function post(unit,lines,type,note,ref,oid,at){
+ const jid=uid('J'),when=at||Date.now(),r=ref||'';
+ const chain=chainOf(unit),slot=unit==='EACO'?Math.floor(280000000+Math.random()*9000000):0;
+ lines.forEach(l=>{
+  const bal=round(balOf(l.a,unit)+l.d);
+  state.entries.push({id:uid('E'),jid:jid,ts:when,type:type,unit:unit,a:l.a,d:round(l.d),bal:bal,ref:r,oid:oid||'',note:note,chain:chain,slot:slot});
+ });
+}
+function txRef(unit,at){
+ if(unit==='EACO')return b58(64);
+ const d=new Date(at||Date.now()),p=n=>String(n).padStart(2,'0');
+ return 'VCH-'+d.getFullYear()+p(d.getMonth()+1)+p(d.getDate())+'-'+String(state.seq++).padStart(4,'0');
+}
+function shortRef(r){return !r?'-':(r.length>26?r.slice(0,10)+'…'+r.slice(-8):r)}
+function topup(mid,amount,at,ref,forceUnit){
+ const m=member(mid);if(!m)return;
+ const u=forceUnit||m.unit,x=round(amount);
+ post(u,[{a:'__EXT__',d:-x},{a:mid,d:x}],'topup',bi('积分充值 '+money(x)+' '+u+'（'+m.name+'）','Top-up '+money(x)+' '+u+' ('+m.name+')'),ref||txRef(u,at),'',at);
+ logEvent('充值 '+money(x)+' '+u+' · '+m.name,'Top-up '+money(x)+' '+u+' · '+m.name);
+}
+function placeOrder(d,at){
+ const m=member(d.memberId);if(!m)return null;
+ const s=service(d.serviceId),u=m.unit;
+ const qty=Math.max(1,Math.round(Number(d.qty)||1)),dm=Number(d.diff)>0?Number(d.diff):1;
+ const base=round(s.p*qty*dm);
+ const maxOff=round(base*.3);
+ const off=d.usePoints?round(Math.min(Math.max(0,balOf(m.id,u)),maxOff)):0;
+ const pay=round(base-off);
+ const o={id:uid('O'),mid:m.id,sid:s.id,region:m.region,unit:u,qty:qty,diff:dm,
+  base:base,off:off,pay:pay,status:'pending',bid:'',channel:'',ref:'',ts:at||Date.now(),
+  commission:0,reward:0,retain:0};
+ state.orders.push(o);
+ logEvent('创建订单 '+o.id+' · '+svcName(s)+' · '+money(base)+' '+u,'Order '+o.id+' created · '+svcName(s)+' · '+money(base)+' '+u);
+ return o;
+}
+function payOrder(id,channel,at){
+ const o=state.orders.find(x=>x.id===id);if(!o||o.status!=='pending')return false;
+ const when=at||Date.now(),ref=txRef(o.unit,when);
+ if(o.off>0)post(o.unit,[{a:o.mid,d:-o.off},{a:'__PLATFORM__',d:o.off}],'offset',bi('订单 '+o.id+' 积分抵扣','Points offset for '+o.id),ref,id,when);
+ post(o.unit,[{a:'__EXT__',d:-o.pay},{a:'__PLATFORM__',d:o.pay}],'payment',bi('订单 '+o.id+' 在线支付 · '+channel,'Online payment for '+o.id+' · '+channel),ref,id,when);
+ o.status='paid';o.channel=channel;o.ref=ref;o.paidAt=when;
+ logEvent('订单 '+o.id+' 在线支付 '+money(o.pay)+' '+o.unit+' · '+channel,'Payment for '+o.id+' · '+money(o.pay)+' '+o.unit+' · '+channel);
+ return true;
+}
+function assignOrder(id,bid,at){
+ const o=state.orders.find(x=>x.id===id);if(!o||o.status!=='paid')return false;
+ const b=member(bid);if(!b||b.unit!==o.unit||b.role!=='booster')return false;
+ o.bid=bid;o.status='assigned';o.assignedAt=at||Date.now();
+ logEvent('订单 '+o.id+' 派单给 '+b.name,'Order '+o.id+' assigned to '+b.name);
+ return true;
+}
+function cancelOrder(id,at){
+ const o=state.orders.find(x=>x.id===id);if(!o||o.status==='done'||o.status==='cancelled')return false;
+ const when=at||Date.now(),ref='RF-'+o.ref.replace(/^0x|^VCH-/,'');
+ if(o.status!=='pending'){
+  post(o.unit,[{a:'__PLATFORM__',d:-o.pay},{a:'__EXT__',d:o.pay}],'refund',bi('订单 '+o.id+' 原路退款','Refund for '+o.id),ref,id,when);
+  if(o.off>0)post(o.unit,[{a:'__PLATFORM__',d:-o.off},{a:o.mid,d:o.off}],'refund',bi('订单 '+o.id+' 返还抵扣积分','Return offset points for '+o.id),ref,id,when);
+ }
+ o.status='cancelled';o.cancelledAt=when;
+ logEvent('订单 '+o.id+' 取消并红冲 '+money(o.pay)+' '+o.unit,'Order '+o.id+' cancelled, reversed '+money(o.pay)+' '+o.unit);
+ return true;
+}
+function finishOrder(id,at){
+ const o=state.orders.find(x=>x.id===id);if(!o||!['assigned','working','paid'].includes(o.status)||!o.bid)return false;
+ const when=at||Date.now(),ref=o.ref;
+ const com=round(o.pay*.7),rew=round(o.pay*.05),ret=round(o.pay-com-rew);
+ post(o.unit,[{a:'__PLATFORM__',d:-com},{a:o.bid,d:com}],'commission',bi('订单 '+o.id+' 带打佣金','Booster commission for '+o.id),ref,id,when);
+ post(o.unit,[{a:'__PLATFORM__',d:-rew},{a:o.mid,d:rew}],'reward',bi('订单 '+o.id+' 客户返利','Client reward for '+o.id),ref,id,when);
+ o.commission=com;o.reward=rew;o.retain=ret;o.status='done';o.doneAt=when;
+ logEvent('订单 '+o.id+' 验收完成 · 佣金 '+money(com)+' / 返利 '+money(rew)+' / 留存 '+money(ret),'Order '+o.id+' delivered · commission '+money(com)+' / reward '+money(rew)+' / retained '+money(ret));
+ return true;
+}
+function withdraw(mid,x){
+ const m=member(mid);if(!m||x<=0)return false;
+ if(balOf(mid,m.unit)<x)return 'insufficient';
+ post(m.unit,[{a:mid,d:-x},{a:'__EXT__',d:x}],'withdraw',bi('结算提现 '+money(x)+' '+m.unit,'Withdrawal '+money(x)+' '+m.unit),txRef(m.unit),'');
+ logEvent('结算提现 '+money(x)+' '+m.unit+' · '+m.name,'Withdrawal '+money(x)+' '+m.unit+' · '+m.name);
+ return true;
+}
+function exchange(mid,dir,x){
+ const m=member(mid);if(!m||x<=0)return false;
+ if(!canWeb3(m.region))return 'noEaco';
+ const from=dir==='c2e'?'CNH':'EACO',to=dir==='c2e'?'EACO':'CNH';
+ if(balOf(mid,from)<x)return 'insufficient';
+ const ref='EX-'+txRef('CNH').replace('VCH-','');
+ post(from,[{a:mid,d:-x},{a:'__BRIDGE__',d:x}],'exchange',bi('兑换付出 '+money(x)+' '+from,'Exchange out '+money(x)+' '+from),ref,'');
+ post(to,[{a:'__BRIDGE__',d:-x},{a:mid,d:x}],'exchange',bi('兑换收入 '+money(x)+' '+to+'（1:1 锚定）','Exchange in '+money(x)+' '+to+' (1:1 anchor)'),ref,'');
+ logEvent('兑换 '+money(x)+' '+from+' → '+to+' · '+m.name,'Exchange '+money(x)+' '+from+' to '+to+' · '+m.name);
+ return true;
+}
+function addMember(name,role,reg,initial){
+ const m={id:uid('M'),name:name,role:role,region:reg,unit:unitOf(reg),joined:Date.now()};
+ state.members.push(m);
+ if(initial>0)topup(m.id,round(initial));
+ logEvent('新增成员 '+m.name+' · '+regionName(region(reg))+' · '+m.unit,'Member added '+m.name+' · '+regionName(region(reg))+' · '+m.unit);
+ return m;
+}
+function removeMember(id){const m=member(id);state.members=state.members.filter(x=>x.id!==id);if(m)logEvent('移除成员 '+m.name,'Member removed '+m.name)}
+function changeRegion(id,reg){
+ const m=member(id);if(!m)return false;
+ if(m.region===reg)return 'same';
+ const nu=unitOf(reg);
+ if(nu==='CNH'&&balOf(id,'EACO')>0)return 'blocked';
+ m.region=reg;m.unit=nu;
+ logEvent(m.name+' 切换地区至 '+regionName(region(reg))+' · '+nu,m.name+' moved to '+regionName(region(reg))+' · '+nu);
+ return true;
+}
+function unitNet(u){let s=0;for(const e of state.entries)if(e.unit===u)s+=e.d;return round(s)}
+function ledgerBalanced(){return unitNet('EACO')===0&&unitNet('CNH')===0}
+function turnover(u){let s=0;for(const e of state.entries)if(e.unit===u&&e.a==='__PLATFORM__'&&e.d>0&&(e.type==='payment'||e.type==='offset'))s+=e.d;return round(s)}
+
+/* ---------- 5. seed demo (built through the real pipeline) ---------- */
+function seedDemo(){
+ const keepLang=state?state.lang:'zh',keepTheme=state?state.theme:'kr';
+ state=freshState();state.lang=keepLang;state.theme=keepTheme;
+ const D=86400000,now=Date.now();
+ addMember('林墨 / Lin Mo','client','SG',260);
+ addMember('阿凯 / Kai','booster','SG',40);
+ addMember('陈小雨 / Chen Xiaoyu','client','CN',180);
+ addMember('佐藤 / Sato','booster','JP',25);
+ addMember('Rina','client','PH',120);
+ addMember('老周 / Zhou','booster','CN',15);
+ const M=state.members;
+ state.draft.memberId=M[0].id;
+ topup(M[0].id,60,now-5*D,'','CNH');
+ exchange(M[0].id,'c2e',20);
+ const o1=placeOrder({memberId:M[0].id,serviceId:'S1',qty:1,diff:1.35,usePoints:true},now-3*D);
+ payOrder(o1.id,CH_EACO[1][1],now-3*D+3600000);
+ assignOrder(o1.id,M[1].id,now-3*D+7200000);
+ finishOrder(o1.id,now-2*D);
+ withdraw(M[1].id,10);
+ const o2=placeOrder({memberId:M[2].id,serviceId:'S3',qty:2,diff:1,usePoints:true},now-D);
+ payOrder(o2.id,CH_CNH[0][1],now-D+1800000);
+ assignOrder(o2.id,M[5].id,now-D+3600000);
+ o2.status='working';
+ placeOrder({memberId:M[4].id,serviceId:'S5',qty:1,diff:1,usePoints:false},now-2*3600000);
+ topup(M[2].id,90,now-6*3600000);
+ logEvent('演示数据初始化：6 名成员 / 3 笔订单 / '+state.entries.length+' 条分录','Demo seeded: 6 members / 3 orders / '+state.entries.length+' journal lines');
+ state.filters={unit:'ALL',type:'ALL',q:''};
+ save();
+}
+
+/* ---------- 6. TXT memory ---------- */
+function b64encode(str){
+ const bytes=new TextEncoder().encode(str);let bin='';
+ for(let i=0;i<bytes.length;i+=4096)bin+=String.fromCharCode.apply(null,bytes.subarray(i,i+4096));
+ return btoa(bin);
+}
+function b64decode(s){
+ const bin=atob(s),bytes=new Uint8Array(bin.length);
+ for(let i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);
+ return new TextDecoder().decode(bytes);
+}
+function buildTxt(){
+ const z=state.lang==='zh',L2=(a,b)=>z?a:b;
+ const out=[];
+ out.push('================================================================');
+ out.push('EACO x Solana · 亚洲游戏带打小组 / Asia Game Boosting Guild');
+ out.push('TXT MEMORY · 自带记忆文件 / built-in memory file · 双方案 / TWO SCHEMES');
+ out.push('================================================================');
+ out.push('生成时间 / Generated : '+tsStr(Date.now()));
+ out.push('语言 / Language       : '+(z?'华语 / Chinese':'English'));
+ out.push('风格 / Theme          : '+L2({jp:'和风极简',kr:'韩系渐变',cn:'中式国潮'}[state.theme],{jp:'Wabi-sabi',kr:'K-Gloss',cn:'Guochao'}[state.theme]));
+ out.push('锚定 / Anchor         : 1 EACO = 1 CNH (内部记账点数 / internal accounting only)');
+ out.push('');
+ out.push('--- [1] 设置 / SETTINGS ----------------------------------------');
+ out.push('当前视图 / view='+state.view+'  主题 / theme='+state.theme+'  语言 / lang='+state.lang);
+ out.push('方案 A / Scheme A : EACO + Solana Web3, Web3-friendly regions');
+ out.push('方案 B / Scheme B : CNH accounting, Web3-restricted / neutral regions');
+ out.push('EACO CA : '+EACO.ca+'  (Solana, '+EACO.supply+')');
+ out.push('');
+ out.push('--- [2] 地区合规映射 / REGION COMPLIANCE ------------------------');
+ REGIONS.forEach(r=>out.push('  '+r.c.padEnd(4)+(z?r.zh:r.en).padEnd(16)+r.w.padEnd(12)+'scheme='+schemeOf(r.c)+'  unit='+unitOf(r.c).padEnd(5)+(z?r.n[0]:r.n[1])));
+ out.push('');
+ out.push('--- [3] 成员 / MEMBERS -----------------------------------------');
+ state.members.forEach(m=>out.push('  '+m.id+' | '+m.name+' | '+m.role+' | '+m.region+' | '+m.unit+' | EACO='+money(balOf(m.id,'EACO'))+' | CNH='+money(balOf(m.id,'CNH'))));
+ ['__PLATFORM__','__EXT__','__BRIDGE__'].forEach(a=>out.push('  '+a+' | '+(z?SYS[a][0]:SYS[a][1])+' | EACO='+money(balOf(a,'EACO'))+' | CNH='+money(balOf(a,'CNH'))));
+ out.push('');
+ out.push('--- [4] 服务目录 / SERVICES ------------------------------------');
+ SERVICES.forEach(s=>out.push('  '+s.id+' | '+s.zh+' / '+s.en+' | '+money(s.p)+' CNH | '+s.cat));
+ out.push('');
+ out.push('--- [5] 订单 / ORDERS ------------------------------------------');
+ state.orders.forEach(o=>out.push('  '+o.id+' | '+tsStr(o.ts)+' | '+(member(o.mid)?member(o.mid).name:o.mid)+' | '+service(o.sid).zh+' / '+service(o.sid).en+' | '+o.unit+' base='+money(o.base)+' offset='+money(o.off)+' paid='+money(o.pay)+' | '+o.status+' | booster='+(o.bid?(member(o.bid)?member(o.bid).name:o.bid):'-')+' | ref='+(o.ref||'-')+' | commission='+money(o.commission)+' reward='+money(o.reward)+' retain='+money(o.retain)));
+ out.push('');
+ out.push('--- [6] 复式记账分录 / DOUBLE-ENTRY JOURNAL --------------------');
+ out.push('  '+state.entries.length+' lines | balanced='+(ledgerBalanced()?'YES':'NO')+' | EACO net='+money(unitNet('EACO'))+' | CNH net='+money(unitNet('CNH')));
+ state.entries.forEach(e=>out.push('  '+tsStr(e.ts)+' | '+e.jid+' | '+e.type.padEnd(11)+' | '+e.unit.padEnd(4)+' | '+(e.chain||chainOf(e.unit)).padEnd(8)+' | '+String(e.a).padEnd(14)+' | '+(e.d>=0?'+':'-')+money(e.d).replace('-','').padEnd(10)+' | bal='+money(e.bal).padEnd(10)+' | '+e.ref+' | '+(z?e.note.zh:e.note.en)));
+ out.push('');
+ out.push('--- [7] 事件记忆 / EVENT LOG -----------------------------------');
+ if(!state.log.length)out.push('  ('+(z?'暂无事件':'no events')+')');
+ state.log.forEach(e=>out.push('  '+tsStr(e.ts)+' | '+(z?e.m.zh:e.m.en)));
+ out.push('');
+ out.push('--- [8] 手动备忘 / MANUAL NOTES --------------------------------');
+ out.push(state.notes||('('+(z?'空':'empty')+')'));
+ out.push('');
+ out.push('--- [9] 中英术语 / CN-EN GLOSSARY ------------------------------');
+ GLOSS.forEach(g=>out.push('  '+g[0]+' | '+g[1]+' | '+(z?g[2]:g[3])));
+ out.push('');
+ out.push('--- [10] 合规声明 / DISCLAIMER ---------------------------------');
+ out.push(DICT['disclaimer.short'][0]);
+ out.push(DICT['disclaimer.short'][1]);
+ out.push('');
+ out.push('--- [11] 双方案对照 / TWO SCHEMES ------------------------------');
+ SCHEME_ROWS.forEach(r=>out.push('  '+(z?r[0]:r[1])+' | A: '+(z?r[2]:r[3])+' | B: '+(z?r[4]:r[5])));
+ out.push('');
+ out.push('--- [12] EACO 官方资料 / OFFICIAL EACO FACTS -------------------');
+ out.push('  CA        : '+EACO.ca);
+ out.push('  Chain     : '+EACO.chain+'  Supply: '+EACO.supply+'  LP: '+(z?EACO.lpZh:EACO.lpEn));
+ out.push('  Formula   : '+(z?EACO.formulaZh:EACO.formulaEn));
+ out.push('  Principle : '+(z?EACO.principleZh:EACO.principleEn));
+ EACO.goals.forEach((g,i)=>out.push('  Goal '+(i+1)+' : '+(z?g[0]:g[1])));
+ out.push('');
+ out.push('--- [13] 亚洲 20 个轻资产赛道 / ASIA ASSET-LIGHT 20 ------------');
+ ASSET20.forEach((a,i)=>out.push('  '+String(i+1).padStart(2)+' | '+(z?a[0]:a[1])+' | '+(z?a[2]:a[3])+' | '+(z?a[4]:a[5])));
+ out.push('  (curated representative tracks, NOT an official ranking)');
+ out.push('');
+ out.push('--- [14] 结合路径 / INTEGRATION PATHS --------------------------');
+ DEV_PATHS.forEach((d,i)=>out.push('  '+(i+1)+' | '+(z?d[0]:d[1])+' | '+(z?d[2]:d[3])));
+ out.push('');
+ out.push('--- [15] 高维正能量方向 / POSITIVE-SUM DIRECTIONS --------------');
+ POSITIVE.forEach((p,i)=>out.push('  '+(i+1)+' | '+(z?p[0]:p[1])+' | '+(z?p[2]:p[3])));
+ out.push('');
+ out.push('--- [16] 资料链接 / REFERENCE LINKS ----------------------------');
+ EACO.links.forEach(l=>out.push('  '+(z?l[0]:l[1])+' : '+l[2]));
+ out.push('  '+DICT['dos.note'][0]);
+ out.push('  '+DICT['dos.note'][1]);
+ out.push('');
+ out.push('================================================================');
+ out.push('机器可读状态快照 / MACHINE-READABLE SNAPSHOT (do not edit)');
+ out.push('#EACO_STATE_B64:'+b64encode(JSON.stringify(state)));
+ out.push('================ END OF TXT MEMORY =============================');
+ return out.join('\n');
+}
+function downloadTxt(){
+ const blob=new Blob(['\uFEFF'+buildTxt()],{type:'text/plain;charset=utf-8'});
+ const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+ const d=new Date(),p=n=>String(n).padStart(2,'0');
+ a.download='eaco-memory-'+d.getFullYear()+p(d.getMonth()+1)+p(d.getDate())+'-'+p(d.getHours())+p(d.getMinutes())+'.txt';
+ document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),3000);
+ toast(t('msg.export'));
+}
+function importTxt(text){
+ const m=text.match(/#EACO_STATE_B64:([A-Za-z0-9+/=]+)/);
+ if(m){
+  try{
+   const obj=JSON.parse(b64decode(m[1]));
+   if(!obj||!Array.isArray(obj.entries)||!Array.isArray(obj.members))throw new Error('bad snapshot');
+   const lg=state.lang,th=state.theme;
+   state=obj;
+   state.lang=state.lang||lg;state.theme=state.theme||th;
+   state.draft=state.draft||{memberId:'',serviceId:'S1',qty:1,diff:1,usePoints:true};
+   state.filters=state.filters||{unit:'ALL',type:'ALL',q:''};
+   state.view=state.view||'dash';state.notes=state.notes||'';state.log=state.log||[];state.seq=state.seq||1;
+   logEvent('导入 TXT 记忆，状态已恢复','TXT memory imported, state restored');
+   save();render();toast(t('mem.imported'));return;
+  }catch(err){console.warn(err)}
+ }
+ state.notes=(state.notes?state.notes+'\n\n':'')+'[imported '+tsStr(Date.now())+']\n'+text.slice(0,20000);
+ logEvent('导入纯文本备忘','Plain-text notes imported');
+ save();render();toast(t('mem.importText'));
+}
+
+/* ---------- 7. rendering helpers ---------- */
+function icon(k){return '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="'+ICONS[k]+'"/></svg>'}
+function statusChip(s){const c={pending:'y',paid:'g',assigned:'g',working:'g',done:'a',cancelled:'r'}[s]||'';return '<span class="chip '+c+'">'+t('st.'+s)+'</span>'}
+function unitChip(u){return '<span class="chip '+(u==='EACO'?'a':'y')+'">'+u+'</span>'}
+function web3Chip(w){const c={friendly:'g',neutral:'y',restricted:'r'}[w];return '<span class="chip '+c+'">'+t('web3.'+w)+'</span>'}
+function card(title,body,extra){return '<div class="card"><div class="spread" style="margin-bottom:10px"><h3>'+title+'</h3>'+(extra||'')+'</div>'+body+'</div>'}
+function pageHead(k,sub){return '<div class="page-head"><h1>'+t(k+'.title')+'</h1><p>'+t(k+'.sub')+'</p>'+(sub||'')+'</div>'}
+
+function renderShell(){
+ document.body.dataset.theme=state.theme;
+ document.documentElement.lang=state.lang==='zh'?'zh-CN':'en';
+ document.title='EACO · '+t('app.title');
+ document.querySelectorAll('[data-i18n]').forEach(el=>el.textContent=t(el.dataset.i18n));
+ const counts={services:SERVICES.length,orders:state.orders.filter(o=>o.status!=='cancelled').length,ledger:state.entries.length,team:state.members.length,memory:state.log.length};
+ document.getElementById('nav').innerHTML=VIEWS.map(v=>'<button data-act="nav" data-id="'+v+'" class="'+(state.view===v?'on':'')+'">'+icon(v)+'<span>'+t('nav.'+v)+'</span>'+(counts[v]!==undefined?'<span class="num">'+counts[v]+'</span>':'')+'</button>').join('');
+ const rb=document.getElementById('unitBadge');
+ rb.innerHTML='<span class="muted tiny">'+t('unit.badge')+'</span><b id="unitBadgeVal"></b><span class="tiny muted" id="unitBadgeSub"></span>';
+ const cur=state.draft.memberId?member(state.draft.memberId):null;
+ const u=cur?cur.unit:'EACO';
+ document.getElementById('unitBadgeVal').textContent=u;
+ document.getElementById('unitBadgeSub').textContent=cur?(regionName(region(cur.region))+' · '+cur.name):t('region.auto');
+ document.getElementById('crumbT').textContent=t('nav.'+state.view);
+ document.getElementById('crumbS').textContent=' · '+t('app.sub');
+ document.getElementById('tools').innerHTML=
+  '<span class="seg-lbl">'+t('lang.label')+'</span><div class="seg">'+
+   ['zh','en'].map(l=>'<button data-act="lang" data-id="'+l+'" class="'+(state.lang===l?'on':'')+'">'+(l==='zh'?'中文':'EN')+'</button>').join('')+'</div>'+
+  '<span class="seg-lbl">'+t('theme.label')+'</span><div class="seg">'+
+   ['jp','kr','cn'].map(x=>'<button data-act="theme" data-id="'+x+'" class="'+(state.theme===x?'on':'')+'" title="'+esc(t('theme.desc.'+x))+'">'+t('theme.'+x)+'</button>').join('')+'</div>'+
+  '<button class="btn sm" data-act="gotoDossier">'+t('dos.goto')+'</button>'+
+  '<button class="btn sm" data-act="export">'+t('btn.export')+'</button>'+
+  '<span class="chip" id="saveChip">'+t('save.state')+' · '+t('save.ok')+'</span>';
+}
+function kpi(lb,vl,sub){return '<div class="card kpi"><div class="lb">'+lb+'</div><div class="vl">'+vl+'</div><div class="sub">'+(sub||'')+'</div></div>'}
+function barsSVG(){
+ const days=[];for(let i=6;i>=0;i--){const d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()-i);days.push({k:dayKey(d.getTime()),s:d.getTime(),e:d.getTime()+86400000,n:0})}
+ state.entries.forEach(e=>{for(const d of days)if(e.ts>=d.s&&e.ts<d.e)d.n++});
+ const mx=Math.max(1,...days.map(d=>d.n));
+ const W=560,H=140,bw=44,gap=(W-40-days.length*bw)/(days.length-1);
+ let s='<svg viewBox="0 0 '+W+' '+H+'" width="100%" height="150" role="img" aria-label="7 day activity">';
+ s+='<line x1="20" y1="110" x2="'+(W-20)+'" y2="110" stroke="var(--line)" stroke-width="1"/>';
+ days.forEach((d,i)=>{const h=Math.round(d.n/mx*82),x=20+i*(bw+gap),y=110-h;
+  s+='<rect x="'+x+'" y="'+y+'" width="'+bw+'" height="'+Math.max(h,2)+'" rx="4" fill="'+(i===6?'var(--accent2)':'var(--accent)')+'" opacity="'+(i===6?1:.72)+'"/>';
+  s+='<text x="'+(x+bw/2)+'" y="'+(y-5)+'" text-anchor="middle" font-size="10" fill="var(--muted)">'+d.n+'</text>';
+  s+='<text x="'+(x+bw/2)+'" y="128" text-anchor="middle" font-size="10" fill="var(--muted)">'+d.k+'</text>';});
+ return s+'</svg>';
+}
+function donutSVG(){
+ const a=turnover('EACO'),b=turnover('CNH'),tot=a+b||1,pa=a/tot;
+ const C=2*Math.PI*46;
+ let s='<svg viewBox="0 0 140 140" width="140" height="140" role="img" aria-label="unit split">';
+ s+='<circle cx="70" cy="70" r="46" fill="none" stroke="var(--soft)" stroke-width="18"/>';
+ s+='<circle cx="70" cy="70" r="46" fill="none" stroke="var(--accent)" stroke-width="18" stroke-dasharray="'+round(pa*C)+' '+round(C)+'" transform="rotate(-90 70 70)" stroke-linecap="round"/>';
+ s+='<circle cx="70" cy="70" r="46" fill="none" stroke="var(--accent2)" stroke-width="18" stroke-dasharray="'+round((1-pa)*C)+' '+round(C)+'" stroke-dashoffset="'+round(-pa*C)+'" transform="rotate(-90 70 70)" stroke-linecap="round"/>';
+ s+='<text x="70" y="68" text-anchor="middle" font-size="15" font-weight="700" fill="var(--ink)">'+Math.round(pa*100)+'%</text>';
+ s+='<text x="70" y="84" text-anchor="middle" font-size="9" fill="var(--muted)">EACO</text></svg>';
+ return s;
+}
+function chainChip(e){
+ const on=e.chain==='solana';
+ return '<span class="chip '+(on?'a':'y')+'">'+t(on?'chain.solana':'chain.off')+'</span>';
+}
+function schemeBanner(){
+ const A=state.members.filter(m=>schemeOf(m.region)==='A').length;
+ const B=state.members.length-A;
+ const ae=state.entries.filter(e=>e.chain==='solana').length;
+ const be=state.entries.length-ae;
+ return '<div class="grid g2" style="margin-bottom:14px">'+
+  '<div class="card" style="border-left:4px solid var(--accent)"><div class="spread"><h3>'+t('scheme.a')+' · '+t('scheme.aName')+'</h3>'+schemeChip('A')+'</div>'+
+   '<p class="tiny muted" style="margin:6px 0 10px">'+t('scheme.aTag')+' · EACO + Solana Web3</p>'+
+   '<div class="row"><span class="chip">'+A+' '+t('kpi.members')+'</span><span class="chip">'+ae+' '+t('led.lines')+'</span><span class="chip">'+money(turnover('EACO'))+' EACO</span></div></div>'+
+  '<div class="card" style="border-left:4px solid var(--accent2)"><div class="spread"><h3>'+t('scheme.b')+' · '+t('scheme.bName')+'</h3>'+schemeChip('B')+'</div>'+
+   '<p class="tiny muted" style="margin:6px 0 10px">'+t('scheme.bTag')+' · CNH '+t('led.balance')+'</p>'+
+   '<div class="row"><span class="chip">'+B+' '+t('kpi.members')+'</span><span class="chip">'+be+' '+t('led.lines')+'</span><span class="chip">'+money(turnover('CNH'))+' CNH</span></div></div>'+
+  '</div>';
+}
+function solanaCard(){
+ const z=state.lang==='zh';
+ return card(t('sol.title'),
+  '<p class="tiny muted" style="margin-bottom:10px">'+t('sol.sub')+'</p>'+
+  '<div class="quote-line"><span>'+t('sol.ca')+'</span><span class="mono tiny" style="word-break:break-all;text-align:right;max-width:62%">'+esc(EACO.ca)+'</span></div>'+
+  '<div class="quote-line"><span>'+t('sol.network')+'</span><span>'+esc(EACO.chain)+' · mainnet-beta（资料引用）</span></div>'+
+  '<div class="quote-line"><span>'+t('sol.supply')+'</span><span>'+esc(EACO.supply)+'</span></div>'+
+  '<div class="quote-line"><span>'+t('sol.lp')+'</span><span>'+esc(z?EACO.lpZh:EACO.lpEn)+'</span></div>'+
+  '<div class="quote-line"><span>'+t('sol.formula')+'</span><span>'+esc(z?EACO.formulaZh:EACO.formulaEn)+'</span></div>'+
+  '<div class="quote-line"><span>'+t('sol.principle')+'</span><span>'+esc(z?EACO.principleZh:EACO.principleEn)+'</span></div>'+
+  '<div class="row" style="margin-top:10px"><button class="btn sm" data-act="copyCA">'+t('sol.copy')+'</button><button class="btn sm" data-act="gotoDossier">'+t('dos.goto')+'</button></div>',
+  '<span class="chip a">'+t('scheme.a')+'</span>');
+}
+function viewScheme(){
+ const z=state.lang==='zh';
+ const A=REGIONS.filter(r=>schemeOf(r.c)==='A'),B=REGIONS.filter(r=>schemeOf(r.c)==='B');
+ const rows=SCHEME_ROWS.map(r=>'<tr><td><b>'+esc(z?r[0]:r[1])+'</b></td><td class="tiny">'+esc(z?r[2]:r[3])+'</td><td class="tiny">'+esc(z?r[4]:r[5])+'</td></tr>').join('');
+ const goals=EACO.goals.map((g,i)=>'<li>'+esc(z?g[0]:g[1])+'</li>').join('');
+ const rail=(k)=>{
+  const e=k==='A'?t('scheme.aName'):t('scheme.bName');
+  const tag=k==='A'?t('scheme.aTag'):t('scheme.bTag');
+  const units=k==='A'?'EACO':'CNH';
+  return '<div class="card"><div class="spread"><h2>'+t('scheme.'+k.toLowerCase())+'</h2>'+schemeChip(k)+'</div>'+
+   '<p style="margin:6px 0 2px;font-family:var(--head);font-size:16px;color:var(--accent)">'+e+'</p>'+
+   '<p class="tiny muted" style="margin-bottom:10px">'+tag+'</p>'+
+   '<div class="quote-line"><span>'+t('svc.unit')+'</span><span>'+units+'</span></div>'+
+   '<div class="quote-line"><span>'+t('chain.col')+'</span><span>'+(k==='A'?t('chain.solana'):t('chain.off'))+'</span></div>'+
+   '<div class="quote-line"><span>'+t('scheme.regions')+'</span><span>'+(k==='A'?A.length:B.length)+' / '+REGIONS.length+'</span></div>'+
+   '<div class="notice tiny" style="margin-top:10px">'+(k==='A'?t('sol.sub'):t('led.noEaco'))+'</div></div>';
+ };
+ const listA=A.map(r=>'<span class="chip g" style="margin:2px">'+r.c+' '+esc(regionName(r))+'</span>').join('');
+ const listB=B.map(r=>'<span class="chip y" style="margin:2px">'+r.c+' '+esc(regionName(r))+'</span>').join('');
+ return pageHead('scheme')+schemeBanner()+
+  '<div class="grid g2" style="margin-bottom:14px">'+rail('A')+rail('B')+'</div>'+
+  card(t('scheme.compare'),'<div class="tw"><table><thead><tr><th>'+t('scheme.col')+'</th><th>'+t('scheme.valA')+'</th><th>'+t('scheme.valB')+'</th></tr></thead><tbody>'+rows+'</tbody></table></div>','<span class="chip">'+t('scheme.choose')+'</span>')+
+  '<div style="height:14px"></div>'+
+  '<div class="grid g2" style="margin-bottom:14px">'+
+   card(t('scheme.regions')+' · '+t('scheme.a'),'<div class="row">'+listA+'</div>')+
+   card(t('scheme.regions')+' · '+t('scheme.b'),'<div class="row">'+listB+'</div>')+
+  '</div>'+
+  solanaCard()+
+  '<div style="height:14px"></div>'+
+  card(t('sol.goals'),'<ol style="margin:0;padding-left:20px;line-height:1.9">'+goals+'</ol><p class="tiny muted" style="margin-top:10px">'+esc(z?EACO.principleZh:EACO.principleEn)+'</p>','<span class="chip">'+esc(z?EACO.nameZh:EACO.nameEn)+'</span>');
+}
+/* ---- Bottom-of-page EACO dossier (always last) ---- */
+function dossierHTML(){
+ const z=state.lang==='zh';
+ const links=EACO.links.map(l=>'<a class="btn sm" href="'+esc(l[2])+'" target="_blank" rel="noopener noreferrer">'+esc(z?l[0]:l[1])+' ↗</a>').join('');
+ const asset=ASSET20.map((a,i)=>'<tr><td class="mono">'+(i+1)+'</td><td><b>'+esc(z?a[0]:a[1])+'</b></td><td class="tiny">'+esc(z?a[2]:a[3])+'</td><td class="tiny muted">'+esc(z?a[4]:a[5])+'</td></tr>').join('');
+ const dev=DEV_PATHS.map((d,i)=>'<div class="card" style="padding:12px"><div class="row" style="gap:7px"><span class="chip a">'+(i+1)+'</span><b>'+esc(z?d[0]:d[1])+'</b></div><p class="tiny muted" style="margin-top:6px">'+esc(z?d[2]:d[3])+'</p></div>').join('');
+ const pos=POSITIVE.map((p,i)=>'<div class="card" style="padding:12px"><div class="row" style="gap:7px"><span class="chip g">'+(i+1)+'</span><b>'+esc(z?p[0]:p[1])+'</b></div><p class="tiny muted" style="margin-top:6px">'+esc(z?p[2]:p[3])+'</p></div>').join('');
+ return '<section id="dossier" class="dossier">'+
+  '<div class="dossier-head"><h1>'+t('dos.title')+'</h1><p>'+t('dos.sub')+'</p></div>'+
+  card(t('dos.official'),
+   '<div class="grid g2" style="margin-bottom:10px"><div>'+
+    '<div class="quote-line"><span>'+t('sol.ca')+'</span><span class="mono tiny" style="word-break:break-all;text-align:right;max-width:64%">'+esc(EACO.ca)+'</span></div>'+
+    '<div class="quote-line"><span>'+t('sol.network')+'</span><span>'+esc(EACO.chain)+'</span></div>'+
+    '<div class="quote-line"><span>'+t('sol.supply')+'</span><span>'+esc(EACO.supply)+'</span></div>'+
+    '<div class="quote-line"><span>'+t('sol.lp')+'</span><span>'+esc(z?EACO.lpZh:EACO.lpEn)+'</span></div>'+
+    '<div class="quote-line"><span>'+t('sol.formula')+'</span><span>'+esc(z?EACO.formulaZh:EACO.formulaEn)+'</span></div>'+
+    '<div class="quote-line"><span>'+t('sol.principle')+'</span><span>'+esc(z?EACO.principleZh:EACO.principleEn)+'</span></div>'+
+   '</div><div>'+
+    '<p class="tiny muted" style="margin-bottom:8px">'+esc(z?EACO.nameZh:EACO.nameEn)+' · '+t('scheme.a')+'</p>'+
+    '<ol style="margin:0 0 10px;padding-left:20px;line-height:1.85" class="tiny">'+EACO.goals.map(g=>'<li>'+esc(z?g[0]:g[1])+'</li>').join('')+'</ol>'+
+    '<div class="row" style="gap:6px"><button class="btn sm" data-act="copyCA">'+t('sol.copy')+'</button></div>'+
+   '</div></div>'+
+   '<h3 style="margin:12px 0 8px">'+t('dos.links')+'</h3><div class="row" style="gap:6px">'+links+'</div>'+
+   '<p class="tiny muted" style="margin-top:10px">'+t('dos.source')+'</p>')+
+  '<div style="height:14px"></div>'+
+  card(t('dos.q1'),'<p class="tiny muted" style="margin-bottom:10px">'+t('dos.note')+'</p><div class="tw"><table><thead><tr><th>'+t('asset.no')+'</th><th>'+t('asset.track')+'</th><th>'+t('asset.hub')+'</th><th>'+t('asset.combine')+'</th></tr></thead><tbody>'+asset+'</tbody></table></div>','<span class="chip">20</span>')+
+  '<div style="height:14px"></div>'+
+  card(t('dos.q2'),'<div class="grid g3">'+dev+'</div>','<span class="chip">'+DEV_PATHS.length+'</span>')+
+  '<div style="height:14px"></div>'+
+  card(t('dos.q3'),'<div class="grid g3">'+pos+'</div>','<span class="chip g">'+POSITIVE.length+'</span>')+
+  '<div style="height:14px"></div>'+
+  '<div class="notice"><b>'+t('disclaimer.full')+'</b><br>'+t('dos.note')+'<br>'+t('disclaimer.short')+'</div>'+
+  '<p class="tiny muted" style="margin-top:14px;text-align:center">EACO × Solana · Asia Game Boosting Guild · '+esc(z?'页面底部资料区':'bottom-of-page dossier')+'</p>'+
+  '</section>';
+}
+
+/* ---------- 8. views ---------- */
+function viewDash(){
+ const O=state.orders.filter(o=>o.status!=='cancelled');
+ const done=O.filter(o=>o.status==='done').length,working=O.filter(o=>o.status==='working'||o.status==='assigned').length,pending=O.filter(o=>o.status==='pending').length;
+ const pool='<span class="mono">'+money(balOf('__PLATFORM__','EACO'))+' EACO</span> · <span class="mono">'+money(balOf('__PLATFORM__','CNH'))+' CNH</span>';
+ const steps=[1,2,3,4,5,6,7].map(i=>{
+  const sub=[state.members.length+' '+t('team.members').split(' / ')[0],state.orders.length+' '+t('kpi.orders'),state.entries.filter(e=>e.type==='payment').length+' '+t('ty.payment'),O.filter(o=>o.bid).length+' '+t('ord.assign'),done+' '+t('st.done'),state.entries.filter(e=>e.type==='commission').length+' '+t('ty.commission'),state.log.length+' '+t('mem.log').split(' / ')[0]][i-1];
+  return '<div class="step"><div class="n">0'+i+'</div><div class="tx">'+t('flow.'+i)+'</div><div class="sb">'+sub+'</div></div>';
+ }).join('');
+ const recent=state.entries.slice(-7).reverse().map(e=>'<tr><td class="mono tiny">'+tsStr(e.ts)+'</td><td>'+typeChip(e.type)+'</td><td>'+esc(accountName(e.a))+'</td><td>'+unitChip(e.unit)+'</td><td class="mono '+(e.d>=0?'pos':'neg')+'">'+(e.d>=0?'+':'')+money(e.d)+'</td></tr>').join('');
+ return pageHead('dash')+schemeBanner()+
+  '<div class="grid g4" style="margin-bottom:14px">'+
+   kpi(t('kpi.orders'),O.length,t('kpi.done')+' '+done)+
+   kpi(t('kpi.done'),done,t('kpi.working')+' '+working+' · '+t('kpi.pending')+' '+pending)+
+   kpi(t('kpi.eaco'),'<span class="mono">'+money(turnover('EACO'))+'</span>','EACO · '+state.entries.filter(e=>e.unit==='EACO').length+' '+t('led.lines'))+
+   kpi(t('kpi.cnh'),'<span class="mono">'+money(turnover('CNH'))+'</span>','CNH · '+state.entries.filter(e=>e.unit==='CNH').length+' '+t('led.lines'))+
+  '</div>'+
+  '<div class="grid g4" style="margin-bottom:14px">'+
+   kpi(t('kpi.members'),state.members.length,state.members.filter(m=>m.role==='booster').length+' '+t('role.booster'))+
+   kpi(t('kpi.pool'),'<span style="font-size:15px">'+pool+'</span>',t('led.check')+' · '+(ledgerBalanced()?'OK':'!'))+
+   kpi(t('web3.friendly'),REGIONS.filter(r=>r.w==='friendly').length,'EACO · '+t('region.auto'))+
+   kpi(t('web3.restricted'),REGIONS.filter(r=>r.w!=='friendly').length,'CNH · '+t('region.auto'))+
+  '</div>'+
+  '<div class="grid g23" style="margin-bottom:14px">'+
+   card(t('chart.7d'),barsSVG())+
+   card(t('chart.split'),'<div class="row" style="gap:18px">'+donutSVG()+'<div style="flex:1"><div class="legend"><span><i style="background:var(--accent)"></i>EACO '+money(turnover('EACO'))+'</span><span><i style="background:var(--accent2)"></i>CNH '+money(turnover('CNH'))+'</span></div><div class="notice" style="margin-top:12px"><b>'+t('disclaimer.full')+'</b><br>'+t('dash.tip')+'</div></div></div>')+
+  '</div>'+
+  card(t('flow.title'),'<div class="flow">'+steps+'</div>')+
+  '<div style="height:14px"></div>'+
+  card(t('recent.title'),'<div class="tw"><table><thead><tr><th>'+t('led.time')+'</th><th>'+t('led.type')+'</th><th>'+t('led.account')+'</th><th>'+t('svc.unit')+'</th><th>'+t('led.change')+'</th></tr></thead><tbody>'+recent+'</tbody></table></div>','<button class="btn sm" data-act="nav" data-id="ledger">'+t('btn.details')+'</button>');
+}
+function typeChip(ty){return '<span class="chip">'+t('ty.'+ty)+'</span>'}
+function viewServices(){
+ const M=state.members.filter(m=>m.role!=='admin');
+ if(!state.draft.memberId||!member(state.draft.memberId))state.draft.memberId=M.length?M[0].id:'';
+ const cards=SERVICES.map(s=>'<div class="svc"><span class="cat">'+catName(s.cat)+'</span><span class="nm">'+svcName(s)+'</span><span class="tiny muted">'+(state.lang==='zh'?s.en:s.zh)+'</span><div class="spread" style="margin-top:6px"><span class="pr">'+money(s.p)+'</span><span class="tiny muted">CNH · '+t('svc.per')+'</span></div></div>').join('');
+ const memberOpts=M.map(m=>'<option value="'+m.id+'" '+(state.draft.memberId===m.id?'selected':'')+'>'+esc(m.name)+' · '+regionName(region(m.region))+' · '+m.unit+'</option>').join('');
+ const svcOpts=SERVICES.map(s=>'<option value="'+s.id+'" '+(state.draft.serviceId===s.id?'selected':'')+'>'+svcName(s)+' · '+money(s.p)+' CNH</option>').join('');
+ const diffOpts=DIFF.map(d=>'<option value="'+d.v+'" '+(Number(state.draft.diff)===d.v?'selected':'')+'>'+t(d.k)+'</option>').join('');
+ const q='<div class="field"><label class="fl">'+t('svc.member')+'</label><select data-draft="memberId" id="dMember">'+memberOpts+'</select></div>'+
+  '<div class="field"><label class="fl">'+t('svc.service')+'</label><select data-draft="serviceId" id="dService">'+svcOpts+'</select></div>'+
+  '<div class="f2"><div class="field"><label class="fl">'+t('svc.qty')+'</label><input type="number" min="1" max="30" step="1" value="'+state.draft.qty+'" data-draft="qty" id="dQty"></div>'+
+  '<div class="field"><label class="fl">'+t('svc.diff')+'</label><select data-draft="diff" id="dDiff">'+diffOpts+'</select></div></div>'+
+  '<label class="row tiny" style="margin:4px 0 14px;cursor:pointer"><input type="checkbox" data-draft="usePoints" id="dPoints" '+(state.draft.usePoints?'checked':'')+' style="width:auto"> '+t('svc.usePoints')+'</label>'+
+  '<div class="notice" style="margin-bottom:12px" id="qRegion"></div>'+
+  '<div class="quote-line"><span>'+t('svc.base')+'</span><span class="mono" id="qBase">-</span></div>'+
+  '<div class="quote-line"><span>'+t('svc.discount')+'</span><span class="mono" id="qOffset">-</span></div>'+
+  '<div class="quote-line big"><span>'+t('svc.payable')+'</span><span id="qPay">-</span></div>'+
+  '<div class="tiny muted" id="qHint" style="margin:8px 0 12px"></div>'+
+  '<button class="btn pri" style="width:100%" data-act="placeOrder" id="qBtn">'+t('svc.place')+'</button>';
+ return pageHead('svc')+'<div class="grid g23"><div>'+card(t('svc.catalog'),'<div class="grid g2">'+cards+'</div>')+'</div><div>'+card(t('svc.builder'),q)+'</div></div>';
+}
+function quoteVals(){
+ const d=state.draft,m=member(d.memberId),s=service(d.serviceId);
+ if(!m)return null;
+ const qty=Math.max(1,Math.round(Number(d.qty)||1)),dm=Number(d.diff)>0?Number(d.diff):1;
+ const base=round(s.p*qty*dm);
+ const off=d.usePoints?round(Math.min(Math.max(0,balOf(m.id,m.unit)),round(base*.3))):0;
+ return {m:m,s:s,u:m.unit,base:base,off:off,pay:round(base-off),bal:balOf(m.id,m.unit)};
+}
+function updateQuote(){
+ const v=quoteVals();
+ const set=(id,txt)=>{const el=document.getElementById(id);if(el)el.textContent=txt};
+ if(!v){set('qBase','-');set('qOffset','-');set('qPay','-');set('qRegion',t('msg.noMember'));const b=document.getElementById('qBtn');if(b)b.disabled=true;return}
+ set('qBase',money(v.base)+' '+v.u);
+ set('qOffset','- '+money(v.off)+' '+v.u);
+ set('qPay',money(v.pay)+' '+v.u);
+ const rg=document.getElementById('qRegion');
+ if(rg)rg.innerHTML='<b>'+t('svc.regionFollow')+'</b><br>'+esc(regionName(region(v.m.region)))+' · '+schemeChip(schemeOf(v.m.region))+' '+web3Chip(region(v.m.region).w)+' '+unitChip(v.u)+'<br>'+esc(noteOf(region(v.m.region)));
+ set('qHint',v.bal<=0?t('svc.noBalance'):t('led.balance')+': '+money(v.bal)+' '+v.u+' · '+t('svc.usePoints'));
+ const b=document.getElementById('qBtn');if(b)b.disabled=false;
+}
+function viewOrders(){
+ const rows=state.orders.slice().reverse().map(o=>{
+  const m=member(o.mid),b=o.bid?member(o.bid):null,s=service(o.sid);
+  const acts=[];
+  if(o.status==='pending'){acts.push('<button class="btn sm pri" data-act="pay" data-id="'+o.id+'">'+t('ord.pay')+'</button>');acts.push('<button class="btn sm warn" data-act="cancelOrder" data-id="'+o.id+'">'+t('ord.cancel')+'</button>')}
+  if(o.status==='paid'){acts.push('<button class="btn sm pri" data-act="assign" data-id="'+o.id+'">'+t('ord.assign')+'</button>');acts.push('<button class="btn sm warn" data-act="cancelOrder" data-id="'+o.id+'">'+t('ord.refund')+'</button>')}
+  if(o.status==='assigned'){acts.push('<button class="btn sm pri" data-act="start" data-id="'+o.id+'">'+t('ord.start')+'</button>');acts.push('<button class="btn sm" data-act="assign" data-id="'+o.id+'">'+t('ord.assign')+'</button>')}
+  if(o.status==='working')acts.push('<button class="btn sm pri" data-act="finish" data-id="'+o.id+'">'+t('ord.finish')+'</button>');
+  if(o.status==='done')acts.push('<button class="btn sm" data-act="settle" data-id="'+o.id+'">'+t('ord.settle')+'</button>');
+  return '<tr><td class="mono tiny">'+o.id+'<br><span class="muted">'+tsStr(o.ts)+'</span></td>'+
+   '<td>'+esc(m?m.name:'-')+'<br><span class="tiny muted">'+esc(regionName(region(o.region)))+'</span></td>'+
+   '<td>'+svh(s)+'<br><span class="tiny muted">×'+o.qty+' · '+o.diff+'</span></td>'+
+   '<td>'+unitChip(o.unit)+'</td>'+
+   '<td class="mono">'+money(o.base)+'<br><span class="tiny muted">-'+money(o.off)+' / <b>'+money(o.pay)+'</b></span></td>'+
+   '<td>'+statusChip(o.status)+'<br><span class="tiny muted">'+(b?esc(b.name):'-')+'</span></td>'+
+   '<td><div class="row" style="gap:4px">'+acts.join('')+'</div></td></tr>';
+ }).join('');
+ const table=state.orders.length?'<div class="tw"><table><thead><tr><th>'+t('ord.id')+'</th><th>'+t('ord.client')+'</th><th>'+t('ord.service')+'</th><th>'+t('svc.unit')+'</th><th>'+t('ord.quote')+'</th><th>'+t('ord.status')+'</th><th>'+t('ord.action')+'</th></tr></thead><tbody>'+rows+'</tbody></table></div>':'<div class="notice">'+t('ord.empty')+'</div>';
+ return pageHead('ord')+card(t('ord.title'),table,'<button class="btn sm" data-act="nav" data-id="services">'+t('svc.place')+'</button>');
+}
+function svh(s){return esc(svcName(s))}
+function viewLedger(){
+ const f=state.filters;
+ let list=state.entries.slice().reverse();
+ if(f.unit!=='ALL')list=list.filter(e=>e.unit===f.unit);
+ if(f.type!=='ALL')list=list.filter(e=>e.type===f.type);
+ if(f.q){const q=f.q.toLowerCase();list=list.filter(e=>(accountName(e.a)+' '+L(e.note)+' '+e.ref+' '+e.jid+' '+e.oid).toLowerCase().includes(q))}
+ const rows=list.slice(0,300).map(e=>'<tr><td class="mono tiny">'+tsStr(e.ts)+'</td><td class="mono tiny" title="'+esc(e.ref)+(e.slot?' · slot '+e.slot:'')+'">'+esc(shortRef(e.ref))+'<br><span class="muted">'+e.jid+'</span></td><td>'+typeChip(e.type)+'</td><td>'+chainChip(e)+'</td><td>'+esc(accountName(e.a))+'</td><td>'+unitChip(e.unit)+'</td><td class="mono '+(e.d>=0?'pos':'neg')+'">'+(e.d>=0?'+':'')+money(e.d)+'</td><td class="mono">'+money(e.bal)+'</td><td class="tiny muted">'+esc(L(e.note))+'</td></tr>').join('');
+ const wallets=state.members.map(m=>'<tr><td>'+esc(m.name)+'</td><td>'+roleName(m.role)+'</td><td>'+esc(regionName(region(m.region)))+'</td><td>'+unitChip(m.unit)+' '+schemeChip(schemeOf(m.region))+'</td><td class="mono">'+money(balOf(m.id,'EACO'))+'</td><td class="mono">'+money(balOf(m.id,'CNH'))+'</td></tr>').join('');
+ const types=['topup','offset','payment','commission','reward','refund','withdraw','exchange'];
+ const controls='<div class="row" style="margin-bottom:12px">'+
+  '<select data-filter="unit" style="width:auto"><option value="ALL" '+(f.unit==='ALL'?'selected':'')+'>'+t('btn.all')+'</option><option value="EACO" '+(f.unit==='EACO'?'selected':'')+'>EACO</option><option value="CNH" '+(f.unit==='CNH'?'selected':'')+'>CNH</option></select>'+
+  '<select data-filter="type" style="width:auto"><option value="ALL" '+(f.type==='ALL'?'selected':'')+'>'+t('led.all')+'</option>'+types.map(x=>'<option value="'+x+'" '+(f.type===x?'selected':'')+'>'+t('ty.'+x)+'</option>').join('')+'</select>'+
+  '<input type="text" data-search value="'+esc(f.q)+'" placeholder="'+esc(t('led.search'))+'" style="flex:1;min-width:180px">'+
+  '<button class="btn sm pri" data-act="topup">+ '+t('led.topup')+'</button>'+
+  '<button class="btn sm" data-act="exchange">'+t('led.exchange')+'</button>'+
+  '<button class="btn sm" data-act="withdraw">'+t('led.withdraw')+'</button></div>';
+ return pageHead('led')+
+  '<div class="grid g4" style="margin-bottom:14px">'+
+   kpi('EACO · '+t('led.balance'),'<span class="mono">'+money(state.members.reduce((s,m)=>s+balOf(m.id,'EACO'),0))+'</span>',t('led.vol')+' '+money(turnover('EACO')))+
+   kpi('CNH · '+t('led.balance'),'<span class="mono">'+money(state.members.reduce((s,m)=>s+balOf(m.id,'CNH'),0))+'</span>',t('led.vol')+' '+money(turnover('CNH')))+
+   kpi(t('led.lines'),state.entries.length,t('led.check'))+
+   kpi(t('led.check'),ledgerBalanced()?'OK':'!',ledgerBalanced()?t('led.checkOk'):t('led.checkBad'))+
+  '</div>'+
+  '<div class="notice" style="margin-bottom:14px"><b>'+t('led.check')+'：</b>'+(ledgerBalanced()?t('led.checkOk'):t('led.checkBad'))+' · EACO '+money(unitNet('EACO'))+' / CNH '+money(unitNet('CNH'))+'</div>'+
+  '<div style="margin-bottom:14px">'+solanaCard()+'</div>'+
+  card(t('led.title'),controls+'<div class="tw"><table><thead><tr><th>'+t('led.time')+'</th><th>'+t('led.ref')+'</th><th>'+t('led.type')+'</th><th>'+t('chain.col')+'</th><th>'+t('led.account')+'</th><th>'+t('svc.unit')+'</th><th>'+t('led.change')+'</th><th>'+t('led.balanceAfter')+'</th><th>'+t('led.note')+'</th></tr></thead><tbody>'+(rows||'<tr><td colspan="9" class="muted">-</td></tr>')+'</tbody></table></div>'+(list.length>300?'<p class="tiny muted" style="margin-top:8px">'+list.length+' / 300</p>':''))+
+  '<div style="height:14px"></div>'+
+  card(t('led.wallet'),'<div class="tw"><table><thead><tr><th>'+t('team.name')+'</th><th>'+t('team.role')+'</th><th>'+t('team.region')+'</th><th>'+t('team.unit')+'</th><th>EACO</th><th>CNH</th></tr></thead><tbody>'+wallets+'</tbody></table></div>');
+}
+function viewTeam(){
+ const rows=state.members.map(m=>'<tr><td><b>'+esc(m.name)+'</b><br><span class="mono tiny muted">'+m.id+'</span></td><td>'+roleName(m.role)+'</td><td>'+esc(regionName(region(m.region)))+'<br>'+web3Chip(region(m.region).w)+'</td><td>'+unitChip(m.unit)+' '+schemeChip(schemeOf(m.region))+'</td><td class="mono">'+money(balOf(m.id,'EACO'))+'</td><td class="mono">'+money(balOf(m.id,'CNH'))+'</td><td class="mono">'+state.orders.filter(o=>o.mid===m.id||o.bid===m.id).length+'</td><td><button class="btn sm" data-act="changeRegion" data-id="'+m.id+'">'+t('team.changeRegion')+'</button> <button class="btn sm warn" data-act="delMember" data-id="'+m.id+'">'+t('team.delete')+'</button></td></tr>').join('');
+ const rrows=REGIONS.map(r=>'<tr><td class="mono">'+r.c+'</td><td>'+esc(regionName(r))+'</td><td>'+web3Chip(r.w)+'</td><td>'+unitChip(unitOf(r.c))+' '+schemeChip(schemeOf(r.c))+'</td><td class="tiny muted">'+esc(noteOf(r))+'</td></tr>').join('');
+ return pageHead('team')+
+  card(t('team.members'),'<div class="tw"><table><thead><tr><th>'+t('team.name')+'</th><th>'+t('team.role')+'</th><th>'+t('team.region')+'</th><th>'+t('team.unit')+'</th><th>'+t('team.eaco')+'</th><th>'+t('team.cnh')+'</th><th>'+t('team.orders')+'</th><th>'+t('team.action')+'</th></tr></thead><tbody>'+rows+'</tbody></table></div>','<button class="btn sm pri" data-act="addMember">+ '+t('team.add')+'</button>')+
+  '<div style="height:14px"></div>'+
+  card(t('team.regionTable'),'<div class="tw"><table><thead><tr><th>Code</th><th>'+t('team.region')+'</th><th>'+t('team.web3')+'</th><th>'+t('team.unit')+'</th><th>'+t('team.note')+'</th></tr></thead><tbody>'+rrows+'</tbody></table></div>','<span class="chip">'+REGIONS.length+' '+t('team.coverage')+'</span>')+
+  '<div style="height:14px"></div><div class="notice"><b>'+t('disclaimer.full')+'</b><br>'+t('disclaimer.body')+'</div>';
+}
+function viewMemory(){
+ const txt=buildTxt();
+ const log=state.log.length?state.log.slice().reverse().map(e=>tsStr(e.ts)+'  '+esc(L(e.m))).join('\n'):t('mem.emptyLog');
+ const gloss=GLOSS.map(g=>'<tr><td>'+esc(g[0])+'</td><td>'+esc(g[1])+'</td><td class="tiny muted">'+esc(state.lang==='zh'?g[2]:g[3])+'</td></tr>').join('');
+ const size=(new Blob([txt]).size/1024).toFixed(1)+' KB';
+ return pageHead('mem')+
+  '<div class="grid g2" style="margin-bottom:14px">'+
+   card(t('mem.auto'),'<div class="row" style="margin-bottom:10px"><button class="btn sm pri" data-act="export">'+t('mem.export')+'</button><button class="btn sm" data-act="import">'+t('mem.import')+'</button><button class="btn sm" data-act="copyTxt">'+t('mem.copy')+'</button></div>'+
+    '<div class="quote-line"><span>'+t('mem.size')+'</span><span class="mono">'+size+'</span></div>'+
+    '<div class="quote-line"><span>'+t('led.lines')+'</span><span class="mono">'+state.entries.length+'</span></div>'+
+    '<div class="quote-line"><span>'+t('mem.state')+'</span><span class="mono">'+esc(KEY)+'</span></div>'+
+    '<div class="quote-line"><span>'+t('mem.synced')+'</span><span class="mono">'+tsStr(Date.now())+'</span></div>'+
+    '<div class="notice" style="margin-top:12px">'+t('mem.sub')+'</div>'+
+    '<div class="row" style="margin-top:10px"><button class="btn sm warn" data-act="clearLog">'+t('mem.clearLog')+'</button><button class="btn sm warn" data-act="resetDemo">'+t('mem.reset')+'</button></div>')+
+   card(t('mem.notes'),'<textarea data-notes placeholder="'+esc(t('mem.notesPh'))+'">'+esc(state.notes)+'</textarea><p class="tiny muted" style="margin-top:8px">'+t('save.state')+' · '+t('save.ok')+'</p>')+
+  '</div>'+
+  card(t('mem.log'),'<pre class="txt" style="max-height:210px">'+log+'</pre>')+
+  '<div style="height:14px"></div>'+
+  card(t('mem.preview'),'<pre class="txt" id="txtPreview">'+esc(txt.slice(0,9000))+(txt.length>9000?'\n... ('+txt.length+' chars)':'')+'</pre>','<button class="btn sm" data-act="export">'+t('btn.download')+'</button>')+
+  '<div style="height:14px"></div>'+
+  card(t('mem.glossary'),'<div class="tw"><table><thead><tr><th>'+t('mem.zh')+'</th><th>'+t('mem.en')+'</th><th>'+t('mem.explain')+'</th></tr></thead><tbody>'+gloss+'</tbody></table></div>');
+}
+const VIEWFN={dash:viewDash,scheme:viewScheme,services:viewServices,orders:viewOrders,ledger:viewLedger,team:viewTeam,memory:viewMemory};
+function render(){
+ renderShell();
+ document.getElementById('view').innerHTML=(VIEWFN[state.view]||viewDash)()+dossierHTML();
+ if(state.view==='services')updateQuote();
+ save();
+}
+function commit(key){save();render();toast(t(key))}
+
+/* ---------- 9. modals ---------- */
+function modal(html){document.getElementById('modalRoot').innerHTML='<div class="mask" data-act="closeModal"><div class="dlg">'+html+'</div></div>'}
+function closeModal(){document.getElementById('modalRoot').innerHTML=''}
+function mHead(k){return '<div class="spread" style="margin-bottom:14px"><div><h2>'+t(k)+'</h2><p class="tiny muted">'+t('disclaimer.full')+' · '+t('save.state')+'</p></div><button class="btn sm" data-act="closeModal">×</button></div>'}
+function mFoot(k){return '<div class="foot"><button class="btn" data-act="closeModal">'+t('btn.cancel')+'</button><button class="btn pri" type="submit">'+t(k||'btn.confirm')+'</button></div>'}
+function memberOpts(role,unit){return state.members.filter(m=>(!role||m.role===role)&&(!unit||m.unit===unit)).map(m=>'<option value="'+m.id+'">'+esc(m.name)+' · '+esc(regionName(region(m.region)))+' · '+m.unit+' ('+money(balOf(m.id,m.unit))+')</option>').join('')}
+function confirmModal(title,body,act,id){
+ modal(mHeadPlain(title)+'<div class="notice">'+body+'</div><div class="foot"><button class="btn" data-act="closeModal">'+t('btn.cancel')+'</button><button class="btn pri" data-act="'+act+'" data-id="'+(id||'')+'">'+t('btn.confirm')+'</button></div>');
+}
+function mHeadPlain(s){return '<div class="spread" style="margin-bottom:14px"><h2>'+esc(s)+'</h2><button class="btn sm" data-act="closeModal">×</button></div>'}
+const MODALS={
+ pay(id){
+  const o=state.orders.find(x=>x.id===id);if(!o)return;
+  const ch=o.unit==='EACO'?CH_EACO:CH_CNH;
+  modal(mHead('ord.payTitle')+'<form data-form="pay" data-id="'+o.id+'">'+
+   '<div class="notice" style="margin-bottom:12px"><b>'+o.id+'</b> · '+esc(svcName(service(o.sid)))+'<br>'+t('ord.amountDue')+': <b>'+money(o.pay)+' '+o.unit+'</b> · '+t('ord.offset')+' '+money(o.off)+' '+o.unit+'<br>'+schemeChip(schemeOf(o.region))+' '+t('scheme.'+(o.unit==='EACO'?'a':'b').toLowerCase())+'</div>'+
+   (o.unit==='EACO'?'<div class="notice tiny" style="margin-bottom:12px"><b>'+t('chain.solana')+'</b> · '+esc(EACO.chain)+' · CA '+esc(EACO.ca.slice(0,8))+'…'+esc(EACO.ca.slice(-6))+'<br>'+t('sol.sub')+'</div>':'')+
+   '<div class="field"><label class="fl">'+t('ord.channel')+'</label><select name="channel">'+ch.map(c=>'<option value="'+esc(state.lang==='zh'?c[1]:c[2])+'">'+esc(state.lang==='zh'?c[1]:c[2])+'</option>').join('')+'</select></div>'+
+   '<div class="notice tiny">'+t('disclaimer.short')+'</div>'+mFoot('ord.confirmPay')+'</form>');
+ },
+ assign(id){
+  const o=state.orders.find(x=>x.id===id);if(!o)return;
+  const opts=memberOpts('booster',o.unit);
+  modal(mHead('ord.assignTitle')+'<form data-form="assign" data-id="'+o.id+'">'+
+   '<div class="field"><label class="fl">'+t('ord.chooseBooster')+'</label><select name="bid">'+(opts||'<option value="">-</option>')+'</select></div>'+
+   '<div class="notice tiny">'+t('ord.sameUnit')+'</div>'+mFoot('btn.confirm')+'</form>');
+ },
+ settle(id){
+  const o=state.orders.find(x=>x.id===id);if(!o)return;
+  const b=o.bid?member(o.bid):null;
+  modal(mHeadPlain(t('ord.settleTitle'))+'<div class="quote-line"><span>'+t('ord.service')+'</span><span>'+esc(svcName(service(o.sid)))+'</span></div>'+
+   '<div class="quote-line"><span>'+t('ord.payable')+'</span><span class="mono">'+money(o.pay)+' '+o.unit+'</span></div>'+
+   '<div class="quote-line"><span>'+t('ord.commission')+'</span><span class="mono">'+money(o.commission)+'</span></div>'+
+   '<div class="quote-line"><span>'+t('ord.reward')+'</span><span class="mono">'+money(o.reward)+'</span></div>'+
+   '<div class="quote-line"><span>'+t('ord.retain')+'</span><span class="mono">'+money(o.retain)+'</span></div>'+
+   '<div class="quote-line"><span>'+t('ord.booster')+'</span><span>'+esc(b?b.name:'-')+'</span></div>'+
+   '<div class="quote-line"><span>'+t('ord.ref')+'</span><span class="mono tiny">'+esc(o.ref)+'</span></div>'+
+   '<div class="foot"><button class="btn pri" data-act="closeModal">'+t('btn.close')+'</button></div>');
+ },
+ topup(){modal(mHead('led.topupTitle')+'<form data-form="topup">'+
+  '<div class="field"><label class="fl">'+t('team.name')+'</label><select name="mid">'+memberOpts()+'</select></div>'+
+  '<div class="field"><label class="fl">'+t('led.amount')+'</label><input type="number" name="amount" min="1" step="0.01" value="100"></div>'+
+  '<div class="notice tiny">'+t('region.auto')+' · '+t('led.exchangeNote')+'</div>'+mFoot('led.topup')+'</form>')},
+ exchange(){modal(mHead('led.exchangeTitle')+'<form data-form="exchange">'+
+  '<div class="field"><label class="fl">'+t('team.name')+'</label><select name="mid">'+memberOpts()+'</select></div>'+
+  '<div class="f2"><div class="field"><label class="fl">'+t('led.direction')+'</label><select name="dir"><option value="c2e">'+t('led.c2e')+'</option><option value="e2c">'+t('led.e2c')+'</option></select></div>'+
+  '<div class="field"><label class="fl">'+t('led.amount')+'</label><input type="number" name="amount" min="1" step="0.01" value="20"></div></div>'+
+  '<div class="notice tiny">'+t('led.exchangeNote')+'</div>'+mFoot('led.exchange')+'</form>')},
+ withdraw(){modal(mHead('led.withdrawTitle')+'<form data-form="withdraw">'+
+  '<div class="field"><label class="fl">'+t('team.name')+'</label><select name="mid">'+memberOpts()+'</select></div>'+
+  '<div class="field"><label class="fl">'+t('led.amount')+'</label><input type="number" name="amount" min="1" step="0.01" value="50"></div>'+
+  '<div class="notice tiny">'+t('disclaimer.short')+'</div>'+mFoot('led.withdraw')+'</form>')},
+ addMember(){modal(mHead('team.addTitle')+'<form data-form="addMember">'+
+  '<div class="field"><label class="fl">'+t('team.name')+'</label><input type="text" name="name" required maxlength="40" placeholder="Kai / 阿凯"></div>'+
+  '<div class="f2"><div class="field"><label class="fl">'+t('team.role')+'</label><select name="role"><option value="client">'+t('role.client')+'</option><option value="booster">'+t('role.booster')+'</option><option value="admin">'+t('role.admin')+'</option></select></div>'+
+  '<div class="field"><label class="fl">'+t('team.region')+'</label><select name="region">'+REGIONS.map(r=>'<option value="'+r.c+'">'+esc(regionName(r))+' · '+unitOf(r.c)+'</option>').join('')+'</select></div></div>'+
+  '<div class="field"><label class="fl">'+t('team.initial')+'</label><input type="number" name="initial" min="0" step="0.01" value="100"></div>'+
+  '<div class="notice tiny">'+t('region.auto')+'</div>'+mFoot('team.add')+'</form>')},
+ changeRegion(id){const m=member(id);if(!m)return;
+  modal(mHeadPlain(t('team.changeRegion'))+'<form data-form="changeRegion" data-id="'+id+'">'+
+   '<div class="notice" style="margin-bottom:12px"><b>'+esc(m.name)+'</b> · '+esc(regionName(region(m.region)))+' · '+m.unit+'<br>'+t('led.exchangeNote')+'</div>'+
+   '<div class="field"><label class="fl">'+t('team.region')+'</label><select name="region">'+REGIONS.map(r=>'<option value="'+r.c+'" '+(r.c===m.region?'selected':'')+'>'+esc(regionName(r))+' · '+unitOf(r.c)+'</option>').join('')+'</select></div>'+mFoot('btn.save')+'</form>')}
+};
+
+/* ---------- 10. actions & forms ---------- */
+const ACTIONS={
+ nav(id){state.view=id;save();render();window.scrollTo({top:0,behavior:'smooth'})},
+ lang(id){state.lang=id;save();render()},
+ theme(id){state.theme=id;save();render();toast(t('theme.desc.'+id))},
+ export(){downloadTxt()},
+ import(){document.getElementById('importFile').click()},
+ gotoDossier(){const el=document.getElementById('dossier');if(el)el.scrollIntoView({behavior:'smooth',block:'start'})},
+ copyCA(){const s=EACO.ca;if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(s).then(()=>toast(t('msg.caCopied'))).catch(()=>toast(t('msg.caCopied')))}else{const ta=document.createElement('textarea');ta.value=s;document.body.appendChild(ta);ta.select();try{document.execCommand('copy')}catch(err){}ta.remove();toast(t('msg.caCopied'))}},
+ copyTxt(){const s=buildTxt();navigator.clipboard?.writeText(s).then(()=>toast(t('msg.copied'))).catch(()=>{const ta=document.createElement('textarea');ta.value=s;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();toast(t('msg.copied'))})},
+ clearLog(){confirmModal(t('mem.clearLog'),t('mem.clearWarn'),'doClearLog')},
+ doClearLog(){state.log=[];closeModal();commit('mem.cleared')},
+ resetDemo(){confirmModal(t('mem.reset'),t('mem.resetWarn'),'doResetDemo')},
+ doResetDemo(){closeModal();seedDemo();render();toast(t('msg.demo'))},
+ closeModal(id,el,ev){if(el&&el.classList&&el.classList.contains('mask')&&ev&&ev.target!==el)return;closeModal()},
+ placeOrder(){
+  const v=quoteVals();if(!v){toast(t('msg.noMember'));return}
+  placeOrder(state.draft);
+  state.view='orders';commit('msg.orderCreated');
+ },
+ pay(id){MODALS.pay(id)},
+ assign(id){MODALS.assign(id)},
+ settle(id){MODALS.settle(id)},
+ topup(){MODALS.topup()},
+ exchange(){MODALS.exchange()},
+ withdraw(){MODALS.withdraw()},
+ addMember(){MODALS.addMember()},
+ changeRegion(id){MODALS.changeRegion(id)},
+ start(id){const o=state.orders.find(x=>x.id===id);if(o){o.status='working';logEvent('订单 '+o.id+' 开始带打','Boosting started for '+o.id);commit('msg.started')}},
+ finish(id){if(finishOrder(id))commit('msg.finished');else toast(t('msg.required'))},
+ cancelOrder(id){const o=state.orders.find(x=>x.id===id);if(!o)return;
+  confirmModal(t('ord.refund'),esc(o.ref||'-')+'<br>'+t('ord.refundWarn'),'doCancel',id)},
+ doCancel(id){if(cancelOrder(id)){closeModal();commit('msg.cancelled')}},
+ delMember(id){const m=member(id);if(!m)return;
+  confirmModal(t('team.delete')+' · '+m.name,esc(m.name)+' · '+t('team.delWarn'),'doDelMember',id)},
+ doDelMember(id){removeMember(id);closeModal();commit('msg.memberDeleted')}
+};
+function val(f,n){const el=f.elements.namedItem(n);return el?String(el.value):''}
+const FORMS={
+ pay(f){
+  const o=state.orders.find(x=>x.id===f.dataset.id);if(!o)return;
+  const ch=val(f,'channel').trim()||'-';
+  if(payOrder(o.id,ch)){closeModal();commit('msg.paid')}
+ },
+ assign(f){
+  const bid=val(f,'bid');if(!bid){toast(t('msg.pickBooster'));return}
+  if(assignOrder(f.dataset.id,bid)){closeModal();commit('msg.assigned')}else toast(t('msg.required'));
+ },
+ topup(f){
+  const x=round(Number(val(f,'amount')));if(x<=0){toast(t('msg.negative'));return}
+  topup(val(f,'mid'),x);closeModal();commit('msg.topup');
+ },
+ exchange(f){
+  const r=exchange(val(f,'mid'),val(f,'dir'),round(Number(val(f,'amount'))));
+  if(r===true){closeModal();commit('msg.exchange')}else toast(t(r==='insufficient'?'msg.insufficient':r==='noEaco'?'led.noEaco':'msg.negative'));
+ },
+ withdraw(f){
+  const r=withdraw(val(f,'mid'),round(Number(val(f,'amount'))));
+  if(r===true){closeModal();commit('msg.withdraw')}else toast(t(r==='insufficient'?'msg.insufficient':'msg.negative'));
+ },
+ addMember(f){
+  const n=val(f,'name').trim();if(!n){toast(t('msg.required'));return}
+  addMember(n,val(f,'role'),val(f,'region'),Math.max(0,round(Number(val(f,'initial')))));
+  closeModal();commit('msg.memberAdded');
+ },
+ changeRegion(f){
+  const r=changeRegion(f.dataset.id,val(f,'region'));
+  if(r===true){closeModal();commit('msg.regionChanged')}
+  else if(r==='blocked'){closeModal();toast(t('team.regionBlocked'))}
+  else if(r==='same'){closeModal();toast(t('msg.sameRegion'))}
+  else toast(t('msg.required'));
+ }
+};
+
+/* ---------- 11. event wiring ---------- */
+document.addEventListener('click',function(ev){
+ const el=ev.target.closest('[data-act]');if(!el)return;
+ const fn=ACTIONS[el.dataset.act];if(fn){ev.preventDefault();fn(el.dataset.id,el,ev)}
+});
+document.addEventListener('submit',function(ev){
+ const f=ev.target;if(!f.dataset.form)return;
+ ev.preventDefault();const fn=FORMS[f.dataset.form];if(fn)fn(f);
+});
+document.addEventListener('change',function(ev){
+ const el=ev.target;
+ if(el.dataset.draft){
+  const k=el.dataset.draft;
+  state.draft[k]=el.type==='checkbox'?el.checked:(k==='qty'||k==='diff'?Number(el.value):el.value);
+  if(k==='qty'&&(state.draft.qty<1||!Number.isFinite(state.draft.qty)))state.draft.qty=1;
+  save();updateQuote();renderShell();return;
+ }
+ if(el.dataset.filter){state.filters[el.dataset.filter]=el.value;save();render();return}
+});
+document.addEventListener('input',function(ev){
+ const el=ev.target;
+ if(el.dataset.notes!==undefined){state.notes=el.value;clearTimeout(el._tm);el._tm=setTimeout(()=>{save();const c=document.getElementById('saveChip');if(c)c.textContent=t('save.state')+' · '+t('save.ok');const p=document.getElementById('txtPreview');if(p){const x=buildTxt();p.textContent=x.slice(0,9000)+(x.length>9000?'\n... ('+x.length+' chars)':'')}},350);return}
+ if(el.dataset.search!==undefined){clearTimeout(searchTimer);const v=el.value;searchTimer=setTimeout(()=>{state.filters.q=v;save();render();const n=document.querySelector('[data-search]');if(n){n.focus();n.setSelectionRange(v.length,v.length)}},380)}
+});
+document.addEventListener('keydown',function(ev){if(ev.key==='Escape')closeModal()});
+document.getElementById('importFile').addEventListener('change',function(ev){
+ const file=ev.target.files&&ev.target.files[0];if(!file)return;
+ const r=new FileReader();
+ r.onload=()=>{importTxt(String(r.result||''));ev.target.value=''};
+ r.onerror=()=>{toast(t('msg.importFail'));ev.target.value=''};
+ r.readAsText(file,'utf-8');
+});
+
+/* ---------- 12. boot ---------- */
+(function boot(){
+ let loaded=false;
+ try{
+  const raw=localStorage.getItem(KEY);
+  if(raw){const o=JSON.parse(raw);if(o&&Array.isArray(o.entries)&&Array.isArray(o.members)){
+   state=o;state.draft=state.draft||{memberId:'',serviceId:'S1',qty:1,diff:1,usePoints:true};
+   state.filters=state.filters||{unit:'ALL',type:'ALL',q:''};state.notes=state.notes||'';state.log=state.log||[];
+   state.lang=state.lang||'zh';state.theme=state.theme||'kr';state.view=state.view||'dash';state.seq=state.seq||1;
+   loaded=true;
+  }}
+ }catch(err){console.warn('state restore failed',err)}
+ if(!loaded)seedDemo();
+ render();
+})();
+</script>
+</body>
+</html>
