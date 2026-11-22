@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="zh" data-theme="cn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>地球村感恩节 · EACO Earth's Best Coin</title>
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+<style>
+/* ============ 主题变量：华夏红金 / 和风素雅 / 现代简约 ============ */
+:root{
+  --font-body:"Noto Sans SC",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --font-head:"Noto Serif SC",Georgia,serif;
+  --radius:18px;
+  --maxw:1080px;
+}
+body[data-theme="cn"]{
+  --bg:#f7f0e2; --bg2:#fbf6ea; --card:#fffaf0; --ink:#3a2415; --sub:#7a5a3a;
+  --brand:#a52a2a; --brand2:#c99a3c; --gold:#b8860b; --line:#e8d6b0;
+  --accent:#8c1f1f; --shadow:0 10px 30px rgba(120,60,20,.14);
+}
+body[data-theme="ja"]{
+  --bg:#f3f1ec; --bg2:#faf9f5; --card:#ffffff; --ink:#2f3530; --sub:#6b736c;
+  --brand:#4a7c66; --brand2:#c98a8a; --gold:#8aa88f; --line:#e2e0d8;
+  --accent:#3d6b57; --shadow:0 8px 24px rgba(60,80,70,.12);
+}
+body[data-theme="kr"]{
+  --bg:#f6f4f8; --bg2:#fbfafc; --card:#ffffff; --ink:#33313d; --sub:#767286;
+  --brand:#7c6bb0; --brand2:#f2a6b8; --gold:#9db8d9; --line:#e9e5f0;
+  --accent:#65549a; --shadow:0 12px 32px rgba(110,90,160,.14);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--bg);color:var(--ink);line-height:1.75}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+/* 顶部工具栏 */
+.topbar{position:sticky;top:0;z-index:50;background:var(--bg2);border-bottom:1px solid var(--line);backdrop-filter:blur(8px)}
+.topbar .wrap{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:12px 20px}
+.brand-mini{font-family:var(--font-head);font-weight:700;color:var(--brand);font-size:1.05rem}
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+select,button.ctl{font-family:var(--font-body);font-size:.88rem;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:7px 12px;cursor:pointer}
+button.ctl.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+/* Hero */
+.hero{padding:64px 0 40px;text-align:center;background:linear-gradient(160deg,var(--bg2),var(--bg))}
+.hero h1{font-family:var(--font-head);font-size:clamp(1.8rem,4.5vw,3rem);color:var(--brand);letter-spacing:.04em}
+.hero p.sub{margin-top:14px;color:var(--sub);font-size:clamp(.95rem,2vw,1.15rem);max-width:680px;margin-left:auto;margin-right:auto}
+.hero .tags{margin-top:20px;display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.hero .tags span{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:6px 14px;font-size:.85rem;color:var(--sub)}
+/* 导航锚点 */
+.nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:18px 0}
+.nav a{text-decoration:none;color:var(--brand);font-size:.9rem;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:7px 14px}
+.nav a:hover{background:var(--brand);color:#fff}
+/* 板块 */
+section.block{padding:44px 0}
+section.block:nth-child(even){background:var(--bg2)}
+h2.sec{font-family:var(--font-head);font-size:clamp(1.4rem,3vw,1.9rem);color:var(--brand);margin-bottom:8px;display:flex;align-items:center;gap:10px}
+h2.sec::before{content:"";width:10px;height:1.4em;background:var(--brand2);border-radius:6px;display:inline-block}
+.lead{color:var(--sub);margin:10px 0 22px;max-width:760px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+.card h3{font-family:var(--font-head);color:var(--accent);margin-bottom:8px;font-size:1.05rem}
+.card p{color:var(--sub);font-size:.94rem}
+.num{display:inline-flex;width:30px;height:30px;border-radius:50%;background:var(--brand);color:#fff;align-items:center;justify-content:center;font-weight:700;margin-bottom:10px;font-size:.9rem}
+/* 时间线 */
+.timeline{border-left:2px solid var(--line);margin-left:10px;padding-left:24px;display:grid;gap:20px}
+.tl-item{position:relative}
+.tl-item::before{content:"";position:absolute;left:-31px;top:6px;width:14px;height:14px;border-radius:50%;background:var(--brand2);border:3px solid var(--bg2)}
+.tl-item h3{color:var(--accent);font-family:var(--font-head)}
+.tl-item p{color:var(--sub);font-size:.94rem}
+/* FAQ */
+.faq-search{width:100%;max-width:520px;padding:12px 16px;border:1px solid var(--line);border-radius:14px;background:var(--card);color:var(--ink);font-family:var(--font-body);font-size:.95rem;margin:10px 0 20px}
+.faq-list{display:grid;gap:12px}
+.faq-item{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.faq-q{padding:16px 18px;cursor:pointer;display:flex;justify-content:space-between;gap:12px;align-items:center;font-weight:500}
+.faq-q .idx{color:var(--brand2);font-weight:700;margin-right:8px}
+.faq-q .arrow{transition:transform .2s;color:var(--sub)}
+.faq-item.open .arrow{transform:rotate(180deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .25s ease;color:var(--sub);font-size:.93rem}
+.faq-a-inner{padding:0 18px 16px 18px;border-top:1px dashed var(--line)}
+.faq-cat{display:inline-block;font-size:.75rem;color:var(--brand);border:1px solid var(--line);border-radius:999px;padding:2px 10px;margin-bottom:6px}
+/* 页脚 */
+footer{margin-top:40px;background:var(--ink);color:#f3ead8;padding:36px 0 28px}
+footer h2{font-family:var(--font-head);color:var(--brand2);font-size:1.25rem;margin-bottom:12px}
+footer .eaco-grid{display:grid;gap:8px;font-size:.92rem}
+footer a{color:var(--brand2);word-break:break-all}
+footer .ca{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85rem;color:#e8d6b0}
+footer .copy{margin-top:18px;font-size:.8rem;opacity:.7}
+.note{font-size:.82rem;color:var(--sub);margin-top:10px}
+@media(max-width:600px){.hero{padding:40px 0 28px}.card{padding:18px}}
+</style>
+</head>
+<body data-theme="cn">
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="brand-mini" data-i18n="brand">🌍 地球村感恩节 · EACO</div>
+    <div class="controls">
+      <select id="langSel" aria-label="language"></select>
+      <div id="themeBtns" style="display:flex;gap:8px"></div>
+    </div>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <h1 data-i18n="hero_title">地球村感恩节</h1>
+    <p class="sub" data-i18n="hero_sub">感恩是全人类共通的语言；以华夏感恩之心，联结亚洲、东南亚与世界，与 EACO 一同走向文明自愈与地球可持续发展。</p>
+    <div class="tags">
+      <span data-i18n="tag1">正能量</span>
+      <span data-i18n="tag2">积极态度</span>
+      <span data-i18n="tag3">全球协作</span>
+      <span data-i18n="tag4">持续优化</span>
+    </div>
+    <nav class="nav">
+      <a href="#origin" data-i18n="nav_origin">感恩节由来</a>
+      <a href="#village" data-i18n="nav_village">地球村感恩节</a>
+      <a href="#asia" data-i18n="nav_asia">亚洲×华夏</a>
+      <a href="#festivals" data-i18n="nav_festivals">亚洲感恩节日</a>
+      <a href="#seasia" data-i18n="nav_seasia">东南亚×华夏</a>
+      <a href="#actions" data-i18n="nav_actions">10个小动作</a>
+      <a href="#mindsets" data-i18n="nav_mindsets">10个高维思维</a>
+      <a href="#faq" data-i18n="nav_faq">EACO 100问</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<!-- ===== 视图：由来 ===== -->
+<section class="block" id="origin">
+  <div class="wrap">
+    <h2 class="sec" data-i18n="origin_title">感恩节的由来</h2>
+    <p class="lead" data-i18n="origin_lead">从北美殖民地的丰收庆典，到跨越宗教、民族与国界的感恩传统。</p>
+    <div class="timeline" id="originTimeline"></div>
+  </div>
+</section>
+
+<!-- ===== 视图：地球村 ===== -->
+<section class="block" id="village">
+  <div class="wrap">
+    <h2 class="sec" data-i18n="village_title">地球村感恩节</h2>
+    <p class="lead" data-i18n="village_lead">把感恩从家庭餐桌扩展到村庄、城市、国家与整个地球。</p>
+    <div class="cards" id="villageCards"></div>
+  </div>
+</section>
+
+<!-- ===== 视图：亚洲×华夏 ===== -->
+<section class="block" id="asia">
+  <div class="wrap">
+    <h2 class="sec" data-i18n="asia_title">亚洲感恩节 · 结合华夏文化</h2>
+    <p class="lead" data-i18n="asia_lead">孝道、敬天、惜物、知恩图报——华夏文化本就有深厚的感恩基因。</p>
+    <div class="cards" id="asiaCards"></div>
+  </div>
+</section>
+
+<!-- ===== 视图：亚洲感恩节日 ===== -->
+<section class="block" id="festivals">
+  <div class="wrap">
+    <h2 class="sec" data-i18n="fest_title">亚洲主要感恩节日一览</h2>
+    <p class="lead" data-i18n="fest_lead">敬老、祭祖、谢丰收、敬自然——亚洲各文明以不同节日表达共通的感恩之心。</p>
+    <div class="cards" id="festCards"></div>
+  </div>
+</section>
+
+<!-- ===== 视图：东南亚×华夏 ===== -->
+<section class="block" id="seasia">
+  <div class="wrap">
+    <h2 class="sec" data-i18n="seasia_title">东南亚感恩节 · 结合华夏文化发展</h2>
+    <p class="lead" data-i18n="seasia_lead">华人华侨把祭祖、敬老、团圆的风俗带到东南亚，与当地民俗交融共生。</p>
+    <div class="cards" id="seasiaCards"></div>
+  </div>
+</section>
+
+<!-- ===== 视图：10小动作 ===== -->
+<section class="block" id="actions">
+  <div class="wrap">
+    <h2 class="sec" data-i18n="actions_title">感恩的 10 个小动作</h2>
+    <p class="lead" data-i18n="actions_lead">感恩不必隆重，藏在日常可执行的小小行动里。</p>
+    <div class="cards" id="actionCards"></div>
+  </div>
+</section>
+
+<!-- ===== 视图：10思维 ===== -->
+<section class="block" id="mindsets">
+  <div class="wrap">
+    <h2 class="sec" data-i18n="mind_title">感恩的 10 个高维正能量思维</h2>
+    <p class="lead" data-i18n="mind_lead">把感恩从情绪升维为认知模型与处世哲学。</p>
+    <div class="cards" id="mindCards"></div>
+  </div>
+</section>
+
+<!-- ===== 视图：FAQ 100 ===== -->
+<section class="block" id="faq">
+  <div class="wrap">
+    <h2 class="sec" data-i18n="faq_title">感恩节 + EACO 地球 · 常见 100 问</h2>
+    <p class="lead" data-i18n="faq_lead">涵盖感恩节文化、感恩心理、华夏与亚洲实践，以及 EACO 项目基础、理念与社区。</p>
+    <input type="text" class="faq-search" id="faqSearch" data-i18n-ph="faq_ph" placeholder="搜索问题…">
+    <div class="faq-list" id="faqList"></div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <h2>EACO 地球 | Earth's Best Coin — 地球最好的代币</h2>
+    <div class="eaco-grid">
+      <div><span style="opacity:.7">CA：</span><span class="ca">DqfoyZH96RnvZusSp3Cdncjpyp3C74ZmJzGhjmHnDHRH</span></div>
+      <div><a href="https://ucoingroup.github.io/eacoagent/solana-vanity.html" target="_blank" rel="noopener">https://ucoingroup.github.io/eacoagent/solana-vanity.html</a></div>
+      <div><a href="https://ucoingroup.github.io/eacoagent/" target="_blank" rel="noopener">https://ucoingroup.github.io/eacoagent/</a></div>
+      <div><a href="https://ucoingroup.github.io/good-books/" target="_blank" rel="noopener">https://ucoingroup.github.io/good-books/</a></div>
+    </div>
+    <p class="copy">EACO 理念：正能量 × 积极态度 × 全球协作 × 持续优化 · 提升个体认知 · 提升组织效率 · 推进社会文明 · 促进地球可持续发展 · 融合 100 种认知模型。</p>
+  </div>
+</footer>
+
+<script>
+/* ================= 多语言字典 ================= */
+const LANGS = [
+  ["zh","简体中文"],["en","English"],["es","Español"],["ar","العربية"],
+  ["hi","हिन्दी"],["pt","Português"],["ru","Русский"],["ja","日本語"],
+  ["fr","Français"],["de","Deutsch"]
+];
+const I18N = {
+  brand:{zh:"🌍 地球村感恩节 · EACO",en:"🌍 Global Village Thanksgiving · EACO",es:"🌍 Acción de Gracias de la Aldea Global · EACO",ar:"🌍 عيد الشكر في القرية العالمية · EACO",hi:"🌍 वैश्विक गांव थैंक्सगिविंग · EACO",pt:"🌍 Ação de Graças da Aldeia Global · EACO",ru:"🌍 День благодарения глобальной деревни · EACO",ja:"🌍 地球村感謝祭 · EACO",fr:"🌍 Action de grâce du village global · EACO",de:"🌍 Erntedank im globalen Dorf · EACO"},
+  hero_title:{zh:"地球村感恩节",en:"Global Village Thanksgiving",es:"Acción de Gracias de la Aldea Global",ar:"عيد الشكر في القرية العالمية",hi:"वैश्विक गांव थैंक्सगिविंग",pt:"Ação de Graças da Aldeia Global",ru:"День благодарения глобальной деревни",ja:"地球村感謝祭",fr:"Action de grâce du village global",de:"Erntedank im globalen Dorf"},
+  hero_sub:{zh:"感恩是全人类共通的语言；以华夏感恩之心，联结亚洲、东南亚与世界，与 EACO 一同走向文明自愈与地球可持续发展。",en:"Gratitude is the shared language of humankind. With a Chinese heart of gratitude, connect Asia, Southeast Asia and the world, and walk with EACO toward civilizational self-healing and a sustainable Earth.",es:"La gratitud es el idioma común de la humanidad. Con el corazón agradecido de China, conecte Asia, el Sudeste Asiático y el mundo, junto con EACO hacia la autocuración de la civilización y una Tierra sostenible.",ar:"الامتنان لغة مشتركة بين البشرية. بقلب صيني ممتن، اربط آسيا وجنوب شرق آسيا والعالم، وسير مع EACO نحو شفاء الحضارة واستدامة الأرض.",hi:"कृतज्ञता मानवता की साझा भाषा है। चीनी कृतज्ञ हृदय से एशिया, दक्षिण पूर्व एशिया और दुनिया को जोड़ें, और EACO के साथ सभ्यता के स्व-उपचार और सतत पृथ्वी की ओर बढ़ें।",pt:"Gratidão é a linguagem comum da humanidade. Com um coração chinês grato, conecte a Ásia, o Sudeste Asiático e o mundo, caminhando com a EACO rumo à autocuração da civilização e a uma Terra sustentável.",ru:"Благодарность — общий язык человечества. С китайским сердцем благодарности соединяйте Азию, Юго-Восточную Азию и мир, вместе с EACO идя к самоисцелению цивилизации и устойчивой Земле.",ja:"感謝は人類共通の言葉。中華の感謝の心でアジア・東南アジア・世界を結び、EACOとともに文明の自己治癒と地球の持続可能な発展へ。",fr:"La gratitude est la langue commune de l'humanité. Avec un cœur chinois reconnaissant, reliez l'Asie, l'Asie du Sud-Est et le monde, et avancez avec EACO vers l'auto-guérison de la civilisation et une Terre durable.",de:"Dankbarkeit ist die gemeinsame Sprache der Menschheit. Verbinden Sie mit chinesischem Dankesherz Asien, Südostasien und die Welt und gehen Sie mit EACO zur Selbstheilung der Zivilisation und nachhaltigen Erde."},
+  tag1:{zh:"正能量",en:"Positive Energy",es:"Energía positiva",ar:"طاقة إيجابية",hi:"सकारात्मक ऊर्जा",pt:"Energia positiva",ru:"Позитивная энергия",ja:"ポジティブエネルギー",fr:"Énergie positive",de:"Positive Energie"},
+  tag2:{zh:"积极态度",en:"Positive Attitude",es:"Actitud positiva",ar:"موقف إيجابي",hi:"सकारात्मक दृष्टिकोण",pt:"Atitude positiva",ru:"Позитивный настрой",ja:"積極的な態度",fr:"Attitude positive",de:"Positive Einstellung"},
+  tag3:{zh:"全球协作",en:"Global Collaboration",es:"Colaboración global",ar:"تعاون عالمي",hi:"वैश्विक सहयोग",pt:"Colaboração global",ru:"Глобальное сотрудничество",ja:"グローバル協力",fr:"Collaboration mondiale",de:"Globale Zusammenarbeit"},
+  tag4:{zh:"持续优化",en:"Continuous Improvement",es:"Mejora continua",ar:"تحسين مستمر",hi:"निरंतर सुधार",pt:"Melhoria contínua",ru:"Непрерывное улучшение",ja:"継続的改善",fr:"Amélioration continue",de:"Kontinuierliche Verbesserung"},
+  nav_origin:{zh:"感恩节由来",en:"Origin",es:"Origen",ar:"الأصل",hi:"उत्पत्ति",pt:"Origem",ru:"История",ja:"感謝祭の由来",fr:"Origine",de:"Ursprung"},
+  nav_village:{zh:"地球村感恩节",en:"Global Village",es:"Aldea global",ar:"القرية العالمية",hi:"वैश्विक गांव",pt:"Aldeia global",ru:"Глобальная деревня",ja:"地球村",fr:"Village global",de:"Globales Dorf"},
+  nav_asia:{zh:"亚洲×华夏",en:"Asia × China",es:"Asia × China",ar:"آسيا × الصين",hi:"एशिया × चीन",pt:"Ásia × China",ru:"Азия × Китай",ja:"アジア × 中華",fr:"Asie × Chine",de:"Asien × China"},
+  nav_festivals:{zh:"亚洲感恩节日",en:"Asian Festivals",es:"Festivales asiáticos",ar:"مهرجانات آسيا",hi:"एशियाई त्योहार",pt:"Festivais asiáticos",ru:"Азиатские праздники",ja:"アジアの祝祭",fr:"Fêtes asiatiques",de:"Asiatische Feste"},
+  nav_seasia:{zh:"东南亚×华夏",en:"SE Asia × China",es:"Sudeste asiático × China",ar:"جنوب شرق آسيا × الصين",hi:"दक्षिण पूर्व एशिया × चीन",pt:"Sudeste da Ásia × China",ru:"ЮВ Азия × Китай",ja:"東南アジア × 中華",fr:"Asie du Sud-Est × Chine",de:"Südostasien × China"},
+  nav_actions:{zh:"10个小动作",en:"10 Small Acts",es:"10 pequeños actos",ar:"10 أفعال صغيرة",hi:"10 छोटे कार्य",pt:"10 pequenos atos",ru:"10 маленьких дел",ja:"10の小さな行動",fr:"10 petits gestes",de:"10 kleine Taten"},
+  nav_mindsets:{zh:"10个高维思维",en:"10 High-level Mindsets",es:"10 mentalidades elevadas",ar:"10 عقليات راقية",hi:"10 उच्च-स्तरीय मानसिकता",pt:"10 mentalidades elevadas",ru:"10 возвышенных мышлений",ja:"10の高次元思考",fr:"10 mentalités élevées",de:"10 hochwertige Denkweisen"},
+  nav_faq:{zh:"EACO 100问",en:"EACO 100 Q&A",es:"100 preguntas EACO",ar:"100 سؤال عن EACO",hi:"EACO 100 प्रश्न",pt:"100 perguntas EACO",ru:"100 вопросов EACO",ja:"EACO 100問",fr:"100 questions EACO",de:"EACO 100 Fragen"},
+  origin_title:{zh:"感恩节的由来",en:"The Origin of Thanksgiving",es:"El origen de Acción de Gracias",ar:"أصل عيد الشكر",hi:"थैंक्सगिविंग की उत्पत्ति",pt:"A origem do Dia de Ação de Graças",ru:"История Дня благодарения",ja:"感謝祭の由来",fr:"L'origine de l'Action de grâce",de:"Ursprung des Erntedanks"},
+  origin_lead:{zh:"从北美殖民地的丰收庆典，到跨越宗教、民族与国界的感恩传统。",en:"From a harvest feast in the North American colonies to a gratitude tradition transcending religion, ethnicity and borders.",es:"De una fiesta de cosecha en las colonias de Norteamérica a una tradición de gratitud que trasciende religión, etnia y fronteras.",ar:"من مأدبة حصاد في مستعمرات أمريكا الشمالية إلى تقليد امتنان يتجاوز الدين والعرق والحدود.",hi:"उत्तर अमेरिकी उपनिवेशों की फसल दावत से लेकर धर्म, जाति और सीमाओं से परे कृतज्ञता परंपरा तक।",pt:"De um banquete de colônia na América do Norte a uma tradição de gratidão que transcende religião, etnia e fronteiras.",ru:"От праздника урожая в североамериканских колониях до традиции благодарности, выходящей за пределы религии, этноса и границ.",ja:"北米植民地の収穫祭から、宗教・民族・国境を超えた感謝の伝統へ。",fr:"D'un festin des récoltes dans les colonies d'Amérique du Nord à une tradition de gratitude transcendante.",de:"Vom Erntefest in nordamerikanischen Kolonien zu einer Dankestradition über Religion, Ethnie und Grenzen hinweg."},
+  village_title:{zh:"地球村感恩节",en:"Global Village Thanksgiving",es:"Acción de Gracias de la Aldea Global",ar:"عيد الشكر في القرية العالمية",hi:"वैश्विक गांव थैंक्सगिविंग",pt:"Ação de Graças da Aldeia Global",ru:"День благодарения глобальной деревни",ja:"地球村感謝祭",fr:"Action de grâce du village global",de:"Erntedank im globalen Dorf"},
+  village_lead:{zh:"把感恩从家庭餐桌扩展到村庄、城市、国家与整个地球。",en:"Extend gratitude from the family table to villages, cities, nations and the whole Earth.",es:"Extienda la gratitud de la mesa familiar a pueblos, ciudades, naciones y toda la Tierra.",ar:"وسّع الامتنان من مائدة الأسرة إلى القرى والمدن والأمم والأرض كلها.",hi:"कृतज्ञता को पारिवारिक मेज से गांवों, शहरों, राष्ट्रों और पूरी पृथ्वी तक बढ़ाएं।",pt:"Estenda a gratidão da mesa de casa às aldeias, cidades, nações e a Terra inteira.",ru:"Расширьте благодарность от семейного стола до деревень, городов, наций и всей Земли.",ja:"感謝を家庭の食卓から村・都市・国家・地球全体へ広げる。",fr:"Étendez la gratitude de la table familiale aux villages, villes, nations et à toute la Terre.",de:"Dankbarkeit vom Familientisch auf Dörfer, Städte, Nationen und die ganze Erde ausweiten."},
+  asia_title:{zh:"亚洲感恩节 · 结合华夏文化",en:"Asian Thanksgiving × Chinese Culture",es:"Acción de Gracias asiática × cultura china",ar:"عيد الشكر الآسيوي × الثقافة الصينية",hi:"एशियाई थैंक्सगिविंग × चीनी संस्कृति",pt:"Ação de Graças asiática × cultura chinesa",ru:"Азиатский день благодарения × китайская культура",ja:"アジア感謝祭 × 中華文化",fr:"Action de grâce asiatique × culture chinoise",de:"Asiatisches Erntedankfest × chinesische Kultur"},
+  asia_lead:{zh:"孝道、敬天、惜物、知恩图报——华夏文化本就有深厚的感恩基因。",en:"Filial piety, reverence for heaven, cherishing things, repaying kindness — Chinese culture carries deep gratitude genes.",es:"Piedad filial, respeto al cielo, apreciar lo que se tiene, retribuir favores: la cultura china tiene profundas raíces de gratitud.",ar:"بر الوالدين، تبجيل السماء، تقدير النعم، رد الجميل — الثقافة الصينية تحمل جينات امتنان عميقة.",hi:"पुत्रधर्म, स्वर्ग का सम्मान, वस्तुओं की कद्र, उपकार चुकाना — चीनी संस्कृति में कृतज्ञता के गहरे गुण हैं।",pt:"Piedade filial, reverência ao céu, valorizar o que se tem, retribuir favores: a cultura chinesa tem raízes profundas de gratidão.",ru:"Сыновняя почтительность, благоговение перед небом, бережливость, ответная доброта — в китайской культуре заложены глубинные гены благодарности.",ja:"孝行、敬天、物を惜しむこと、恩返し——中華文化には深い感謝の遺伝子がある。",fr:"Piété filiale, respect du ciel, valeur des biens, retour de grâce : la culture chinoise porte de profonds gènes de gratitude.",de:"Kindliche Pietät, Ehrfurcht vor dem Himmel, Wertschätzung, Dankvergelten – die chinesische Kultur trägt tiefe Dankesgene."},
+  seasia_title:{zh:"东南亚感恩节 · 结合华夏文化发展",en:"Southeast Asian Thanksgiving × Chinese Culture",es:"Acción de Gracias del Sudeste Asiático × cultura china",ar:"عيد شكر جنوب شرق آسيا × الثقافة الصينية",hi:"दक्षिण पूर्व एशियाई थैंक्सगिविंग × चीनी संस्कृति",pt:"Ação de Graças do Sudeste Asiático × cultura chinesa",ru:"День благодарения ЮВ Азии × китайская культура",ja:"東南アジア感謝祭 × 中華文化",fr:"Action de grâce d'Asie du Sud-Est × culture chinoise",de:"Südostasiatisches Erntedankfest × chinesische Kultur"},
+  fest_title:{zh:"亚洲主要感恩节日一览",en:"Major Gratitude Festivals of Asia",es:"Principales festivales de gratitud de Asia",ar:"أهم مهرجانات الامتنان في آسيا",hi:"एशिया के प्रमुख कृतज्ञता त्योहार",pt:"Principais festivais de gratidão da Ásia",ru:"Главные праздники благодарности Азии",ja:"アジアの主な感謝の祝祭",fr:"Principales fêtes de gratitude d'Asie",de:"Wichtige Dankfeste Asiens"},
+  fest_lead:{zh:"敬老、祭祖、谢丰收、敬自然——亚洲各文明以不同节日表达共通的感恩之心。",en:"Honoring elders, ancestors, harvest and nature — Asian civilizations express a shared gratitude through diverse festivals.",es:"Honrar a mayores, ancestros, cosecha y naturaleza: las civilizaciones asiáticas expresan una gratitud común en diversas fiestas.",ar:"تكريم الكبار والأجداد والحصاد والطبيعة — تعبر الحضارات الآسيوية عن امتنان مشترك بمهرجانات متنوعة.",hi:"बड़ों, पूर्वजों, फसल और प्रकृति का सम्मान — एशियाई सभ्यताएं विविध त्योहारों से साझा कृतज्ञता व्यक्त करती हैं।",pt:"Honrar idosos, ancestrais, colheita e natureza: civilizações asiáticas expressam gratidão comum em festas diversas.",ru:"Почтение старших, предков, урожая и природы: азиатские цивилизации выражают общую благодарность разными праздниками.",ja:"敬老・祭祖・収穫・自然への感謝——アジアの各文明は多様な祭りで共通の感謝の心を表す。",fr:"Honorer aînés, ancêtres, récolte et nature : les civilisations asiatiques expriment une gratitude commune par des fêtes variées.",de:"Ältere, Vorfahren, Ernte und Natur ehren – asiatische Zivilisationen drücken gemeinsame Dankbarkeit in vielfältigen Festen aus."},
+  seasia_lead:{zh:"华人华侨把祭祖、敬老、团圆的风俗带到东南亚，与当地民俗交融共生。",en:"Overseas Chinese brought ancestor worship, respecting the elderly and reunion customs to Southeast Asia, blending with local traditions.",es:"Los chinos de ultramar llevaron el culto a los ancestros, el respeto a los mayores y las costumbres de reunión al Sudeste Asiático, fusionándose con lo local.",ar:"حمل الصينيون المغتربون عادات تبجيل الأجداد واحترام الكبار واللم الشمل إلى جنوب شرق آسيا، فامتزجت بالتقاليد المحلية.",hi:"प्रवासी चीनियों ने पूर्वज पूजा, बड़ों का सम्मान और मिलन की परंपराएं दक्षिण पूर्व एशिया में लाईं, जहाँ वे स्थानीय रीति-रिवाजों से घुल-मिल गईं।",pt:"Chineses no exterior trouxeram culto aos ancestrais, respeito aos idosos e reuniões ao Sudeste Asiático, fundindo-se com tradições locais.",ru:"Зарубежные китайцы принесли в ЮВА культ предков, уважение к старшим и традиции воссоединения, слившись с местными обычаями.",ja:"華僑華人は祖先祭祀・敬老・団圓の風習を東南アジアに伝え、現地の民俗と融合し共生した。",fr:"Les Chinois d'outre-mer ont apporté le culte des ancêtres, le respect des aînés et les réunions en Asie du Sud-Est, fusionnant avec les traditions locales.",de:"Auslandschinesen brachten Ahnenkult, Achtung vor Älteren und Familientreffen nach Südostasien und verschmolzen mit lokalen Bräuchen."},
+  actions_title:{zh:"感恩的 10 个小动作",en:"10 Small Acts of Gratitude",es:"10 pequeños actos de gratitud",ar:"10 أفعال امتنان صغيرة",hi:"कृतज्ञता के 10 छोटे कार्य",pt:"10 pequenos atos de gratidão",ru:"10 маленьких дел благодарности",ja:"感謝の10の小さな行動",fr:"10 petits gestes de gratitude",de:"10 kleine Dankestaten"},
+  actions_lead:{zh:"感恩不必隆重，藏在日常可执行的小小行动里。",en:"Gratitude need not be grand; it lives in small daily acts anyone can do.",es:"La gratitud no necesita ser grandiosa; vive en pequeños actos diarios.",ar:"لا يحتاج الامتنان إلى ضخامة؛ إنه في أفعال يومية صغيرة.",hi:"कृतज्ञता भव्य होने की आवश्यकता नहीं; वह छोटे दैनिक कार्यों में बसती है।",pt:"Gratidão não precisa ser grandiosa; mora em pequenos atos diários.",ru:"Благодарность не обязана быть пышной — она в ежедневных маленьких делах.",ja:"感謝は大仰である必要はなく、日常の小さな行動の中にある。",fr:"La gratitude n'a pas besoin d'être grande : elle vit dans les petits gestes du quotidien.",de:"Dankbarkeit muss nicht groß sein – sie liegt in kleinen alltäglichen Taten."},
+  mind_title:{zh:"感恩的 10 个高维正能量思维",en:"10 High-dimensional Positive Mindsets of Gratitude",es:"10 mentalidades positivas elevadas de la gratitud",ar:"10 عقليات إيجابية راقية للامتنان",hi:"कृतज्ञता के 10 उच्च-आयामी सकारात्मक मानसिकता",pt:"10 mentalidades positivas elevadas de gratidão",ru:"10 возвышенных позитивных мышлений благодарности",ja:"感謝の10の高次元ポジティブ思考",fr:"10 mentalités positives élevées de la gratitude",de:"10 hochdimensionale positive Denkweisen der Dankbarkeit"},
+  mind_lead:{zh:"把感恩从情绪升维为认知模型与处世哲学。",en:"Elevate gratitude from an emotion into cognitive models and a life philosophy.",es:"Eleve la gratitud de una emoción a modelos cognitivos y filosofía de vida.",ar:"ارتقِ بالامتنان من مشاعر إلى نماذج معرفية وفلسفة حياة.",hi:"कृतज्ञता को भावना से उठाकर संज्ञानात्मक मॉडल और जीवन दर्शन बनाएं।",pt:"Elevate a gratidão de emoção para modelos cognitivos e filosofia de vida.",ru:"Поднимите благодарность из эмоции до когнитивных моделей и жизненной философии.",ja:"感謝を感情から認知モデルと人生哲学へ昇華させる。",fr:"Élevez la gratitude d'une émotion en modèles cognitifs et philosophie de vie.",de:"Erheben Sie Dankbarkeit vom Gefühl zu Denkmodellen und Lebensphilosophie."},
+  cat_A:{zh:"感恩节常识",en:"Thanksgiving Basics"},cat_B:{zh:"感恩心理与文化",en:"Gratitude Psychology"},cat_C:{zh:"华夏与亚洲实践",en:"Chinese & Asian Practice"},cat_D:{zh:"东南亚实践",en:"Southeast Asia"},cat_E:{zh:"地球村理念",en:"Global Village"},cat_F:{zh:"EACO 基础",en:"EACO Basics"},cat_G:{zh:"EACO 理念与社区",en:"EACO Vision & Community"},
+  faq_title:{zh:"感恩节 + EACO 地球 · 常见 100 问",en:"Thanksgiving + EACO Earth · 100 FAQs",es:"Acción de Gracias + EACO Tierra · 100 preguntas",ar:"عيد الشكر + EACO الأرض · 100 سؤالاً",hi:"थैंक्सगिविंग + EACO अर्थ · 100 प्रश्न",pt:"Ação de Graças + EACO Terra · 100 perguntas",ru:"День благодарения + EACO Земля · 100 вопросов",ja:"感謝祭 + EACOアース · 100問",fr:"Action de grâce + EACO Terre · 100 questions",de:"Erntedank + EACO Erde · 100 Fragen"},
+  faq_lead:{zh:"涵盖感恩节文化、感恩心理、华夏与亚洲实践，以及 EACO 项目基础、理念与社区。",en:"Covers Thanksgiving culture, gratitude psychology, Chinese and Asian practices, plus EACO basics, philosophy and community.",es:"Cultura de Acción de Gracias, psicología de la gratitud, prácticas china y asiática, además de los fundamentos, filosofía y comunidad de EACO.",ar:"يشمل ثقافة عيد الشكر وعلم نفس الامتنان والممارسات الصينية والآسيوية وأساسيات EACO وفلسفتها ومجتمعها.",hi:"थैंक्सगिविंग संस्कृति, कृतज्ञता मनोविज्ञान, चीनी और एशियाई अभ्यास, साथ ही EACO मूल बातें, दर्शन और समुदाय शामिल हैं।",pt:"Cobre cultura de Ação de Graças, psicologia da gratidão, práticas chinesas e asiáticas, além de fundamentos, filosofia e comunidade EACO.",ru:"Культура благодарения, психология благодарности, китайские и азиатские практики, основы, философия и сообщество EACO.",ja:"感謝祭の文化、感謝の心理学、中華・アジアの実践、EACOの基礎・理念・コミュニティを網羅。",fr:"Culture de l'Action de grâce, psychologie de la gratitude, pratiques chinoises et asiatiques, bases, philosophie et communauté EACO.",de:"Erntedankkultur, Dankbarkeitspsychologie, chinesische und asiatische Praktiken sowie EACO-Grundlagen, Philosophie und Community."},
+  faq_ph:{zh:"搜索问题…",en:"Search questions…",es:"Buscar preguntas…",ar:"ابحث عن الأسئلة…",hi:"प्रश्न खोजें…",pt:"Buscar perguntas…",ru:"Поиск вопросов…",ja:"質問を検索…",fr:"Rechercher des questions…",de:"Fragen suchen…"}
+};
+
+/* 板块内容（zh 为基准，en 提供英译；其余语言兜底 en） */
+const CONTENT = {
+  origin:[
+    {t:{zh:"北美殖民时期的丰收庆典",en:"Harvest feast in North American colonies"},p:{zh:"1621年，英国清教徒移民在普利茅斯度过艰难的第一个冬天，在印第安原住民帮助下获得丰收，聚众设宴庆祝，被视为感恩节的雏形。",en:"In 1621, English Pilgrims at Plymouth held a harvest feast with Native American help after a harsh first winter, seen as the prototype of Thanksgiving."}},
+    {t:{zh:"从地方性节日到全国假日",en:"From local feast to national holiday"},p:{zh:"经历多个殖民地与州的传统演变，1863年林肯总统宣布将全国感恩日固定为每年11月的第四个星期四，成为美国法定节日。",en:"After regional evolution, President Lincoln in 1863 made a national Thanksgiving the fourth Thursday of November, a US holiday."}},
+    {t:{zh:"跨文化传播与现代内涵",en:"Cross-cultural spread and modern meaning"},p:{zh:"如今感恩节流传到加拿大、欧洲及世界各地，核心从“感谢丰收”扩展为感谢家人、朋友、健康、机遇与一切美好相遇。",en:"Now spread to Canada, Europe and worldwide; its core expands from thanking harvest to family, friends, health, opportunities and every good encounter."}},
+    {t:{zh:"感恩精神的普世性",en:"Universality of the gratitude spirit"},p:{zh:"感恩并非西方独有：东方有敬老孝亲、祭祖敬天，非洲有部落互助，拉美有丰收庆典。感恩是全人类共同的情感与伦理实践。",en:"Gratitude is not Western-only: East Asia honors elders and ancestors, Africa practices mutual aid, Latin America holds harvest festivals. Gratitude is a universal human ethic."}}
+  ],
+  village:[
+    {t:{zh:"从一家之桌到一村之宴",en:"From one table to a village feast"},p:{zh:"地球村感恩节主张把感恩从家庭延伸到邻里：共享一餐、互赠谢意，让陌生人之间也建立善意联结。",en:"It extends gratitude from family to neighbors: shared meals, mutual thanks, building goodwill even among strangers."}},
+    {t:{zh:"跨语言、跨文明的彼此致谢",en:"Cross-language, cross-civilization thanks"},p:{zh:"用前十大语言向不同文明表达感谢：感恩土地、水源、空气、前人创造的知识与当代人的协作。",en:"Thank different civilizations in ten major languages: land, water, air, inherited knowledge and present cooperation."}},
+    {t:{zh:"感恩自然与可持续发展",en:"Gratitude to nature and sustainability"},p:{zh:"对地球的馈赠心怀感激，落实为节约资源、低碳生活、保护生物多样性，让感恩转化为长期行动。",en:"Gratitude for Earth's gifts turns into resource saving, low-carbon living and biodiversity protection."}},
+    {t:{zh:"数字时代的全球协作",en:"Global collaboration in the digital age"},p:{zh:"借由互联网与区块链社区，世界各地的感恩者可以实时协作，把善意汇聚成公共产品与可持续项目，如 EACO 的地球村实践。",en:"Via internet and blockchain communities, thank-minded people worldwide collaborate in real time, pooling goodwill into public goods like EACO's global village practice."}}
+  ],
+  asia:[
+    {t:{zh:"孝道：华夏感恩的根基",en:"Filial piety: root of Chinese gratitude"},p:{zh:"“百善孝为先”，感恩父母养育是华夏伦理的起点；敬老、孝亲、传家，是感恩节在亚洲最自然的本土化表达。",en:"Filial piety tops all virtues: thanking parents begins Chinese ethics; honoring elders and family is the natural local form of Thanksgiving in Asia."}},
+    {t:{zh:"敬天惜物：感恩自然馈赠",en:"Revering heaven, cherishing goods"},p:{zh:"“一粥一饭，当思来处不易”，华夏传统珍惜粮食与物用，对应西方感恩丰收的内核，强调节制与惜福。",en:"Every grain comes with effort; cherishing food and goods matches the harvest-gratitude core, emphasizing restraint and contentment."}},
+    {t:{zh:"祭祖追远：感谢先人之恩",en:"Ancestor rites: thanks to forebears"},p:{zh:"清明、重阳、春节祭祖，表达对祖先奠基立业之恩的感念，把感恩延伸到时间长河中的先辈。",en:"Qingming, Double Ninth and Spring Festival rites thank ancestors who laid foundations, extending gratitude across time."}},
+    {t:{zh:"知恩图报：仁义与情义",en:"Repaying kindness: benevolence and loyalty"},p:{zh:"“滴水之恩，涌泉相报”，华夏文化重情义、记人恩、思回报，与感恩节后半段“回馈社会”的精神相通。",en:"A drop of kindness repaid with a spring; Chinese values loyalty and returning favors, echoing Thanksgiving's giving-back spirit."}},
+    {t:{zh:"亚洲融合：多样文明共庆感恩",en:"Asian fusion: diverse civilizations share thanks"},p:{zh:"日本有敬老日与秋收祭，韩国有秋夕，东南亚有泼水节与祭祖仪式。亚洲可在尊重各自传统的前提下，共建统一的“地球村感恩日”。",en:"Japan has Respect-for-the-Aged Day and harvest rites, Korea Chuseok, SE Asia Songkran and ancestor rites; Asia can jointly build a global village gratitude day respecting traditions."}},
+    {t:{zh:"把感恩写入家庭与学校教育",en:"Writing gratitude into family and school"},p:{zh:"从家规家训到校园品德课，鼓励孩子记录“今天感谢的三件事”，让感恩成为可传承的认知习惯。",en:"From family precepts to school ethics, encourage children to record three daily thanks, making gratitude a transmissible habit."}}
+  ],
+  festivals:[
+    /* 东亚 */
+    {t:{zh:"中国 · 春节（农历正月初一）",en:"China · Spring Festival (1st day of lunar year)"},p:{zh:"阖家团圆、祭祀祖先、拜年贺岁，感谢上一年的平安与庇佑，祈愿新岁向好。",en:"Family reunion, ancestor rites and New Year greetings thank last year's safety and blessings, wishing the new year well."}},
+    {t:{zh:"中国 · 清明（公历4月5日前后）",en:"China · Qingming (around Apr 5)"},p:{zh:"扫墓祭祖、追思先人，感谢祖先开基立业之恩，维系代际情感与家族记忆。",en:"Grave visits and ancestor rites thank forebears who founded the family, keeping intergenerational bonds and memory alive."}},
+    {t:{zh:"中国 · 重阳（农历九月初九）",en:"China · Double Ninth Festival (9th day, 9th lunar month)"},p:{zh:"登高、敬老、孝亲，以节日形式表达对长辈健康长寿的祝福与感恩。",en:"Climbing heights and honoring elders bless their longevity, a festive expression of gratitude to seniors."}},
+    {t:{zh:"中国 · 中秋（农历八月十五）",en:"China · Mid-Autumn Festival (15th day, 8th lunar month)"},p:{zh:"月圆团圆、赏月品饼，感谢亲人相聚与自然时节的馈赠。",en:"Full-moon reunion, mooncakes and moonlight thank family bonds and nature's seasonal gifts."}},
+    {t:{zh:"中国 · 农民丰收节（秋分）",en:"China · Farmers' Harvest Festival (Autumn Equinox)"},p:{zh:"在秋收时节庆祝五谷丰登，感谢土地、劳作与风调雨顺，是现代版的丰收感恩。",en:"Celebrates autumn harvest, thanking land, labor and favorable weather — a modern harvest thanksgiving."}},
+    {t:{zh:"日本 · 盂兰盆节（公历8月）",en:"Japan · Obon (August)"},p:{zh:"迎接祖先亡灵、家族团聚、扫墓祭祖，感念先人庇佑与家族传承。",en:"Welcomes ancestral spirits, family reunion and grave visits, thanking forebears' protection and lineage."}},
+    {t:{zh:"日本 · 敬老日（9月第三个周一）",en:"Japan · Respect-for-the-Aged Day (3rd Mon. Sep)"},p:{zh:"全国性向长辈表达敬意与感谢，祝愿老人安康，是制度化的代际感恩日。",en:"Nationwide respect and thanks to elders, wishing them health — an institutionalized intergenerational gratitude day."}},
+    {t:{zh:"日本 · 新尝祭（秋收）",en:"Japan · Niiname-sai (harvest rite)"},p:{zh:"以新收五谷供奉神灵与祖先，感谢自然恩赐与一年耕作的成果。",en:"First harvest offered to deities and ancestors, thanking nature's gifts and the year's labor."}},
+    {t:{zh:"韩国 · 秋夕 Chuseok（农历八月十五）",en:"Korea · Chuseok (15th day, 8th lunar month)"},p:{zh:"回乡祭祖、分享丰收美食，感谢祖先与土地，团圆贺节，与中秋内核相通。",en:"Homecoming, ancestor rites and harvest food thank ancestors and land; reunion echoes Mid-Autumn."}},
+    /* 东南亚 */
+    {t:{zh:"越南 · 雄王节（农历三月初十）",en:"Vietnam · Hùng Kings' Festival (10th day, 3rd lunar month)"},p:{zh:"祭拜建国雄王，感念民族先祖立国护民之恩，凝聚家国认同。",en:"Worships founding Hùng kings, thanking national ancestors for the nation and people, binding national identity."}},
+    {t:{zh:"越南 · 春节 Tết（农历正月）",en:"Vietnam · Tết Nguyên Đán (lunar January)"},p:{zh:"阖家团圆、祭祖守岁、拜年致谢，与华夏春节同源同俗。",en:"Reunion, ancestor rites, New Year's Eve and greetings share the same roots as Chinese Spring Festival."}},
+    {t:{zh:"泰国 · 水灯节 Loy Krathong（11月圆月）",en:"Thailand · Loy Krathong (full moon, Nov)"},p:{zh:"漂放水灯，感谢河流滋养与自然馈赠，祈求洗去过错、回报大地。",en:"Floating krathongs thank rivers and nature for nourishment, seeking cleansing and repaying the land."}},
+    {t:{zh:"泰国/缅甸 · 泼水节 Songkran（4月）",en:"Thailand/Myanmar · Songkran (April)"},p:{zh:"迎新祈福、浴佛敬老、泼水送旧，以清水表达祝福与对长辈的感恩。",en:"New year blessing, Buddha bathing, elder respect and water splashing; clean water conveys wishes and thanks to elders."}},
+    {t:{zh:"缅甸 · 点灯节 Tazaungdaing（10月圆月）",en:"Myanmar · Tazaungdaing (full moon, Oct)"},p:{zh:"点灯供佛、庆祝收获，感恩佛法指引与一年的丰收与安宁。",en:"Lighting lamps for the Buddha and celebrating harvest, thanking the teaching's guidance and the year's peace."}},
+    {t:{zh:"柬埔寨 · 亡人节 Pchum Ben（9–10月）",en:"Cambodia · Pchum Ben (Sep–Oct)"},p:{zh:"连续半月供奉祖先亡灵，感念先人恩德，是高棉人最重要的追思感恩节。",en:"Fortnight of offerings to ancestral spirits, thanking forebears; Cambodia's major remembrance festival."}},
+    {t:{zh:"老挝 · 塔銮节",en:"Laos · That Luang Festival"},p:{zh:"拜佛塔、布施祈福，感恩国家护佑与社群团结，全民共庆。",en:"Veneration of the stupa, alms and blessings, thanking national protection and community unity, celebrated nationwide."}},
+    {t:{zh:"马来西亚/沙巴 · Kaamatan 丰收节",en:"Malaysia/Sabah · Kaamatan Harvest Festival"},p:{zh:"庆祝稻米丰收、感谢稻神庇佑，以歌舞与献祭表达对土地的感恩。",en:"Celebrates rice harvest and thanks the rice spirit; song, dance and offerings express gratitude to the land."}},
+    {t:{zh:"砂拉越 · Gawai 达雅丰收节",en:"Sarawak · Gawai Dayak Harvest Festival"},p:{zh:"达雅族群庆祝稻作丰收，祭祖敬神、互访致谢，祈愿来年丰饶。",en:"Dayak people celebrate rice harvest, honor ancestors and deities, visit and thank one another, wishing next year's plenty."}},
+    {t:{zh:"新马 · 屠妖节 Deepavali（印度裔）",en:"Singapore/Malaysia · Deepavali (Indian community)"},p:{zh:"以光明驱散黑暗，感谢正义、知识与家庭福祉，是南亚裔在东南亚的感恩庆典。",en:"Light dispels darkness, thanking justice, knowledge and family well-being; the South Asian gratitude festival in SE Asia."}},
+    /* 南亚 */
+    {t:{zh:"印度 · Pongal（1月）",en:"India · Pongal (January)"},p:{zh:"泰米尔丰收节，煮甜米粥敬太阳、耕牛与土地，感谢一年的收成与劳作伙伴。",en:"Tamil harvest festival; sweet rice offered to sun, oxen and land, thanking the year's crop and working partners."}},
+    {t:{zh:"印度 · Onam（喀拉拉，8–9月）",en:"India · Onam (Kerala, Aug–Sep)"},p:{zh:"庆祝传说中圣王到访与稻米丰收，全家团聚、布置花毯，感恩丰饶与和睦。",en:"Marks a legendary king's visit and rice harvest; family reunion and flower carpets thank plenty and harmony."}},
+    {t:{zh:"尼泊尔 · Dashain（9–10月）",en:"Nepal · Dashain (Sep–Oct)"},p:{zh:"敬祖敬长、点红祈福，感谢长辈祝福与家庭庇佑，是尼泊尔最隆重的家庭节日。",en:"Honors ancestors and elders with tika blessings, thanking family protection; Nepal's grandest family festival."}},
+    {t:{zh:"尼泊尔 · Tihar（10–11月）",en:"Nepal · Tihar (Oct–Nov)"},p:{zh:"分别敬拜狗、牛、乌鸦与兄妹，感恩万物各尽其责，是生命共生的感恩礼赞。",en:"Worships dogs, cows, crows and siblings in turn, thanking every being's role — a hymn to living symbiosis."}},
+    {t:{zh:"斯里兰卡/南亚 · 屠妖节",en:"Sri Lanka / South Asia · Deepavali"},p:{zh:"点灯感恩神明恩赐、家庭团圆与智慧光明，与印度次大陆传统一脉相承。",en:"Lamps thank divine gifts, family reunion and the light of wisdom, sharing the subcontinent's tradition."}}
+  ],
+  seasia:[
+    {t:{zh:"华人移民与风俗传播",en:"Chinese migration and custom spread"},p:{zh:"明清以来下南洋的华人，把春节、清明、中秋、祭祖与敬老习俗带入新加坡、马来西亚、泰国、印尼、菲律宾、越南等地。",en:"Since Ming-Qing times, Nanyang migrants brought Spring Festival, Qingming, Mid-Autumn, ancestor and elder rites to Singapore, Malaysia, Thailand, Indonesia, Philippines, Vietnam."}},
+    {t:{zh:"与本地民俗交融共生",en:"Blending with local folklore"},p:{zh:"祭祖祭品融合本地香料与食材，庙宇与宗祠并列清真寺、教堂、寺庙，形成多元宗教和睦共处的感恩场景。",en:"Offerings blend local spices and foods; ancestral halls stand beside mosques, churches and temples, showing multi-religious harmony."}},
+    {t:{zh:"宗族互助与社群感恩",en:"Clan mutual aid and community thanks"},p:{zh:"华人会馆、宗亲会以互助共济为本，成员互助渡难关后聚首感恩，是东南亚版“社区感恩节”的现实土壤。",en:"Clan associations aid members through hardship and gather to give thanks — a local version of community Thanksgiving."}},
+    {t:{zh:"团圆饭与跨代情感",en:"Reunion meals and intergenerational bonds"},p:{zh:"南洋团圆饭融合娘惹菜、泰式、越式风味，三代同桌互敬祝福，延续华夏“家”的感恩内核。",en:"Nanyang reunion meals blend Nonya, Thai and Vietnamese flavors; three generations toast together, continuing the Chinese family-gratitude core."}},
+    {t:{zh:"现代发展：商业、教育与公益",en:"Modern growth: business, education, charity"},p:{zh:"东南亚华商以感恩反哺乡梓，捐建学校、庙宇、医院与华文教育；现代感恩节可与慈善捐赠、志愿服务结合发展。",en:"Overseas Chinese entrepreneurs give back through schools, temples, hospitals and Chinese education; modern Thanksgiving can pair with charity and volunteering."}},
+    {t:{zh:"面向未来的文化共创",en:"Future co-creation of culture"},p:{zh:"依托东南亚多语言、多族裔社会，可打造融合华夏感恩、本土丰收节与地球村理念的年度感恩品牌活动，面向全球华人及本地社群。",en:"Using SE Asia's multilingual, multi-ethnic society, build an annual gratitude brand blending Chinese thanks, local harvest festivals and global village ideals for overseas Chinese and local communities."}}
+  ],
+  actions:[
+    {t:{zh:"说一句真诚的谢谢",en:"Say a sincere thank-you"},p:{zh:"对家人、同事、店员或陌生人，当面或发消息表达感谢。",en:"Thank family, colleagues, staff or strangers, in person or by message."}},
+    {t:{zh:"写一张感恩卡片",en:"Write a gratitude card"},p:{zh:"手写一句具体的感谢事由，比笼统赞美更有力量。",en:"Handwrite a specific reason; concrete thanks are more powerful than vague praise."}},
+    {t:{zh:"认真倾听一次",en:"Listen attentively once"},p:{zh:"放下手机，专心听对方说完，是对他人时间与存在的尊重。",en:"Put down the phone and listen fully; respect others' time and presence."}},
+    {t:{zh:"帮一个小忙",en:"Offer a small favor"},p:{zh:"顺手开门、搬物、指路，用行动回馈日常得到的善意。",en:"Hold a door, carry something, give directions; repay daily kindness in action."}},
+    {t:{zh:"记录三件值得感恩的事",en:"Record three things to thank for"},p:{zh:"每晚写下当天三件小确幸，培养积极觉察。",en:"Write three daily blessings each night to build positive awareness."}},
+    {t:{zh:"给父母长辈打个电话",en:"Call parents and elders"},p:{zh:"定期问候，耐心听他们重复往事，感恩养育之恩。",en:"Call regularly, patiently hear their stories, thank them for raising you."}},
+    {t:{zh:"珍惜一餐一饭",en:"Cherish every meal"},p:{zh:"饭前默想食物来自土地与他人劳动，不浪费粮食。",en:"Before eating, reflect on land and labor; avoid food waste."}},
+    {t:{zh:"回赠一份小礼物",en:"Return a small gift"},p:{zh:"不必贵重，一杯茶、一本书、一盆绿植即可表达谢意。",en:"Need not be costly: tea, a book or a plant conveys thanks."}},
+    {t:{zh:"原谅一次小摩擦",en:"Forgive a small friction"},p:{zh:"对他人无心之失放下计较，也是对自己内心的善待。",en:"Let go of minor unintentional slights; it kindness to your own heart too."}},
+    {t:{zh:"向自然道一声感谢",en:"Thank nature once"},p:{zh:"出门感受阳光、风与绿树，感谢地球馈赠的空气与水。",en:"Step outside, feel sun, wind and trees; thank Earth for air and water."}}
+  ],
+  mindsets:[
+    {t:{zh:"匮乏转向丰盈",en:"From scarcity to abundance"},p:{zh:"同样的境遇，看见“已拥有”而非“未得到”，感恩是丰盈心态的起点。",en:"See what you have rather than what you lack; gratitude starts an abundance mindset."}},
+    {t:{zh:"归因他人与环境",en:"Attribute to others and context"},p:{zh:"承认成就中有他人协助与环境机遇，不把一切归于自己，心量自然扩大。",en:"Acknowledge help and opportunity behind success; credit others, expand your heart."}},
+    {t:{zh:"时间维度拉长看",en:"Lengthen the time lens"},p:{zh:"把挫折放在更长的时间线里回看，许多困难也值得感恩其带来的成长。",en:"Review setbacks on a longer timeline; many hardships teach growth worth thanking."}},
+    {t:{zh:"互惠循环思维",en:"Reciprocity loop"},p:{zh:"感恩不是终点，而是善意循环的一环：受恩—记恩—报恩—施恩。",en:"Gratitude is not an end but a loop: receive, remember, repay, give."}},
+    {t:{zh:"系统视角感恩",en:"Systems-view gratitude"},p:{zh:"感谢一张协作之网：从农民、工人到科学家与制度，个体只是系统的一环。",en:"Thank the web of collaboration: farmers, workers, scientists, institutions; the individual is one node."}},
+    {t:{zh:"对挑战保持感恩假设",en:"Gratitude hypothesis for challenges"},p:{zh:"先假设困境背后藏着礼物，主动寻找它，把被动承受变为主动成长。",en:"Assume challenges hide a gift; seek it, turning endurance into growth."}},
+    {t:{zh:"利他即自利",en:"Altruism as self-interest"},p:{zh:"持续利他、回馈他人，会反过来提升自己的幸福感与社会连接。",en:"Steady altruism and giving back raise your own well-being and social bonds."}},
+    {t:{zh:"觉察当下之美",en:"Awaken to present beauty"},p:{zh:"感恩训练对当下细节的觉察，把注意力从焦虑未来拉回真实此刻。",en:"Gratitude trains attention to present details, pulling focus from future anxiety to now."}},
+    {t:{zh:"文明传承意识",en:"Civilization inheritance awareness"},p:{zh:"感谢前人留下的知识、秩序与工具，并思考自己能为后人留下什么。",en:"Thank predecessors for knowledge, order and tools; consider what you leave to successors."}},
+    {t:{zh:"地球整体共生观",en:"Whole-Earth symbiosis view"},p:{zh:"把自己视为地球生命共同体的一部分，感恩众生与自然系统的共生关系。",en:"See yourself as part of the Earth community; thank the symbiosis of all beings and nature."}}
+  ]
+};
+
+/* ================= FAQ 100 条 =================
+   结构: [分类key, 问zh, 答zh, 问en, 答en] */
+const FAQ = [
+/* ---- A 感恩节常识 1-20 ---- */
+["A","感恩节是哪一天？","美国为每年11月第四个星期四；加拿大为10月第二个星期一；其他国家日期与传统各不相同。","When is Thanksgiving?","US: fourth Thursday of November; Canada: second Monday of October; other countries vary."],
+["A","感恩节最初是为了感谢什么？","最初感谢农作物丰收与原住民对移民的帮助，后来扩展为感谢家人、朋友与生活中的美好。","What was Thanksgiving first for?","First for harvest and Native help to settlers; later for family, friends and life's blessings."],
+["A","感恩节吃什么传统食物？","火鸡、南瓜派、土豆泥、蔓越莓酱、玉米面包等是北美传统餐桌常见食物。","Traditional Thanksgiving food?","Turkey, pumpkin pie, mashed potatoes, cranberry sauce, cornbread and more."],
+["A","感恩节和火鸡有什么关系？","火鸡是北美本土禽类，早期丰收宴上被食用，逐渐成为节日主菜象征。","Why turkey?","Native to North America, eaten at early harvest feasts, it became the holiday's signature dish."],
+["A","感恩节是美国独有的节日吗？","不是。加拿大、德国、英国、荷兰、日本等地都有类似丰收或感恩传统，日期与形式不同。","Is it unique to the US?","No. Canada, Germany, UK, Netherlands, Japan and others have harvest/thanks traditions with different dates."],
+["A","感恩节有哪些经典习俗？","家庭聚餐、游行、橄榄球赛、给需要的人捐助、写感恩清单等。","Classic customs?","Family dinner, parades, football, charity giving, gratitude lists."],
+["A","黑色星期五和感恩节是什么关系？","感恩节后次日是 Black Friday，商家开启年末促销，由节日家庭购物传统演变而来。","Black Friday relation?","The day after Thanksgiving; year-end sales evolved from holiday family shopping."],
+["A","感恩节的核心精神是什么？","向内看见已有之恩，向外表达感谢并回馈他人与社会。","Core spirit?","Notice blessings within, express thanks outward, and give back to others and society."],
+["A","没有宗教信仰也可以过感恩节吗？","可以。感恩是普世情感与伦理实践，不依附特定宗教，任何人都能参与。","Non-religious people can join?","Yes. Gratitude is a universal emotion and ethic, independent of any religion."],
+["A","感恩节和丰收节是一回事吗？","相近但不等同。丰收节侧重感谢土地与收成，感恩节范围更广，包含人际与生活感恩。","Same as harvest festival?","Related but not identical. Harvest festivals thank land and crops; Thanksgiving covers people and life broadly."],
+["A","感恩节为什么强调家庭团聚？","长途归家、同桌共餐象征珍惜亲情，是节日情感联结的主要方式。","Why family reunion?","Traveling home and sharing a meal cherishes family bonds, the main emotional connection."],
+["A","感恩节可以只对自己感恩吗？","可以。感谢自己的坚持、努力与成长，也是健康感恩观的一部分。","Can I thank myself?","Yes. Thanking your own persistence, effort and growth is part of healthy gratitude."],
+["A","感恩节和圣诞节有什么区别？","感恩节侧重感恩与丰收，世俗与家庭色彩浓；圣诞节侧重宗教纪念与礼物交换。","Difference from Christmas?","Thanksgiving focuses on gratitude and harvest, secular/family; Christmas on religious commemoration and gifts."],
+["A","历史上感恩节有哪些争议？","部分视角指出早期殖民叙事掩盖了原住民遭遇，现代感恩节也被反思为更包容的感恩与和解。","Historical controversies?","Some views note colonial narratives overshadowed Indigenous experience; modern Thanksgiving is rethought toward inclusion and reconciliation."],
+["A","现代年轻人怎么过感恩节？","聚餐、写感恩日记、公益志愿、线上向远方亲友致谢，形式更多元。","How do young people celebrate today?","Dinner, gratitude journals, volunteering, online thanks to distant loved ones; more diverse forms."],
+["A","感恩节一定要吃大餐吗？","不必。仪式可简，关键是真诚表达感谢，一顿家常饭同样可以。","Must there be a feast?","No. Ritual can be simple; sincerity matters, a home meal works too."],
+["A","感恩节能向陌生人表达感谢吗？","能。对服务人员、路人善意说谢谢，正是把感恩延伸到公共空间。","Thank strangers?","Yes. Thanking service workers and kind strangers extends gratitude to public space."],
+["A","感恩节和周末假期如何安排？","美国常连休周四至周日，用于返乡、休息、购物与公益。","Holiday arrangement?","Often Thursday-to-Sunday long weekend for travel, rest, shopping and charity."],
+["A","感恩文化对社会有什么价值？","提升人际信任、增强互助氛围、降低对立，让社会更有凝聚力与韧性。","Social value?","Builds trust, mutual aid, reduces division, strengthens cohesion and resilience."],
+["A","感恩可以成为一种日常习惯吗？","可以。通过记录、表达与回馈的反复练习，感恩会从节日情绪变为长期性格特质。","Can it be a daily habit?","Yes. Repeated recording, expression and giving-back turn holiday emotion into a lasting trait."],
+/* ---- B 感恩心理与文化 21-35 ---- */
+["B","感恩在心理学上是什么？","感恩是个体识别并回应他人善意与生活馈赠时产生的积极情绪与认知倾向。","What is gratitude in psychology?","A positive emotion and tendency to recognize and respond to kindness and life's gifts."],
+["B","感恩为什么能提升幸福感？","感恩训练把注意力转向积极资源，减少反刍与嫉妒，提升满足感与社会连接。","Why does it boost well-being?","It shifts attention to positive resources, reduces rumination and envy, raising satisfaction and connection."],
+["B","写感恩日记真的有用吗？","研究表明定期记录感恩对象可显著提升乐观与情绪状态，关键是持续、具体。","Does a gratitude journal work?","Research shows regular specific entries improve optimism and mood; consistency and detail matter."],
+["B","感恩和满足感是一回事吗？","相近但不同：满足感偏当下需求被满足，感恩偏识别来源与他人付出。","Same as contentment?","Related but different: contentment is needs met; gratitude recognizes sources and others' effort."],
+["B","感恩会变成讨好或委屈自己吗？","健康感恩不压抑合理诉求；它承认善意，同时尊重自身边界与权利。","Can gratitude become people-pleasing?","Healthy gratitude does not suppress legitimate needs; it acknowledges kindness while respecting boundaries."],
+["B","对伤害过自己的人也要感恩吗？","不必强迫感恩伤害本身；可以感谢从中磨练出的韧性与成长，但不等于原谅伤害。","Thank those who hurt you?","Don't force gratitude for harm itself; you may thank the resilience gained, without excusing it."],
+["B","感恩与谦卑有什么关系？","感恩承认个人成就离不开他人与环境，自然生出谦卑，减少自大与对立。","Gratitude and humility?","Gratitude sees achievement depends on others and context, breeding humility over arrogance."],
+["B","为什么有的人难以感恩？","匮乏感、比较习惯、创伤经历会让人紧盯缺失；可通过小练习逐步重建觉察。","Why are some people ungrateful?","Scarcity, comparison and trauma focus the mind on lack; small exercises rebuild awareness over time."],
+["B","感恩如何改善亲密关系？","主动欣赏并表达伴侣优点，减少挑剔，提升亲密感与关系稳定性。","How does it improve relationships?","Appreciating and voicing a partner's strengths reduces criticism, raising closeness and stability."],
+["B","感恩和乐观有何区别？","乐观偏向对未来的积极预期；感恩偏向对已发生之事的积极确认。","Gratitude vs optimism?","Optimism is positive future expectation; gratitude is positive acknowledgment of what has happened."],
+["B","孩子如何培养感恩之心？","家长示范感谢、引导看见他人付出、避免物质过度满足，让孩子体验来之不易。","Raising grateful children?","Model thanks, help them see others' effort, avoid over-gratification, let them experience effort."],
+["B","感恩是否只针对人？","不是。也可感谢自然、时代、制度、知识、身体与偶然机遇。","Only toward people?","No. Also nature, era, institutions, knowledge, body and chance opportunity."],
+["B","心理学中有哪些感恩干预方法？","感恩日记、感恩拜访、三件好事练习、感恩冥想、致谢信等。","Gratitude interventions?","Journaling, gratitude visit, three-good-things exercise, gratitude meditation, thank-you letters."],
+["B","感恩会降低奋斗动力吗？","不会。健康感恩让人珍惜已有、更从容地追求目标，减少焦虑型内耗。","Does it reduce ambition?","No. Healthy gratitude cherishes the present, pursuing goals calmly with less anxious drain."],
+["B","集体感恩和个人感恩有何不同？","个人感恩调节内心状态；集体感恩凝聚群体认同、推动互助与公共善。","Collective vs individual?","Individual regulates inner state; collective builds group identity, mutual aid and public good."],
+/* ---- C 华夏与亚洲实践 36-50 ---- */
+["C","华夏文化里感恩的源头是什么？","源自孝亲、祭祖、敬天、酬神，以及仁义礼智信中的恩情观。","Chinese roots of gratitude?","Filial piety, ancestor rites, reverence for heaven, thanks to deities, and kindness in Confucian virtues."],
+["C","“百善孝为先”和感恩有什么关系？","孝是对父母养育之恩的回报，被视为一切善与感恩行为的起点。","How does filial piety relate?","Repaying parental upbringing is ranked the first virtue, the starting point of grateful conduct."],
+["C","儒家如何看待感恩？","儒家讲仁爱、报恩、慎终追远，主张把家庭之爱推及乡里与社会。","Confucian view?","Benevolence, repaying kindness, honoring ancestors; extend family love to community and society."],
+["C","道家有感恩思想吗？","有。道家强调道法自然、知足不辱，对天地运化与生命本身心怀顺应与感激。","Daoist gratitude?","Yes. Dao follows nature; contentment without disgrace, yielding to and thanking cosmic order and life."],
+["C","佛家如何讲感恩？","佛教报四重恩：父母恩、众生恩、国土恩、三宝恩，强调利他与回馈。","Buddhist view?","Repay four debts: parents, all beings, nation, the teaching; emphasizes altruism and giving back."],
+["C","传统节日里哪些体现感恩？","春节团圆祭祖、清明追思、重阳敬老、中秋团圆、冬至阖家，皆含感恩意涵。","Festivals showing gratitude?","Spring Festival reunion/ancestor rites, Qingming remembrance, Double Ninth elders, Mid-Autumn, Winter Solstice."],
+["C","“滴水之恩，涌泉相报”是什么意思？","受他人微小恩惠，当以更大善意回报，体现重情重义的感恩伦理。","Meaning of the saying?","Repay a drop of kindness with a spring; a gratitude ethic valuing loyalty and reciprocity."],
+["C","华夏感恩和西方感恩有何异同？","都重家庭与善意；华夏更重辈分、宗族、报恩与天人关系，西方更偏个人表达与公开致谢。","Chinese vs Western?","Both value family and kindness; Chinese emphasizes lineage, repayment and heaven-human ties; Western favors personal, public thanks."],
+["C","韩国秋夕与感恩有何相通？","秋夕回乡祭祖、分享收成，与感恩节团圆、谢丰收的内核相通。","Korean Chuseok connection?","Chuseok homecoming, ancestor rites and harvest sharing echo Thanksgiving's reunion and thanks."],
+["C","日本敬老日体现什么感恩？","尊重老人、感谢长辈多年付出，是东方社会对代际恩情的制度化表达。","Japanese Respect-for-the-Aged Day?","Honors elders' lifelong contribution, an institutionalized East Asian gratitude across generations."],
+["C","东南亚华人保留了哪些华夏感恩习俗？","祭祖、清明扫墓、春节拜年、敬老团年饭、庙宇酬神等。","Chinese gratitude customs in SE Asia?","Ancestor rites, Qingming graves visits, New Year greetings, reunion dinners, temple thanks."],
+["C","如何把华夏感恩融入现代城市生活？","设立家庭感恩日、社区敬老活动、企业致谢文化、公益捐赠与文化传家。","Fit into modern city life?","Family gratitude days, community elder events, workplace appreciation culture, charity and family heritage."],
+["C","华夏感恩如何走向世界？","通过汉语教育、华人社区、餐饮与节庆文化，把孝亲、惜福、报恩理念传递给更多文明。","Going global?","Through Chinese education, diaspora communities, cuisine and festivals, share filial gratitude, contentment and reciprocity."],
+["C","感恩和“家文化”有什么联系？","家是华夏感恩的第一场景：从感谢父母起步，扩展到宗亲、乡里、国家与天下。","Link to family culture?","Family is the first scene: thank parents first, then clan, neighborhood, nation and world."],
+["C","亚洲不同文明能共建一个感恩节日吗？","可以。保留各自传统内核，统一在“感谢他人、自然与相遇”的主题下形成年度共庆。","Can Asia share one gratitude day?","Yes. Keep local cores, unite under thanks to people, nature and encounters in an annual shared celebration."],
+/* ---- D 东南亚实践 51-60 ---- */
+["D","东南亚华人主要分布在哪些国家？","新加坡、马来西亚、泰国、印尼、菲律宾、越南、缅甸、柬埔寨、文莱等。","Where are SE Asian Chinese communities?","Singapore, Malaysia, Thailand, Indonesia, Philippines, Vietnam, Myanmar, Cambodia, Brunei."],
+["D","下南洋是什么历史背景？","明清至近代华南居民赴东南亚谋生，带去农耕、商贸与宗族文化。","Nanyang migration background?","South China residents moved to SE Asia from Ming-Qing to modern times, bringing farming, trade and clan culture."],
+["D","东南亚华人会馆起什么作用？","联络乡亲、互助救济、兴办教育与庙宇，是社群感恩与互助的组织载体。","Role of clan associations?","Connect kin, mutual relief, run schools and temples; organizational base for community gratitude and aid."],
+["D","当地民俗如何与华夏习俗融合？","如泰国华人祭祖融合本地供奉，娘惹饮食结合中式与马来风味，宗教场所并存互尊。","Fusion with local folklore?","Thai Chinese rites blend local offerings; Nonya cuisine blends Chinese and Malay; religious sites coexist respectfully."],
+["D","东南亚华商如何回馈社会？","捐资建校、支持华文教育、修桥铺路、办医院与慈善基金，以感恩反哺乡梓与当地。","How do Chinese entrepreneurs give back?","Fund schools, Chinese education, infrastructure, hospitals and charities, repaying hometown and adopted land."],
+["D","东南亚有哪些本土丰收或感恩节日？","泰国水灯节、缅甸点灯节、越南雄王节、菲律宾丰收庆典、印尼稻米祭祀等。","Local harvest/thanks festivals?","Thai Loy Krathong, Burmese Tazaungdaing, Vietnamese Hùng Kings, Philippine harvest rites, Indonesian rice rituals."],
+["D","华人祭祖在东南亚如何延续？","通过宗祠、扫墓、清明与春秋二祭，供奉祖先牌位与祭品，维系宗族记忆。","How do ancestor rites continue?","Through ancestral halls, grave visits, Qingming and seasonal rites, tablets and offerings keep clan memory."],
+["D","东南亚多语言环境对感恩传播有何帮助？","可借助本地语言与方言双语表达，让感恩理念在华人、本地族群与移民间流动。","Multilingual advantage?","Local languages and dialects let gratitude spread among Chinese, locals and other migrants."],
+["D","现代东南亚感恩节可以怎么做？","结合慈善晚宴、敬老慰问、华文文化展、志愿服务与社区团圆餐。","Modern SE Asian Thanksgiving ideas?","Charity dinners, elder visits, Chinese culture fairs, volunteering, community reunion meals."],
+["D","东南亚经验对全球华人社群有何参考？","展示了跨族裔共生、文化落地与感恩回馈的可持续模式，可供其他移民社群借鉴。","Reference for global diaspora?","A sustainable model of cross-ethnic coexistence, cultural rooting and grateful giving back, useful to other migrant communities."],
+/* ---- E 地球村理念 61-70 ---- */
+["E","什么是地球村？","指交通与信息网络把世界连成紧密互动的整体，各地彼此依存、休戚与共。","What is the global village?","Transport and networks bind the world into an interdependent, closely interacting whole."],
+["E","地球村和感恩有什么关系？","在相互依存的系统里，更能看见他人劳动与自然馈赠，感恩成为全球协作的情感基础。","Gratitude link?","In an interdependent system, others' labor and nature's gifts are visible; gratitude becomes the emotional base of global cooperation."],
+["E","为什么要讲全球协作？","气候、能源、粮食、公共卫生等问题无法由单一国家解决，必须跨国协作。","Why global collaboration?","Climate, energy, food and health cannot be solved alone; cross-border cooperation is required."],
+["E","地球村理念和可持续发展如何结合？","以感恩之心对待地球，转化为低碳、循环、保护生物多样性的长期行动。","Sustainability link?","Gratitude toward Earth turns into low-carbon, circular, biodiversity-protecting long-term action."],
+["E","个人在地球村能做什么？","学习跨文化理解、理性表达善意、参与公共议题、支持可持续项目与公益。","What can individuals do?","Learn cross-cultural understanding, express goodwill rationally, join public issues, support sustainable and charity projects."],
+["E","数字技术如何助力地球村感恩？","互联网、翻译工具与区块链社区让跨语言致谢、协作与公共产品共建成为可能。","Digital technology's role?","Internet, translation tools and blockchain communities enable cross-language thanks, collaboration and shared public goods."],
+["E","地球村是否意味着取消民族文化？","不是。全球化以尊重多元文化为前提，在共性之上保留各文明特色。","Does it erase national cultures?","No. Globalization presupposes respect for diversity, keeping each civilization's character on shared common ground."],
+["E","感恩如何减少文明冲突？","先看见彼此贡献与善意，降低对立叙事，为对话与协作留出空间。","Reduce civilizational conflict?","Seeing each side's contribution and goodwill lowers hostile narratives, leaving room for dialogue."],
+["E","地球村的下一代应具备什么素养？","跨文化沟通、全球视野、同理心、可持续意识与协作能力。","Literacy for the next generation?","Cross-cultural communication, global vision, empathy, sustainability awareness and collaboration."],
+["E","感恩行动如何形成全球公共产品？","个体善意经社区组织、公益项目与链上共识汇聚，变成可共享的资源与机制。","Turning thanks into public goods?","Individual goodwill pools through communities, projects and on-chain consensus into shareable resources and mechanisms."],
+/* ---- F EACO 基础 71-85 ---- */
+["F","EACO 是什么？","EACO 全称 Earth's Best Coin，简称 E，是 Solana 链上的 AI + RWA + Web3 代币。","What is EACO?","EACO = Earth's Best Coin, symbol E; an AI + RWA + Web3 token on the Solana blockchain."],
+["F","EACO 部署在哪条公链？","部署在 Solana 区块链上，依托其高性能与低手续费生态。","Which chain?","Solana, leveraging its high performance and low-fee ecosystem."],
+["F","EACO 合约地址（CA）是什么？","DqfoyZH96RnvZusSp3Cdncjpyp3C74ZmJzGhjmHnDHRH。","Contract address (CA)?","DqfoyZH96RnvZusSp3Cdncjpyp3C74ZmJzGhjmHnDHRH."],
+["F","EACO 总供应量是多少？","总供应量为 13.5 亿枚。","Total supply?","1.35 billion tokens."],
+["F","EACO 的 LP 锁定情况如何？","10% 的 LP 流动性被永久锁定，以增强资金池稳定性与社区信任。","LP lock?","10% of LP liquidity is permanently locked to strengthen pool stability and community trust."],
+["F","EACO 中的 AI 指什么？","指结合人工智能辅助认知、内容、决策与社区运营，提升个体与组织效率。","What does AI mean here?","AI assists cognition, content, decisions and community operations, raising individual and organizational efficiency."],
+["F","EACO 中的 RWA 指什么？","RWA 即真实世界资产，把光伏、能源、地产等实体价值映射到链上。","What does RWA mean?","Real World Assets: mapping physical value such as solar, energy and property on-chain."],
+["F","EACO 中的 Web3 指什么？","指去中心化社区、链上治理与代币协作，让参与者共享建设成果。","What does Web3 mean?","Decentralized community, on-chain governance and token collaboration, letting participants share built value."],
+["F","EACO 官网在哪里？","https://ucoingroup.github.io/earths-best-coin/","Official website?","https://ucoingroup.github.io/earths-best-coin/"],
+["F","EACO 与感恩节主题有什么联系？","EACO 以感恩、利他、正能量为底色，倡导对地球、他人与自然的回馈式协作。","Link to Thanksgiving?","EACO grounds itself in gratitude, altruism and positive energy, advocating reciprocal collaboration with Earth, others and nature."],
+["F","EACO 代币可以在哪里查询与交易？","可在 Solana 生态的 DEX（如 Jupiter 聚合路由）及公开行情平台查询合约与流动性，交易前请自行核实。","Where to query/trade?","Check contract and liquidity on Solana DEXs (e.g. Jupiter aggregator) and public market platforms; verify before trading."],
+["F","持有 EACO 意味着什么？","持币代表认同其理念并参与地球村协作生态，不等于任何固定收益承诺。","What does holding mean?","Holding signals alignment with its vision and participation in the ecosystem; it is not a fixed-return promise."],
+["F","EACO 是投资理财产品吗？","EACO 是 Web3 社区代币，价格波动与链上风险并存；本页面不构成任何投资建议。","Is it an investment product?","A Web3 community token with volatility and on-chain risk; this page gives no investment advice."],
+["F","如何辨别 EACO 真假合约？","以官方 CA 为准，核对链上合约地址、发行方与流动性锁定记录，警惕仿冒币。","How to verify the genuine contract?","Use the official CA; check on-chain address, issuer and LP lock; watch for fake tokens."],
+["F","EACO 团队公开了哪些资料？","可通过官网、EACO-Bot 页面与好书目录等公开链接了解项目叙事、理念与工具。","Public materials?","Explore the official site, EACO-Bot page and good-books list for narrative, vision and tools."],
+/* ---- G EACO 理念与社区 86-100 ---- */
+["G","EACO 的核心理念是什么？","正能量 × 积极态度 × 全球协作 × 持续优化。","Core philosophy?","Positive energy × positive attitude × global collaboration × continuous improvement."],
+["G","EACO 要提升个体认知吗？","是。通过知识体系、认知模型与 AI 工具，帮助个体持续学习与自我升级。","Individual cognition?","Yes. Knowledge systems, mental models and AI tools support lifelong learning and self-upgrade."],
+["G","EACO 如何提升组织效率？","以协作机制、透明记录与工具化流程，降低组织内耗，提升决策与执行效率。","Organizational efficiency?","Collaboration mechanisms, transparent records and tooled processes reduce friction and improve decisions and execution."],
+["G","EACO 与推进社会文明有什么关系？","倡导理性、利他、契约与长期主义，把个体成长汇聚为更文明的公共秩序。","Advancing social civilization?","Advocate rationality, altruism, contract and long-termism; aggregate individual growth into a more civilized public order."],
+["G","EACO 如何促进地球可持续发展？","结合 RWA 光伏与能源应用，倡导低碳、循环与环保实践，回馈真实地球。","Earth sustainability?","Through RWA solar/energy use cases, advocate low-carbon, circular, environmental practices that give back to Earth."],
+["G","“融合100种认知模型”是什么意思？","汇集心理学、哲学、科学、商业等多学科思维框架，帮助使用者多角度理解问题。","100 mental models?","Collect cross-disciplinary frameworks from psychology, philosophy, science and business for multi-angle thinking."],
+["G","EACO 社区鼓励什么样的行为？","感恩、利他、建设、友善表达、持续学习与透明协作，反对欺骗与割韭菜。","Community behavior?","Gratitude, altruism, building, friendly speech, learning and transparent cooperation; against scams and exploitation."],
+["G","新成员如何加入 EACO 社区？","阅读官网与好书目录、关注公开动态、参与讨论与贡献内容，从了解理念开始。","How to join?","Read the site and good-books list, follow public updates, join discussions and contribute; start with the vision."],
+["G","EACO 社区支持多语言吗？","支持面向地球村前十大语言的内容与传播，便于亚洲、非洲、拉美等地区参与。","Multilingual?","Content and outreach support the world's top ten languages, easing participation across Asia, Africa and Latin America."],
+["G","EACO 与华夏感恩文化如何结合？","以孝亲、报恩、惜福、利他为底色，把华夏感恩伦理延伸到链上社区与全球协作。","Combining Chinese gratitude?","Rooted in filial piety, reciprocity, contentment and altruism, extending Chinese gratitude ethics to on-chain community and global collaboration."],
+["G","EACO 面向哪些市场？","兼顾亚洲、东南亚、中东、非洲、拉美与俄罗斯等新兴市场，推动全球协作。","Target markets?","Asia, Southeast Asia, Middle East, Africa, Latin America and Russia, driving global collaboration."],
+["G","EACO-Bot 是什么？","项目配套的智能助手，用于理念讲解、信息检索与社区工具辅助，详见官方页面。","What is EACO-Bot?","The project's assistant for vision explanation, info retrieval and community tooling; see the official page."],
+["G","EACO 为什么强调感恩？","感恩是正能量的起点：看见馈赠、承认贡献、愿意回馈，社区才能长期向善共生。","Why emphasize gratitude?","Gratitude starts positive energy: seeing gifts, recognizing contribution, willing to give back, so the community thrives long-term."],
+["G","EACO 的长期愿景是什么？","以文明自愈为方向，提升认知与效率，推进社会文明与地球可持续发展，共建人类命运共同体。","Long-term vision?","Toward civilizational self-healing: raise cognition and efficiency, advance civilization and Earth sustainability, build a shared human community."],
+["G","参与 EACO 需要注意什么风险？","Web3 存在合约、波动、诈骗与政策风险；请自行研究、保管好私钥，不投入超出承受能力的资金。","Risks to note?","On-chain risk includes contract, volatility, scams and regulation; do your own research, guard keys, never invest more than you can lose."]
+];
+
+/* ================= 运行时逻辑 ================= */
+const THEMES = [
+  ["cn",{zh:"华夏红金",en:"Chinese Red-Gold",es:"Chino rojo-dorado",ar:"صيني أحمر وذهبي",hi:"चीनी लाल-सोना",pt:"Chinês vermelho-dourado",ru:"Китайский красно-золотой",ja:"中華紅金",fr:"Chinois rouge-or",de:"Chinesisch Rot-Gold"}],
+  ["ja",{zh:"和风素雅",en:"Japanese Minimal",es:"Japonés sobrio",ar:"ياباني بسيط",hi:"जापानी सादा",pt:"Japonês minimalista",ru:"Японский минимал",ja:"和風素雅",fr:"Japonais épuré",de:"Japanisch Schlicht"}],
+  ["kr",{zh:"现代简约",en:"Modern Minimal",es:"Moderno minimalista",ar:"عصري بسيط",hi:"आधुनिक सरल",pt:"Moderno minimalista",ru:"Современный минимал",ja:"モダン簡約",fr:"Moderne minimaliste",de:"Modern Minimal"}]
+];
+let state = { lang:"zh", theme:"cn" };
+
+function t(key){
+  const d = I18N[key]; if(!d) return key;
+  return d[state.lang] || d.en || d.zh || key;
+}
+function pick(zh, en){ return state.lang==="zh" ? zh : (en||zh); }
+
+/* 初始化语言下拉 */
+const langSel = document.getElementById("langSel");
+LANGS.forEach(([code,name])=>{
+  const o=document.createElement("option"); o.value=code; o.textContent=name; langSel.appendChild(o);
+});
+langSel.value = state.lang;
+langSel.addEventListener("change", e=>{ state.lang=e.target.value; applyLang(); renderAll(); });
+
+/* 初始化风格按钮 */
+const themeBtns = document.getElementById("themeBtns");
+THEMES.forEach(([code,label])=>{
+  const b=document.createElement("button"); b.className="ctl"+(code===state.theme?" active":""); b.dataset.theme=code;
+  b.textContent = label.zh;
+  b.addEventListener("click",()=>{ state.theme=code; document.body.dataset.theme=code;
+    [...themeBtns.children].forEach(x=>x.classList.toggle("active",x.dataset.theme===code));
+    renderThemeLabels();
+  });
+  themeBtns.appendChild(b);
+});
+function renderThemeLabels(){
+  [...themeBtns.children].forEach(b=>{
+    const meta = THEMES.find(x=>x[0]===b.dataset.theme)[1];
+    b.textContent = pick(meta.zh, meta.en);
+  });
+}
+
+function applyLang(){
+  document.documentElement.lang = state.lang;
+  document.querySelectorAll("[data-i18n]").forEach(el=>{ el.textContent = t(el.dataset.i18n); });
+  const ph = I18N.faq_ph[state.lang] || I18N.faq_ph.en;
+  document.getElementById("faqSearch").placeholder = ph;
+}
+
+/* 渲染板块 */
+function cardBlock(item, idx, numbered){
+  const num = numbered ? `<div class="num">${idx}</div>` : "";
+  return `<div class="card">${num}<h3>${pick(item.t.zh,item.t.en)}</h3><p>${pick(item.p.zh,item.p.en)}</p></div>`;
+}
+function renderSection(elId, items, numbered, asTimeline){
+  const el = document.getElementById(elId); if(!el) return;
+  el.innerHTML = items.map((it,i)=> asTimeline
+    ? `<div class="tl-item"><h3>${pick(it.t.zh,it.t.en)}</h3><p>${pick(it.p.zh,it.p.en)}</p></div>`
+    : cardBlock(it, i+1, numbered)).join("");
+}
+
+/* FAQ 渲染 */
+const CATKEY = {A:"cat_A",B:"cat_B",C:"cat_C",D:"cat_D",E:"cat_E",F:"cat_F",G:"cat_G"};
+function renderFAQ(filter=""){
+  const list = document.getElementById("faqList");
+  const f = filter.trim().toLowerCase();
+  const rows = FAQ.map((r,i)=>{
+    const q = state.lang==="zh"?r[1]:r[3], a = state.lang==="zh"?r[2]:r[4];
+    return {i,cat:r[0],q,a};
+  }).filter(r=> !f || r.q.toLowerCase().includes(f) || r.a.toLowerCase().includes(f));
+  list.innerHTML = rows.map(r=>`
+    <div class="faq-item" data-i="${r.i}">
+      <div class="faq-q"><span><span class="idx">${String(r.i+1).padStart(2,"0")}</span>${r.q}</span><span class="arrow">▾</span></div>
+      <div class="faq-a"><div class="faq-a-inner"><span class="faq-cat">${t(CATKEY[r.cat])}</span><p>${r.a}</p></div></div>
+    </div>`).join("");
+  list.querySelectorAll(".faq-q").forEach(q=>{
+    q.addEventListener("click",()=>{
+      const item=q.parentElement, a=item.querySelector(".faq-a"), open=item.classList.toggle("open");
+      a.style.maxHeight = open ? a.scrollHeight+"px" : "0";
+    });
+  });
+}
+document.getElementById("faqSearch").addEventListener("input", e=>renderFAQ(e.target.value));
+
+function renderAll(){
+  renderSection("originTimeline", CONTENT.origin, false, true);
+  renderSection("villageCards", CONTENT.village, false, false);
+  renderSection("asiaCards", CONTENT.asia, false, false);
+  renderSection("festCards", CONTENT.festivals, false, false);
+  renderSection("seasiaCards", CONTENT.seasia, false, false);
+  renderSection("actionCards", CONTENT.actions, true, false);
+  renderSection("mindCards", CONTENT.mindsets, true, false);
+  renderFAQ(document.getElementById("faqSearch").value);
+  renderThemeLabels();
+}
+applyLang();
+renderAll();
+</script>
+</body>
+</html>
