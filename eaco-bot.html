@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0e141b">
+<meta name="description" content="EACO BOT - Solana 链上极简交易入口，支持 EACO、eCNH 及任意 SPL 代币。纯静态单页，Jupiter v2 报价 + Helius RPC 落地，交易由用户钱包签名，不托管私钥。">
+<title>EACO BOT · 极简 Solana 交易入口</title>
+<style>
+:root{
+  --bg:#0d131a; --bg2:#070b10; --card:#151e28; --card2:#1b2734; --line:#283544;
+  --txt:#e9f0f7; --muted:#8a9bad; --dim:#5f7082;
+  --brand1:#2f8f43; --brand2:#2f6fe4; --gold:#d8a24a;
+  --up:#f04b57; --down:#2fb886; --warn:#e8a33d; --danger:#f0685f;
+  --shadow:0 18px 50px rgba(0,0,0,.45);
+}
+body[data-theme="light"]{
+  --bg:#ffffff; --bg2:#eef3ef; --card:#f7faf8; --card2:#eef4f0; --line:#d9e4dc;
+  --txt:#17251d; --muted:#5b6f63; --dim:#879a8d;
+  --up:#d93a47; --down:#159c6b; --warn:#b8791d; --danger:#c8403a;
+  --shadow:0 18px 45px rgba(26,54,36,.14);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;height:100%}
+body{
+  background:var(--bg2); color:var(--txt);
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-size:14px; line-height:1.55; display:flex; align-items:center; justify-content:center;
+}
+button,input,select{font-family:inherit;font-size:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+a{color:var(--brand2);text-decoration:none}
+.app{
+  width:100%; max-width:470px; height:100vh; max-height:900px; background:var(--bg);
+  display:flex; flex-direction:column; overflow:hidden; position:relative;
+}
+@media(min-width:560px){ .app{border-radius:20px; box-shadow:var(--shadow); border:1px solid var(--line); height:min(880px,94vh)} }
+.hdr{display:flex;align-items:center;gap:9px;padding:12px 14px;border-bottom:1px solid var(--line);flex-shrink:0}
+.logo{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--brand1),var(--brand2));display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo svg{width:19px;height:19px;fill:none;stroke:#fff;stroke-width:1.8}
+.brand{font-weight:750;letter-spacing:.6px;font-size:15px;white-space:nowrap}
+.brand small{display:block;font-weight:400;font-size:10px;color:var(--muted);letter-spacing:.2px;line-height:1.2}
+.net{margin-left:auto;font-size:9px;letter-spacing:.8px;color:var(--down);border:1px solid color-mix(in srgb,var(--down) 45%,transparent);padding:3px 6px;border-radius:999px;white-space:nowrap}
+.icon-btn{width:30px;height:30px;border-radius:9px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--muted);flex-shrink:0}
+.icon-btn:hover{color:var(--txt);border-color:var(--muted)}
+.icon-btn svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.notice{padding:7px 14px;font-size:11px;color:var(--warn);background:color-mix(in srgb,var(--warn) 10%,transparent);border-bottom:1px solid var(--line);flex-shrink:0;display:flex;gap:6px;align-items:center}
+.notice svg{width:12px;height:12px;flex:none;fill:none;stroke:currentColor;stroke-width:2}
+.scroll{flex:1;overflow-y:auto;overscroll-behavior:contain;padding:12px 12px 20px;scrollbar-width:thin}
+.view{display:none}.view.on{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:10px}
+.card-t{font-size:10px;letter-spacing:1.1px;color:var(--dim);text-transform:uppercase;font-weight:700;margin-bottom:9px;display:flex;align-items:center;gap:6px}
+.card-t .right{margin-left:auto;letter-spacing:0;text-transform:none;font-weight:400;font-size:10px;color:var(--muted)}
+.row{display:flex;align-items:center;gap:8px}
+.between{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.muted{color:var(--muted)}.dim{color:var(--dim)}.small{font-size:11px}.tiny{font-size:10px}
+.mono{font-family:ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace}
+.up{color:var(--up)}.down{color:var(--down)}
+.wallet-card{display:flex;align-items:center;gap:10px}
+.avatar{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,var(--gold),var(--brand2));flex:none;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:13px}
+.wallet-card .addr{font-size:12px;font-weight:600}
+.btn{border-radius:10px;padding:9px 12px;font-weight:650;font-size:12px;border:1px solid var(--line);background:var(--card2);color:var(--txt);transition:.15s;display:inline-flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap;flex-shrink:0}
+.row input{flex:1;min-width:0}
+.btn:hover{filter:brightness(1.14)}
+.btn.primary{background:linear-gradient(135deg,var(--brand1),var(--brand2));color:#fff;border-color:transparent}
+.btn.ghost{background:transparent}
+.btn.buy{background:linear-gradient(135deg,var(--brand1),var(--brand2));color:#fff;border-color:transparent;flex:1;padding:13px;font-size:14px;font-weight:750;border-radius:12px}
+.btn.sell{background:var(--card2);border:1px solid var(--line);flex:1;padding:13px;font-size:14px;font-weight:750;border-radius:12px;color:var(--txt)}
+.btn.warn{background:color-mix(in srgb,var(--warn) 16%,transparent);border-color:color-mix(in srgb,var(--warn) 35%,transparent);color:var(--warn)}
+.btn.full{width:100%}
+.btn:disabled{opacity:.45;cursor:not-allowed;filter:none}
+select,input[type=text],input[type=number],input[type=password]{background:var(--card2);border:1px solid var(--line);border-radius:9px;padding:8px 10px;outline:none;width:100%}
+select:focus,input:focus{border-color:var(--brand2)}
+.tok-sel{display:flex;align-items:center;gap:9px}
+.tok-badge{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--brand1),var(--brand2));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;flex:none}
+.tok-badge.gray{background:var(--card2);color:var(--muted);border:1px solid var(--line)}
+.tok-sel select{font-weight:700;font-size:14px}
+.ca-box{margin-top:9px;padding:8px 9px;border-radius:9px;background:var(--bg2);border:1px dashed var(--line);display:flex;align-items:center;gap:6px}
+.ca-box code{font-size:10.5px;word-break:break-all;color:var(--muted);flex:1;line-height:1.4}
+.mini{padding:4px 7px;border-radius:7px;border:1px solid var(--line);font-size:10px;color:var(--muted);white-space:nowrap;flex:none}
+.mini:hover{color:var(--txt)}
+.price{font-size:27px;font-weight:780;letter-spacing:-.5px;line-height:1.15}
+.px-sub{font-size:11px;color:var(--muted);margin-top:2px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:11px}
+.stat{background:var(--bg2);border-radius:9px;padding:8px 9px;border:1px solid var(--line)}
+.stat b{display:block;font-size:12.5px;font-weight:700;margin-top:2px}
+.stat span{font-size:9.5px;color:var(--dim);letter-spacing:.3px}
+.bar{height:4px;border-radius:4px;background:var(--line);overflow:hidden;margin-top:8px}
+.bar i{display:block;height:100%;border-radius:4px;background:linear-gradient(90deg,var(--brand1),var(--brand2));transition:width .4s}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+.chip{border:1px solid var(--line);background:var(--bg2);border-radius:8px;padding:6px 10px;font-size:11.5px;font-weight:600;color:var(--muted)}
+.chip.on{background:linear-gradient(135deg,color-mix(in srgb,var(--brand1) 25%,transparent),color-mix(in srgb,var(--brand2) 25%,transparent));border-color:var(--brand2);color:var(--txt)}
+.amt-in{display:flex;align-items:center;gap:8px;margin-top:10px}
+.amt-in input{font-size:18px;font-weight:700;padding:10px 12px}
+.amt-in span{color:var(--muted);font-size:12px;font-weight:700;white-space:nowrap}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}
+.kv{display:flex;justify-content:space-between;gap:8px;padding:7px 0;border-bottom:1px solid var(--line);font-size:12px}
+.kv:last-child{border-bottom:0}
+.kv span:first-child{color:var(--muted)}
+.actions{display:flex;gap:8px;margin-top:11px}
+.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:9px}
+.quick button{border:1px solid var(--line);background:var(--card2);border-radius:9px;padding:9px 2px;font-size:11px;font-weight:700;color:var(--muted)}
+.quick button:hover{color:var(--txt);border-color:var(--brand2)}
+.quick button:disabled{opacity:.4}
+.chat{margin-top:11px;display:flex;flex-direction:column;gap:7px;max-height:190px;overflow-y:auto}
+.bub{max-width:90%;padding:8px 10px;border-radius:12px 12px 12px 3px;background:var(--card2);border:1px solid var(--line);font-size:11.5px;line-height:1.5;white-space:pre-wrap;word-break:break-word}
+.bub.me{align-self:flex-end;border-radius:12px 12px 3px 12px;background:linear-gradient(135deg,color-mix(in srgb,var(--brand1) 30%,var(--card)),color-mix(in srgb,var(--brand2) 30%,var(--card)))}
+.bub.ok{border-color:color-mix(in srgb,var(--down) 40%,transparent)}
+.bub.err{border-color:color-mix(in srgb,var(--danger) 45%,transparent);color:var(--danger)}
+.disc{font-size:10.5px;line-height:1.65;color:var(--dim);padding:11px 4px 4px;border-top:1px solid var(--line);margin-top:12px}
+.disc b{color:var(--warn)}
+.tabbar{display:flex;border-top:1px solid var(--line);flex-shrink:0;background:var(--card)}
+.tabbar button{flex:1;padding:9px 2px 10px;color:var(--dim);font-size:10px;display:flex;flex-direction:column;align-items:center;gap:3px}
+.tabbar button.on{color:var(--brand2)}
+.tabbar svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.toast{position:absolute;left:50%;bottom:74px;transform:translate(-50%,12px);background:var(--txt);color:var(--bg);padding:9px 15px;border-radius:10px;font-size:12px;font-weight:650;opacity:0;pointer-events:none;transition:.25s;z-index:60;max-width:88%;text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.mask{position:absolute;inset:0;background:rgba(3,7,11,.72);display:none;align-items:flex-end;z-index:50;backdrop-filter:blur(3px)}
+.mask.on{display:flex}
+.sheet{width:100%;background:var(--card);border-radius:18px 18px 0 0;padding:16px 16px 22px;border-top:1px solid var(--line);max-height:86%;overflow-y:auto}
+.sheet h3{margin:0 0 4px;font-size:16px}
+.sheet .sub{color:var(--muted);font-size:11.5px;margin-bottom:14px}
+.wopt{display:flex;align-items:center;gap:10px;padding:11px;border:1px solid var(--line);border-radius:11px;background:var(--card2);margin-bottom:8px;width:100%;text-align:left}
+.wopt:hover{border-color:var(--brand2)}
+.wopt .nm{font-weight:700;font-size:13px}
+.wopt .st{font-size:10.5px;color:var(--muted)}
+.wopt .dot{width:28px;height:28px;border-radius:9px;background:linear-gradient(135deg,var(--brand1),var(--brand2));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:11px;flex:none}
+.link-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 0;border-bottom:1px solid var(--line);font-size:12px}
+.link-row:last-child{border-bottom:0}
+.link-row .lb{color:var(--muted);font-size:11px}
+.formula{background:linear-gradient(135deg,color-mix(in srgb,var(--brand1) 14%,var(--card2)),color-mix(in srgb,var(--brand2) 14%,var(--card2)));border:1px solid var(--line);border-radius:10px;padding:11px;font-size:12.5px;font-weight:650;line-height:1.8}
+.goals{padding-left:18px;margin:6px 0 0;font-size:12px;line-height:1.9}
+.goals li{padding-left:2px}
+.warnbox{background:color-mix(in srgb,var(--warn) 10%,transparent);border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);border-radius:10px;padding:10px;font-size:11.5px;line-height:1.65;color:var(--warn)}
+.tag{font-size:9px;padding:2px 6px;border-radius:5px;border:1px solid var(--line);color:var(--muted);letter-spacing:.3px}
+.empty{text-align:center;color:var(--dim);font-size:12px;padding:22px 10px}
+.hr{height:1px;background:var(--line);margin:12px 0}
+.pill{display:inline-block;padding:2px 7px;border-radius:6px;font-size:10px;font-weight:700;background:var(--card2);border:1px solid var(--line);color:var(--muted)}
+.keywarn{padding:8px 14px;font-size:10.5px;line-height:1.5;color:var(--danger);background:color-mix(in srgb,var(--danger) 12%,transparent);border-bottom:1px solid var(--line);flex-shrink:0;display:flex;align-items:center;gap:8px}
+.keywarn span{flex:1}
+.keywarn button{font-size:10px;color:var(--danger);border:1px solid color-mix(in srgb,var(--danger) 45%,transparent);padding:3px 7px;border-radius:6px;white-space:nowrap;flex:none}
+.keywarn.hide{display:none}
+.seg{display:flex;gap:5px;background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:3px}
+.seg button{flex:1;padding:7px 4px;border-radius:8px;font-size:11.5px;font-weight:650;color:var(--muted)}
+.seg button.on{background:linear-gradient(135deg,var(--brand1),var(--brand2));color:#fff}
+.txline{font-size:11.5px;line-height:1.75;word-break:break-all}
+.sig{display:inline-block;padding:2px 6px;border-radius:6px;background:var(--card2);border:1px solid var(--line)}
+.spin{display:inline-block;width:11px;height:11px;border:2px solid var(--line);border-top-color:var(--brand2);border-radius:50%;animation:sp .8s linear infinite;vertical-align:-1px;margin-right:5px}
+@keyframes sp{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body data-theme="dark">
+<div class="app">
+
+  <header class="hdr">
+    <div class="logo"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.5 4 5.6 4 9s-1.4 6.5-4 9c-2.6-2.5-4-5.6-4-9s1.4-6.5 4-9z"/></svg></div>
+    <div class="brand">EACO BOT<small>Earth's Best Coin · 极简交易入口</small></div>
+    <div class="net">SOLANA MAINNET</div>
+    <button class="icon-btn" data-act="theme" title="切换主题"><svg viewBox="0 0 24 24"><path d="M12 3v2m0 14v2M3 12h2m14 0h2M5.6 5.6l1.4 1.4m10 10l1.4 1.4m0-12.8l-1.4 1.4m-10 10l-1.4 1.4"/><circle cx="12" cy="12" r="4"/></svg></button>
+    <button class="icon-btn" data-act="refresh" title="刷新行情与余额"><svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 6M20 4v7h-7"/></svg></button>
+  </header>
+
+  <div class="notice"><svg viewBox="0 0 24 24"><path d="M12 9v4m0 4h.01M10.3 3.9L2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg><span>认准合约地址，谨防假币 · 不托管私钥 · 链上交易不可撤销</span></div>
+
+  <div class="keywarn hide" id="keyWarn">
+    <span><b>密钥安全</b>：本页内置了 Helius API Key 明文，任何能看到本文件的人都能使用你的额度。请勿公开分发此 HTML；公开前请先清除。</span>
+    <button data-act="clearkey">清除密钥</button>
+  </div>
+
+  <div class="scroll" id="scroll">
+
+    <!-- ============ 交易视图 ============ -->
+    <section class="view on" id="v-trade">
+
+      <div class="card wallet-card">
+        <div class="avatar" id="wAvatar">?</div>
+        <div style="flex:1;min-width:0">
+          <div class="addr" id="wAddr">未连接钱包</div>
+          <div class="small muted" id="wSub">连接后可读取真实余额与持仓</div>
+        </div>
+        <button class="btn primary" data-act="wallet" id="wBtn">连接钱包</button>
+      </div>
+
+      <div class="card">
+        <div class="card-t">交易代币 <span class="right" id="tokCount">5 个</span></div>
+        <div class="tok-sel">
+          <div class="tok-badge" id="tokBadge">E</div>
+          <select id="tokSelect" aria-label="选择交易代币"></select>
+        </div>
+        <div class="ca-box">
+          <code id="caText">—</code>
+          <button class="mini" data-act="copyca">复制 CA</button>
+        </div>
+        <div class="small muted" style="margin-top:7px">认准合约地址，谨防假币。粘贴任意 Solana 合约地址可添加自定义代币。</div>
+        <div class="row" style="margin-top:8px">
+          <input type="text" id="caInput" placeholder="粘贴 SPL 代币合约地址（Base58）" spellcheck="false">
+          <button class="btn" data-act="addtoken">添加</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-t">实时行情 <span class="right" id="mktSource">DexScreener · 待加载</span></div>
+        <div class="between">
+          <div>
+            <div class="price" id="mPrice">—</div>
+            <div class="px-sub" id="mSub">正在获取链上数据…</div>
+          </div>
+          <div style="text-align:right">
+            <div class="pill" id="mDex">—</div>
+            <div class="tiny dim" style="margin-top:5px" id="mTime">—</div>
+          </div>
+        </div>
+        <div class="stats">
+          <div class="stat"><span>24H 涨跌</span><b id="mChange">—</b></div>
+          <div class="stat"><span>主池流动性</span><b id="mLiq">—</b></div>
+          <div class="stat"><span>24H 成交额</span><b id="mVol">—</b></div>
+        </div>
+        <div class="bar"><i id="mBar" style="width:0%"></i></div>
+        <div class="small muted" style="margin-top:7px" id="mRisk">行情仅作展示，不构成任何投资建议；数据可能延迟。</div>
+        <div class="row" style="margin-top:9px;flex-wrap:wrap;gap:6px">
+          <button class="btn ghost" data-act="opends">DexScreener 图表</button>
+          <button class="btn ghost" data-act="opensolscan">Solscan</button>
+          <button class="btn ghost" data-act="openpool">Meteora 池</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-t">钱包余额 <span class="right">链上读取 · jsonParsed</span></div>
+        <div class="kv"><span>SOL（用于 gas 与买入）</span><b class="mono" id="bSol">未连接</b></div>
+        <div class="kv"><span id="bTokLabel">EACO 余额</span><b class="mono" id="bTok">未连接</b></div>
+        <button class="btn full ghost" style="margin-top:9px" data-act="refresh">刷新链上余额</button>
+      </div>
+
+      <div class="card">
+        <div class="card-t">快速买入 <span class="right">以 SOL 计价</span></div>
+        <div class="chips" id="amtChips"></div>
+        <div class="amt-in"><input type="number" id="amtInput" min="0" step="0.01" value="0.5"><span>SOL</span></div>
+        <div class="grid2">
+          <div><div class="tiny dim" style="margin-bottom:4px">滑点（自动 / 固定）</div><select id="slipSel"></select></div>
+          <div><div class="tiny dim" style="margin-bottom:4px">跳转模式的路由</div><select id="routeSel"><option value="jupiter">Jupiter 聚合</option><option value="raydium">Raydium</option><option value="meteora">Meteora 池</option></select></div>
+        </div>
+        <div class="tiny dim" style="margin-top:6px" id="slipHint">自动 RTSE 由 Jupiter 实时估算滑点；固定滑点会把报价切换为 manual 模式，可能限制可用路由。</div>
+        <div class="card-t" style="margin-top:13px">成交方式 <span class="right" id="chainState">检测中</span></div>
+        <div class="seg" id="modeSeg">
+          <button data-act="mode" data-m="chain" class="on">应用内链上成交</button>
+          <button data-act="mode" data-m="link">跳转 DEX 页面</button>
+        </div>
+        <div class="tiny dim" style="margin:9px 0 4px">链上落地通道</div>
+        <select id="landSel">
+          <option value="execute">Jupiter /execute（推荐，自动优化落地与确认）</option>
+          <option value="helius">Helius RPC 直发（用你的 API Key 上链）</option>
+        </select>
+        <div class="actions">
+          <button class="btn buy" data-act="buy" id="buyBtn">买入</button>
+          <button class="btn sell" data-act="sell" id="sellBtn">卖出</button>
+        </div>
+        <div class="tiny dim" style="margin-top:8px">卖出比例（链上模式按真实余额与代币精度计算）：</div>
+        <div class="quick" id="sellChips">
+          <button data-act="pct" data-p="25">25%</button>
+          <button data-act="pct" data-p="50">50%</button>
+          <button data-act="pct" data-p="75">75%</button>
+          <button data-act="pct" data-p="100" class="on">100%</button>
+        </div>
+        <div class="small muted" style="margin-top:9px">链上模式流程：Jupiter 报价 → 你的钱包签名 → Jupiter /execute 或 Helius RPC 上链 → 轮询确认。链上交易不可撤销。</div>
+      </div>
+
+      <div class="card">
+        <div class="card-t">最近一笔链上交易 <span class="right" id="txStamp">—</span></div>
+        <div id="txState" class="txline muted">尚未发起链上交易。连接钱包并选择「应用内链上成交」后，这里会显示签名与确认状态。</div>
+        <div class="row" style="margin-top:9px;flex-wrap:wrap;gap:6px" id="txLinks"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-t">EACO ↔ eCNH 直连池 <span class="right">Orca · 链上存在</span></div>
+        <div class="small muted">该交易对在 Orca 有独立流动性池。以下入口用于查看池子与价格，是否可路由以 DEX 实际显示为准。</div>
+        <div class="row" style="margin-top:9px;flex-wrap:wrap;gap:6px">
+          <button class="btn ghost" data-act="openpair">查看交易对</button>
+          <button class="btn ghost" data-act="openecnh">eCNH 资料</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-t">BOT 消息 <span class="right"><button class="mini" data-act="clearchat">清空</button></span></div>
+        <div class="chat" id="chat"></div>
+      </div>
+
+      <div class="disc">
+        <b>免责声明</b>：本页面为公开资料整理与工具界面，<b>不构成投资建议、证券发行或任何募资承诺</b>。加密资产价格波动剧烈，参与任何交易前请自行核实合约地址（CA）与当地合规要求。本应用不提供价格预测、不承诺收益、不喊单。行情来自第三方公开接口，可能延迟或不可用；链上成交在你确认后由钱包签名并广播，<b>交易不可撤销</b>，实际成交量、滑点与手续费以链上结果为准，本应用不保证成交、不承担交易损失。<br>
+        <b>最高原则</b>：一切文明为人类文明服务，包括 EACO。
+      </div>
+    </section>
+
+    <!-- ============ 持仓视图 ============ -->
+    <section class="view" id="v-positions">
+      <div class="card">
+        <div class="card-t">链上持仓 <span class="right" id="posAddr">未连接</span></div>
+        <div id="posList"><div class="empty">连接钱包后读取 SPL Token 与 Token-2022 账户。</div></div>
+        <button class="btn full ghost" style="margin-top:9px" data-act="refresh">刷新持仓</button>
+      </div>
+      <div class="card">
+        <div class="card-t">安全提示</div>
+        <div class="warnbox">持仓数据通过公共 RPC 只读获取，本应用无法转移你的资产。任何要求输入助记词、私钥或下载"修复插件"的页面都是诈骗。认准合约地址，谨防假币。</div>
+      </div>
+      <div class="card">
+        <div class="card-t">链上核验入口</div>
+        <div class="link-row"><span>钱包账户</span><button class="mini" data-act="openaccount">Solscan 查看</button></div>
+        <div class="link-row"><span>EACO 代币页</span><button class="mini" data-act="openEacoScan">Solscan 查看</button></div>
+        <div class="link-row"><span>eCNH 代币页</span><button class="mini" data-act="openEcnhScan">Solscan 查看</button></div>
+      </div>
+    </section>
+
+    <!-- ============ 记录视图 ============ -->
+    <section class="view" id="v-history">
+      <div class="card">
+        <div class="card-t">本地操作记录 <span class="right"><button class="mini" data-act="clearhist">清空</button></span></div>
+        <div id="histList"><div class="empty">暂无记录。</div></div>
+      </div>
+      <div class="card">
+        <div class="warnbox">记录仅保存在本机浏览器。链上模式的记录会附带交易签名，点「查看链上交易」可在 Solscan 核验；跳转模式的记录<b>仅为本机留痕，不代表成交</b>。是否成交、实际成交量与手续费一律以链上结果为准。本应用不托管私钥，签名始终在你的钱包扩展内完成。</div>
+      </div>
+    </section>
+
+    <!-- ============ 资料视图 ============ -->
+    <section class="view" id="v-about">
+      <div class="card">
+        <div class="card-t">EACO 官方口径 <span class="right">以用户确认口径为准</span></div>
+        <div class="formula">Earth's Best Coin = EACO = E<br>地球最好币 = EACO = E</div>
+        <div class="small muted" style="margin-top:9px">定位：Solana 链上「地球最好的 AI + RWA + Web3 代币」</div>
+        <div class="hr"></div>
+        <div class="kv"><span>总供应量</span><b>13.5 亿枚（1.35 billion）</b></div>
+        <div class="kv"><span>LP</span><b>10% 永久锁定</b></div>
+        <div class="kv"><span>官网</span><b><a href="https://ucoingroup.github.io/earths-best-coin/" target="_blank" rel="noopener noreferrer">ucoingroup.github.io</a></b></div>
+        <div class="ca-box" style="margin-top:10px"><code>DqfoyZH96RnvZusSp3Cdncjpyp3C74ZmJzGhjmHnDHRH</code><button class="mini" data-act="copymint" data-mint="DqfoyZH96RnvZusSp3Cdncjpyp3C74ZmJzGhjmHnDHRH">复制</button></div>
+        <div class="small" style="margin-top:7px;color:var(--warn)">认准合约地址，谨防假币。</div>
+      </div>
+
+      <div class="card">
+        <div class="card-t">四要素 · 等号必写全</div>
+        <div class="formula">EACO = Positive Energy × Positive Mindset × Global Collaboration × Continuous Optimization<br><br>EACO = 正能量 × 积极态度 × 全球协作 × 持续优化</div>
+        <div class="small muted" style="margin-top:9px">等价表述（早期资料）：Energy × Attitude × Cooperation × Optimization，缩写同为 EACO，可互为解释，不是两个不同概念。</div>
+      </div>
+
+      <div class="card">
+        <div class="card-t">核心目标（五条）</div>
+        <ol class="goals">
+          <li>提升个体认知</li>
+          <li>提升组织效率</li>
+          <li>推动社会文明进步</li>
+          <li>促进地球可持续发展</li>
+          <li>融合 100 个认知模型</li>
+        </ol>
+        <div class="hr"></div>
+        <div class="small"><b>最高原则</b>：一切文明为人类文明服务，包括 EACO。</div>
+      </div>
+
+      <div class="card">
+        <div class="card-t">eCNH · 链上元数据</div>
+        <div class="kv"><span>名称 / 符号</span><b>Offshore Chinese Yuan / eCNH</b></div>
+        <div class="kv"><span>Mint</span><b class="mono tiny">7GQnqthWKa5v2GqXYWhmgWZY5mCRrniwK3Xuinm9GKw5</b></div>
+        <div class="kv"><span>Meteora DAMM v2</span><b class="mono tiny">Ac2bwg4ByZr2FePpuKKdjGLpfRMenFsjgt17St9PfBKC</b></div>
+        <div class="small muted" style="margin-top:8px">名称与符号取自链上 / DexScreener 元数据，本应用不对其作出额外定义或背书。认准合约地址，谨防假币。</div>
+      </div>
+
+      <div class="card">
+        <div class="card-t">口径说明</div>
+        <div class="small muted">早期生态资料中的代币分配数字与用户确认口径存在统计差异（存在统计口径重叠），本应用<b style="color:var(--warn)">不做任何分配类计算或推算</b>。涉及分配的数字请以官方最终口径为准。</div>
+        <div class="hr"></div>
+        <div class="card-t">参考来源</div>
+        <div class="link-row"><span>EACO 官方仓库</span><button class="mini" data-act="ext" data-url="https://github.com/ucoingroup/earths-best-coin/">打开</button></div>
+        <div class="link-row"><span>EACO Agent（静态站设计约定）</span><button class="mini" data-act="ext" data-url="https://github.com/ucoingroup/eacoagent/">打开</button></div>
+        <div class="link-row"><span>讨论串（标题参考）</span><button class="mini" data-act="ext" data-url="https://www.doubao.com/thread/x5chApGYVyg4DV6al">打开</button></div>
+        <div class="link-row"><span>BONKbot 交互形态</span><span class="lb">极简 · 新手友好 · 快速买卖</span></div>
+      </div>
+
+      <div class="disc">
+        <b>免责声明</b>：以上内容为公开资料整理，不构成投资建议、证券发行或任何募资承诺。加密资产波动剧烈，请自行核实合约地址与当地合规要求。本应用不提供价格预测、不承诺收益、不喊单。认准合约地址，谨防假币。
+      </div>
+    </section>
+
+    <!-- ============ 设置视图 ============ -->
+    <section class="view" id="v-settings">
+      <div class="card">
+        <div class="card-t">API 密钥 <span class="right" id="keyState">未检测</span></div>
+        <div class="warnbox" style="margin-bottom:11px"><b>安全警告</b>：密钥以明文保存在本 HTML 文件与浏览器 localStorage 中。任何能看到本文件的人都能使用你的 Helius 额度；把页面部署到公开网站（如 GitHub Pages）等于公开密钥。请仅在本机使用、限制额度，并在分享文件前清除。生产环境应改为后端代理，密钥不进前端。</div>
+        <div class="tiny dim" style="margin-bottom:5px">Helius API Key（RPC 读写 / 优先费估算 / 备用上链）</div>
+        <input type="password" id="heliusKeyInput" spellcheck="false" autocomplete="off" placeholder="Helius API Key">
+        <div class="tiny dim" style="margin:10px 0 5px">Jupiter API Key（可选；留空为 keyless 0.5 RPS，易触发 429）</div>
+        <input type="password" id="jupKeyInput" spellcheck="false" autocomplete="off" placeholder="建议填写 · 留空即 keyless">
+        <div class="row" style="margin-top:11px;flex-wrap:wrap;gap:6px">
+          <button class="btn primary" data-act="savekeys">保存密钥</button>
+          <button class="btn warn" data-act="clearkey">清除密钥</button>
+          <button class="btn ghost" data-act="testkey">测试连通性</button>
+          <button class="btn ghost" data-act="togglekey">显示 / 隐藏</button>
+        </div>
+        <div class="small muted" style="margin-top:9px" id="rpcPreview">—</div>
+      </div>
+
+      <div class="card">
+        <div class="card-t">运行设置</div>
+        <div class="tiny dim" style="margin-bottom:5px">Solana RPC 节点（余额 / 持仓 / 交易上链）</div>
+        <input type="password" id="rpcInput" spellcheck="false" autocomplete="off" placeholder="https://api.mainnet-beta.solana.com">
+        <div class="small muted" style="margin-top:6px">配置 Helius API Key 后会自动使用 mainnet.helius-rpc.com；端点内含密钥，默认隐藏，点上方「显示 / 隐藏」可查看或手动覆盖。</div>
+        <div class="hr"></div>
+        <div class="tiny dim" style="margin-bottom:5px">默认滑点（%）</div>
+        <input type="number" id="slipInput" min="0.1" max="50" step="0.1">
+        <div class="hr"></div>
+        <div class="between"><span class="small">界面主题</span><button class="btn" data-act="theme">切换深色 / 浅色</button></div>
+        <button class="btn full primary" style="margin-top:12px" data-act="savesettings">保存设置</button>
+      </div>
+
+      <div class="card">
+        <div class="card-t">工作方式（务必阅读）</div>
+        <div class="small muted" style="line-height:1.9">
+          1. <b>纯静态单文件</b>：HTML + 原生 CSS/JS，零构建，双击即可运行；链上成交时会按需从 CDN 加载 <code>@solana/web3.js</code>。<br>
+          2. <b>钱包连接</b>：调用浏览器注入钱包的 <code>connect()</code> 获取公钥；签名时调用 <code>signTransaction()</code>，私钥始终留在钱包扩展内，本页面不接触私钥、不索要助记词。<br>
+          3. <b>行情与余额</b>：DexScreener 行情 + Helius RPC 只读查询（余额、SPL / Token-2022 持仓、优先费估算、签名状态）。<br>
+          4. <b>链上成交</b>：Jupiter <code>GET /swap/v2/order</code> 返回报价与 base64 待签名交易 → 钱包签名 → <code>POST /swap/v2/execute</code> 落地（Jupiter 内置确认轮询）；若路由允许，失败时自动改用 Helius RPC <code>sendTransaction</code> 直发并轮询 <code>getSignatureStatuses</code>。RFQ（JupiterZ）路由需做市商追加签名，<b>只能走 /execute</b>。<br>
+          5. <b>数量精度</b>：按链上真实 decimals 换算（EACO 为 9 位；eCNH 为 4 位且属 Token-2022），不把最小单位误当成整数枚。<br>
+          6. <b>跳转模式</b>：可切回只读的「跳转 DEX 页面」，仅打开预填链接，不签名、不广播。<br>
+          7. <b>本地数据</b>：密钥、自定义代币、设置与记录保存在 localStorage；钱包公钥只在内存与本机，不上传。
+        </div>
+        <div class="hr"></div>
+        <div class="warnbox">为获得最佳钱包扩展兼容性与跨域成功率，建议用本地 HTTP 服务打开：<code>python -m http.server 8000</code> 后访问 <code>http://localhost:8000/eaco-bot.html</code>。直接双击打开时，部分浏览器会限制扩展注入或跨域请求；若链上模式不可用，可切到「跳转 DEX 页面」完成交易。</div>
+      </div>
+
+      <div class="card">
+        <div class="card-t">常见问题</div>
+        <div class="kv"><span>连接钱包按钮没反应？</span><b class="small">安装 Phantom / Solflare 扩展</b></div>
+        <div class="kv"><span>行情显示「—」？</span><b class="small">网络或 API 限流，稍后刷新</b></div>
+        <div class="kv"><span>链上成交失败？</span><b class="small">检查 Helius Key / 切 HTTP 服务打开</b></div>
+        <div class="kv"><span>提示交易签名被拒？</span><b class="small">钱包弹窗中自行确认或取消</b></div>
+        <div class="kv"><span>Jupiter 报价 429？</span><b class="small">keyless 限 0.5 RPS，建议填 Jupiter Key</b></div>
+        <div class="kv"><span>提示「RFQ 路由」？</span><b class="small">落地通道自动锁定 /execute</b></div>
+        <div class="kv"><span>价格影响为何显示异常？</span><b class="small">部分路由回传异常值，已隐藏</b></div>
+        <div class="kv"><span>为什么没有 K 线 / PnL？</span><b class="small">无可靠免费历史源，不编造数据</b></div>
+        <div class="kv"><span>为什么没有 FDV / 市值？</span><b class="small">口径易冲突，不展示推算值</b></div>
+      </div>
+
+      <div class="card">
+        <div class="card-t">钱包与工具</div>
+        <div class="link-row"><span>Phantom</span><button class="mini" data-act="ext" data-url="https://phantom.app/download">下载</button></div>
+        <div class="link-row"><span>Solflare</span><button class="mini" data-act="ext" data-url="https://solflare.com/download">下载</button></div>
+        <div class="link-row"><span>Jupiter</span><button class="mini" data-act="ext" data-url="https://jup.ag">打开</button></div>
+        <div class="link-row"><span>DexScreener</span><button class="mini" data-act="ext" data-url="https://dexscreener.com">打开</button></div>
+        <button class="btn full warn" style="margin-top:11px" data-act="resetall">清除本机全部数据</button>
+      </div>
+
+      <div class="disc"><b>免责声明</b>：本工具不构成投资建议；加密资产波动剧烈；请自行核实合约地址与当地合规要求。不提供价格预测、不承诺收益、不喊单。链上交易由你的钱包签名、不可撤销，实际结果以链上为准。认准合约地址，谨防假币。<br><b>最高原则</b>：一切文明为人类文明服务，包括 EACO。</div>
+    </section>
+
+  </div>
+
+  <nav class="tabbar">
+    <button data-act="tab" data-tab="trade" class="on"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg>交易</button>
+    <button data-act="tab" data-tab="positions"><svg viewBox="0 0 24 24"><path d="M3 3v18h18M7 15l4-5 3 3 5-7"/></svg>持仓</button>
+    <button data-act="tab" data-tab="history"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5M12 7v5l3 2"/></svg>记录</button>
+    <button data-act="tab" data-tab="about"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5m0-8h.01"/></svg>资料</button>
+    <button data-act="tab" data-tab="settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-2.9 1.2v.2h-4v-.2A1.7 1.7 0 0 0 7 19.7l-.1.1L4.1 17l.1-.1A1.7 1.7 0 0 0 3 14.1H3v-4h.2A1.7 1.7 0 0 0 4.9 7L5 6.9 7.8 4l.1.1A1.7 1.7 0 0 0 10 3.3V3h4v.3A1.7 1.7 0 0 0 16.9 5l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0 1.2 2.9h.1v4h-.2a1.7 1.7 0 0 0-1.4 1z"/></svg>设置</button>
+  </nav>
+
+  <div class="toast" id="toast"></div>
+
+  <div class="mask" id="walletMask">
+    <div class="sheet">
+      <h3>连接钱包</h3>
+      <div class="sub">仅获取公钥用于读取余额与持仓，不会触碰私钥、不会自动签名交易。</div>
+      <div id="walletList"></div>
+      <div class="warnbox" style="margin-top:10px">认准合约地址，谨防假币。任何索要助记词 / 私钥的页面都是诈骗。</div>
+      <button class="btn full ghost" style="margin-top:11px" data-act="closemask">取消</button>
+    </div>
+  </div>
+
+  <div class="mask" id="confirmMask">
+    <div class="sheet">
+      <h3 id="cfTitle">确认交易意图</h3>
+      <div class="sub" id="cfSub">请核对以下信息，交易将由你的钱包签名。</div>
+      <div id="cfBody"></div>
+      <div class="tiny dim" id="cfExpire" style="margin-top:9px"></div>
+      <div class="warnbox" style="margin-top:10px" id="cfWarn"></div>
+      <div class="actions">
+        <button class="btn ghost" style="flex:1" data-act="closemask">取消</button>
+        <button class="btn" data-act="requote" id="cfRefresh" style="display:none">重新报价</button>
+        <button class="btn primary" style="flex:1" data-act="confirmgo" id="cfGo">打开交易</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+'use strict';
+
+/* ============ 常量：全部为公开可核验数据 ============ */
+var EACO = 'DqfoyZH96RnvZusSp3Cdncjpyp3C74ZmJzGhjmHnDHRH';
+var ECNH = '7GQnqthWKa5v2GqXYWhmgWZY5mCRrniwK3Xuinm9GKw5';
+var SOL  = 'So11111111111111111111111111111111111111112';
+var USDC = 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v';
+var USDT = 'Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB';
+var TOKEN_PROGRAM   = 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA';
+var TOKEN_2022      = 'TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb';
+var EACO_POOL       = 'H4P6RUcyQPG7yCrSyE51P4sfj32aTJC2qE86hodCH1Cc';
+var ECNH_POOL       = 'Ac2bwg4ByZr2FePpuKKdjGLpfRMenFsjgt17St9PfBKC';
+var EACO_ECNH_PAIR  = 'EeECjxqjUALgDEoT6SW2ebN2RTFvN7ci8S8CMaPrLZHw';
+var DEFAULT_RPC     = 'https://api.mainnet-beta.solana.com';
+var RPC_FALLBACKS   = ['https://solana-rpc.publicnode.com','https://api.mainnet-beta.solana.com'];
+var DEX_API         = 'https://api.dexscreener.com/latest/dex/tokens/';
+var JUP_BASE        = 'https://api.jup.ag/swap/v2';
+var BUILTIN_HELIUS_KEY = '97f8f97d-2b9d-45e4-b8a9-71575dee38cc';
+var WEB3_CDNS       = [
+  'https://unpkg.com/@solana/web3.js@1.98.4/lib/index.iife.min.js',
+  'https://cdn.jsdelivr.net/npm/@solana/web3.js@1.98.4/lib/index.iife.min.js'
+];
+var JUP_TTL_MS      = 45000;  // 聚合路由报价默认有效期；RFQ 路由优先用响应里的 expireAt
+var ROUTER_NAME     = {metis:'Metis 聚合',jupiterz:'JupiterZ（RFQ）',dflow:'DFlow',okx:'OKX DEX'};
+var DEC_CACHE       = {};     // mint -> decimals，链上读取结果缓存
+function heliusRpc(k){ return 'https://mainnet.helius-rpc.com/?api-key='+encodeURIComponent(k); }
+function maskRpc(u){ return String(u||'').replace(/(api-key=)([^&]{4})[^&]*/i,'$1$2••••••••'); }
+
+var DEFAULT_TOKENS = [
+  {mint:EACO, sym:'EACO',  label:"Earth's Best Coin · 地球最好币", tag:'官方',   pool:EACO_POOL},
+  {mint:ECNH, sym:'eCNH',  label:'Offshore Chinese Yuan · 离岸人民币', tag:'生态', pool:ECNH_POOL},
+  {mint:SOL,  sym:'SOL',   label:'Solana', tag:'计价币', pool:''},
+  {mint:USDC, sym:'USDC',  label:'USD Coin', tag:'稳定币', pool:''},
+  {mint:USDT, sym:'USDT',  label:'Tether USD', tag:'稳定币', pool:''}
+];
+
+/* ============ 状态 ============ */
+function lsGet(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }
+function lsSet(k,v){ try { localStorage.setItem(k,v); } catch(e){} }
+function lsDel(k){ try { localStorage.removeItem(k); } catch(e){} }
+var _savedKey = lsGet('eacobot.heliusKey');
+var S = {
+  theme: lsGet('eacobot.theme') || 'dark',
+  rpc:   lsGet('eacobot.rpc') || DEFAULT_RPC,
+  heliusKey: _savedKey === null ? BUILTIN_HELIUS_KEY : _savedKey,
+  builtinKey: _savedKey === null,
+  jupKey: lsGet('eacobot.jupKey') || '',
+  mode:  lsGet('eacobot.mode') || 'chain',
+  landing: lsGet('eacobot.landing') || 'execute',
+  slip:  parseFloat(lsGet('eacobot.slip') || '1'),
+  slipMode: lsGet('eacobot.slipMode') || 'fixed',
+  amount: 0.5,
+  pct: 100,
+  mint: EACO,
+  tokens: DEFAULT_TOKENS.slice(),
+  wallet: null,
+  address: null,
+  solBal: null,
+  tokenAccounts: [],
+  market: null,
+  history: [],
+  pendingUrl: '',
+  pendingRec: null,
+  pendingOrder: null,
+  orderTs: 0,
+  orderExpire: 0,
+  quoteTimer: null,
+  marketSeq: 0,
+  chainSeq: 0,
+  activeRec: null,
+  activeDec: null,
+  lastSig: null,
+  priorityFee: null,
+  tokenPrograms: {},
+  web3Promise: null,
+  busy: false
+};
+// 未手动指定（或沿用旧版默认公共节点）时，自动切换到 Helius 节点
+var _savedRpc=lsGet('eacobot.rpc');
+if ((!_savedRpc || _savedRpc===DEFAULT_RPC || _savedRpc.indexOf('publicnode')>=0) && S.heliusKey) S.rpc=heliusRpc(S.heliusKey);
+try {
+  var ct = JSON.parse(lsGet('eacobot.tokens') || '[]');
+  if (Array.isArray(ct)) S.tokens = S.tokens.concat(ct.filter(function(t){ return t && t.mint && /^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(t.mint); }));
+  S.history = JSON.parse(lsGet('eacobot.history') || '[]');
+  if (!Array.isArray(S.history)) S.history = [];
+} catch(e){ S.history = []; }
+
+/* ============ 工具 ============ */
+function $(id){ return document.getElementById(id); }
+function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+function tok(){ for (var i=0;i<S.tokens.length;i++){ if (S.tokens[i].mint === S.mint) return S.tokens[i]; } return S.tokens[0]; }
+function short(a){ return a ? a.slice(0,4) + '…' + a.slice(-4) : '—'; }
+function fmtUsd(n){
+  if (n == null || !isFinite(n)) return '—';
+  var a = Math.abs(n);
+  if (a === 0) return '$0';
+  if (a >= 1e9) return '$' + (n/1e9).toFixed(2) + 'B';
+  if (a >= 1e6) return '$' + (n/1e6).toFixed(2) + 'M';
+  if (a >= 1e3) return '$' + (n/1e3).toFixed(2) + 'K';
+  if (a >= 1)   return '$' + n.toFixed(2);
+  if (a >= 0.01) return '$' + n.toFixed(4);
+  if (a >= 0.0001) return '$' + n.toFixed(6);
+  return '$' + n.toPrecision(4);
+}
+function fmtNum(n){
+  if (n == null || !isFinite(n)) return '—';
+  if (Math.abs(n) >= 1e6) return (n/1e6).toFixed(2) + 'M';
+  if (Math.abs(n) >= 1e3) return n.toLocaleString('en-US',{maximumFractionDigits:0});
+  return n.toLocaleString('en-US',{maximumFractionDigits:4});
+}
+function fmtTime(ts){ var d=new Date(ts); return d.toLocaleString('zh-CN',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}); }
+function fmtPct(v){
+  if (v==null || !isFinite(Number(v))) return '—';
+  var n=Number(v);
+  if (Math.abs(n)>50) return '异常值，以链上为准';
+  return (n>0?'+':'')+n.toFixed(Math.abs(n)<0.01?4:2)+'%';
+}
+function fmtRaw(raw, dec, sym){
+  if (raw==null || dec==null || !isFinite(Number(raw))) return '—';
+  var n=Number(raw)/Math.pow(10,dec);
+  if (!isFinite(n)) return '—';
+  var s;
+  if (Math.abs(n)>=1e6) s=(n/1e6).toFixed(3)+'M';
+  else if (Math.abs(n)>=1) s=n.toLocaleString('en-US',{maximumFractionDigits:Math.min(Math.max(dec,2),6)});
+  else s=String(Number(n.toPrecision(4)));
+  return s+(sym?' '+sym:'');
+}
+function routerName(r){ return ROUTER_NAME[r]||r||'—'; }
+function routeLabels(q){
+  var out=[], seen={};
+  ((q&&q.routePlan)||[]).forEach(function(p){
+    var l=p&&p.swapInfo&&p.swapInfo.label;
+    if (l && !seen[l]){ seen[l]=1; out.push(l); }
+  });
+  return out.slice(0,3).join(' + ')||'—';
+}
+function toast(msg){
+  var t=$('toast'); t.textContent=msg; t.classList.add('show');
+  clearTimeout(toast._t); toast._t=setTimeout(function(){ t.classList.remove('show'); },2600);
+}
+function bubble(text, cls){
+  var c=$('chat'), d=document.createElement('div');
+  d.className='bub' + (cls ? ' '+cls : ''); d.textContent=text; c.appendChild(d);
+  c.scrollTop=c.scrollHeight;
+  while (c.children.length > 30) c.removeChild(c.firstChild);
+}
+function open(url){ window.open(url, '_blank', 'noopener,noreferrer'); }
+function copy(text){
+  var done=function(){ toast('已复制：认准合约地址，谨防假币'); };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(done, function(){ legacy(); });
+  } else legacy();
+  function legacy(){
+    var ta=document.createElement('textarea'); ta.value=text; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); done(); } catch(e){ toast('复制失败，请手动选择文本'); }
+    document.body.removeChild(ta);
+  }
+}
+function persist(){
+  lsSet('eacobot.theme',S.theme);
+  lsSet('eacobot.rpc',S.rpc);
+  lsSet('eacobot.slip',String(S.slip));
+  lsSet('eacobot.slipMode',S.slipMode);
+  lsSet('eacobot.mode',S.mode);
+  lsSet('eacobot.landing',S.landing);
+  lsSet('eacobot.history',JSON.stringify(S.history.slice(0,60)));
+  lsSet('eacobot.tokens',JSON.stringify(S.tokens.filter(function(t){ return !t.builtin; })));
+  // 密钥不在此处写入：内置密钥不会自动扩散到 localStorage，清除状态可持久保留
+}
+DEFAULT_TOKENS.forEach(function(t){ t.builtin=true; });
+
+/* ============ 主题 ============ */
+function applyTheme(){
+  document.body.setAttribute('data-theme',S.theme);
+  var m=document.querySelector('meta[name="theme-color"]');
+  if (m) m.setAttribute('content', S.theme==='light'?'#ffffff':'#0e141b');
+}
+applyTheme();
+
+/* ============ 渲染：静态控件 ============ */
+function renderSelects(){
+  var sel=$('tokSelect'), html='', seen={};
+  S.tokens.forEach(function(t){
+    if (seen[t.mint]) return; seen[t.mint]=1;
+    html += '<option value="'+esc(t.mint)+'"'+(t.mint===S.mint?' selected':'')+'>'+esc(t.sym)+' — '+esc(t.label)+'</option>';
+  });
+  sel.innerHTML=html;
+  $('tokCount').textContent=S.tokens.length+' 个';
+  var ss=$('slipSel'), sh='';
+  sh += '<option value="auto"'+(S.slipMode==='auto'?' selected':'')+'>自动（Jupiter RTSE）</option>';
+  [0.5,1,3,5,10].forEach(function(v){ sh += '<option value="'+v+'"'+(S.slipMode!=='auto'&&Math.abs(v-S.slip)<0.001?' selected':'')+'>'+v+'%（固定）</option>'; });
+  if (S.slipMode!=='auto' && [0.5,1,3,5,10].indexOf(S.slip)<0) sh += '<option value="'+S.slip+'" selected>'+S.slip+'%（自定义）</option>';
+  ss.innerHTML=sh;
+  $('slipHint').textContent = S.slipMode==='auto'
+    ? '自动 RTSE：Jupiter 按实时波动估算滑点，可用路由最完整；跳转模式链接仍以 '+S.slip+'% 预填。'
+    : '固定 '+S.slip+'%：以 slippageBps 传入报价，Jupiter 进入 manual 模式，可能限制部分路由。';
+  $('slipInput').value=S.slip;
+  $('rpcInput').value=S.rpc;
+  var ac=$('amtChips'), ah='';
+  [0.1,0.5,1,2].forEach(function(v){ ah += '<button class="chip'+(Math.abs(v-S.amount)<1e-9?' on':'')+'" data-act="amt" data-v="'+v+'">'+v+' SOL</button>'; });
+  ah += '<button class="chip" data-act="amtmax">余额上限</button>';
+  ac.innerHTML=ah;
+  $('amtInput').value=S.amount;
+}
+function renderToken(){
+  var t=tok();
+  S.market=null; // 切换代币后不得沿用上一个代币的行情与图表链接
+  $('tokBadge').textContent = (t.mint===EACO ? 'E' : (t.sym||'?').slice(0,2).toUpperCase());
+  $('tokBadge').className='tok-badge'+(t.mint===EACO||t.mint===ECNH?'':' gray');
+  $('caText').textContent=t.mint;
+  $('bTokLabel').textContent=t.sym+' 余额';
+  $('buyBtn').disabled=(t.mint===SOL);
+  $('sellBtn').disabled=(t.mint===SOL);
+  renderMarket(null);
+}
+function renderWallet(){
+  var b=$('wBtn'), a=$('wAddr'), s=$('wSub');
+  if (S.address){
+    a.textContent=short(S.address);
+    s.textContent=(S.walletName||'钱包')+' · 已连接（只读）';
+    b.textContent='断开'; b.classList.remove('primary');
+    $('wAvatar').textContent=S.address.slice(0,2).toUpperCase();
+    $('posAddr').textContent=short(S.address);
+  } else {
+    a.textContent='未连接钱包'; s.textContent='连接后可读取真实余额与持仓';
+    b.textContent='连接钱包'; b.classList.add('primary');
+    $('wAvatar').textContent='?'; $('posAddr').textContent='未连接';
+  }
+}
+function renderMarket(m){
+  var t=tok();
+  if (!m){
+    $('mPrice').textContent='—'; $('mPrice').className='price';
+    $('mSub').textContent = (t.mint===SOL ? 'SOL 为计价币' : '正在获取链上数据…');
+    $('mChange').textContent='—'; $('mChange').className='';
+    $('mLiq').textContent='—'; $('mVol').textContent='—';
+    $('mDex').textContent='—'; $('mTime').textContent='—';
+    $('mktSource').textContent='DexScreener · 待加载';
+    $('mBar').style.width='0%';
+    $('mRisk').textContent='行情仅作展示，不构成任何投资建议；数据可能延迟。';
+    return;
+  }
+  var ch=m.priceChange;
+  $('mPrice').textContent=fmtUsd(m.priceUsd);
+  $('mSub').textContent=t.sym+' / USD · 主池 '+m.dexId.toUpperCase()+' · 24H 买 '+m.buys+' / 卖 '+m.sells;
+  var ce=$('mChange');
+  if (ch==null || !isFinite(ch)){ ce.textContent='—'; ce.className=''; }
+  else { ce.textContent=(ch>0?'+':'')+ch.toFixed(2)+'%'; ce.className=ch>=0?'up':'down'; }
+  $('mLiq').textContent=fmtUsd(m.liquidity);
+  $('mVol').textContent=fmtUsd(m.volume);
+  $('mDex').textContent=m.dexId.toUpperCase();
+  $('mTime').textContent=fmtTime(m.ts);
+  $('mktSource').textContent='DexScreener · '+(m.pair ? short(m.pair) : '主池');
+  $('mBar').style.width=Math.min(100,Math.max(3,(m.liquidity||0)/5000*100))+'%';
+  var risk=[];
+  if (m.liquidity!=null && m.liquidity<1000) risk.push('当前主池流动性较低，注意滑点与价格影响');
+  if (m.volume!=null && m.volume<10) risk.push('24H 成交额很低，成交可能不连续');
+  risk.push('行情来自第三方公开接口，可能延迟或不可用；不构成投资建议');
+  $('mRisk').textContent=risk.join('；')+'。';
+}
+function renderBalances(){
+  $('bSol').textContent = S.solBal==null ? (S.address?'读取中 / 不可用':'未连接') : S.solBal.toFixed(4)+' SOL';
+  var t=tok();
+  if (t.mint===SOL){ $('bTok').textContent=S.solBal==null?'—':S.solBal.toFixed(4); return; }
+  var hit=null;
+  S.tokenAccounts.forEach(function(a){ if (a.mint===t.mint && (!hit || a.ui>hit.ui)) hit=a; });
+  $('bTok').textContent = !S.address ? '未连接' : (hit ? fmtNum(hit.ui)+' '+t.sym : (S.tokenAccounts.length ? '0' : '读取中 / 不可用'));
+}
+function renderPositions(){
+  var box=$('posList');
+  if (!S.address){ box.innerHTML='<div class="empty">连接钱包后读取 SPL Token 与 Token-2022 账户。</div>'; return; }
+  if (!S.tokenAccounts.length){ box.innerHTML='<div class="empty">未读到非零代币账户，或公共 RPC 暂不可用。可稍后刷新 / 更换节点。</div>'; return; }
+  var h='';
+  S.tokenAccounts.sort(function(a,b){ return b.ui-a.ui; }).forEach(function(a){
+    var t=null; S.tokens.forEach(function(x){ if(x.mint===a.mint) t=x; });
+    var nm=t?t.sym:(a.mint.slice(0,4)+'…'+a.mint.slice(-4));
+    var official=(a.mint===EACO||a.mint===ECNH)?'<span class="tag">已收录</span>':'<span class="tag">未校验</span>';
+    var t22=(a.prog===TOKEN_2022||S.tokenPrograms[a.mint]===TOKEN_2022)?'<span class="tag">Token-2022</span>':'';
+    h+='<div class="link-row"><div><b>'+esc(nm)+'</b> '+official+' '+t22+'<div class="tiny dim mono">'+esc(a.mint)+'</div></div><div style="text-align:right"><b>'+esc(fmtNum(a.ui))+'</b><div class="tiny dim">decimals '+a.decimals+'</div></div></div>';
+  });
+  box.innerHTML=h;
+}
+function renderHistory(){
+  var box=$('histList');
+  if (!S.history.length){ box.innerHTML='<div class="empty">暂无记录。</div>'; return; }
+  var h='';
+  S.history.forEach(function(r){
+    var st=r.status || '外部发起';
+    var note=r.statusNote || (r.status?'':'等待钱包确认');
+    if (r.landedBy) note += ' · '+r.landedBy;
+    var detail=esc(fmtTime(r.ts))+' · 滑点 '+esc(String(r.slip))+'%'+(r.side==='sell'?' · '+esc(String(r.pct))+'% 持仓':' · '+esc(String(r.amount))+' SOL');
+    if (r.outUi) detail += ' · 实得 '+esc(r.outUi);
+    var link='';
+    if (r.sig) link='<a href="https://solscan.io/tx/'+esc(r.sig)+'" target="_blank" rel="noopener noreferrer" class="mini" style="display:inline-block;margin-top:5px">查看链上交易</a>';
+    else if (r.url) link='<a href="'+esc(r.url)+'" target="_blank" rel="noopener noreferrer" class="mini" style="display:inline-block;margin-top:5px">查看 DEX 链接</a>';
+    h+='<div class="link-row"><div><b class="'+(r.side==='buy'?'up':'down')+'">'+(r.side==='buy'?'买入':'卖出')+' '+esc(r.sym)+'</b><div class="tiny dim">'+detail+'</div>'+link+'</div><div style="text-align:right"><span class="pill">'+esc(st)+'</span><div class="tiny dim">'+esc(note)+'</div></div></div>';
+  });
+  box.innerHTML=h;
+}
+function renderWalletList(){
+  var ws=detectWallets(), h='';
+  ws.forEach(function(w){
+    h+='<button class="wopt" data-act="pickwallet" data-id="'+esc(w.id)+'"><span class="dot">'+esc(w.name.slice(0,1))+'</span><span style="flex:1"><span class="nm">'+esc(w.name)+'</span><br><span class="st">'+(w.provider?'已检测到浏览器扩展':'未检测到 · 点击前往官网安装')+'</span></span><span class="tag">'+(w.provider?'连接':'安装')+'</span></button>';
+  });
+  if (!ws.length) h='<div class="empty">未检测到任何 Solana 钱包扩展。</div>';
+  $('walletList').innerHTML=h;
+}
+
+/* ============ 钱包：只做只读连接 ============ */
+function detectWallets(){
+  var list=[], w=window;
+  function add(id,name,p,url){ list.push({id:id,name:name,provider:p||null,url:url}); }
+  var phantom = (w.phantom && w.phantom.solana && w.phantom.solana.isPhantom) ? w.phantom.solana : null;
+  var solflare = (w.solflare && w.solflare.isSolflare) ? w.solflare : null;
+  var backpack = (w.backpack && (w.backpack.solana || w.backpack.isBackpack)) ? (w.backpack.solana || w.backpack) : null;
+  var okx = (w.okxwallet && w.okxwallet.solana) ? w.okxwallet.solana : null;
+  var coinbase = (w.coinbaseSolana) ? w.coinbaseSolana : null;
+  var generic = (!phantom && w.solana && !w.solana.isSolflare) ? w.solana : null;
+  add('phantom','Phantom',phantom,'https://phantom.app/download');
+  add('solflare','Solflare',solflare,'https://solflare.com/download');
+  add('backpack','Backpack',backpack,'https://backpack.app/download');
+  add('okx','OKX Wallet',okx,'https://www.okx.com/web3');
+  add('coinbase','Coinbase Wallet',coinbase,'https://www.coinbase.com/wallet/downloads');
+  if (generic) add('generic','浏览器注入钱包',generic,'https://phantom.app/download');
+  return list;
+}
+async function connectWallet(id){
+  var w=null; detectWallets().forEach(function(x){ if(x.id===id) w=x; });
+  if (!w) return;
+  if (!w.provider){ open(w.url); toast('未检测到该钱包，已打开官网'); return; }
+  try {
+    var resp = await w.provider.connect();
+    var pk = resp && (resp.publicKey || resp.account && resp.account.publicKey) || null;
+    var addr = pk ? (typeof pk === 'string' ? pk : (pk.toString ? pk.toString() : null)) : null;
+    if (!addr || !/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(addr)) throw new Error('未返回有效公钥');
+    S.wallet=w.provider; S.walletName=w.name; S.address=addr;
+    closeMasks(); renderWallet();
+    toast('已连接 '+w.name+'（只读）');
+    bubble(w.name+' 已连接：'+short(addr)+'。仅读取公钥，不会触碰私钥。','ok');
+    try {
+      if (w.provider.on) {
+        w.provider.on('accountChanged', function(){ location.reload(); });
+        w.provider.on('disconnect', function(){ S.wallet=null; S.address=null; S.solBal=null; S.tokenAccounts=[]; renderWallet(); renderBalances(); renderPositions(); });
+      }
+    } catch(e){}
+    refreshChain();
+  } catch(e){
+    var msg = (e && e.message) ? e.message : '连接被取消';
+    toast('连接失败：'+msg);
+    bubble('钱包连接未完成：'+msg,'err');
+  }
+}
+function disconnectWallet(){
+  try { if (S.wallet && S.wallet.disconnect) S.wallet.disconnect(); } catch(e){}
+  S.wallet=null; S.address=null; S.solBal=null; S.tokenAccounts=[];
+  renderWallet(); renderBalances(); renderPositions(); toast('已断开钱包');
+}
+
+/* ============ 只读链上数据：Solana JSON-RPC ============ */
+async function rpcCall(method, params, opts){
+  opts=opts||{};
+  // 写操作与 Helius 专有方法只打当前节点，避免误把交易重复广播到公共节点
+  var endpoints = opts.onlyPrimary ? [S.rpc] : [S.rpc].concat(RPC_FALLBACKS.filter(function(x){ return x!==S.rpc; }));
+  var last='';
+  for (var i=0;i<endpoints.length;i++){
+    var timer=null;
+    try {
+      var ctl=new AbortController();
+      timer=setTimeout(function(){ ctl.abort(); },8000);
+      var res=await fetch(endpoints[i],{
+        method:'POST', headers:{'Content-Type':'application/json'}, signal:ctl.signal,
+        body:JSON.stringify({jsonrpc:'2.0',id:1,method:method,params:params})
+      });
+      if (!res.ok) throw new Error('HTTP '+res.status);
+      var j=await res.json();
+      if (j.error) throw new Error(j.error.message || 'RPC error');
+      return j.result;
+    } catch(e){ last=e.message||'网络错误'; }
+    finally { if (timer) clearTimeout(timer); }
+  }
+  throw new Error(last||'全部节点不可用');
+}
+async function refreshChain(){
+  if (!S.address) { toast('请先连接钱包'); return; }
+  var seq=++S.chainSeq, owner=S.address;
+  $('bSol').textContent='读取中…'; $('bTok').textContent='读取中…';
+  try {
+    var r=await rpcCall('getBalance',[owner,{commitment:'confirmed'}]);
+    if (seq!==S.chainSeq || owner!==S.address) return;
+    S.solBal=(r && r.value!=null)?r.value/1e9:null;
+  } catch(e){ S.solBal=null; bubble('SOL 余额读取失败：'+e.message+'（公共 RPC 可能限流或被浏览器拦截，可在设置中更换节点）','err'); }
+  var accs=[], progs={};
+  for (var k=0;k<2;k++){
+    var prog=k===0?TOKEN_PROGRAM:TOKEN_2022;
+    try {
+      var ta=await rpcCall('getTokenAccountsByOwner',[owner,{programId:prog},{encoding:'jsonParsed',commitment:'confirmed'}]);
+      (ta && ta.value ? ta.value : []).forEach(function(v){
+        try {
+          var d=v.account.data.parsed.info, amt=d.tokenAmount;
+          var ui=(amt.uiAmount!=null)?amt.uiAmount:Number(amt.amount)/Math.pow(10,amt.decimals);
+          if (ui>0){
+            accs.push({mint:d.mint,ui:ui,decimals:amt.decimals,raw:String(amt.amount),prog:prog});
+            progs[d.mint]=prog; DEC_CACHE[d.mint]=amt.decimals;
+          }
+        } catch(e){}
+      });
+    } catch(e){ if(k===0) bubble('代币账户读取失败：'+e.message,'err'); }
+  }
+  if (seq!==S.chainSeq || owner!==S.address) return;
+  S.tokenAccounts=accs; S.tokenPrograms=progs;
+  renderBalances(); renderPositions();
+  if (S.solBal!=null) bubble('链上余额已更新：'+S.solBal.toFixed(4)+' SOL；读到 '+accs.length+' 个非零代币账户。','ok');
+  if (progs[ECNH]===TOKEN_2022) bubble('提示：eCNH 为 Token-2022 代币（精度 4 位），可能带扩展或转账费用，实际到账以链上结果为准。');
+}
+
+/* ============ 行情：DexScreener 公共 API ============ */
+async function refreshMarket(){
+  var t=tok(), mint=t.mint, seq=++S.marketSeq;
+  if (mint===SOL){ renderMarket(null); $('mktSource').textContent='SOL 为计价币'; return; }
+  $('mktSource').textContent='DexScreener · 加载中';
+  try {
+    var ctl=new AbortController(), timer=setTimeout(function(){ ctl.abort(); },9000);
+    var res=await fetch(DEX_API+mint,{signal:ctl.signal});
+    clearTimeout(timer);
+    if (seq!==S.marketSeq || mint!==tok().mint) return; // 期间切换了代币，丢弃过期响应
+    if (!res.ok) throw new Error('HTTP '+res.status);
+    var j=await res.json();
+    var pairs=(j && j.pairs ? j.pairs : []).filter(function(p){ return p.chainId==='solana' && p.baseToken && p.baseToken.address===mint; });
+    if (!pairs.length) throw new Error('该地址暂无 Solana 交易对');
+    pairs.sort(function(a,b){ return ((b.liquidity&&b.liquidity.usd)||0)-((a.liquidity&&a.liquidity.usd)||0); });
+    var p=pairs[0];
+    if (seq!==S.marketSeq || mint!==tok().mint) return;
+    S.market={
+      priceUsd:p.priceUsd?parseFloat(p.priceUsd):null,
+      priceChange:(p.priceChange&&p.priceChange.h24!=null)?Number(p.priceChange.h24):null,
+      liquidity:(p.liquidity&&p.liquidity.usd!=null)?Number(p.liquidity.usd):null,
+      volume:(p.volume&&p.volume.h24!=null)?Number(p.volume.h24):null,
+      dexId:p.dexId||'—', pair:p.pairAddress||'', url:p.url||'',
+      buys:(p.txns&&p.txns.h24&&p.txns.h24.buys)||0, sells:(p.txns&&p.txns.h24&&p.txns.h24.sells)||0,
+      ts:Date.now()
+    };
+    renderMarket(S.market);
+  } catch(e){
+    if (seq!==S.marketSeq || mint!==tok().mint) return;
+    renderMarket(null);
+    $('mktSource').textContent='DexScreener · 暂不可用';
+    $('mSub').textContent='无法获取行情：'+e.message+'（不展示任何推测数值）';
+    $('mRisk').textContent='可点击「DexScreener 图表」在官方页面核验价格。行情仅作展示，不构成投资建议。';
+  }
+}
+
+/* ============ Helius RPC + Jupiter v2：真实链上成交 ============ */
+function b64ToBytes(b64){
+  var bin=atob(b64), u=new Uint8Array(bin.length);
+  for(var i=0;i<bin.length;i++) u[i]=bin.charCodeAt(i);
+  return u;
+}
+function bytesToB64(u){
+  var s='', CH=0x8000;
+  for(var i=0;i<u.length;i+=CH) s+=String.fromCharCode.apply(null,u.subarray(i,i+CH));
+  return btoa(s);
+}
+function loadWeb3(){
+  if (window.solanaWeb3 && window.solanaWeb3.VersionedTransaction) return Promise.resolve(window.solanaWeb3);
+  if (S.web3Promise) return S.web3Promise;
+  S.web3Promise=new Promise(function(resolve,reject){
+    var i=0;
+    (function next(){
+      if (i>=WEB3_CDNS.length){ S.web3Promise=null; reject(new Error('无法加载 @solana/web3.js（CDN 不可达）')); return; }
+      var s=document.createElement('script');
+      s.src=WEB3_CDNS[i++];
+      s.onload=function(){ if(window.solanaWeb3 && window.solanaWeb3.VersionedTransaction) resolve(window.solanaWeb3); else next(); };
+      s.onerror=function(){ if(s.parentNode) s.parentNode.removeChild(s); next(); };
+      document.head.appendChild(s);
+    })();
+  });
+  return S.web3Promise;
+}
+function jupHeaders(){ var h={}; if(S.jupKey) h['x-api-key']=S.jupKey; return h; }
+async function jupOrder(side, amountRaw, taker){
+  var t=tok();
+  // 不传 maxSupportedTransactionVersion：默认返回 v0 交易，@solana/web3.js v1 可反序列化并签名
+  var p={ inputMint:(side==='buy'?SOL:t.mint), outputMint:(side==='buy'?t.mint:SOL), amount:String(amountRaw) };
+  if (taker) p.taker=taker;
+  if (S.slipMode==='fixed') p.slippageBps=String(Math.round(S.slip*100));
+  var ctl=new AbortController(), timer=setTimeout(function(){ ctl.abort(); },15000);
+  var res;
+  try { res=await fetch(JUP_BASE+'/order?'+new URLSearchParams(p).toString(),{headers:jupHeaders(),signal:ctl.signal}); }
+  finally { clearTimeout(timer); }
+  if (!res.ok){
+    var txt=''; try { txt=await res.text(); } catch(e){}
+    throw new Error('Jupiter 报价失败 HTTP '+res.status+(txt?'：'+txt.slice(0,160):''));
+  }
+  var j=await res.json();
+  if (!j || typeof j!=='object') throw new Error('Jupiter 返回格式异常');
+  return j;
+}
+function sellAmount(){
+  var t=tok(), hit=null;
+  S.tokenAccounts.forEach(function(a){ if(a.mint===t.mint && (!hit || a.ui>hit.ui)) hit=a; });
+  if (!hit || !hit.raw) return null;
+  try { return {raw:(BigInt(hit.raw)*BigInt(S.pct)/100n).toString(), ui:hit.ui, decimals:hit.decimals}; }
+  catch(e){ return null; }
+}
+async function heliusPriorityFee(keys){
+  if (!S.heliusKey || !keys.length) return null;
+  try {
+    var r=await rpcCall('getPriorityFeeEstimate',[{accountKeys:keys.slice(0,20),options:{priorityLevel:'Medium'}}],{onlyPrimary:true});
+    if (!r) return null;
+    var v=(r.priorityFeeEstimate!=null)?r.priorityFeeEstimate:(Array.isArray(r)&&r[0]?r[0].priorityFeeEstimate:null);
+    return (typeof v==='number')?v:null;
+  } catch(e){ return null; }
+}
+async function jupExecute(signedB64, requestId){
+  var h=jupHeaders(); h['Content-Type']='application/json';
+  var ctl=new AbortController(), timer=setTimeout(function(){ ctl.abort(); },30000);
+  var res=null, j=null;
+  try {
+    res=await fetch(JUP_BASE+'/execute',{method:'POST',headers:h,signal:ctl.signal,
+      body:JSON.stringify({signedTransaction:signedB64,requestId:requestId})});
+    try { j=await res.json(); } catch(e){}
+    if (!res.ok) throw new Error('Jupiter /execute HTTP '+res.status+(j&&(j.error||j.message)?'：'+(j.error||j.message):''));
+  } finally { clearTimeout(timer); }
+  j=j||{};
+  // 官方约定：code=0 且 status='Success' 才是成功，signature 在部分失败响应里也会出现
+  if (typeof j.code==='number' && j.code!==0) throw new Error('落地失败 code '+j.code+(j.error?'：'+j.error:''));
+  if (j.status && j.status!=='Success') throw new Error('落地返回 '+j.status+(j.error?'：'+j.error:''));
+  if (!j.signature) throw new Error('响应缺少 signature');
+  return j;
+}
+async function heliusSend(signedB64){
+  return await rpcCall('sendTransaction',[signedB64,{encoding:'base64',skipPreflight:false,preflightCommitment:'confirmed',maxRetries:3}],{onlyPrimary:true});
+}
+function isRfq(order){ return !!order && (order.router==='jupiterz' || !!order.quoteId || !!order.maker); }
+async function tryLanding(signedB64, order, land){
+  // RFQ / JupiterZ 交易还缺做市商签名，只能由 /execute 补齐后落地；RPC 直发必然失败
+  var force=isRfq(order);
+  var seq=force?['execute']:((land==='execute')?['execute','helius']:['helius','execute']);
+  var errors=[];
+  for (var i=0;i<seq.length;i++){
+    var how=seq[i];
+    try {
+      if (how==='execute'){
+        var ex=await jupExecute(signedB64,order.requestId);
+        return {sig:ex.signature,used:'Jupiter /execute',exec:ex,confirmed:true};
+      }
+      var sig=await heliusSend(signedB64);
+      if (!sig || typeof sig!=='string') throw new Error('RPC 未返回签名');
+      return {sig:sig,used:'Helius RPC',exec:null,confirmed:false};
+    } catch(e){
+      errors.push((how==='execute'?'Jupiter /execute':'Helius RPC')+'：'+e.message);
+      if (i===0 && seq.length>1) bubble('首选落地通道失败（'+e.message+'），自动尝试备用通道。','err');
+    }
+  }
+  throw new Error((force?'RFQ 路由必须走 Jupiter /execute，但落地失败：':'所有落地通道均失败：')+errors.join(' | ').slice(0,280));
+}
+async function waitConfirm(sig, maxMs){
+  var start=Date.now();
+  while (Date.now()-start<maxMs){
+    try {
+      var r=await rpcCall('getSignatureStatuses',[[sig]]);
+      var st=r&&r.value&&r.value[0];
+      if (st){
+        if (st.err) return {ok:false,msg:'链上执行失败：'+JSON.stringify(st.err)};
+        if (st.confirmationStatus==='confirmed'||st.confirmationStatus==='finalized') return {ok:true,status:st.confirmationStatus};
+      }
+    } catch(e){}
+    await new Promise(function(r){ setTimeout(r,2500); });
+  }
+  return {ok:null,msg:'超过等待时间仍未确认'};
+}
+function setTx(html, stamp){
+  $('txState').innerHTML=html;
+  if (stamp) $('txStamp').textContent=stamp;
+  $('txLinks').innerHTML=S.lastSig
+    ? '<button class="btn ghost" data-act="opentx">Solscan 查看交易</button><button class="btn ghost" data-act="copysig">复制签名</button>'
+    : '';
+}
+async function executeChainTrade(){
+  if (S.busy) return;
+  S.busy=true;
+  $('buyBtn').disabled=true; $('sellBtn').disabled=true;
+  var rec=S.activeRec, order=S.pendingOrder;
+  try {
+    if (!rec || !order || !order.transaction) throw new Error('报价已失效，请重新点击买入 / 卖出');
+    if (S.orderExpire && Date.now()>S.orderExpire) throw new Error('报价已过期，请重新报价（价格与区块哈希已变化）');
+    if (Number(order.transactionVersion)===1) throw new Error('该报价返回 v1 交易，当前签名依赖不支持；请切「跳转 DEX 页面」或重新报价');
+    setTx('<span class="spin"></span>正在加载签名依赖…', fmtTime(Date.now()));
+    var web3=await loadWeb3();
+    var tx=web3.VersionedTransaction.deserialize(b64ToBytes(order.transaction));
+    var keys=[];
+    try { (tx.message.staticAccountKeys||[]).forEach(function(k){ keys.push(k.toBase58?k.toBase58():String(k)); }); } catch(e){}
+    S.priorityFee=await heliusPriorityFee(keys);
+    if (S.priorityFee!=null) bubble('Helius 建议优先费（仅供参考）：'+S.priorityFee+' micro-lamports/CU。实际优先费由 Jupiter 落地策略或交易内 ComputeBudget 指令决定。');
+    if (!S.wallet || !S.wallet.signTransaction) throw new Error('当前钱包不支持 signTransaction，请改用 Phantom / Solflare');
+    setTx('<span class="spin"></span>请在钱包中确认签名…', fmtTime(Date.now()));
+    bubble('已生成待签名交易，请在钱包弹窗中核对后自行确认。');
+    var signed=await S.wallet.signTransaction(tx);
+    if (!signed) throw new Error('钱包未返回已签名交易（可能已取消）');
+    var signedB64=bytesToB64(signed.serialize());
+    rec.status='已签名·上链中'; rec.statusNote='等待确认'; persist(); renderHistory();
+    setTx('<span class="spin"></span>已签名，正在广播…', fmtTime(Date.now()));
+    bubble('钱包已签名，正在广播交易。','me');
+    var land=$('landSel').value;
+    if (isRfq(order) && land!=='execute'){ land='execute'; bubble('检测到 RFQ 路由，落地通道自动锁定为 Jupiter /execute（交易需做市商追加签名）。'); }
+    var landed=await tryLanding(signedB64,order,land);
+    S.lastSig=landed.sig; rec.sig=landed.sig; rec.landedBy=landed.used;
+    if (landed.exec && landed.exec.totalOutputAmount!=null){
+      var od=(rec.side==='sell')?9:S.activeDec;
+      if (od!=null){ var ou=fmtRaw(landed.exec.totalOutputAmount,od,rec.side==='sell'?'SOL':rec.sym); if (ou!=='—') rec.outUi=ou; }
+    }
+    rec.status='已广播'; rec.statusNote=landed.used; persist(); renderHistory();
+    setTx('签名：<span class="sig mono">'+esc(landed.sig)+'</span><br>落地通道：'+esc(landed.used)+'<br><span class="spin"></span>等待链上确认…', fmtTime(Date.now()));
+    bubble('交易已广播：'+landed.sig.slice(0,14)+'…（'+landed.used+'）。正在等待链上确认。','me');
+    // /execute 已内置确认轮询，成功响应即可视为已确认；只有 RPC 直发才需要自己轮询
+    var cf = landed.confirmed ? {ok:true,status:'confirmed'} : await waitConfirm(landed.sig,60000);
+    if (cf.ok){
+      rec.status='链上成功'; rec.statusNote=cf.status||'confirmed';
+      var extra=rec.outUi?'<br>链上实际获得：<b>'+esc(rec.outUi)+'</b>':'';
+      setTx('签名：<span class="sig mono">'+esc(landed.sig)+'</span><br><b class="down">链上已确认（'+esc(cf.status||'confirmed')+'）</b> · 落地通道：'+esc(landed.used)+extra+'<br><span class="tiny dim">实际成交量与手续费以链上结果为准</span>', fmtTime(Date.now()));
+      bubble('链上确认成功'+(rec.outUi?'，实际获得 '+rec.outUi:'')+'。请在 Solscan 核实。','ok');
+    } else {
+      rec.status=cf.ok===false?'链上失败':'待核实'; rec.statusNote=cf.msg||'未确认';
+      setTx('签名：<span class="sig mono">'+esc(landed.sig)+'</span><br><b class="up">'+esc(cf.msg||'未确认')+'</b> · 请在 Solscan 核实', fmtTime(Date.now()));
+      bubble(cf.msg||'交易状态未确认','err');
+    }
+    persist(); renderHistory(); refreshChain();
+  } catch(e){
+    var msg=(e&&e.message)?e.message:String(e);
+    if (rec){ rec.status='未完成'; rec.statusNote=msg.slice(0,90); persist(); renderHistory(); }
+    setTx('<b class="up">交易未完成</b>：'+esc(msg), fmtTime(Date.now()));
+    bubble('链上交易未完成：'+msg+'（若钱包已签名，请在 Solscan 核实是否上链）','err');
+  } finally {
+    S.busy=false; S.pendingOrder=null;
+    var isSol=(tok().mint===SOL);
+    $('buyBtn').disabled=isSol; $('sellBtn').disabled=isSol;
+  }
+}
+
+/* ============ 交易意图 → 官方 DEX 深度链接 ============ */
+function buildTradeUrl(side){
+  var t=tok(), route=$('routeSel').value, bps=Math.round(S.slip*100);
+  var input  = side==='buy' ? SOL : t.mint;
+  var output = side==='buy' ? t.mint : SOL;
+  if (route==='meteora'){
+    // 未收录池子的代币不指向 EACO 池，避免误导
+    if (!t.pool) return 'https://app.meteora.ag/pools';
+    return 'https://app.meteora.ag/dammv2/'+t.pool;
+  }
+  if (route==='raydium'){
+    return 'https://raydium.io/swap/?inputMint='+(side==='buy'?'sol':input)+'&outputMint='+output;
+  }
+  // Jupiter：只预填交易对与滑点；买入金额预填 lamports（SOL 精度固定 9 位，安全）
+  var u='https://jup.ag/swap/'+input+'-'+output+'?slippageBps='+bps;
+  if (side==='buy'){
+    var amt=parseFloat($('amtInput').value);
+    if (isFinite(amt) && amt>0) u+='&inputAmount='+Math.round(amt*1e9);
+  }
+  return u;
+}
+var ROUTE_NAME={jupiter:'Jupiter 聚合',raydium:'Raydium',meteora:'Meteora 池'};
+async function tokenDecimals(mint){
+  if (mint===SOL) return 9;
+  if (DEC_CACHE[mint]!=null) return DEC_CACHE[mint];
+  var hit=null; S.tokenAccounts.forEach(function(a){ if(a.mint===mint) hit=a; });
+  if (hit && typeof hit.decimals==='number'){ DEC_CACHE[mint]=hit.decimals; return hit.decimals; }
+  // 标准 RPC 兜底：Mint account 第 44 字节为 decimals，经典 Token 与 Token-2022 布局通用，
+  // 不依赖 Helius DAS（其 getAsset 需要对象 params，传数组会返回 -32602）
+  try {
+    var r=await rpcCall('getAccountInfo',[mint,{encoding:'base64',commitment:'confirmed'}]);
+    var b64=r&&r.value&&r.value.data&&r.value.data[0];
+    if (b64){
+      var bin=atob(b64);
+      if (bin.length>=45){
+        var d=bin.charCodeAt(44);
+        if (d>=0 && d<=18){
+          DEC_CACHE[mint]=d;
+          if (r.value.owner) S.tokenPrograms[mint]=r.value.owner;
+          return d;
+        }
+      }
+    }
+  } catch(e){}
+  return null;
+}
+function cfFail(title,msg,hint,btn){
+  stopQuoteTimer();
+  $('cfGo').disabled=false; $('cfGo').textContent=btn||'重试报价';
+  $('cfRefresh').style.display='';
+  $('cfExpire').textContent='';
+  $('cfTitle').textContent=title;
+  $('cfBody').innerHTML='<div class="txline up">'+esc(msg)+'</div>'+(hint?'<div class="tiny dim" style="margin-top:8px">'+esc(hint)+'</div>':'');
+  bubble(title+'：'+msg,'err');
+}
+function stopQuoteTimer(){ if (S.quoteTimer){ clearInterval(S.quoteTimer); S.quoteTimer=null; } }
+function startQuoteTimer(expire){
+  stopQuoteTimer();
+  function tick(){
+    var left=Math.max(0,Math.ceil((expire-Date.now())/1000));
+    if (left<=0){
+      $('cfExpire').textContent='报价已过期，请点「重新报价」获取新价格。';
+      $('cfGo').disabled=true; $('cfGo').textContent='报价已过期';
+      $('cfRefresh').style.display=''; stopQuoteTimer(); return;
+    }
+    $('cfExpire').textContent='报价剩余有效时间：'+left+' 秒 · 过期后需重新报价（价格与区块哈希会变化）';
+  }
+  tick(); S.quoteTimer=setInterval(tick,1000);
+}
+async function prepareTrade(side){
+  stopQuoteTimer(); // 每次新报价都先清掉上一轮的倒计时，避免旧定时器覆盖新有效期
+  var t=tok();
+  if (t.mint===SOL){ toast('SOL 为计价币，请先选择代币'); return; }
+  if (S.busy){ toast('上一笔交易仍在处理中'); return; }
+  var amt=parseFloat($('amtInput').value);
+  if (side==='buy' && (!isFinite(amt) || amt<=0)){ toast('请输入有效的 SOL 金额'); return; }
+  var rec={ts:Date.now(),side:side,sym:t.sym,mint:t.mint,amount:side==='buy'?amt:0,pct:S.pct,slip:S.slip};
+  var m=S.market;
+
+  /* ---- 链上成交模式：Jupiter 报价 → 钱包签名 → 落地 ---- */
+  if (S.mode==='chain'){
+    if (!S.address){ toast('链上成交需先连接钱包'); renderWalletList(); $('walletMask').classList.add('on'); return; }
+    var raw, desc;
+    if (side==='buy'){
+      raw=Math.round(amt*1e9).toString(); desc=amt+' SOL';
+      if (S.solBal!=null && amt>S.solBal-0.003){ toast('SOL 余额不足或需预留手续费'); return; }
+    } else {
+      var sa=sellAmount();
+      if (!sa){ toast('未读到该代币余额，请先连接钱包并刷新持仓'); return; }
+      if (!sa.raw || BigInt(sa.raw)<=0n){ toast('按当前比例计算的可卖数量为 0'); return; }
+      raw=sa.raw; rec.raw=raw;
+      desc=S.pct+'% 持仓（约 '+fmtNum(sa.ui)+' '+t.sym+'）';
+    }
+    // 提前落 pendingRec：报价失败后「重新报价」仍能拿到方向与金额
+    S.pendingRec=rec; S.pendingOrder=null; S.pendingUrl='';
+    $('cfTitle').textContent='正在获取链上报价…';
+    $('cfSub').textContent='Jupiter v2 正在返回可签名交易；请留意报价有效期。';
+    $('cfBody').innerHTML='<div class="txline"><span class="spin"></span>正在向 Jupiter 请求真实报价…</div>';
+    $('cfWarn').textContent='在钱包签名前不会有任何资产变动。认准合约地址，谨防假币。';
+    $('cfExpire').textContent=''; $('cfRefresh').style.display='none';
+    $('cfGo').textContent='获取报价中…'; $('cfGo').disabled=true;
+    $('confirmMask').classList.add('on');
+    var q;
+    try { q=await jupOrder(side,raw,S.address); }
+    catch(e){
+      $('cfWarn').textContent='本页不编造报价数据；未拿到真实报价前不会请求签名。';
+      cfFail('报价失败',e.message,'可切到「跳转 DEX 页面」，或在设置中填 Jupiter API Key（keyless 仅 0.5 RPS）后重试。');
+      return;
+    }
+    if (!q.transaction){
+      $('cfWarn').textContent='常见原因：余额不足、SOL 不足以支付手续费、金额低于最小可成交额度。交易为空时不请求签名。';
+      var ref=(q.outAmount!=null?'；报价参考 outAmount='+q.outAmount+'（最小单位）':'');
+      cfFail('无法构建交易',(q.errorMessage||'Jupiter 未返回交易')+'（router '+(q.router||'—')+' / errorCode '+(q.errorCode||'未知')+'）'+ref,'请核对余额后重试。');
+      return;
+    }
+    var dec=(side==='buy')?await tokenDecimals(t.mint):9;
+    S.activeDec=dec;
+    var outSym=(side==='buy')?t.sym:'SOL';
+    var out=fmtRaw(q.outAmount,dec,outSym);
+    var minOut=fmtRaw(q.otherAmountThreshold,dec,outSym);
+    var ttl=JUP_TTL_MS;
+    if (q.expireAt){ var ea=new Date(q.expireAt).getTime(); if (isFinite(ea) && ea>Date.now()) ttl=Math.min(ea-Date.now(),120000); }
+    S.orderTs=Date.now(); S.orderExpire=S.orderTs+ttl;
+    var rfq=isRfq(q);
+    var land=$('landSel').value;
+    if (rfq) land='execute';
+    var warn=[];
+    warn.push('点击「签名并发送」后，钱包会弹出签名请求；私钥不会离开钱包扩展，本页不接触私钥。');
+    warn.push('链上交易一旦广播不可撤销。实际成交量、滑点与手续费以链上结果为准。');
+    warn.push('认准合约地址，谨防假币：'+t.mint);
+    if (m && m.liquidity!=null && m.liquidity<1000) warn.push('主池流动性较低，可能出现较大价格影响。');
+    if (rfq) warn.push('该报价为 RFQ 路由，需做市商在 /execute 阶段追加签名，落地通道已自动锁定；Helius RPC 直发不可用。');
+    if (S.tokenPrograms[t.mint]===TOKEN_2022) warn.push('该代币为 Token-2022'+(dec!=null?'（精度 '+dec+' 位）':'')+'，可能含转账费用或扩展，实际到账以链上为准。');
+    if (q.gasless) warn.push('Jupiter 标记本笔为 gasless（手续费由第三方代付），请以钱包签名界面显示为准。');
+    warn.push('本页不构成投资建议，不提供价格预测或收益承诺。');
+    var landText=rfq?'Jupiter /execute（RFQ 锁定）':(land==='execute'?'Jupiter /execute（失败转 Helius RPC）':'Helius RPC 直发（失败转 /execute）');
+    var usdIn=(q.inUsdValue>0)?fmtUsd(q.inUsdValue):'—';
+    var body='';
+    body+='<div class="kv"><span>方向</span><b class="'+(side==='buy'?'up':'down')+'">'+(side==='buy'?'买入':'卖出')+' '+esc(t.sym)+'</b></div>';
+    body+='<div class="kv"><span>'+(side==='buy'?'投入':'卖出')+'</span><b>'+esc(desc)+'</b></div>';
+    body+='<div class="kv"><span>预计获得（报价）</span><b>'+esc(out)+'</b></div>';
+    body+='<div class="kv"><span>最低获得（滑点后）</span><b>'+esc(minOut)+'</b></div>';
+    body+='<div class="kv"><span>输入估值</span><b>'+esc(usdIn)+'</b></div>';
+    body+='<div class="kv"><span>路由 / DEX 路径</span><b class="small">'+esc(routerName(q.router))+' · '+esc(routeLabels(q))+'</b></div>';
+    body+='<div class="kv"><span>价格影响</span><b>'+esc(fmtPct(q.priceImpact))+'</b></div>';
+    body+='<div class="kv"><span>平台费 / 滑点</span><b>'+(q.feeBps!=null?q.feeBps+' bps':'—')+' / '+(S.slipMode==='auto'?'自动 RTSE':S.slip+'% 固定')+'</b></div>';
+    body+='<div class="kv"><span>落地通道</span><b class="small">'+esc(landText)+'</b></div>';
+    body+='<div class="kv"><span>报价模式</span><b>'+(q.mode==='manual'?'manual（含可选参数）':'ultra（自动优化）')+'</b></div>';
+    body+='<div class="kv"><span>签名钱包</span><b class="mono tiny">'+esc(S.address)+'</b></div>';
+    body+='<div class="kv"><span>RPC 节点</span><b class="mono tiny">'+esc(S.heliusKey?'Helius（已配置 Key）':'公共节点')+'</b></div>';
+    $('cfTitle').textContent='确认链上交易';
+    $('cfSub').textContent='以下为 Jupiter 实时报价，请在有效期内完成钱包签名。';
+    $('cfBody').innerHTML=body;
+    $('cfWarn').textContent=warn.join(' ');
+    $('cfGo').disabled=false; $('cfGo').textContent='签名并发送（钱包确认）';
+    $('cfRefresh').style.display='';
+    startQuoteTimer(S.orderExpire);
+    S.pendingOrder=q;
+    return;
+  }
+
+  /* ---- 跳转 DEX 模式（只读，不签名） ---- */
+  stopQuoteTimer();
+  $('cfExpire').textContent=''; $('cfRefresh').style.display='none';
+  var route=$('routeSel').value;
+  var url=buildTradeUrl(side);
+  var warn2=[];
+  warn2.push('本模式不会签名或广播交易，只在新窗口打开官方 DEX 页面，由你本人在钱包中确认。');
+  warn2.push('认准合约地址，谨防假币：'+t.mint);
+  if (m && m.liquidity!=null && m.liquidity<1000) warn2.push('主池流动性较低，可能出现较大价格影响与滑点。');
+  warn2.push('加密资产波动剧烈，本页不构成投资建议，不提供价格预测或收益承诺。');
+  if (route==='meteora' && !t.pool) warn2.push('该代币未收录 Meteora 池地址，将打开池列表页，请自行核验交易对。');
+  if (route==='jupiter') warn2.push('若 DEX 页面未自动填入交易对或金额，请手动粘贴目标 CA 并核对，切勿直接确认。');
+  var body2='';
+  body2+='<div class="kv"><span>方向</span><b class="'+(side==='buy'?'up':'down')+'">'+(side==='buy'?'买入':'卖出')+' '+esc(t.sym)+'</b></div>';
+  body2+='<div class="kv"><span>交易对</span><b>'+(side==='buy'?'SOL → ':'')+esc(t.sym)+(side==='buy'?'':' → SOL')+'</b></div>';
+  body2+='<div class="kv"><span>'+(side==='buy'?'投入':'卖出比例（仅留痕）')+'</span><b>'+(side==='buy'?esc(String(amt))+' SOL':S.pct+'%')+'</b></div>';
+  body2+='<div class="kv"><span>滑点</span><b>'+S.slip+'%</b></div>';
+  body2+='<div class="kv"><span>目标</span><b>'+esc(ROUTE_NAME[route])+'</b></div>';
+  body2+='<div class="ca-box"><code>'+esc(url)+'</code></div>';
+  $('cfTitle').textContent='确认交易意图';
+  $('cfSub').textContent='本模式不代签名，以下链接将在新窗口打开官方 DEX。';
+  $('cfBody').innerHTML=body2;
+  $('cfWarn').textContent=warn2.join(' ');
+  $('cfGo').disabled=false; $('cfGo').textContent='打开交易';
+  S.pendingUrl=url; S.pendingOrder=null;
+  S.pendingRec=Object.assign({},rec,{route:route,url:url});
+  $('confirmMask').classList.add('on');
+}
+async function confirmTrade(){
+  if (S.mode==='chain'){
+    if (!S.pendingOrder || !S.address || (S.orderExpire && Date.now()>S.orderExpire)){
+      var side=(S.pendingRec&&S.pendingRec.side)||null;
+      stopQuoteTimer(); closeMasks();
+      if (side) await prepareTrade(side); else toast('报价已失效，请重新发起');
+      return;
+    }
+    var cr=S.pendingRec;
+    cr.status='待签名'; cr.statusNote='等待钱包确认';
+    S.history.unshift(cr); S.history=S.history.slice(0,60);
+    S.activeRec=cr; persist(); renderHistory();
+    stopQuoteTimer(); closeMasks();
+    bubble('已确认交易意图，准备请求钱包签名。','me');
+    await executeChainTrade();
+  } else {
+    if (!S.pendingUrl) return;
+    var lr=S.pendingRec;
+    lr.status='外部发起'; lr.statusNote='等待钱包确认';
+    S.history.unshift(lr); S.history=S.history.slice(0,60); persist(); renderHistory();
+    open(S.pendingUrl);
+    closeMasks();
+    bubble((lr.side==='buy'?'买入':'卖出')+' '+lr.sym+'：已在 '+ROUTE_NAME[lr.route]+' 打开交易对。请在钱包中自行确认；是否成交请在 Solscan 核实。','me');
+    toast('已打开官方 DEX · 请自行在钱包确认');
+    S.pendingUrl=''; S.pendingRec=null;
+  }
+}
+
+/* ============ 自定义代币 ============ */
+async function addToken(){
+  var v=($('caInput').value||'').trim();
+  if (!/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(v)){ toast('合约地址格式不正确（Base58，32–44 位）'); return; }
+  var exist=false; S.tokens.forEach(function(t){ if(t.mint===v) exist=true; });
+  if (exist){ S.mint=v; renderSelects(); renderToken(); refreshMarket(); toast('已切换到该代币'); return; }
+  var sym=v.slice(0,4)+'…'+v.slice(-4), label='自定义代币 · 待校验';
+  var actl=new AbortController(), atimer=setTimeout(function(){ actl.abort(); },9000);
+  try {
+    var res=await fetch(DEX_API+v,{signal:actl.signal});
+    if (res.ok){
+      var j=await res.json();
+      var pairs=(j.pairs||[]).filter(function(p){ return p.chainId==='solana'&&p.baseToken&&p.baseToken.address===v; });
+      if (pairs.length){
+        sym=pairs[0].baseToken.symbol||sym;
+        label=(pairs[0].baseToken.name||'未知名称')+' · 链上元数据';
+        toast('已校验：'+sym);
+      } else toast('未找到该地址的 Solana 交易对，请自行核验');
+    }
+  } catch(e){ toast('元数据接口不可用，已按未校验添加'); }
+  finally { clearTimeout(atimer); }
+  S.tokens.push({mint:v,sym:sym,label:label,tag:'自定义',pool:''});
+  S.mint=v; persist(); renderSelects(); renderToken(); refreshMarket();
+  bubble('已添加自定义代币 '+sym+'（'+short(v)+'）。认准合约地址，谨防假币：未收录地址存在仿冒风险。','err');
+}
+
+/* ============ 视图 / 弹层 ============ */
+function switchTab(tab){
+  ['trade','positions','history','about','settings'].forEach(function(x){
+    $('v-'+x).classList.toggle('on',x===tab);
+  });
+  document.querySelectorAll('.tabbar button').forEach(function(b){ b.classList.toggle('on',b.getAttribute('data-tab')===tab); });
+  $('scroll').scrollTop=0;
+}
+function closeMasks(){
+  $('walletMask').classList.remove('on'); $('confirmMask').classList.remove('on');
+  stopQuoteTimer();
+  $('cfExpire').textContent=''; $('cfRefresh').style.display='none';
+}
+function renderSetup(){
+  var hasKey=!!S.heliusKey;
+  $('keyState').textContent = hasKey ? (S.builtinKey?'内置密钥 · 有泄露风险':'自定义密钥') : '未配置';
+  $('keyState').className = 'right '+(hasKey?(S.builtinKey?'up':'down'):'');
+  $('keyWarn').classList.toggle('hide', !(S.builtinKey && hasKey));
+  $('heliusKeyInput').value=S.heliusKey||'';
+  $('jupKeyInput').value=S.jupKey||'';
+  $('rpcPreview').textContent='当前 RPC：'+maskRpc(S.rpc)+'（含密钥的 URL 已脱敏显示）';
+  $('rpcInput').value=S.rpc;
+  $('rpcInput').type=/api-key=/i.test(S.rpc)?'password':'text'; // 含密钥的端点默认隐藏，普通端点直接可读
+  $('slipInput').value=S.slip;
+  $('chainState').textContent=hasKey?'Helius RPC 已配置':'公共 RPC（无 Key）';
+  $('chainState').className='right '+(hasKey?'down':'up');
+  document.querySelectorAll('#modeSeg button').forEach(function(b){ b.classList.toggle('on',b.getAttribute('data-m')===S.mode); });
+  $('landSel').value=S.landing;
+}
+
+/* ============ 事件委托 ============ */
+document.addEventListener('click', async function(e){
+  var el=e.target.closest('[data-act]'); if(!el) return;
+  var a=el.getAttribute('data-act'), t=tok();
+  switch(a){
+    case 'theme':
+      S.theme = S.theme==='dark'?'light':'dark'; applyTheme(); persist(); break;
+    case 'tab': switchTab(el.getAttribute('data-tab')); break;
+    case 'refresh': refreshMarket(); if(S.address) refreshChain(); else toast('行情已刷新；连接钱包可读取余额'); break;
+    case 'wallet':
+      if (S.address) disconnectWallet(); else { renderWalletList(); $('walletMask').classList.add('on'); }
+      break;
+    case 'pickwallet': await connectWallet(el.getAttribute('data-id')); break;
+    case 'closemask': closeMasks(); S.pendingUrl=''; S.pendingOrder=null; S.pendingRec=null; $('cfGo').disabled=false; break;
+    case 'confirmgo': await confirmTrade(); break;
+    case 'requote':
+      var rq=S.pendingRec;
+      if (!rq || !rq.side){ toast('请重新点击买入 / 卖出'); break; }
+      closeMasks(); await prepareTrade(rq.side); break;
+    case 'copysig': if (S.lastSig) copy(S.lastSig); else toast('暂无交易签名'); break;
+    case 'copyca': copy(t.mint); break;
+    case 'copymint': copy(el.getAttribute('data-mint')); break;
+    case 'amt':
+      S.amount=parseFloat(el.getAttribute('data-v')); $('amtInput').value=S.amount; renderSelects(); break;
+    case 'amtmax':
+      if (S.solBal==null){ toast('请先连接钱包并读取余额'); break; }
+      S.amount=Math.max(0,Math.floor((S.solBal-0.005)*100)/100); $('amtInput').value=S.amount; renderSelects();
+      toast('已预留约 0.005 SOL 作为手续费'); break;
+    case 'pct':
+      S.pct=parseInt(el.getAttribute('data-p'),10);
+      document.querySelectorAll('#sellChips button').forEach(function(b){ b.classList.toggle('on',parseInt(b.getAttribute('data-p'),10)===S.pct); });
+      break;
+    case 'buy': await prepareTrade('buy'); break;
+    case 'sell': await prepareTrade('sell'); break;
+    case 'addtoken': await addToken(); break;
+    case 'clearchat': $('chat').innerHTML=''; bubble('消息已清空。认准合约地址，谨防假币。'); break;
+    case 'clearhist': S.history=[]; persist(); renderHistory(); toast('本地记录已清空'); break;
+    case 'savesettings':
+      var r=($('rpcInput').value||'').trim();
+      if (r && /^https?:\/\//.test(r)) S.rpc=r; else { S.rpc=S.heliusKey?heliusRpc(S.heliusKey):DEFAULT_RPC; toast('RPC 地址无效，已恢复默认'); }
+      var sl=parseFloat($('slipInput').value);
+      if (isFinite(sl)&&sl>0&&sl<=50) S.slip=sl; else { toast('滑点需在 0.1–50 之间'); }
+      S.landing=$('landSel').value;
+      persist(); renderSelects(); renderSetup(); toast('设置已保存'); break;
+    case 'resetall':
+      ['theme','rpc','slip','slipMode','tokens','history','mode','landing'].forEach(function(k){ lsDel('eacobot.'+k); });
+      lsSet('eacobot.heliusKey',''); lsSet('eacobot.jupKey','');
+      S.history=[]; S.tokens=DEFAULT_TOKENS.slice(); S.rpc=DEFAULT_RPC; S.slip=1; S.slipMode='fixed'; S.mint=EACO;
+      S.heliusKey=''; S.jupKey=''; S.builtinKey=false; S.mode='chain'; S.landing='execute'; S.lastSig=null;
+      S.tokenAccounts=[]; S.tokenPrograms={}; S.solBal=null;
+      renderSelects(); renderToken(); renderHistory(); renderSetup(); renderBalances(); renderPositions(); refreshMarket(); toast('本机数据与密钥已清除'); break;
+    case 'opends': open(S.market&&S.market.url?S.market.url:'https://dexscreener.com/solana/'+t.mint); break;
+    case 'opensolscan': open('https://solscan.io/token/'+t.mint); break;
+    case 'openpool': open(t.pool ? 'https://app.meteora.ag/dammv2/'+t.pool : 'https://app.meteora.ag/pools'); break;
+    case 'openpair': open('https://dexscreener.com/solana/'+EACO_ECNH_PAIR); break;
+    case 'openecnh': S.mint=ECNH; renderSelects(); renderToken(); refreshMarket(); switchTab('trade'); toast('已切换到 eCNH'); break;
+    case 'openaccount': if(S.address) open('https://solscan.io/account/'+S.address); else toast('请先连接钱包'); break;
+    case 'openEacoScan': open('https://solscan.io/token/'+EACO); break;
+    case 'openEcnhScan': open('https://solscan.io/token/'+ECNH); break;
+    case 'mode':
+      S.mode=el.getAttribute('data-m');
+      document.querySelectorAll('#modeSeg button').forEach(function(b){ b.classList.toggle('on',b.getAttribute('data-m')===S.mode); });
+      persist(); renderSetup();
+      toast(S.mode==='chain'?'已切换到应用内链上成交（需钱包签名）':'已切换到跳转 DEX 页面（只读）');
+      break;
+    case 'savekeys':
+      S.heliusKey=($('heliusKeyInput').value||'').trim();
+      S.jupKey=($('jupKeyInput').value||'').trim();
+      S.builtinKey=false;
+      lsSet('eacobot.heliusKey',S.heliusKey); lsSet('eacobot.jupKey',S.jupKey);
+      if (S.rpc===DEFAULT_RPC || S.rpc.indexOf('mainnet.helius-rpc.com')>=0 || S.rpc.indexOf('publicnode')>=0)
+        S.rpc=S.heliusKey?heliusRpc(S.heliusKey):DEFAULT_RPC;
+      persist(); renderSetup(); toast('密钥已保存到本机'); break;
+    case 'clearkey':
+      S.heliusKey=''; S.jupKey=''; S.builtinKey=false; S.rpc=DEFAULT_RPC;
+      lsSet('eacobot.heliusKey',''); lsSet('eacobot.jupKey',''); lsSet('eacobot.rpc',S.rpc);
+      persist(); renderSetup(); toast('密钥已从运行时清除；文件内明文常量仍需手动删除'); break;
+    case 'testkey':
+      toast('正在测试当前 RPC…');
+      try { var ver=await rpcCall('getVersion',[],{onlyPrimary:true}); toast('RPC 连通：'+(ver&&ver['solana-core']?ver['solana-core']:'OK')); bubble('当前 RPC 连通性测试通过。','ok'); }
+      catch(e2){ toast('连通性测试失败：'+e2.message); bubble('RPC 测试失败：'+e2.message,'err'); }
+      break;
+    case 'togglekey':
+      var hk=$('heliusKeyInput'), jk=$('jupKeyInput'), rk=$('rpcInput');
+      var nk=hk.type==='password'?'text':'password';
+      hk.type=nk; jk.type=nk; rk.type=nk; toast(nk==='text'?'密钥已显示（注意周围视线）':'密钥已隐藏'); break;
+    case 'opentx': if(S.lastSig) open('https://solscan.io/tx/'+S.lastSig); break;
+    case 'ext':
+      var eu=el.getAttribute('data-url');
+      if (eu && /^https?:\/\//.test(eu)) open(eu); else toast('链接无效');
+      break;
+  }
+});
+document.addEventListener('change', function(e){
+  var id=e.target.id;
+  if (id==='tokSelect'){ S.mint=e.target.value; renderToken(); refreshMarket(); renderBalances(); }
+  if (id==='slipSel'){
+    var sv=e.target.value;
+    if (sv==='auto'){ S.slipMode='auto'; }
+    else {
+      S.slipMode='fixed'; S.slip=parseFloat(sv);
+      if (!isFinite(S.slip) || S.slip<=0 || S.slip>50) S.slip=1;
+    }
+    renderSelects(); persist();
+  }
+  if (id==='amtInput'){ var v=parseFloat(e.target.value); if(isFinite(v)&&v>=0) S.amount=v; renderSelects(); }
+  if (id==='routeSel'){ /* 仅影响跳转模式的链接构造 */ }
+  if (id==='landSel'){ S.landing=e.target.value; persist(); }
+});
+$('confirmMask').addEventListener('click',function(e){ if(e.target===this) closeMasks(); });
+$('walletMask').addEventListener('click',function(e){ if(e.target===this) closeMasks(); });
+document.addEventListener('keydown',function(e){ if (e.key==='Escape' && !S.busy) closeMasks(); });
+
+/* ============ 启动 ============ */
+renderSelects(); renderToken(); renderWallet(); renderBalances(); renderPositions(); renderHistory(); renderSetup();
+bubble('欢迎使用 EACO BOT。已启用真实链上成交：Jupiter v2 报价 → 你的钱包签名 → '+(S.heliusKey?'Helius RPC':'公共 RPC')+' 落地，支持 EACO、eCNH 与任意 SPL 代币。当前为'+(S.mode==='link'?'「跳转 DEX 页面」（只读）模式':'「应用内链上成交」模式')+'。');
+bubble('安全说明：本应用不托管私钥、不索要助记词。链上交易的签名在你的钱包扩展内完成，交易不可撤销。认准合约地址，谨防假币。');
+if (S.builtinKey && S.heliusKey) bubble('本页内置 Helius API Key 明文，公开分发前请在「设置 → 清除密钥」中停用，并删除文件内的明文常量。');
+else if (!S.heliusKey) bubble('当前未配置 Helius API Key：链上读写走公共 RPC，报价走 Jupiter keyless（0.5 RPS），可能限流；建议在设置页填入密钥。');
+else bubble('当前使用自定义 Helius API Key，密钥只保存在本机浏览器；请勿公开分发本文件。');
+bubble('行情与余额为第三方公开接口的只读数据；若接口不可用会显示「—」，不会用推测数字填充。');
+refreshMarket();
+setInterval(function(){ if(document.visibilityState==='visible') refreshMarket(); },60000);
+
+})();
+</script>
+</body>
+</html>
