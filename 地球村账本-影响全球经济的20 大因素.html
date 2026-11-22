@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>地球村账本：影响全球经济的 10 大与 20 大因素（草根视角）</title>
+<meta name="description" content="从普通网友、地球村草根的角度，用工资条、菜价、月供和运费解释影响全球经济的 10 大因素与 20 大因素，并给出与 EACO Web3 结合的 6 条路径。">
+<style>
+  :root{
+    --canvas:#ffffff;
+    --wash:#f5f7f8;
+    --line:#e4e8eb;
+    --line-strong:#cfd6db;
+    --ink:#11161a;
+    --muted:#5a6572;
+    --accent:#0e6b4f;
+    --accent-soft:#e8f3ee;
+    --radius:18px;
+    --radius-sm:12px;
+    --maxw:1120px;
+    --shadow:0 1px 2px rgba(17,22,26,.04), 0 8px 24px rgba(17,22,26,.05);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:var(--canvas);
+    color:var(--ink);
+    font-family:"PingFang SC","Hiragino Sans GB","Noto Sans CJK SC","Noto Sans SC","Microsoft YaHei",system-ui,-apple-system,"Segoe UI",sans-serif;
+    font-size:16px;
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  h1,h2,h3{line-height:1.2;letter-spacing:-.01em;margin:0}
+  p{margin:0}
+  ul,ol{margin:0;padding:0;list-style:none}
+  .wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:#fff;padding:10px 16px;z-index:99;border-radius:0 0 10px 0}
+  .skip:focus{left:0}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+
+  /* ---------- nav ---------- */
+  .nav{
+    position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);
+    backdrop-filter:saturate(140%) blur(8px);
+    border-bottom:1px solid transparent;transition:border-color .2s ease, box-shadow .2s ease;
+  }
+  .nav.scrolled{border-bottom-color:var(--line);box-shadow:0 4px 18px rgba(17,22,26,.05)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:18px;height:62px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.01em;color:var(--ink)}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--accent);flex:none}
+  .brand small{display:block;font-weight:400;font-size:.7rem;color:var(--muted);letter-spacing:.06em}
+  .nav-links{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
+  .nav-links::-webkit-scrollbar{display:none}
+  .nav-links a{
+    display:block;white-space:nowrap;padding:8px 12px;border-radius:999px;
+    color:var(--muted);font-size:.9rem;
+  }
+  .nav-links a:hover{background:var(--wash);color:var(--ink);text-decoration:none}
+  .nav-links a[aria-current="true"]{background:var(--accent-soft);color:var(--accent);font-weight:600}
+
+  /* ---------- hero ---------- */
+  .hero{padding:clamp(44px,7vw,88px) 0 clamp(36px,5vw,56px)}
+  .hero-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:clamp(28px,4vw,56px);align-items:center}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;font-size:.78rem;letter-spacing:.12em;
+    color:var(--accent);background:var(--accent-soft);padding:6px 12px;border-radius:999px;font-weight:600;
+  }
+  .hero h1{font-size:clamp(2.1rem,5.6vw,3.7rem);margin:20px 0 18px;font-weight:800}
+  .hero h1 em{font-style:normal;color:var(--accent)}
+  .lead{font-size:clamp(1rem,1.6vw,1.12rem);color:var(--muted);max-width:38em}
+  .hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:999px;
+    font-weight:600;font-size:.95rem;border:1px solid transparent;cursor:pointer;
+    min-height:46px;
+  }
+  .btn-primary{background:var(--accent);color:#fff}
+  .btn-primary:hover{background:#0b5740;text-decoration:none}
+  .btn-ghost{background:#fff;color:var(--ink);border-color:var(--line-strong)}
+  .btn-ghost:hover{background:var(--wash);text-decoration:none}
+  .stats{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
+  .stat{
+    flex:1 1 130px;border:1px solid var(--line);border-radius:var(--radius-sm);
+    padding:14px 16px;background:#fff;
+  }
+  .stat b{display:block;font-size:1.6rem;line-height:1.1;color:var(--accent);font-variant-numeric:tabular-nums}
+  .stat span{font-size:.82rem;color:var(--muted)}
+
+  .chain-card{
+    border:1px solid var(--line);border-radius:var(--radius);background:var(--wash);
+    padding:24px;box-shadow:var(--shadow);
+  }
+  .chain-card>p{font-size:.78rem;letter-spacing:.1em;color:var(--muted);font-weight:600}
+  .chain{margin-top:16px;position:relative}
+  .chain li{position:relative;padding:0 0 18px 34px}
+  .chain li::before{
+    content:"";position:absolute;left:9px;top:6px;width:9px;height:9px;border-radius:50%;
+    background:#fff;border:2px solid var(--line-strong);
+  }
+  .chain li:not(:last-child)::after{
+    content:"";position:absolute;left:13px;top:17px;bottom:0;width:1px;background:var(--line-strong);
+  }
+  .chain li.end::before{background:var(--accent);border-color:var(--accent)}
+  .chain b{display:block;font-size:1rem}
+  .chain em{font-style:normal;font-size:.86rem;color:var(--muted)}
+
+  /* ---------- sections ---------- */
+  section{padding:clamp(44px,6vw,76px) 0}
+  .band{background:var(--wash);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .sec-head{max-width:46em}
+  .sec-head h2{font-size:clamp(1.6rem,3.6vw,2.35rem);margin:10px 0 14px;font-weight:800}
+  .sec-head p{color:var(--muted)}
+  .tools-line{margin-top:12px;font-size:.94rem;color:var(--muted)}
+  .tag-line{font-size:.78rem;letter-spacing:.12em;color:var(--accent);font-weight:700}
+
+  .method{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:32px}
+  .method article{border:1px solid var(--line);background:#fff;border-radius:var(--radius);padding:22px}
+  .method b{display:block;font-size:1rem;margin-bottom:6px}
+  .method p{color:var(--muted);font-size:.95rem}
+  .note{margin-top:22px;color:var(--muted);font-size:.9rem;border-left:3px solid var(--accent);padding-left:14px}
+
+  /* ---------- top10 ---------- */
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:34px}
+  .card{
+    border:1px solid var(--line);border-radius:var(--radius);background:#fff;padding:24px;
+    display:grid;grid-template-columns:auto 1fr;gap:0 18px;
+  }
+  .card .num{
+    font-size:clamp(1.9rem,3.4vw,2.5rem);font-weight:800;color:var(--accent);
+    font-variant-numeric:tabular-nums;line-height:1;letter-spacing:-.03em;
+  }
+  .card h3{font-size:1.16rem;margin:2px 0 14px;font-weight:700}
+  .card .row{margin-top:12px}
+  .card .row:first-of-type{margin-top:0}
+  .lbl{display:block;font-size:.72rem;letter-spacing:.1em;color:var(--muted);font-weight:700;margin-bottom:3px}
+  .card .row p{font-size:.95rem;color:#2b333b}
+  .card .row.act p{color:var(--ink)}
+  .card .row.act .lbl{color:var(--accent)}
+
+  /* ---------- next10 ---------- */
+  .mini-wrap{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:32px}
+  .mini{
+    display:grid;grid-template-columns:46px 1fr;gap:14px;padding:18px 20px;
+    border:1px solid var(--line);border-radius:var(--radius-sm);background:#fff;
+  }
+  .mini .n{font-size:1.05rem;font-weight:800;color:var(--accent);font-variant-numeric:tabular-nums;line-height:1.5}
+  .mini h3{font-size:1rem;margin:0 0 6px}
+  .mini p{font-size:.9rem;color:var(--muted)}
+  .mini .up{display:inline-block;margin-top:8px;font-size:.72rem;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:2px 9px}
+
+  /* ---------- threads ---------- */
+  .threads{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:32px}
+  .thread{border:1px solid var(--line);border-radius:var(--radius);padding:24px;background:#fff}
+  .thread .glyph{
+    width:46px;height:46px;border-radius:12px;background:var(--accent-soft);color:var(--accent);
+    display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.15rem;margin-bottom:14px;
+  }
+  .thread h3{font-size:1.1rem;margin-bottom:8px}
+  .thread p{font-size:.94rem;color:var(--muted)}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+  .chip{
+    font-size:.74rem;color:#3d4752;background:var(--wash);border:1px solid var(--line);
+    border-radius:999px;padding:3px 9px;
+  }
+  .threads-note{margin-top:24px;font-size:1rem;background:var(--accent-soft);border-radius:var(--radius-sm);padding:16px 20px;color:#123}
+  .threads-note b{color:var(--accent)}
+
+  /* ---------- eaco ---------- */
+  .eaco-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:20px}
+  .paths{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:32px}
+  .path{border:1px solid var(--line);border-radius:var(--radius);background:#fff;padding:24px}
+  .path-head{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+  .path-head .letter{
+    width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;
+    display:flex;align-items:center;justify-content:center;font-size:.95rem;flex:none;
+  }
+  .path h3{font-size:1.04rem}
+  .path .kv{margin-top:10px;font-size:.92rem;color:#2b333b}
+  .path .kv b{display:block;font-size:.72rem;letter-spacing:.1em;color:var(--muted);margin-bottom:2px}
+  .path .val{color:var(--accent);font-weight:600}
+
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:30px;counter-reset:s}
+  .step{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:22px}
+  .step .sn{
+    font-size:1.9rem;font-weight:800;color:var(--accent);line-height:1;font-variant-numeric:tabular-nums;
+  }
+  .step h3{font-size:1rem;margin:10px 0 6px}
+  .step p{font-size:.9rem;color:var(--muted)}
+
+  .caveat{margin-top:26px;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:var(--radius-sm);padding:20px 22px;background:var(--wash)}
+  .caveat h3{font-size:1rem;margin-bottom:10px}
+  .caveat li{position:relative;padding-left:20px;margin-top:8px;font-size:.94rem;color:#2b333b}
+  .caveat li::before{content:"";position:absolute;left:0;top:10px;width:7px;height:7px;border-radius:50%;background:var(--accent)}
+  .caveat li b{color:var(--ink)}
+
+  /* ---------- do ---------- */
+  .do-list{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:30px}
+  .do{border:1px solid var(--line);border-radius:var(--radius-sm);padding:20px;background:#fff}
+  .do b{display:block;font-size:.95rem;margin-bottom:6px}
+  .do p{font-size:.86rem;color:var(--muted)}
+
+  /* ---------- footer ---------- */
+  footer{background:var(--wash);border-top:1px solid var(--line);padding:clamp(44px,6vw,72px) 0 0}
+  .about{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(24px,4vw,56px)}
+  .about h2{font-size:clamp(1.5rem,3.4vw,2rem);margin:10px 0 12px}
+  .about .sub{color:var(--muted);font-size:.95rem;max-width:30em}
+  dl{margin:0;border-top:1px solid var(--line)}
+  .dl-row{display:grid;grid-template-columns:104px 1fr;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}
+  dt{font-size:.82rem;color:var(--muted);letter-spacing:.04em}
+  dd{margin:0;font-size:.94rem;min-width:0;overflow-wrap:anywhere}
+  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;font-size:.86rem;line-height:1.6}
+  .hint{display:block;font-size:.82rem;line-height:1.55;color:var(--muted);margin-top:3px}
+  .copy{
+    display:inline-flex;align-items:center;gap:6px;margin-left:8px;padding:3px 10px;border-radius:999px;
+    border:1px solid var(--line-strong);background:#fff;color:var(--ink);font-size:.75rem;cursor:pointer;vertical-align:middle;
+  }
+  .copy:hover{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+  .disclaimer{margin-top:24px;font-size:.82rem;color:var(--muted);max-width:46em}
+
+  .slogan{
+    margin-top:clamp(36px,5vw,56px);border-top:1px solid var(--line);
+    padding:clamp(40px,6vw,72px) 0 clamp(44px,6vw,72px);
+    text-align:center;background:#fff;
+  }
+  .slogan p.small{font-size:.8rem;letter-spacing:.14em;color:var(--muted);margin-bottom:14px}
+  .slogan blockquote{
+    margin:0;font-size:clamp(2rem,6.4vw,4.2rem);font-weight:800;letter-spacing:-.02em;line-height:1.15;color:var(--ink);
+  }
+  .slogan blockquote span{color:var(--accent)}
+  .slogan .after{max-width:34em;margin:16px auto 0;color:var(--muted);font-size:.96rem}
+  .site-foot{padding:20px 0 28px;border-top:1px solid var(--line);background:#fff}
+  .site-foot .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;color:var(--muted);font-size:.8rem}
+
+  .to-top{
+    position:fixed;right:18px;bottom:18px;width:44px;height:44px;border-radius:50%;
+    border:1px solid var(--line-strong);background:#fff;color:var(--ink);font-size:1.1rem;cursor:pointer;
+    box-shadow:var(--shadow);display:none;align-items:center;justify-content:center;z-index:40;
+  }
+  .to-top.show{display:flex}
+
+  /* ---------- responsive ---------- */
+  @media (max-width:960px){
+    .hero-grid{grid-template-columns:1fr}
+    .chain-card{order:2}
+    .cards,.mini-wrap,.paths{grid-template-columns:1fr}
+    .threads,.method,.steps{grid-template-columns:1fr}
+    .do-list{grid-template-columns:1fr 1fr}
+    .about{grid-template-columns:1fr}
+  }
+  @media (max-width:600px){
+    .wrap{padding:0 18px}
+    .nav-inner{height:auto;padding:10px 0;flex-wrap:wrap;gap:8px}
+    .nav-links{width:100%}
+    .hero{padding-top:32px}
+    .stats{gap:8px}
+    .stat{flex:1 1 100%}
+    .card{padding:20px;grid-template-columns:1fr;gap:0}
+    .card .num{margin-bottom:4px}
+    .do-list{grid-template-columns:1fr}
+    .dl-row{grid-template-columns:1fr;gap:2px}
+    .slogan{text-align:left}
+    .slogan .after{margin-left:0}
+    .to-top{right:12px;bottom:12px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *{transition:none!important;animation:none!important}
+  }
+  @media print{
+    .nav,.to-top{display:none!important}
+    .band,footer,.slogan{background:#fff}
+    body{font-size:11pt}
+    .card,.mini,.path,.thread,.step{break-inside:avoid;border-color:#ccc}
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">跳到正文</a>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <div class="brand">
+      <span class="dot" aria-hidden="true"></span>
+      <span>地球村账本<small>草根视角 · 2026</small></span>
+    </div>
+    <nav class="nav-links" aria-label="页面导航">
+      <a href="#how">榜单怎么排</a>
+      <a href="#top10">前十名</a>
+      <a href="#next10">11–20 名</a>
+      <a href="#threads">三条主线</a>
+      <a href="#eaco">EACO 结合</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">普通网友视角 · 不看模型，只看账单</span>
+        <h1>影响地球经济的 20 个因素，<br>从你家楼下的<em>菜价</em>说起</h1>
+        <p class="lead">
+          峰会谈的是模型、曲线和预期管理。我们谈的是工资条、月供、油价、房租和快递费。
+          这份榜单不按学术权重排，而是按三件事排：离你的钱包有多近、传到你身上有多快、你几乎躲不开。
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#top10">从第 1 条读起 <span aria-hidden="true">↓</span></a>
+          <a class="btn btn-ghost" href="#eaco">直接看 EACO 怎么接</a>
+        </div>
+        <div class="stats">
+          <div class="stat"><b>10</b><span>最硬的因素</span></div>
+          <div class="stat"><b>20</b><span>完整清单</span></div>
+          <div class="stat"><b>6</b><span>条 EACO 结合路径</span></div>
+        </div>
+      </div>
+
+      <aside class="chain-card" aria-label="一条账单的传导路径">
+        <p>一条账单的旅程</p>
+        <ol class="chain">
+          <li><b>全球市场</b><em>油价、运费、汇率</em></li>
+          <li><b>国家政策</b><em>利率、关税、补贴</em></li>
+          <li><b>企业订单</b><em>招工、加班、报价</em></li>
+          <li class="end"><b>你家的账单</b><em>菜价、月供、工资条</em></li>
+        </ol>
+      </aside>
+    </div>
+  </section>
+
+  <section id="how" class="band">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="tag-line">口径说明</span>
+        <h2>这张榜单是怎么排出来的</h2>
+        <p>先说清楚：这不是一份学术排名，没有精确权重，也不需要你背下来。它是一张“体感地图”，帮普通人判断该关注什么、该提前准备什么。</p>
+      </div>
+      <div class="method">
+        <article>
+          <b>一、离钱包近</b>
+          <p>能直接改变你这个月收支的，排前面。所以工资、菜价、利率排在“气候模型”之前，不是因为后者不重要，而是它先落在别的地方。</p>
+        </article>
+        <article>
+          <b>二、传导快</b>
+          <p>从新闻发生到菜价变化只要几周的，排前面。油价、运费、汇率的传导是按周算的；人口结构是按十年算的。</p>
+        </article>
+        <article>
+          <b>三、躲不开</b>
+          <p>个人努力很难对冲的，排前面。你可以少点外卖，但没法一个人对冲利率、汇率和关税。越躲不开，越要提前看懂。</p>
+        </article>
+      </div>
+      <p class="note">前 10 名是“疼”，第 11–20 名是“病”。疼要应急，病要长期治。两份清单其实是同一套东西的不同深度。</p>
+    </div>
+  </section>
+
+  <section id="top10">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="tag-line">第一部分 · 前十大因素</span>
+        <h2>先疼的地方：影响地球经济的 10 个硬因素</h2>
+        <p>往下每一条都按三句话写：你会看到什么、它怎么传到你家、你能做的一点什么。不喊口号，只讲传导。</p>
+      </div>
+
+      <div class="cards">
+        <article class="card">
+          <div class="num" aria-hidden="true">01</div>
+          <div>
+            <h3>饭碗和工资：岗位在哪儿，钱就从哪儿来</h3>
+            <div class="row"><span class="lbl">你会看到</span><p>招聘启事变少、加班被取消、外包和临时工变多、同一个岗位要求却越来越高。</p></div>
+            <div class="row"><span class="lbl">它怎么传到你家</span><p>企业先看订单，再看人手。订单一缩，先砍加班费，再冻结招聘，最后才裁员；工资停涨，消费就跟着停，订单又更少。</p></div>
+            <div class="row act"><span class="lbl">你能做的一点</span><p>别只靠一份工资。把“能带走的手艺”和“能接的零活”当成第二条腿。</p></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="num" aria-hidden="true">02</div>
+          <div>
+            <h3>菜价、油价、房租：三张躲不开的账单</h3>
+            <div class="row"><span class="lbl">你会看到</span><p>猪肉鸡蛋涨价、加油变贵、房东涨租、水电燃气的单子变厚。</p></div>
+            <div class="row"><span class="lbl">它怎么传到你家</span><p>食品和能源是所有商品的第一层成本，涨上去会一层层加到面包、外卖、快递和房租里；房租又是打工人最大的固定支出。</p></div>
+            <div class="row act"><span class="lbl">你能做的一点</span><p>记三个月真实开销，比看一百条预测有用。知道钱漏在哪，才谈得上省。</p></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="num" aria-hidden="true">03</div>
+          <div>
+            <h3>利率：钱的价格，决定你敢不敢借钱</h3>
+            <div class="row"><span class="lbl">你会看到</span><p>房贷月供、信用卡分期、车贷和经营贷的利息；银行推销贷款的电话变多或变少。</p></div>
+            <div class="row"><span class="lbl">它怎么传到你家</span><p>央行调的是“钱的价格”，银行调的是你的月供。利率一高，买房、买车、开店都往后拖，企业投资也跟着缩。</p></div>
+            <div class="row act"><span class="lbl">你能做的一点</span><p>把浮动利率的债，当成一笔会涨的房租来算，先留出加息后的还款空间。</p></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="num" aria-hidden="true">04</div>
+          <div>
+            <h3>能源：油箱和电表背后的世界政治</h3>
+            <div class="row"><span class="lbl">你会看到</span><p>油价、电价、取暖费、快递费；工厂限电停产的消息。</p></div>
+            <div class="row"><span class="lbl">它怎么传到你家</span><p>石油、天然气、煤炭是工业的粮食。能源一贵，运输、化肥、电力和几乎所有制造成本都跟着贵。</p></div>
+            <div class="row act"><span class="lbl">你能做的一点</span><p>盯住油价和电价的趋势，比盯住某个热门概念更能解释你账单的变化。</p></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="num" aria-hidden="true">05</div>
+          <div>
+            <h3>大国关系与关税：货架上的“隐形税”</h3>
+            <div class="row"><span class="lbl">你会看到</span><p>进口商品涨价、某些型号突然断货、外贸厂转单、汇率跟着晃。</p></div>
+            <div class="row"><span class="lbl">它怎么传到你家</span><p>关税、出口管制和制裁会改写供应链路线。绕路、换产地、重建产能都要钱，最后摊到零售价上。</p></div>
+            <div class="row act"><span class="lbl">你能做的一点</span><p>同一件商品多比较产地和渠道；做外贸的，别把订单压在一个市场。</p></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="num" aria-hidden="true">06</div>
+          <div>
+            <h3>人口结构：谁交养老金，谁来干活</h3>
+            <div class="row"><span class="lbl">你会看到</span><p>一边招工难、一边找工作难；幼儿园关停和养老院排队同时出现。</p></div>
+            <div class="row"><span class="lbl">它怎么传到你家</span><p>老龄化让干活的人变少、领养老金的人变多；年轻人口减少，会改变消费、创新和楼市的结构。</p></div>
+            <div class="row act"><span class="lbl">你能做的一点</span><p>你交的社保和父母的养老金是同一本账。早点算清自己的养老缺口，比转发焦虑有用。</p></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="num" aria-hidden="true">07</div>
+          <div>
+            <h3>技术与 AI：效率上去了，岗位要重排</h3>
+            <div class="row"><span class="lbl">你会看到</span><p>客服、翻译、制图、写代码的部分工作被工具接走；同时冒出提示词、数据标注、AI 运营这些新岗位。</p></div>
+            <div class="row"><span class="lbl">它怎么传到你家</span><p>技术先提高效率，再重排岗位。会用工具的人产出翻倍，不会用的人被挤到更便宜的岗位。</p></div>
+            <div class="row act"><span class="lbl">你能做的一点</span><p>不是“AI 抢工作”，是“会用 AI 的人抢工作”。先把一个工具用到能交付结果。</p></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="num" aria-hidden="true">08</div>
+          <div>
+            <h3>房地产与家庭债务：六个钱包的资产负债表</h3>
+            <div class="row"><span class="lbl">你会看到</span><p>房价、房贷、烂尾楼、租金回报率；亲戚朋友聊天必谈的房子。</p></div>
+            <div class="row"><span class="lbl">它怎么传到你家</span><p>房子是多数家庭最大的资产，也是最大的负债。价格和收入预期一动，装修、家电、结婚生娃的消费都跟着动。</p></div>
+            <div class="row act"><span class="lbl">你能做的一点</span><p>把房子当现金流问题看：月供占收入多少，失业能撑几个月。</p></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="num" aria-hidden="true">09</div>
+          <div>
+            <h3>汇率与跨境的钱：本币一贬，进口就贵</h3>
+            <div class="row"><span class="lbl">你会看到</span><p>出国旅游变贵、进口奶粉和药变贵、海外亲友汇回来的钱换成本币忽多忽少。</p></div>
+            <div class="row"><span class="lbl">它怎么传到你家</span><p>汇率是两种货币的相对价格。本币贬值，进口变贵、外债变重、出国变贵；出口和入境旅游可能受益。</p></div>
+            <div class="row act"><span class="lbl">你能做的一点</span><p>有跨境收入或支出的，分批换汇、别赌单边，比预测汇率更实在。</p></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="num" aria-hidden="true">10</div>
+          <div>
+            <h3>战争与地缘冲突：运费、粮价、保险一起涨</h3>
+            <div class="row"><span class="lbl">你会看到</span><p>航线绕行、运费上涨、粮食和化肥价格跳动、保险费变贵，新闻里天天有。</p></div>
+            <div class="row"><span class="lbl">它怎么传到你家</span><p>冲突打断航运、能源和粮食供应，风险溢价会一层层加到运费、原料和保险上。</p></div>
+            <div class="row act"><span class="lbl">你能做的一点</span><p>家里常备一点耐储存的必需品，不是囤货，是给不确定性留个缓冲。</p></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="next10" class="band">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="tag-line">第二部分 · 第 11–20 名</span>
+        <h2>慢慢渗上来的水位：完整 20 大因素</h2>
+        <p>这十条平时不吵，但决定了前十名会疼多久。它们更像“水位”：不响，但在慢慢改变你的选择空间。</p>
+      </div>
+      <div class="mini-wrap">
+        <article class="mini"><div class="n" aria-hidden="true">11</div><div><h3>航运与物流成本</h3><p>一条运河堵一天，绕行的油钱和保费会出现在超市价签上。</p><span class="up">相关：因素 5</span></div></article>
+        <article class="mini"><div class="n" aria-hidden="true">12</div><div><h3>粮食与化肥</h3><p>天气、出口禁令、化肥价格，决定面包和饲料的价格，也决定养殖户敢不敢补栏。</p><span class="up">相关：因素 2 · 10</span></div></article>
+        <article class="mini"><div class="n" aria-hidden="true">13</div><div><h3>极端天气与气候</h3><p>干旱、洪水、高温直接打农业、电力和保险，灾后重建又推高财政压力。</p><span class="up">相关：因素 2 · 4</span></div></article>
+        <article class="mini"><div class="n" aria-hidden="true">14</div><div><h3>政府财政与补贴</h3><p>税收、福利、国债和补贴，决定公共服务能不能撑住，也决定危机时能不能兜底。</p><span class="up">相关：因素 3 · 6</span></div></article>
+        <article class="mini"><div class="n" aria-hidden="true">15</div><div><h3>教育与技能</h3><p>学校教什么、企业认什么，决定下一代能拿到的工资上限。</p><span class="up">相关：因素 1 · 7</span></div></article>
+        <article class="mini"><div class="n" aria-hidden="true">16</div><div><h3>医疗与公共卫生</h3><p>一场疫情能同时改写就业、消费、财政和全球供应链。</p><span class="up">相关：因素 1 · 6</span></div></article>
+        <article class="mini"><div class="n" aria-hidden="true">17</div><div><h3>数字基础设施</h3><p>网络、移动支付和算力，决定一个小摊能不能变成一门线上生意。</p><span class="up">相关：因素 7</span></div></article>
+        <article class="mini"><div class="n" aria-hidden="true">18</div><div><h3>移民与侨汇</h3><p>人往哪走、钱往哪回，直接影响劳动力供给和许多国家的家庭收入。</p><span class="up">相关：因素 6 · 9</span></div></article>
+        <article class="mini"><div class="n" aria-hidden="true">19</div><div><h3>消费信心与储蓄习惯</h3><p>大家敢不敢花钱，本身就是经济；预期一变，最先冻住的是大件消费。</p><span class="up">相关：因素 1 · 8</span></div></article>
+        <article class="mini"><div class="n" aria-hidden="true">20</div><div><h3>制度与产权保护</h3><p>合同能不能执行、规则会不会突然变，决定有没有人愿意长期投资。</p><span class="up">相关：因素 5 · 14</span></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="threads">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="tag-line">第三部分 · 归纳</span>
+        <h2>20 条太散，其实只有三条主线</h2>
+        <p>把清单折叠起来看，决定你生活的就是三件事：钱贵不贵、饭贵不贵、人和人之间还信不信。</p>
+      </div>
+      <div class="threads">
+        <article class="thread">
+          <div class="glyph" aria-hidden="true">钱</div>
+          <h3>钱：利率、汇率、债务、财政</h3>
+          <p>钱贵了，所有需要借钱的事都会慢下来：买房、买车、开店、扩产。钱便宜时也不是人人受益，先受益的是本来就有资产的人。</p>
+          <div class="chips"><span class="chip">利率 03</span><span class="chip">债务 08</span><span class="chip">汇率 09</span><span class="chip">财政 14</span></div>
+        </article>
+        <article class="thread">
+          <div class="glyph" aria-hidden="true">饭</div>
+          <h3>饭：能源、粮食、物流、气候、冲突</h3>
+          <p>吃饭的成本永远排在最前面。能源和粮食一涨，先被挤压的是低收入家庭，因为食品和燃料占他们支出的比例最高。</p>
+          <div class="chips"><span class="chip">能源 04</span><span class="chip">粮食 12</span><span class="chip">物流 11</span><span class="chip">气候 13</span><span class="chip">冲突 10</span></div>
+        </article>
+        <article class="thread">
+          <div class="glyph" aria-hidden="true">信</div>
+          <h3>信：制度、预期、技术、教育</h3>
+          <p>信任一掉，交易成本就涨：合同要多请律师、生意要多留一手、消费要多存钱。反过来，规则稳定本身就是一种经济红利。</p>
+          <div class="chips"><span class="chip">制度 20</span><span class="chip">预期 19</span><span class="chip">技术 07</span><span class="chip">教育 15</span><span class="chip">大国关系 05</span></div>
+        </article>
+      </div>
+      <p class="threads-note"><b>一句话记住：</b>前十名决定你这个月难不难，后十名决定你孩子那一代难不难。所以既要应急，也要留长线。</p>
+    </div>
+  </section>
+
+  <section id="eaco" class="band">
+    <div class="wrap">
+      <div class="sec-head eaco-head">
+        <div>
+          <span class="tag-line">第四部分 · 怎么接</span>
+          <h2>把这张榜单接到 EACO Web3 上</h2>
+          <p>EACO（Earth's Best Coin）是跑在 Solana 上的一套公开实验：用开源代码和公开账本，把能源、订单、贡献这类真实世界的东西记下来、结算掉，再交给社区治理。下面 6 条路径，是对上面 20 个因素的具体回应。</p>
+          <p class="tools-line">配套工具也在同一个生态里：<a href="https://ucoingroup.github.io/eacoagent/" target="_blank" rel="noopener noreferrer">EACO Agent</a> 把「去哪里生活、一个人怎么成为一家公司、文明怎么升级」整理成三个可直接打开的入口；<a href="https://ucoingroup.github.io/eacoagent/solana-vanity.html" target="_blank" rel="noopener noreferrer">Solana 靓号地址工具</a> 能在你自己的浏览器里离线生成好记的钱包地址。两个都是静态页面，不用注册。</p>
+          <p class="tools-line">如果你更想从“读”和“用”两头入手：<a href="https://ucoingroup.github.io/good-books/" target="_blank" rel="noopener noreferrer">善书馆 Good Books</a> 收了 100+100 本人类善书，按华夏善书、地球村善书、宇宙星际善书分开；<a href="https://orbmarkets.io/address/Atx4Y3v5VW68tnAJoRgEic4ryXa8PdPL7joXtWFEvj34" target="_blank" rel="noopener noreferrer">EACO–DOGE 互换池参考地址</a> 可以在 OrbMarkets 查看池里的持仓和交易记录。这个地址来自社区公开资料，属于探索性参考，真要用之前请自己再核对一遍。</p>
+        </div>
+      </div>
+
+      <div class="paths">
+        <article class="path">
+          <div class="path-head"><span class="letter" aria-hidden="true">A</span><h3>跨境小额结算</h3></div>
+          <div class="kv"><b>做法</b><p>用低费率的链上转账替代高手续费的汇款通道；eCNH 作为离岸人民币锚定的记账单位做试验。</p></div>
+          <div class="kv"><b>草根价值</b><p class="val">出国务工的人汇钱回家，少被手续费和汇率差咬一口。</p></div>
+          <div class="chips"><span class="chip">因素 09 汇率</span><span class="chip">因素 18 侨汇</span></div>
+        </article>
+
+        <article class="path">
+          <div class="path-head"><span class="letter" aria-hidden="true">B</span><h3>能源与 RWA 记账</h3></div>
+          <div class="kv"><b>做法</b><p>把光伏、储能的发电数据上链，让绿色贡献变成可核验、可追溯的记录。</p></div>
+          <div class="kv"><b>草根价值</b><p class="val">屋顶发电不只省电费，还能被记录、被承认、被结算。</p></div>
+          <div class="chips"><span class="chip">因素 04 能源</span><span class="chip">因素 13 气候</span></div>
+        </article>
+
+        <article class="path">
+          <div class="path-head"><span class="letter" aria-hidden="true">C</span><h3>小微贸易与供应链透明</h3></div>
+          <div class="kv"><b>做法</b><p>订单、物流、产地信息上链，用可验证记录补上小卖家最缺的那份“信用抵押”。</p></div>
+          <div class="kv"><b>草根价值</b><p class="val">没有厂房和报表的小生意，也能拿出别人愿意相信的证据。</p></div>
+          <div class="chips"><span class="chip">因素 05 关税</span><span class="chip">因素 11 物流</span><span class="chip">因素 12 粮食</span></div>
+        </article>
+
+        <article class="path">
+          <div class="path-head"><span class="letter" aria-hidden="true">D</span><h3>贡献记录与技能凭证</h3></div>
+          <div class="kv"><b>做法</b><p>把学习、协作、社区贡献做成链上凭证，随身携带、随时可核验。</p></div>
+          <div class="kv"><b>草根价值</b><p class="val">没有名校背书的人，也能有一份不靠人情、不靠包装的简历。</p></div>
+          <div class="chips"><span class="chip">因素 01 饭碗</span><span class="chip">因素 07 AI</span><span class="chip">因素 15 教育</span></div>
+        </article>
+
+        <article class="path">
+          <div class="path-head"><span class="letter" aria-hidden="true">E</span><h3>透明账本与社区治理</h3></div>
+          <div class="kv"><b>做法</b><p>开源代码、固定总量、公开可查的地址，让规则本身成为可以被审计的对象。</p></div>
+          <div class="kv"><b>草根价值</b><p class="val">判断一个项目靠不靠谱，不用只听它怎么说，可以自己去看。</p></div>
+          <div class="chips"><span class="chip">因素 14 财政</span><span class="chip">因素 20 制度</span></div>
+        </article>
+
+        <article class="path">
+          <div class="path-head"><span class="letter" aria-hidden="true">F</span><h3>抗通胀的记账纪律</h3></div>
+          <div class="kv"><b>做法</b><p>固定总量加上链上可查，给社区提供一个透明的记账参照。</p></div>
+          <div class="kv"><b>草根价值</b><p class="val">但要说清楚：抗通胀靠的是生产和效率，不是币价。透明账本只能帮你看清，不能替你赚钱。</p></div>
+          <div class="chips"><span class="chip">因素 02 物价</span><span class="chip">因素 03 利率</span><span class="chip">因素 19 预期</span></div>
+        </article>
+      </div>
+
+      <div class="steps" aria-label="EACO 结合的三步走">
+        <article class="step"><div class="sn" aria-hidden="true">01</div><h3>记录</h3><p>先把真实的东西变成可核验的数据：发电量、订单、贡献。没有记录，后面都是空谈。</p></article>
+        <article class="step"><div class="sn" aria-hidden="true">02</div><h3>结算</h3><p>再用低费率的链上通道，把跨境小额支付跑通，让钱少走几道手续费。</p></article>
+        <article class="step"><div class="sn" aria-hidden="true">03</div><h3>治理</h3><p>最后把规则开源、账本公开，让社区自己检查，而不是等谁发一份公告。</p></article>
+      </div>
+      <p class="note">顺序不能反：没有真实记录，结算就是空转；没有透明治理，结算只是换个地方收手续费。</p>
+
+      <div class="caveat">
+        <h3>先把三句话说清楚</h3>
+        <ul>
+          <li><b>Web3 不解决饭碗。</b>它能降低交易成本，不能替你创造订单和岗位。</li>
+          <li><b>链上只记录事实，不生产事实。</b>发电量造假，上了链也还是假的。</li>
+          <li><b>任何承诺固定收益的项目都值得警惕。</b>EACO 是公开试验，不是理财产品。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="do">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="tag-line">落到自己身上</span>
+        <h2>看完 20 条，普通人真正能做的 4 件事</h2>
+        <p>榜单是用来判断风向的，不是用来焦虑的。下面四件事不需要预测能力，只需要执行。</p>
+      </div>
+      <div class="do-list">
+        <article class="do"><b>保住现金流</b><p>留 3–6 个月生活费。它不能让你赚钱，但能让你不在最差的时候做决定。</p></article>
+        <article class="do"><b>学一个能交付的 AI 工具</b><p>不是学概念，是能拿出成品：一份报告、一张图、一段能用的代码。</p></article>
+        <article class="do"><b>留一条跨境能力</b><p>语言、技能、客户或收款通道，任选一条。地球村的钱，越来越不只在一条街上流动。</p></article>
+        <article class="do"><b>看懂三个价格</b><p>利率、汇率、油价。它们比热搜更早告诉你风向，也比专家更少情绪。</p></article>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer id="about">
+  <div class="wrap about">
+    <div>
+      <span class="tag-line">页面最下方 · 项目信息</span>
+      <h2>关于 EACO</h2>
+      <p class="sub">以下是社区公开信息，供核对使用。不构成投资建议，也不构成任何收益承诺；链上数据请以区块浏览器实时查询为准。</p>
+      <p class="disclaimer">EACO 也常被拆解为 Energy × Attitude × Cooperation × Optimization（能量 × 态度 × 协作 × 优化），是这套公开实验的自我描述。</p>
+    </div>
+    <div>
+      <dl>
+        <div class="dl-row"><dt>名称</dt><dd>EACO（Earth's Best Coin，地球最好币）</dd></div>
+        <div class="dl-row"><dt>定位</dt><dd>AI + RWA + Web3 的地球村公共实验</dd></div>
+        <div class="dl-row"><dt>所在链</dt><dd>Solana（SPL 代币）</dd></div>
+        <div class="dl-row"><dt>合约地址</dt><dd><span class="mono" id="ca">DqfoyZH96RnvZusSp3Cdncjpyp3C74ZmJzGhjmHnDHRH</span><button class="copy" type="button" id="copyBtn" aria-label="复制 EACO 合约地址">复制</button></dd></div>
+        <div class="dl-row"><dt>固定总量</dt><dd>1,350,000,000 EACO（链上浏览器显示流通约 1,348,372,498.70，以实时查询为准）</dd></div>
+        <div class="dl-row"><dt>官网</dt><dd><a href="https://ucoingroup.github.io/earths-best-coin/" target="_blank" rel="noopener noreferrer">ucoingroup.github.io/earths-best-coin</a></dd></div>
+        <div class="dl-row"><dt>开源代码</dt><dd><a href="https://github.com/ucoingroup/earths-best-coin" target="_blank" rel="noopener noreferrer">github.com/ucoingroup/earths-best-coin</a></dd></div>
+        <div class="dl-row"><dt>EACO Agent</dt><dd><a href="https://ucoingroup.github.io/eacoagent/" target="_blank" rel="noopener noreferrer">ucoingroup.github.io/eacoagent</a><span class="hint">一个智能体、三个入口：华人友好 Web3 城市指南、OPC 2026 一人公司手册、地球纲要。</span></dd></div>
+        <div class="dl-row"><dt>靓号地址</dt><dd><a href="https://ucoingroup.github.io/eacoagent/solana-vanity.html" target="_blank" rel="noopener noreferrer">eacoagent/solana-vanity.html</a><span class="hint">在本机离线生成好记的 Solana 地址，零网络请求。仅供学习测试与 Mint 演示，别往里存真实资产。</span></dd></div>
+        <div class="dl-row"><dt>EACO–DOGE</dt><dd><a href="https://orbmarkets.io/address/Atx4Y3v5VW68tnAJoRgEic4ryXa8PdPL7joXtWFEvj34" target="_blank" rel="noopener noreferrer">Atx4Y3v5…WFEvj34</a><span class="hint">DOGE–EACO 互换池参考地址（Solana）。社区探索性资料，不构成要约；交互前请自行核对地址与池内数据。</span></dd></div>
+        <div class="dl-row"><dt>善书馆</dt><dd><a href="https://ucoingroup.github.io/good-books/" target="_blank" rel="noopener noreferrer">ucoingroup.github.io/good-books</a><span class="hint">Good Books：100+100 本人类善书，分华夏善书、地球村善书、宇宙星际善书三类，首页推荐 EACO 地球。</span></dd></div>
+        <div class="dl-row"><dt>说明</dt><dd>合约地址、总量与流通数据均可通过 Solana 区块浏览器或 OrbMarkets 自行核对。</dd></div>
+      </dl>
+    </div>
+  </div>
+
+  <div class="site-foot">
+    <div class="wrap">
+      <span>地球村账本 · 草根视角 · 更新于 2026 年 11 月</span>
+      <span>单文件页面 · 无外部依赖 · 可直接保存与打印</span>
+    </div>
+  </div>
+
+  <div class="slogan">
+    <div class="wrap">
+      <p class="small">写在这份榜单的最后</p>
+      <blockquote>发展才是<span>硬道理</span></blockquote>
+      <p class="after">前面 20 条因素，说到底都在回答同一个问题：能不能持续把东西生产出来、把交易成本降下去、把信任建起来。答案不在预测里，在发展里。</p>
+    </div>
+  </div>
+</footer>
+
+<button class="to-top" id="toTop" type="button" aria-label="回到页面顶部">↑</button>
+
+<script>
+(function () {
+  var nav = document.getElementById('nav');
+  var toTop = document.getElementById('toTop');
+  var copyBtn = document.getElementById('copyBtn');
+  var ca = document.getElementById('ca');
+
+  function onScroll() {
+    var y = window.scrollY || document.documentElement.scrollTop;
+    nav.classList.toggle('scrolled', y > 8);
+    toTop.classList.toggle('show', y > 900);
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  toTop.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  if (copyBtn && ca) {
+    copyBtn.addEventListener('click', function () {
+      var text = ca.textContent.trim();
+      var done = function () {
+        copyBtn.textContent = '已复制';
+        setTimeout(function () { copyBtn.textContent = '复制'; }, 1600);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done).catch(function () { fallback(); });
+      } else {
+        fallback();
+      }
+      function fallback() {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly', '');
+        ta.style.position = 'absolute';
+        ta.style.left = '-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); done(); } catch (e) { /* 无法复制时保持原样 */ }
+        document.body.removeChild(ta);
+      }
+    });
+  }
+
+  var links = Array.prototype.slice.call(document.querySelectorAll('.nav-links a'));
+  var sections = links.map(function (a) { return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+  if ('IntersectionObserver' in window && sections.length) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        links.forEach(function (a) {
+          a.setAttribute('aria-current', a.getAttribute('href') === '#' + entry.target.id ? 'true' : 'false');
+        });
+      });
+    }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+    sections.forEach(function (s) { io.observe(s); });
+  }
+})();
+</script>
+</body>
+</html>
