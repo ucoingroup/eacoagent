@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="zh" data-theme="cn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EACO · Earth's Best Coin 全球众筹平台（EACO / USDT (SPL) / USDC (SPL) / SOL）</title>
+<meta name="description" content="EACO (Earth's Best Coin) Solana 链上 AI+RWA+Web3 众筹演示页：五大赛道、四种结算币种、六大洲版图、6 语言与 3 种亚洲设计风格。">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --paper:#f6f1e7; --ink:#1c1a17; --muted:#6b6257; --accent:#a63a2e; --accent2:#3d6b54;
+  --line:#d9cdb4; --card:#fffdf8; --soft:rgba(166,58,46,.08); --shadow:0 10px 30px rgba(40,30,20,.12);
+  --radius:18px; --font:"Noto Serif SC","Noto Sans SC",system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+}
+html[data-theme="jp"]{
+  --paper:#f3f1ec; --ink:#26323f; --muted:#68717c; --accent:#46586f; --accent2:#8a7a5c;
+  --line:#ddd6c8; --card:#fbfaf6; --soft:rgba(70,88,111,.08); --shadow:0 8px 24px rgba(40,50,60,.10);
+  --radius:14px; --font:"Noto Sans SC",system-ui,-apple-system,"Hiragino Sans",sans-serif;
+}
+html[data-theme="kr"]{
+  --paper:#f7f7fb; --ink:#1d1b2e; --muted:#5b5872; --accent:#7c5cff; --accent2:#ff7eb6;
+  --line:#e6e2f5; --card:#fff; --soft:rgba(124,92,255,.08); --shadow:0 14px 36px rgba(90,70,180,.16);
+  --radius:22px; --font:"Noto Sans SC",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+body{background:var(--paper);color:var(--ink);font-family:var(--font);line-height:1.7;transition:background .3s,color .3s}
+a{color:var(--accent);text-decoration:none}
+.wrap{max-width:1180px;margin:0 auto;padding:0 22px}
+header{position:sticky;top:0;z-index:50;background:var(--paper);border-bottom:1px solid var(--line);opacity:.97}
+.nav{display:flex;align-items:center;gap:16px;padding:12px 0;flex-wrap:wrap}
+.logo{font-weight:900;font-size:19px;letter-spacing:.4px;display:flex;align-items:center;gap:8px}
+.logo .dot{width:12px;height:12px;border-radius:50%;background:var(--accent);display:inline-block}
+.nav-links{display:flex;gap:16px;flex-wrap:wrap;margin-left:auto}
+.nav-links a{color:var(--muted);font-size:13.5px}
+.nav-links a:hover{color:var(--accent)}
+select{background:var(--card);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:6px 10px;font-family:inherit;font-size:13px;cursor:pointer}
+.hero{padding:56px 0 36px;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 300px at 80% 0%,var(--soft),transparent 70%);pointer-events:none}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:34px;align-items:start;position:relative}
+.badge{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:12.5px;color:var(--muted);margin-bottom:16px;background:var(--card)}
+h1{font-size:clamp(28px,4.2vw,44px);line-height:1.28;font-weight:900;margin-bottom:14px}
+h1 .hl{color:var(--accent)}
+.hero p.sub{color:var(--muted);font-size:15.5px;max-width:560px;margin-bottom:22px}
+.btns{display:flex;gap:10px;flex-wrap:wrap}
+.btn{border:none;cursor:pointer;font-family:inherit;font-size:14.5px;font-weight:600;border-radius:12px;padding:11px 20px;transition:transform .15s,box-shadow .15s}
+.btn-primary{background:var(--accent);color:#fff}
+html[data-theme="kr"] .btn-primary{background:linear-gradient(120deg,var(--accent),var(--accent2));color:#fff}
+.btn-ghost{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+.btn:hover{transform:translateY(-2px)}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.row{display:flex;justify-content:space-between;gap:12px;font-size:13px;padding:9px 0;border-bottom:1px dashed var(--line)}
+.row:last-child{border-bottom:none}
+.section{padding:52px 0}
+.sec-head{margin-bottom:26px}
+.sec-head h2{font-size:clamp(21px,2.8vw,29px);font-weight:800;margin-bottom:8px}
+.sec-head p{color:var(--muted);max-width:680px;font-size:14.5px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+/* ===== 币种卡 ===== */
+.coin{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;transition:transform .2s,box-shadow .2s}
+.coin:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.coin .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.coin .sym{font-weight:800;font-size:17px;display:flex;align-items:center;gap:8px}
+.coin .tick{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:800;color:#fff;background:var(--accent)}
+.coin.usdt .tick{background:#26a17b}
+.coin.usdc .tick{background:#2775ca}
+.coin.sol .tick{background:#8b5cf6}
+.coin .type{font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:2px 8px}
+.coin .rate{font-size:13.5px;margin:8px 0 4px}
+.coin .rate b{color:var(--accent)}
+.coin .desc{font-size:12.5px;color:var(--muted)}
+.coin .use{font-size:11.5px;margin-top:10px;padding-top:9px;border-top:1px dashed var(--line);color:var(--muted)}
+/* ===== 行业 ===== */
+.ind{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;transition:transform .2s}
+.ind:hover{transform:translateY(-4px)}
+.ind .icon{font-size:26px;margin-bottom:8px}
+.ind h3{font-size:15.5px;margin-bottom:6px}
+.ind p{font-size:13px;color:var(--muted)}
+.lad{display:grid;grid-template-columns:170px 1fr 150px;gap:12px;align-items:center;font-size:13px;padding:9px 0;border-bottom:1px dashed var(--line)}
+.lad:last-child{border-bottom:none}
+.lad .nm{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lad .bar{height:10px;background:var(--soft);border-radius:999px;overflow:hidden}
+.lad .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:999px}
+.lad .val{font-size:12px;color:var(--muted);text-align:end}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.tags span{font-size:11px;background:var(--soft);color:var(--accent);border-radius:999px;padding:3px 10px}
+/* ===== 全球版图 ===== */
+.region{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin-bottom:16px}
+.region h3{font-size:17px;margin-bottom:10px}
+.country{border-top:1px dashed var(--line);padding:11px 0}
+.country:first-of-type{border-top:none}
+.country .cn{font-weight:700;font-size:14.5px}
+.country .cc{font-size:12.5px;color:var(--accent)}
+.country .note{font-size:12.5px;color:var(--muted)}
+/* ===== 众筹 ===== */
+.campaign{display:grid;grid-template-columns:1.05fr .95fr;gap:22px}
+.progress-bar{height:14px;background:var(--soft);border-radius:999px;overflow:hidden;margin:14px 0}
+.progress-bar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0;transition:width .6s}
+.camp-meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:10px;font-size:12.5px;color:var(--muted)}
+.camp-meta b{display:block;font-size:18px;color:var(--ink)}
+.tier{border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:12px;cursor:pointer;transition:border-color .2s,background .2s}
+.tier.active{border-color:var(--accent);background:var(--soft)}
+.tier h4{font-size:15.5px;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.tier .price{color:var(--accent);font-weight:700;font-size:14px}
+.tier .alt{font-size:11.5px;color:var(--muted);margin-top:4px}
+.tier ul{margin:8px 0 0 18px;font-size:12.5px;color:var(--muted)}
+.ledger{margin-top:16px;overflow-x:auto}
+.ledger table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:620px}
+.ledger th,.ledger td{padding:9px 8px;border-bottom:1px dashed var(--line);text-align:left;white-space:nowrap}
+.ledger td.hash{font-size:11px;color:var(--muted)}
+.st{font-size:11px;border-radius:999px;padding:2px 8px}
+.st.pending{background:rgba(200,150,40,.14);color:#9a6f10}
+.st.ok{background:rgba(40,140,90,.14);color:#2b7d55}
+.empty{color:var(--muted);font-size:13px;padding:14px 0;text-align:center}
+/* ===== 结算流程 ===== */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+.step{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;position:relative}
+.step .n{font-size:11px;color:#fff;background:var(--accent);width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-weight:700;margin-bottom:8px}
+.step h4{font-size:13.5px;margin-bottom:4px}
+.step p{font-size:12px;color:var(--muted)}
+/* ===== FAQ ===== */
+.faq-item{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:10px}
+.faq-item h4{font-size:14.5px;margin-bottom:5px}
+.faq-item p{font-size:13px;color:var(--muted)}
+.disclaimer{background:var(--soft);border:1px dashed var(--line);border-radius:var(--radius);padding:18px;font-size:12.5px;color:var(--muted);margin-top:24px}
+footer{padding:26px 0 44px;color:var(--muted);font-size:12.5px;text-align:center;border-top:1px solid var(--line);margin-top:24px}
+/* ===== 弹窗 ===== */
+.mask{position:fixed;inset:0;background:rgba(10,10,20,.5);display:none;align-items:center;justify-content:center;z-index:100;padding:18px}
+.mask.show{display:flex}
+.modal{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);max-width:460px;width:100%;padding:24px;box-shadow:var(--shadow);max-height:92vh;overflow-y:auto}
+.modal h3{margin-bottom:12px;font-size:18px}
+.seg{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:8px 0 4px}
+.seg button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:9px 4px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer}
+.seg button.on{border-color:var(--accent);background:var(--soft);color:var(--accent)}
+.modal label{font-size:12.5px;color:var(--muted);display:block;margin:12px 0 6px}
+.modal input{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font-family:inherit;font-size:15px}
+.equiv{margin-top:10px;font-size:12.5px;color:var(--muted);background:var(--soft);border-radius:10px;padding:10px}
+.quote{font-size:12px;color:var(--muted);margin-top:8px}
+.err{color:#c0392b;font-size:12px;min-height:16px;margin-top:6px}
+.actions{display:flex;gap:10px;margin-top:16px;justify-content:flex-end}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:11px 20px;border-radius:12px;font-size:13.5px;opacity:0;pointer-events:none;transition:opacity .3s;z-index:200;max-width:90vw;text-align:center}
+.toast.show{opacity:1}
+@media(max-width:960px){
+  .hero-grid,.campaign{grid-template-columns:1fr}
+  .grid-4,.steps{grid-template-columns:repeat(2,1fr)}
+  .grid-3{grid-template-columns:1fr}
+  .lad{grid-template-columns:120px 1fr 100px;font-size:12.5px}
+  .camp-meta{grid-template-columns:repeat(2,1fr)}
+  .nav-links{margin-left:0}
+}
+@media(max-width:560px){
+  .grid-4,.grid-2,.steps{grid-template-columns:1fr}
+  .seg{grid-template-columns:repeat(2,1fr)}
+}
+
+.risk-block{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:var(--radius);padding:22px;margin-top:16px}
+.risk-block h4{font-size:16px;margin-bottom:12px}
+.risk-block p{font-size:13px;color:var(--muted);margin-bottom:10px}
+.risk-block p:last-child{margin-bottom:0}
+.ver{font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:2px 10px;margin-left:8px}
+
+.tier .sub{margin-top:10px}
+.tier .sub h5{font-size:12px;color:var(--accent);margin-bottom:3px;letter-spacing:.3px}
+.tier .sub p{font-size:12.5px;color:var(--muted)}
+
+.chain-strip{background:linear-gradient(120deg,rgba(76,175,80,.10),rgba(76,175,80,.04));border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:var(--radius);padding:20px;margin-top:16px}
+.chain-strip h4{font-size:16px;margin-bottom:10px}
+.chain-strip ul{margin:0;padding-left:18px}
+.chain-strip li{font-size:13px;color:var(--muted);margin-bottom:8px}
+.chain-strip li:last-child{margin-bottom:0}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <div class="logo"><span class="dot"></span>EACO · Earth's Best Coin</div>
+    <nav class="nav-links">
+      <a href="#pay" data-i18n="nav_pay">支付与结算</a>
+      <a href="#industries" data-i18n="nav_industries">赛道</a>
+      <a href="#map" data-i18n="nav_map">版图</a>
+      <a href="#campaign" data-i18n="nav_campaign">参与众筹</a>
+      <a href="#settle" data-i18n="nav_settle">规则</a>
+      <a href="#faq" data-i18n="nav_faq">FAQ</a>
+    </nav>
+    <select id="langSelect" aria-label="Language"></select>
+    <select id="themeSelect" aria-label="Style"></select>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="badge" data-i18n="hero_badge">Solana 链上 · AI + RWA + Web3 · 支持 EACO / USDT (SPL) / USDC (SPL) / SOL</span>
+      <h1><span data-i18n="hero_t1">一份善意，</span><span class="hl" data-i18n="hero_t2">四种资产，一起建成地球村</span></h1>
+      <p class="sub" data-i18n="hero_sub">EACO 以「正能量 × 积极态度 × 全球协作 × 持续优化」为理念。众筹款可用 EACO 或 USDT、USDC、SOL 支付，统一折算为 EACO 记账，实时公示到账与进度。</p>
+      <div class="btns">
+        <button class="btn btn-primary" onclick="scrollToCampaign()" data-i18n="cta_join">选择档位参与</button>
+        <button class="btn btn-ghost" onclick="copyCA()" data-i18n="cta_copy">复制合约地址</button>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="row"><span data-i18n="tk_symbol">代币符号</span><b>EACO / E</b></div>
+      <div class="row" style="display:block"><div data-i18n="tk_ca" style="font-size:12px;color:var(--muted)">合约地址 CA</div>
+        <div class="mono" id="caText" style="font-size:11.5px;word-break:break-all;margin-top:4px">DqfoyZH96RnvZusSp3Cdncjpyp3C74ZmJzGhjmHnDHRH</div></div>
+      <div class="row"><span data-i18n="tk_supply">总供应量</span><b>1,350,000,000 E</b></div>
+      <div class="row"><span data-i18n="tk_lp">LP 锁定</span><b>10% <span data-i18n="tk_forever">永久</span></b></div>
+      <div class="row"><span data-i18n="tk_net">网络</span><b>Solana Mainnet</b></div>
+      <div class="row"><span data-i18n="tk_treasury">众筹金库（演示多签）</span><b class="mono" style="font-size:11px" id="treasuryShort">…</b></div>
+      <div class="row"><span data-i18n="tk_link">行情与持仓</span><a href="https://orbmarkets.io/token/DqfoyZH96RnvZusSp3Cdncjpyp3C74ZmJzGhjmHnDHRH" target="_blank" rel="noopener">Orb Markets ↗</a></div>
+      <div class="row"><span data-i18n="tk_site">官方网站</span><a href="https://ucoingroup.github.io/earths-best-coin/" target="_blank" rel="noopener">EACO Group ↗</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 支付与结算：四币种 ===== -->
+<section class="section" id="pay" style="background:var(--soft)">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 data-i18n="pay_title">四种结算币种：EACO、USDT (SPL)、USDC (SPL)、SOL</h2>
+      <p data-i18n="pay_sub">众筹账户统一以 EACO 记账，任何币种支付都会按预言机参考价折算为 EACO 等值，写入同一本账，避免多币种口径混乱。</p>
+    </div>
+    <div class="grid-4" id="coinGrid"></div>
+    <div class="chain-strip">
+      <h4 data-i18n="sc_title"></h4>
+      <ul>
+        <li data-i18n="sc_d1"></li>
+        <li data-i18n="sc_d2"></li>
+        <li data-i18n="sc_d3"></li>
+      </ul>
+    </div>
+    <div class="panel" style="margin-top:16px">
+      <div class="row"><span data-i18n="pay_oracle">报价来源</span><b data-i18n="pay_oracle_v">Pyth / Switchboard 预言机 30s TWAP</b></div>
+      <div class="row"><span data-i18n="pay_pair">折算对</span><b>USDT (SPL)→EACO · USDC (SPL)→EACO · SOL→USD→EACO</b></div>
+      <div class="row"><span data-i18n="pay_lock">报价锁定时效</span><b data-i18n="pay_lock_v">60 秒（超时需重新报价）</b></div>
+      <div class="row"><span data-i18n="pay_fee">链上手续费</span><b data-i18n="pay_fee_v">由参与方自付（约 0.000005 SOL/笔）</b></div>
+      <div class="row"><span data-i18n="pay_note_label">说明</span><span data-i18n="pay_note" style="font-size:12.5px;color:var(--muted);text-align:right">页面汇率为演示参考值，非实时行情；真实项目须接入链上预言机并以成交时刻价格为准。</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 五大赛道 ===== -->
+<section class="section" id="industries">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 data-i18n="ind_title">五大赛道，同一套目标口径</h2>
+      <p data-i18n="ind_sub">目标均为 27,000,000 EACO 的整数倍（软目标 / 超额目标），资金按赛道独立立项、独立核算、独立公示。</p>
+    </div>
+    <div class="grid-3" id="industryGrid"></div>
+    <div class="panel" style="margin-top:16px">
+      <h4 style="font-size:14px;margin-bottom:6px" data-i18n="ladder_title">目标梯度：轻资产最低，重资产最高（统一按 27M EACO 递增）</h4>
+      <div id="ladderList"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 六大洲 ===== -->
+<section class="section" id="map" style="background:var(--soft)">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 data-i18n="map_title">地球村六大洲 Web3 友好辖区</h2>
+      <p data-i18n="map_sub">代表性辖区，监管框架相对清晰。具体展业须先做当地合规评估；受限辖区（含中国大陆）不在服务范围。</p>
+    </div>
+    <div id="regionList"></div>
+  </div>
+</section>
+
+<!-- ===== 众筹闭环 ===== -->
+<section class="section" id="campaign">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 data-i18n="camp_title">共建计划 · 实时众筹（演示）</h2>
+      <p data-i18n="camp_sub">选择档位 → 选择币种 → 锁定报价 → 发起链上支付 → 确认到账 → 生成权益凭证，全流程在本页闭环。</p>
+    </div>
+    <div class="campaign">
+      <div class="panel">
+        <h4 style="font-size:15px" data-i18n="proj_name">全球户用储能 + 社区教育共建项目（示范）</h4>
+        <div class="progress-bar"><i id="progBar"></i></div>
+        <div class="camp-meta">
+          <div><b id="raisedEaco">0</b><span data-i18n="raised">已筹 EACO 等值</span></div>
+          <div><b id="raisedUsd">$0</b><span data-i18n="raised_usd">折合 USD</span></div>
+          <div><b id="targetEaco">—</b><span data-i18n="target">目标 EACO 等值</span></div>
+          <div><b id="backers">0</b><span data-i18n="backers">支持者</span></div>
+          <div><b>27</b><span data-i18n="days">剩余天数</span></div>
+        </div>
+        <div class="ledger">
+          <table>
+            <thead><tr>
+              <th data-i18n="th_wallet">钱包</th><th data-i18n="th_cur">币种</th><th data-i18n="th_amount">支付金额</th>
+              <th data-i18n="th_eaco">EACO 等值</th><th data-i18n="th_status">状态</th><th data-i18n="th_hash">交易哈希</th>
+            </tr></thead>
+            <tbody id="ledgerBody"></tbody>
+          </table>
+          <div class="empty" id="ledgerEmpty" data-i18n="empty_history">暂无记录，等待第一位共建者。</div>
+        </div>
+      </div>
+      <div>
+        <div id="tierList"></div>
+        <div class="btns" style="margin-top:12px">
+          <button class="btn btn-primary" onclick="openModal()" data-i18n="cta_pledge">立即参与</button>
+          <button class="btn btn-ghost" id="connectBtn" onclick="connectWallet()" data-i18n="cta_connect">连接钱包</button>
+        </div>
+        <div style="font-size:12px;color:var(--muted);margin-top:10px" data-i18n="tier_note">档位门槛为 EACO 口径，其他币种按报价折算；同一钱包可多次参与、可分布到不同赛道。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 结算规则 ===== -->
+<section class="section" id="settle" style="background:var(--soft)">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 data-i18n="settle_title">结算与退出规则</h2>
+      <p data-i18n="settle_sub">四步闭环 + 四条硬规则，保证资金流向可查、权益可兑、退出有据。</p>
+    </div>
+    <div class="steps" id="stepList"></div>
+    <div class="grid-2" id="ruleList"></div>
+  </div>
+</section>
+
+
+<!-- ===== 价格波动说明 ===== -->
+<section class="section" id="volatility">
+  <div class="wrap">
+    <div class="sec-head"><h2 data-i18n="volatility_title">价格波动说明</h2></div>
+    <div class="risk-block">
+      <p data-i18n="volatility_desc1"></p>
+      <p data-i18n="volatility_desc2"></p>
+      <p data-i18n="volatility_desc3"></p>
+      <p data-i18n="volatility_desc4"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="section" id="faq">
+  <div class="wrap">
+    <div class="sec-head"><h2 data-i18n="faq_title">常见问题</h2></div>
+    <div id="faqList"></div>
+    <div class="disclaimer">
+      <b data-i18n="disc_title">合规与风险提示：</b>
+      <span data-i18n="disc_text">本页为产品功能演示与信息展示，不构成证券发行、投资要约或收益承诺。代币融资在多数辖区受严格监管，中国大陆禁止代币发行融资与相关交易，本页不面向受限辖区用户。页面汇率、金额、交易哈希均为演示数据。参与前请咨询持牌法律与税务顾问。</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>EACO · Earth's Best Coin · <span data-i18n="footer_line">正能量 × 积极态度 × 全球协作 × 持续优化</span><span class="ver">v0.1</span></div>
+  <div style="margin-top:6px" class="mono" id="footerCa">CA: DqfoyZH96RnvZusSp3Cdncjpyp3C74ZmJzGhjmHnDHRH</div>
+</footer>
+
+<div class="mask" id="modalMask">
+  <div class="modal">
+    <h3 data-i18n="modal_title">确认参与</h3>
+    <div style="font-size:12.5px;color:var(--muted)" data-i18n="modal_tier">已选档位</div>
+    <div id="modalTier" style="font-weight:700;margin:2px 0 10px"></div>
+    <div style="font-size:12.5px;color:var(--muted)" data-i18n="modal_cur">支付币种</div>
+    <div class="seg" id="curSeg"></div>
+    <label for="amountInput" id="modal_amount" data-i18n="modal_amount">支付金额</label>
+    <input id="amountInput" type="number" step="any" min="0" inputmode="decimal">
+    <div class="equiv" id="equivBox">—</div>
+    <div class="quote" id="quoteBox">—</div>
+    <div class="err" id="modalErr"></div>
+    <div class="actions">
+      <button class="btn btn-ghost" onclick="closeModal()" data-i18n="modal_cancel">取消</button>
+      <button class="btn btn-primary" id="confirmBtn" onclick="confirmPledge()" data-i18n="modal_confirm">支付并记账</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ================= 语言 & 风格 ================= */
+const LANGS=[{code:'zh',label:'中文'},{code:'en',label:'English'},{code:'ru',label:'Русский'},{code:'es',label:'Español'},{code:'ar',label:'العربية'},{code:'fr',label:'Français'}];
+const STYLES=[{code:'cn',label:'新中式水墨'},{code:'jp',label:'日式极简'},{code:'kr',label:'韩系潮流'}];
+
+/* ================= 币种参数（演示报价） ================= */
+const COINS={
+  EACO:{name:'EACO',usd:0.0005,dec:0,min:1000,type:{zh:'生态代币',en:'Ecosystem token',ru:'Токен экосистемы',es:'Token del ecosistema',ar:'رمز النظام البيئي',fr:'Jeton écosystème'},
+        desc:{zh:'本项目原生代币，直接入账，不产生兑换损耗。',en:'Native token; credited directly with no conversion slippage.',ru:'Нативный токен, зачисляется напрямую без потерь.',es:'Token nativo; abono directo sin slippage.',ar:'الرمز الأصلي؛ يُقيد مباشرة دون فقد تحويل.',fr:'Jeton natif ; crédité sans perte de conversion.'},
+        use:{zh:'主结算币种 / 分红计价单位',en:'Primary unit / dividend denomination',ru:'Основная единица расчёта',es:'Unidad principal',ar:'وحدة التسوية الأساسية',fr:'Unité principale de règlement'}},
+  USDT:{name:'USDT (SPL)',usd:1,dec:2,min:5,type:{zh:'Solana SPL 稳定币',en:'Solana SPL stablecoin',ru:'SPL-стейблкоин Solana',es:'Stablecoin SPL de Solana',ar:'عملة SPL مستقرة بسولانا',fr:'Stablecoin SPL Solana'},
+        desc:{zh:'1:1 锚定美元，Solana 原生 SPL 代币，同链快速到账。',en:'Pegged 1:1 to USD; native SPL token on Solana for fast same-chain payments.',ru:'Привязан 1:1 к USD; нативный SPL-токен Solana для быстрых платежей.',es:'Vinculado 1:1 al USD; token SPL nativo de Solana para pagos rápidos.',ar:'مرتبط 1:1 بالدولار؛ رمز SPL أصلي على سولانا للمدفوعات السريعة.',fr:'Indexé 1:1 au USD ; jeton SPL natif de Solana, petits paiements rapides.'},
+        use:{zh:'稳定计价 / 日常支付',en:'Stable pricing / daily payment',ru:'Стабильная цена / платежи',es:'Precio estable / pagos',ar:'تسعير مستقر / دفع يومي',fr:'Prix stable / paiements'}},
+  USDC:{name:'USDC (SPL)',usd:1,dec:2,min:5,type:{zh:'Solana SPL 稳定币',en:'Solana SPL stablecoin',ru:'SPL-стейблкоин Solana',es:'Stablecoin SPL de Solana',ar:'عملة SPL مستقرة بسولانا',fr:'Stablecoin SPL Solana'},
+        desc:{zh:'受监管发行方托管，Solana 原生 SPL 稳定币，合规机构常用通道。',en:'Regulated issuer custody; native SPL stablecoin on Solana, preferred by institutions.',ru:'Кастоди регулируемого эмитента; SPL-стейблкоин Solana, выбор институций.',es:'Custodia de emisor regulado; stablecoin SPL de Solana, usado por instituciones.',ar:'حفظ جهة إصدار منظمة؛ عملة SPL مستقرة بسولانا، مفضلة للمؤسسات.',fr:'Conservation par émetteur régulé ; stablecoin SPL Solana, utilisé par les institutions.'},
+        use:{zh:'机构结算 / 大额支付',en:'Institutional / large payments',ru:'Институциональные платежи',es:'Pagos institucionales',ar:'مدفوعات مؤسسية',fr:'Paiements institutionnels'}},
+  SOL:{name:'SOL',usd:210,dec:3,min:0.02,type:{zh:'Solana 原生资产',en:'Solana native asset',ru:'Нативный актив Solana',es:'Activo nativo de Solana',ar:'أصل سولانا الأصلي',fr:'Actif natif Solana'},
+        desc:{zh:'同链原生资产，一笔交易即可完成，手续费极低。',en:'Same-chain native asset; single transaction with minimal fees.',ru:'Нативный актив той же сети, минимальные комиссии.',es:'Activo nativo de la misma red; comisión mínima.',ar:'أصل أصلي على نفس الشبكة برسوم منخفضة.',fr:'Actif natif de la même chaîne ; frais minimes.'},
+        use:{zh:'链上原生支付 / Gas 抵扣',en:'Native on-chain payment / gas',ru:'Нативный платёж / газ',es:'Pago nativo / gas',ar:'دفع أصلي / غاز',fr:'Paiement natif / gas'}}
+};
+const CUR_KEYS=['EACO','USDT','USDC','SOL'];
+const EACO_USD=COINS.EACO.usd;                       // 1 EACO = 0.0005 USD（演示）
+const eacoPer=cur=>COINS[cur].usd/EACO_USD;          // 1 单位该币 = ? EACO
+const TARGET=468000000;                               // 五赛道软目标合计 54+81+90+108+135 = 468,000,000 EACO
+const SEED_RAISED=42600000, SEED_BACKERS=1288;
+
+/* ================= 五大赛道（目标口径统一） ================= */
+const SECTORS=[
+  {key:'culture',icon:'🎨',goal:54000000,stretch:108000000},
+  {key:'solar',icon:'☀️',goal:81000000,stretch:162000000},
+  {key:'agri',icon:'🌾',goal:90000000,stretch:180000000},
+  {key:'metal',icon:'🪙',goal:108000000,stretch:216000000},
+  {key:'rv',icon:'🚐',goal:135000000,stretch:270000000},
+];
+const SECTOR_TXT={
+  zh:{culture:['文化产业','IP、影视图文、多语种译制、文创与内容DAO','轻资产｜软目标 54M / 超额 108M'],
+      solar:['光伏储能','户用0.3–6kW系统、离网电站、海外安装运维','绿色现金流｜软目标 81M / 超额 162M'],
+      agri:['跨境农畜供应链','集采、冷链、口岸检疫、溯源上链','快周转｜软目标 90M / 超额 180M'],
+      metal:['贵金属贸易','钨金、黄金、白银仓单与实物兑换','压舱资产｜软目标 108M / 超额 216M'],
+      rv:['房车旅居','车队、营地、边境自驾路线、维保中心','重资产｜软目标 135M / 超额 270M'],
+      ai:['AI 工具与 Web3 基础设施','Agent、钱包、数据市场、开发者组件','按里程碑分批立项'],
+      retail:['本地零售与供应链数字化','订单、分账、溯源','按城市试点分批立项'],
+      creator:['创作者与小商户启动','首批用户与启动资金','小额定投式支持']},
+  en:{culture:['Culture & Content IP','IP, video, multilingual localization, merch & content DAO','Light asset | 54M / 108M'],
+      solar:['Solar & Storage','0.3–6kW home systems, off-grid stations, O&M','Green cash flow | 81M / 162M'],
+      agri:['Cross-border Agri','Bulk sourcing, cold chain, customs, on-chain trace','Fast turnover | 90M / 180M'],
+      metal:['Precious Metals','Tungsten, gold, silver receipts & physical redemption','Value anchor | 108M / 216M'],
+      rv:['RV & Overlanding','Fleet, camps, border routes, service hubs','Heavy asset | 135M / 270M'],
+      ai:['AI & Web3 Infra','Agents, wallets, data markets, dev components','Milestone-based'],
+      retail:['Retail Digitalization','Orders, revenue split, traceability','City pilots'],
+      creator:['Creators & Small Shops','First users and seed funding','Small recurring support']},
+  ru:{culture:['Культура и IP','IP, видео, перевод, мерч и DAO контента','Лёгкие активы | 54M / 108M'],
+      solar:['Солнце и накопители','0,3–6 кВт, автономные станции, сервис','Зелёный поток | 81M / 162M'],
+      agri:['Агроэкспорт','Закупки, холодная цепь, таможня, трекинг','Быстрый оборот | 90M / 180M'],
+      metal:['Драгоценные металлы','Вольфрам, золото, серебро, расписки','Актив-якорь | 108M / 216M'],
+      rv:['Автофургоны','Парк, кемпинги, маршруты, сервис','Тяжёлые активы | 135M / 270M'],
+      ai:['AI и Web3','Агенты, кошельки, данные, компоненты','По этапам'],
+      retail:['Ритейл-цифровизация','Заказы, раздел платежей, трекинг','Пилоты по городам'],
+      creator:['Авторы и малый бизнес','Первые пользователи и старт','Небольшая поддержка']},
+  es:{culture:['Cultura e IP','IP, audiovisual, localización, merch y DAO','Activo ligero | 54M / 108M'],
+      solar:['Solar y almacenamiento','Sistemas 0,3–6kW, estaciones, O&M','Flujo verde | 81M / 162M'],
+      agri:['Agro transfronterizo','Compras, cadena de frío, aduanas, trazabilidad','Rotación rápida | 90M / 180M'],
+      metal:['Metales preciosos','Wolframio, oro, plata, recibos y canje','Activo ancla | 108M / 216M'],
+      rv:['Autocaravanas','Flota, campamentos, rutas, talleres','Activo pesado | 135M / 270M'],
+      ai:['IA e infra Web3','Agentes, wallets, datos, componentes','Por hitos'],
+      retail:['Retail digital','Pedidos, reparto, trazabilidad','Pilotos por ciudad'],
+      creator:['Creadores y comercios','Primeros usuarios y capital semilla','Apoyo periódico']},
+  ar:{culture:['الثقافة والملكية الفكرية','محتوى، ترجمة، منتجات وDAO','أصول خفيفة | 54M / 108M'],
+      solar:['الطاقة الشمسية والتخزين','أنظمة 0.3–6 كيلوواط، محطات، صيانة','تدفق أخضر | 81M / 162M'],
+      agri:['الزراعة عبر الحدود','شراء، سلسلة تبريد، جمارك، تتبع','دوران سريع | 90M / 180M'],
+      metal:['المعادن النفيسة','تنجستن، ذهب، فضة، إيصالات واسترداد','أصل مثبت | 108M / 216M'],
+      rv:['المركبات السكنية','أسطول، مخيمات، مسارات، صيانة','أصول ثقيلة | 135M / 270M'],
+      ai:['الذكاء الاصطناعي وWeb3','وكلاء، محافظ، بيانات، مكونات','حسب المراحل'],
+      retail:['رقمنة التجزئة','طلبات، تقاسم، تتبع','تجارب مدن'],
+      creator:['المبدعون والأعمال الصغيرة','أوائل المستخدمين والتمويل','دعم دوري صغير']},
+  fr:{culture:['Culture et IP','IP, audiovisuel, localisation, merch et DAO','Actif léger | 54M / 108M'],
+      solar:['Solaire et stockage','Systèmes 0,3–6kW, stations, maintenance','Flux vert | 81M / 162M'],
+      agri:['Agro transfrontalier','Achats, chaîne du froid, douanes, traçabilité','Rotation rapide | 90M / 180M'],
+      metal:['Métaux précieux','Tungstène, or, argent, récépissés et échange','Actif ancre | 108M / 216M'],
+      rv:['Camping-cars','Flotte, campings, itinéraires, ateliers','Actif lourd | 135M / 270M'],
+      ai:['IA et infra Web3','Agents, portefeuilles, données, composants','Par jalons'],
+      retail:['Digitalisation retail','Commandes, partage, traçabilité','Pilotes par ville'],
+      creator:['Créateurs et petits commerces','Premiers utilisateurs et amorçage','Soutien récurrent']}
+};
+
+/* ================= 档位（EACO 口径） ================= */
+const TIERS=[
+  {id:'t1',need:2700000,key:'small'},
+  {id:'t2',need:13500000,key:'standard'},
+  {id:'t3',need:40500000,key:'partner'},
+  {id:'t4',need:81000000,key:'dao'}
+];
+
+/* ================= i18n ================= */
+const I18N={
+zh:{
+ nav_pay:'支付与结算',nav_industries:'赛道',nav_map:'版图',nav_campaign:'参与众筹',nav_settle:'规则',nav_faq:'FAQ',
+ hero_badge:'Solana 链上 · AI + RWA + Web3 · 支持 EACO / USDT (SPL) / USDC (SPL) / SOL',
+ hero_t1:'一份善意，',hero_t2:'四种资产，一起建成地球村',
+ hero_sub:'EACO 以「正能量 × 积极态度 × 全球协作 × 持续优化」为理念。众筹款可用 EACO 或 USDT、USDC、SOL 支付，统一折算为 EACO 记账，实时公示到账与进度。',
+ cta_join:'选择档位参与',cta_copy:'复制合约地址',cta_pledge:'立即参与',cta_connect:'连接钱包',cta_connected:'已连接 ',
+ tk_symbol:'代币符号',tk_ca:'合约地址 CA',tk_supply:'总供应量',tk_lp:'LP 锁定',tk_forever:'永久',tk_net:'网络',tk_treasury:'众筹金库（演示多签）',tk_link:'行情与持仓',tk_site:'官方网站',
+ pay_title:'四种结算币种：EACO、USDT (SPL)、USDC (SPL)、SOL',
+ pay_sub:'众筹账户统一以 EACO 记账，任何币种支付都会按预言机参考价折算为 EACO 等值，写入同一本账。',
+ pay_oracle:'报价来源',pay_oracle_v:'Pyth / Switchboard 30s TWAP',pay_pair:'折算对',pay_lock:'报价锁定时效',pay_lock_v:'60 秒（超时需重新报价）',pay_fee:'链上手续费',pay_fee_v:'参与方自付（约 0.000005 SOL/笔）',pay_note_label:'说明',
+ pay_note:'页面汇率为演示参考值，非实时行情；真实项目须接入链上预言机并以成交时刻价格为准。',sc_title:'同链结算：四种资产同在 Solana Mainnet',sc_d1:'无需跨链桥：EACO、USDT (SPL)、USDC (SPL)、SOL 均为 Solana 链上资产，支付与入账在同一笔链上交易内完成。',sc_d2:'低手续费、快到账：省去跨链确认与桥接滑点，Gas 以 SOL 支付，到账通常仅需数秒。',sc_d3:'口径统一：各币种按预言机 TWAP 折算为 EACO 等值记账，账本、档位与分红权重同一口径。',
+ rate_line:'1 {c} ≈ {e} EACO',
+ ind_title:'五大赛道，同一套目标口径',
+ ladder_title:'目标梯度：轻资产最低，重资产最高（按 27M EACO 递增）',ind_sub:'目标均为 27,000,000 EACO 的整数倍（软目标 / 超额目标），资金按赛道独立立项、独立核算、独立公示。',
+ map_title:'地球村六大洲 Web3 友好辖区',map_sub:'代表性辖区，监管框架相对清晰。具体展业须先做当地合规评估；受限辖区（含中国大陆）不在服务范围。',
+ camp_title:'共建计划 · 实时众筹（演示）',camp_sub:'选择档位 → 选择币种 → 锁定报价 → 发起链上支付 → 确认到账 → 生成权益凭证。',
+ proj_name:'地球村五大赛道共建总池（示范）',raised:'已筹 EACO 等值',raised_usd:'折合 USD',target:'目标 EACO 等值',backers:'支持者',days:'剩余天数',
+ th_wallet:'钱包',th_cur:'币种',th_amount:'支付金额',th_eaco:'EACO 等值',th_status:'状态',th_hash:'交易哈希',
+ st_pending:'确认中',st_ok:'已确认',empty_history:'暂无记录，等待第一位共建者。',
+ tier_note:'档位门槛为 EACO 口径，其他币种按报价折算；同一钱包可多次参与、可分布到不同赛道。',
+ tier_need:'门槛 {n} EACO',tier_alt:'≈ {u} USDT · {s} SOL',
+ t_small:'小额共建',t_standard:'标准共建',t_partner:'生态合伙人',t_dao:'DAO 核心共建',
+ p_small:'月度简报 · 普通治理投票 · 链上共建凭证',p_standard:'季度深度报告 · 赛道提案投票 · 专属徽章',p_partner:'分红加成 · 一对一通道 · 线下优先席位',b_small:'自选赛道投入，获取所选赛道收益分红权；接收月度项目简报与社群公告；持有普通治理投票权；共建凭证链上发放。',h_small:'列入 EACO 地球村共建名册；社区内共建标识；可参与公开生态分享活动。',b_standard:'自由配置赛道组合，享有稳定项目分红；优先查阅季度深度运营报告；参与赛道专项提案投票；共建信息永久链上存证。',h_standard:'专属共建徽章标识；受邀参加线上季度生态会议；作品/站点署名提名资格；在共建展厅公示。',b_partner:'资金自由分配至五条赛道，享有分红加成；一对一专属沟通通道；参与赛道方案研讨与预提案评审；资产、权益链上确权。',h_partner:'合伙人专属身份标签；线下活动优先席位；拥有优质项目推荐权；合伙人名录对外公示；合作署名权益。',b_dao:'全赛道统筹配置，享有最高分红权重；进入 DAO 核心议事小组，参与顶层规则、预算、重大策略表决；获取专属深度尽调材料；长期战略同步。',h_dao:'生态理事会成员身份；站点/营地/IP 作品冠名权；战略共建者公示；深度战略致谢；共建纪念 NFT。',lbl_benefit:'基础权益',lbl_honor:'生态荣誉',p_dao:'最高分红权重 · DAO 议事席位 · 冠名权',
+ settle_title:'结算与退出规则',settle_sub:'四步闭环 + 四条硬规则，保证资金可查、权益可兑、退出有据。',
+ s1:['锁定报价','按预言机价锁定 60 秒，超时自动失效'],s2:['链上支付','付至众筹多签金库，Solana 单笔确认'],s3:['折算记账','按成交价折算 EACO 等值写入账本'],s4:['确认与凭证','确认到账后铸造权益凭证 NFT'],
+ r1t:'到账确认标准',r1:'以金库地址实际到账为准，未确认的支付仅显示“确认中”，不纳入进度与分红基数。',
+ r2t:'达标与退款',r2:'软目标未达成的项目，在截止日后 30 天内原路径退还本金（扣除链上手续费与已发生的第三方成本）。',
+ r3t:'权益与分红',r3:'分红以 EACO 计价、USDT 发放，按月结算；权重由档位与赛道共同决定，规则上链公示。',
+ r4t:'退出与转让',r4:'权益凭证可在生态内转让，转让不改变项目已形成的分红义务；退出后不再享有新增治理权。',
+ faq_title:'常见问题',
+ disc_title:'合规与风险提示：',
+ disc_text:'本页为产品功能演示与信息展示，不构成证券发行、投资要约或收益承诺。代币融资在多数辖区受严格监管，中国大陆禁止代币发行融资与相关交易，本页不面向受限辖区用户。页面汇率、金额、交易哈希均为演示数据。参与前请咨询持牌法律与税务顾问。',
+ volatility_title:'价格波动说明',volatility_desc1:'共建额度以 EACO 为本位，档位门槛固定不变。USDT、USDC、SOL 仅为支付币种，应付金额随预言机 TWAP 价格动态换算。',volatility_desc2:'点击确认下单时锁定汇率，锁价有效期 60 秒；超时未完成转账，汇率自动刷新，需重新下单锁价。',volatility_desc3:'系统设有区间缓冲与熔断机制：当 EACO 或 SOL 出现极端行情波动时，可触发价格带宽限制或临时关闭 SOL 支付通道，保障共建公平。',volatility_desc4:'本机制仅处理下单至链上确认期间的兑换差额问题，不保本、不兜底二级市场币价涨跌风险。所有风控参数调整由 DAO 投票决议。',footer_line:'正能量 × 积极态度 × 全球协作 × 持续优化',
+ modal_title:'确认参与',modal_tier:'已选档位',modal_cur:'支付币种',modal_amount:'支付金额（{c}）',modal_cancel:'取消',modal_confirm:'支付并记账',
+ equiv_txt:'≈ {e} EACO 等值（按当前参考价）',quote_txt:'报价锁定 {s}s',quote_exp:'报价已过期，请关闭后重新打开',
+ err_min:'{c} 最低参与金额为 {m}',err_tier:'该档最低为 {n} EACO 等值',err_amt:'请输入有效金额',err_wallet:'请先连接钱包',
+ toast_copy:'合约地址已复制',toast_wallet:'钱包已连接（演示）',toast_pay:'支付已提交，等待链上确认',toast_ok:'到账确认，权益凭证已生成',
+ faq:[
+  ['为什么统一用 EACO 记账？','四种币种价格维度不同，若各记各账，进度与分红口径会失真。统一折算为 EACO 等值，才能横向比较、统一结算。'],
+  ['用 USDT (SPL)/USDC (SPL) 参与，会拿到 EACO 吗？','不会自动换成 EACO。支付按报价折算为 EACO 等值记账，用于确定档位与分红权重；本金以原币种进入金库，按项目预算使用。'],
+  ['用 SOL 支付有什么不同？','SOL 与 EACO 同在 Solana，支付与确认最快，手续费最低；但 SOL 价格波动大，报价锁定 60 秒，超时需重新报价。'],
+  ['汇率由谁决定？','演示页使用固定参考值；真实项目接入 Pyth / Switchboard 预言机，取所述 30s TWAP 作为折算依据。'],
+  ['未达标怎么办？','软目标未达成，截止日后 30 天内按原路径退还本金，扣除链上手续费与已发生第三方成本。']
+ ]
+},
+en:{
+ nav_pay:'Payments',nav_industries:'Tracks',nav_map:'Map',nav_campaign:'Join',nav_settle:'Rules',nav_faq:'FAQ',
+ hero_badge:'Solana · AI + RWA + Web3 · Pays in EACO / USDT (SPL) / USDC (SPL) / SOL',
+ hero_t1:'One act of goodwill,',hero_t2:'four assets, one global village',
+ hero_sub:'Built on positivity, initiative, global collaboration and continuous improvement. Pledges can be paid in EACO or USDT, USDC, SOL — all converted to an EACO equivalent and recorded in one ledger with live progress.',
+ cta_join:'Choose a tier',cta_copy:'Copy contract',cta_pledge:'Pledge now',cta_connect:'Connect wallet',cta_connected:'Connected ',
+ tk_symbol:'Symbol',tk_ca:'Contract address',tk_supply:'Total supply',tk_lp:'LP locked',tk_forever:'forever',tk_net:'Network',tk_treasury:'Treasury (demo multisig)',tk_link:'Market & holders',tk_site:'Official website',
+ pay_title:'Four settlement assets: EACO, USDT (SPL), USDC (SPL), SOL',
+ pay_sub:'All pledges are booked in EACO. Any currency paid is converted to an EACO equivalent at oracle reference price and written into one ledger.',
+ pay_oracle:'Price source',pay_oracle_v:'Pyth / Switchboard 30s TWAP',pay_pair:'Conversion pairs',pay_lock:'Quote validity',pay_lock_v:'60 seconds (re-quote after expiry)',pay_fee:'On-chain fee',pay_fee_v:'Paid by participant (~0.000005 SOL)',pay_note_label:'Note',
+ pay_note:'Rates shown are demo reference values, not live market data. A real deployment must use on-chain oracles and settle at execution price.',sc_title:'Same-chain settlement: all four assets on Solana Mainnet',sc_d1:'No cross-chain bridge: EACO, USDT (SPL), USDC (SPL) and SOL are all on-chain Solana assets; payment and booking settle in a single on-chain transaction.',sc_d2:'Low fees, fast arrival: no cross-chain confirmations or bridge slippage; gas paid in SOL, usually settled in seconds.',sc_d3:'One consistent ledger: every asset converts to an EACO equivalent via oracle TWAP; ledger, tier and dividend weights share the same basis.',
+ rate_line:'1 {c} ≈ {e} EACO',
+ ind_title:'Five tracks, one target convention',
+ ladder_title:'Target ladder: lightest asset lowest, heaviest highest (steps of 27M EACO)',ind_sub:'Every target is a multiple of 27,000,000 EACO (soft / stretch). Each track is budgeted, accounted and disclosed separately.',
+ map_title:'Web3-friendly jurisdictions across six continents',map_sub:'Representative jurisdictions with relatively clear frameworks. Local compliance review is required; restricted regions (including mainland China) are excluded.',
+ camp_title:'Co-build campaign · live demo',camp_sub:'Pick a tier → choose currency → lock quote → pay on-chain → confirm → receive rights certificate.',
+ proj_name:'Earth Village five-track pool (demo)',raised:'Raised (EACO equiv.)',raised_usd:'USD equivalent',target:'Target (EACO equiv.)',backers:'Backers',days:'Days left',
+ th_wallet:'Wallet',th_cur:'Currency',th_amount:'Paid',th_eaco:'EACO equiv.',th_status:'Status',th_hash:'Tx hash',
+ st_pending:'Confirming',st_ok:'Confirmed',empty_history:'No pledges yet — be the first builder.',
+ tier_note:'Tier thresholds are in EACO; other currencies are converted at quote. One wallet may pledge multiple times across tracks.',
+ tier_need:'Threshold {n} EACO',tier_alt:'≈ {u} USDT · {s} SOL',
+ t_small:'Small Builder',t_standard:'Standard Builder',t_partner:'Ecosystem Partner',t_dao:'DAO Core Builder',
+ p_small:'Monthly briefing · general vote · on-chain certificate',p_standard:'Quarterly report · track proposal vote · badge',p_partner:'Dividend bonus · dedicated channel · priority seats',b_small:'Allocate funds to preferred tracks and obtain dividend rights for selected tracks; receive monthly project briefings and community announcements; hold general governance voting rights; receive on-chain contributor certificate.',h_small:'Listed on the EACO Earth Village contributor roster; basic contributor badge in community; eligible for open ecosystem sharing events.',b_standard:'Allocate portfolio across tracks and receive steady project dividends; priority access to in-depth quarterly operation reports; vote on track-specific proposals; contribution data permanently stored on-chain.',h_standard:'Exclusive contributor badge; invitation to quarterly online ecosystem meetings; nomination right for naming works or stations; display in contributor showcase.',b_partner:'Allocate funds freely across five tracks and get dividend bonus; dedicated one-on-one communication channel; join sector plan discussion and pre-proposal review; assets and rights confirmed on-chain.',h_partner:'Exclusive partner identity tag; priority seats for offline events; right to submit high-quality projects for review; public partner roster; co-naming rights for cooperation projects.',b_dao:'Allocate capital across all five tracks with highest dividend weight; join DAO core council, vote on top-level rules, budgets and key strategies; receive exclusive deep due-diligence documents; long-term strategic alignment.',h_dao:'Member of Ecosystem Council; naming rights for stations, camps and IP works; public recognition as strategic builder; formal strategic acknowledgement; commemorative contributor NFT.',lbl_benefit:'Benefits',lbl_honor:'Ecosystem Honors',p_dao:'Top dividend weight · DAO council seat · naming rights',
+ settle_title:'Settlement & exit rules',settle_sub:'Four-step loop and four hard rules: traceable funds, redeemable rights, documented exit.',
+ s1:['Lock quote','Oracle price locked for 60s, auto-expires'],s2:['Pay on-chain','Sent to the multisig treasury; single Solana confirmation'],s3:['Book conversion','Converted to EACO equivalent at execution price'],s4:['Confirm & certify','Rights certificate NFT minted after confirmation'],
+ r1t:'Confirmation standard',r1:'Only actual receipt by the treasury counts. Unconfirmed payments show as "Confirming" and are excluded from progress and dividend base.',
+ r2t:'Target & refunds',r2:'If the soft target is missed, principal is refunded to the original path within 30 days after close, net of on-chain fees and incurred third-party costs.',
+ r3t:'Rights & dividends',r3:'Dividends are denominated in EACO, paid in USDT monthly. Weight depends on tier and track, published on-chain.',
+ r4t:'Exit & transfer',r4:'Certificates are transferable within the ecosystem; transfer does not cancel accrued dividend obligations. Exited holders lose new governance rights.',
+ faq_title:'FAQ',
+ disc_title:'Compliance & risk notice: ',
+ disc_text:'This page is a functional demo and information display; it is not a securities offering, investment solicitation or return guarantee. Token fundraising is strictly regulated in most jurisdictions; mainland China prohibits token issuance and related trading, and this page does not target restricted regions. Rates, amounts and tx hashes are illustrative. Consult licensed legal and tax advisors before participating.',
+ volatility_title:'Price Volatility Notice',volatility_desc1:'Contribution quota is denominated in EACO, and tier thresholds remain fixed. USDT, USDC and SOL are payment currencies only; payable amounts are dynamically calculated from oracle TWAP prices.',volatility_desc2:'The exchange rate is locked when you submit your order, valid for 60 seconds. If the transfer is not completed within the window, the rate refreshes automatically and you need to lock a new rate.',volatility_desc3:'Range buffer and circuit breaker are enabled. Extreme swings of EACO or SOL may trigger price capping or temporary suspension of SOL payment to ensure fair participation.',volatility_desc4:'This mechanism only covers exchange differences between order submission and on-chain confirmation. No principal guarantee, no compensation for secondary market price risks. All risk parameters are subject to DAO votes.',footer_line:'Positivity × Proactivity × Collaboration × Improvement',
+ modal_title:'Confirm pledge',modal_tier:'Selected tier',modal_cur:'Payment currency',modal_amount:'Amount ({c})',modal_cancel:'Cancel',modal_confirm:'Pay & record',
+ equiv_txt:'≈ {e} EACO equivalent (at reference price)',quote_txt:'Quote locked {s}s',quote_exp:'Quote expired — reopen the dialog',
+ err_min:'Minimum for {c} is {m}',err_tier:'This tier requires {n} EACO equivalent',err_amt:'Enter a valid amount',err_wallet:'Connect a wallet first',
+ toast_copy:'Contract address copied',toast_wallet:'Wallet connected (demo)',toast_pay:'Payment submitted — awaiting confirmation',toast_ok:'Confirmed. Rights certificate issued',
+ faq:[
+  ['Why book everything in EACO?','The four assets have different price dimensions. Separate books would distort progress and dividend calculations; an EACO-equivalent ledger keeps one consistent standard.'],
+  ['If I pay USDT (SPL)/USDC (SPL), do I receive EACO?','No automatic swap. Payment is converted to an EACO equivalent for tier and dividend weighting; principal enters the treasury in the original currency and is spent per budget.'],
+  ['What is different about paying in SOL?','SOL shares the Solana chain with EACO: fastest confirmation and lowest fees. But SOL is volatile, so quotes lock for 60 seconds and must be refreshed after expiry.'],
+  ['Who sets the rate?','This demo uses fixed reference values. Production integrates Pyth / Switchboard and uses the stated 30s TWAP.'],
+  ['What if the target is missed?','Principal is refunded via the original path within 30 days after close, net of on-chain fees and incurred third-party costs.']
+ ]
+},
+ru:{
+ nav_pay:'Платежи',nav_industries:'Направления',nav_map:'Карта',nav_campaign:'Участие',nav_settle:'Правила',nav_faq:'Вопросы',
+ hero_badge:'Solana · AI + RWA + Web3 · оплата в EACO / USDT (SPL) / USDC (SPL) / SOL',
+ hero_t1:'Одно доброе дело,',hero_t2:'четыре актива — одна Деревня Земли',
+ hero_sub:'На основе позитива, инициативности, глобального сотрудничества и постоянного развития. Взносы можно вносить в EACO или USDT, USDC, SOL — всё пересчитывается в эквивалент EACO и пишется в один реестр с живым прогрессом.',
+ cta_join:'Выбрать уровень',cta_copy:'Скопировать контракт',cta_pledge:'Участвовать',cta_connect:'Подключить кошелёк',cta_connected:'Подключено ',
+ tk_symbol:'Символ',tk_ca:'Адрес контракта',tk_supply:'Общее предложение',tk_lp:'LP заблокирован',tk_forever:'навсегда',tk_net:'Сеть',tk_treasury:'Казна (демо-мультисиг)',tk_link:'Рынок и держатели',tk_site:'Официальный сайт',
+ pay_title:'Четыре расчётных актива: EACO, USDT (SPL), USDC (SPL), SOL',
+ pay_sub:'Все взносы учитываются в EACO. Любая валюта пересчитывается в эквивалент EACO по цене оракула и попадает в единый реестр.',
+ pay_oracle:'Источник цены',pay_oracle_v:'Pyth / Switchboard, TWAP 30 с',pay_pair:'Пары пересчёта',pay_lock:'Срок действия котировки',pay_lock_v:'60 секунд (после — новая котировка)',pay_fee:'Комиссия сети',pay_fee_v:'Платит участник (~0,000005 SOL)',pay_note_label:'Примечание',
+ pay_note:'Курсы на странице — демонстрационные, не рыночные. В реальном проекте нужен ончейн-оракул и расчёт по цене исполнения.',sc_title:'Расчёт в одной сети: все четыре актива на Solana Mainnet',sc_d1:'Без кросс-чейн моста: EACO, USDT (SPL), USDC (SPL) и SOL — активы одной сети Solana; оплата и запись проходят в одной транзакции.',sc_d2:'Низкие комиссии, быстрое зачисление: без кросс-чейн подтверждений и проскальзывания моста; газ оплачивается SOL, зачисление обычно за секунды.',sc_d3:'Единый реестр: каждая валюта пересчитывается в эквивалент EACO по TWAP оракула; реестр, уровни и веса дивидендов в одном составе.',
+ rate_line:'1 {c} ≈ {e} EACO',
+ ind_title:'Пять направлений, единый стандарт целей',
+ ladder_title:'Шкала целей: лёгкие активы ниже, тяжёлые выше (шаг 27M EACO)',ind_sub:'Все цели кратны 27 000 000 EACO (мягкая / повышенная). Каждое направление бюджетируется и отчитывается отдельно.',
+ map_title:'Дружественные к Web3 юрисдикции шести континентов',map_sub:'Представительные юрисдикции с относительно понятными правилами. Требуется локальная проверка; ограниченные регионы (включая материковый Китай) исключены.',
+ camp_title:'Кампания соучастия · демо',camp_sub:'Уровень → валюта → фиксация котировки → оплата в сети → подтверждение → сертификат прав.',
+ proj_name:'Общий пул пяти направлений (демо)',raised:'Собрано (экв. EACO)',raised_usd:'Эквивалент USD',target:'Цель (экв. EACO)',backers:'Участники',days:'Дней осталось',
+ th_wallet:'Кошелёк',th_cur:'Валюта',th_amount:'Оплачено',th_eaco:'Экв. EACO',th_status:'Статус',th_hash:'Хэш',
+ st_pending:'Подтверждение',st_ok:'Подтверждено',empty_history:'Пока нет взносов — станьте первым.',
+ tier_note:'Пороги указаны в EACO; иные валюты пересчитываются по котировке. Один кошелёк может участвовать многократно и в разных направлениях.',
+ tier_need:'Порог {n} EACO',tier_alt:'≈ {u} USDT · {s} SOL',
+ t_small:'Малый участник',t_standard:'Стандартный участник',t_partner:'Партнёр экосистемы',t_dao:'Участник ядра DAO',
+ p_small:'Месячный отчёт · общее голосование · сертификат',p_standard:'Квартальный отчёт · голосование по направлениям · значок',p_partner:'Бонус к дивидендам · личный канал · приоритет мест',b_small:'Выберите направления для инвестиций, получайте право на дивиденды; получайте ежемесячные отчёты и новости сообщества; имеет право общего голосования; электронный сертификат участника в цепи.',h_small:'Внесён в список участников Деревни Земли EACO; базовый значок участника в сообществе; допуск к открытым встречам экосистемы.',b_standard:'Свободная настройка портфеля по направлениям, стабильные дивиденды; приоритетный доступ к подробным квартальным отчётам; голосование по отраслевым предложениям; данные вклада навсегда в цепи.',h_standard:'Эксклюзивный значок участника; приглашение на квартальные онлайн-встречи; право на номинацию названий работ или станций; размещение в галерее участников.',b_partner:'Свободное распределение средств по пяти направлениям, бонус к дивидендам; персональный канал связи; участие в обсуждениях и предварительной проверке предложений; активы и права зафиксированы в цепи.',h_partner:'Эксклюзивный статус партнёра; приоритетное место на офлайн-мероприятиях; право предлагать проекты на рассмотрение; публичный список партнёров; право совместного наименования.',b_dao:'Распределение по всем пяти направлениям, максимальный вес дивидендов; вход в основной совет DAO, голосование по правилам, бюджетам и стратегиям; эксклюзивные материалы аудита; синхронизация долгосрочной стратегии.',h_dao:'Член совета экосистемы; право на наименование станций, кемпингов и IP-произведений; публичное признание стратегического участника; официальная благодарность; памятный NFT.',lbl_benefit:'Права',lbl_honor:'Почёт',p_dao:'Максимальный вес дивидендов · место в совете DAO · право наименования',
+ settle_title:'Правила расчётов и выхода',settle_sub:'Четыре шага и четыре жёстких правила: средства прослеживаемы, права реализуемы, выход документирован.',
+ s1:['Фиксация котировки','Цена оракула на 60 с, затем истекает'],s2:['Оплата в сети','Перевод в мультисиг-казну, одно подтверждение Solana'],s3:['Учёт пересчёта','Эквивалент EACO по цене исполнения'],s4:['Подтверждение и сертификат','После подтверждения выпускается NFT прав'],
+ r1t:'Критерий подтверждения',r1:'Учитывается только фактическое поступление на адрес казны. Неподтверждённые платежи отображаются как «подтверждение» и не входят в прогресс и базу дивидендов.',
+ r2t:'Цель и возврат',r2:'Если мягкая цель не достигнута, основная сумма возвращается тем же путём в течение 30 дней после закрытия, за вычетом комиссий и понесённых сторонних расходов.',
+ r3t:'Права и дивиденды',r3:'Дивиденды номинированы в EACO и выплачиваются в USDT ежемесячно. Вес зависит от уровня и направления, публикуется в сети.',
+ r4t:'Выход и передача',r4:'Сертификаты передаваемы внутри экосистемы; передача не отменяет начисленные дивидендные обязательства. Вышедший теряет новые права голоса.',
+ faq_title:'Частые вопросы',
+ disc_title:'Уведомление о соответствии и рисках: ',
+ disc_text:'Страница — демонстрация функционала и информация, не предложение ценных бумаг, не оферта и не гарантия дохода. Токен-сбор строго регулируется; материковый Китай запрещает выпуск токенов и связанные операции, страница не адресована ограниченным регионам. Курсы, суммы и хэши демонстрационные. Перед участием консультируйтесь с лицензированными юристами и налоговыми советниками.',
+ volatility_title:'Уведомление о волатильности цен',volatility_desc1:'Квота участия рассчитывается в EACO, пороги уровней фиксированы. USDT, USDC и SOL — только валюты оплаты; суммы к оплате пересчитываются по TWAP оракула.',volatility_desc2:'Курс фиксируется при подтверждении заказа на 60 секунд. Если перевод не выполнен за это время, курс обновляется, нужно заново зафиксировать цену.',volatility_desc3:'Работает буфер диапазона и стоп-механизм. При экстремальных скачках EACO или SOL может включаться ограничение цены или временно отключаться оплата SOL для справедливости.',volatility_desc4:'Механизм регулирует только расхождения курса между отправкой заказа и подтверждением в сети. Нет гарантии сохранности капитала, нет компенсации убытков на вторичном рынке. Все параметры риска утверждаются голосованием DAO.',footer_line:'Позитив × Инициатива × Сотрудничество × Развитие',
+ modal_title:'Подтвердить участие',modal_tier:'Выбранный уровень',modal_cur:'Валюта платежа',modal_amount:'Сумма ({c})',modal_cancel:'Отмена',modal_confirm:'Оплатить и учесть',
+ equiv_txt:'≈ {e} EACO эквивалент (по текущей цене)',quote_txt:'Котировка действует {s} с',quote_exp:'Котировка истекла — откройте окно заново',
+ err_min:'Минимум для {c}: {m}',err_tier:'Для этого уровня нужно {n} экв. EACO',err_amt:'Введите сумму',err_wallet:'Сначала подключите кошелёк',
+ toast_copy:'Адрес контракта скопирован',toast_wallet:'Кошелёк подключён (демо)',toast_pay:'Платёж отправлен, ждём подтверждения',toast_ok:'Подтверждено. Сертификат прав выпущен',
+ faq:[
+  ['Почему учёт в EACO?','У четырёх активов разные ценовые шкалы. Раздельный учёт исказил бы прогресс и дивиденды; эквивалент EACO даёт единый стандарт.'],
+  ['Если я плачу USDT (SPL)/USDC (SPL), получу ли EACO?','Автоматического обмена нет. Платёж пересчитывается в эквивалент EACO для уровня и веса дивидендов; основная сумма поступает в казну в исходной валюте.'],
+  ['Чем отличается оплата в SOL?','SOL в той же сети Solana:最快 подтверждение и最低 комиссии. Но курс волатилен — котировка на 60 с, затем обновление.'],
+  ['Кто определяет курс?','Демо использует фиксированные значения. В продакшене — Pyth / Switchboard и указанный TWAP 30 с.'],
+  ['Если цель не достигнута?','Возврат тем же путём в течение 30 дней после закрытия, за вычетом комиссий сети и понесённых сторонних расходов.']
+ ]
+},
+es:{
+ nav_pay:'Pagos',nav_industries:'Sectores',nav_map:'Mapa',nav_campaign:'Participar',nav_settle:'Reglas',nav_faq:'FAQ',
+ hero_badge:'Solana · AI + RWA + Web3 · pago en EACO / USDT (SPL) / USDC (SPL) / SOL',
+ hero_t1:'Un gesto de bondad,',hero_t2:'cuatro activos, una aldea global',
+ hero_sub:'Basado en positividad, iniciativa, colaboración global y mejora continua. Puedes aportar en EACO o USDT, USDC, SOL; todo se convierte a equivalente EACO y se registra en un único libro con progreso en vivo.',
+ cta_join:'Elegir nivel',cta_copy:'Copiar contrato',cta_pledge:'Participar',cta_connect:'Conectar wallet',cta_connected:'Conectado ',
+ tk_symbol:'Símbolo',tk_ca:'Dirección del contrato',tk_supply:'Suministro total',tk_lp:'LP bloqueado',tk_forever:'para siempre',tk_net:'Red',tk_treasury:'Tesorería (multifirma demo)',tk_link:'Mercado y holders',tk_site:'Sitio oficial',
+ pay_title:'Cuatro activos de liquidación: EACO, USDT (SPL), USDC (SPL), SOL',
+ pay_sub:'Todos los aportes se contabilizan en EACO. Cualquier moneda se convierte a equivalente EACO al precio del oráculo y entra en un único libro.',
+ pay_oracle:'Fuente de precio',pay_oracle_v:'Pyth / Switchboard TWAP 30s',pay_pair:'Pares de conversión',pay_lock:'Vigencia de cotización',pay_lock_v:'60 segundos (recotizar al vencer)',pay_fee:'Comisión de red',pay_fee_v:'A cargo del participante (~0,000005 SOL)',pay_note_label:'Nota',
+ pay_note:'Los tipos mostrados son referencia de demo, no mercado en vivo. Un despliegue real requiere oráculos on-chain y liquidación al precio de ejecución.',sc_title:'Liquidación en la misma cadena: los cuatro activos en Solana Mainnet',sc_d1:'Sin puente cross-chain: EACO, USDT (SPL), USDC (SPL) y SOL son activos on-chain de Solana; pago y registro se liquidan en una sola transacción.',sc_d2:'Comisiones bajas, llegada rápida: sin confirmaciones cross-chain ni slippage de puente; gas en SOL, liquidación en segundos.',sc_d3:'Un solo libro: cada activo se convierte a equivalente EACO con TWAP del oráculo; libro, nivel y pesos de reparto comparten la misma base.',
+ rate_line:'1 {c} ≈ {e} EACO',
+ ind_title:'Cinco sectores, un mismo criterio de objetivos',
+ ladder_title:'Escala de objetivos: activo ligero abajo, pesado arriba (pasos de 27M EACO)',ind_sub:'Cada objetivo es múltiplo de 27.000.000 EACO (base / ampliado). Cada sector se presupuesta, contabiliza y publica por separado.',
+ map_title:'Jurisdicciones favorables a Web3 en seis continentes',map_sub:'Jurisdicciones representativas con marcos relativamente claros. Se requiere revisión local; se excluyen regiones restringidas (incluida China continental).',
+ camp_title:'Campaña de co-construcción · demo',camp_sub:'Nivel → moneda → cotización bloqueada → pago on-chain → confirmación → certificado de derechos.',
+ proj_name:'Pozo conjunto de cinco sectores (demo)',raised:'Recaudado (equiv. EACO)',raised_usd:'Equivalente USD',target:'Objetivo (equiv. EACO)',backers:'Patrocinadores',days:'Días restantes',
+ th_wallet:'Wallet',th_cur:'Moneda',th_amount:'Pagado',th_eaco:'Equiv. EACO',th_status:'Estado',th_hash:'Hash',
+ st_pending:'Confirmando',st_ok:'Confirmado',empty_history:'Aún no hay aportes: sé el primero.',
+ tier_note:'Los umbrales están en EACO; otras monedas se convierten según cotización. Una wallet puede aportar varias veces en distintos sectores.',
+ tier_need:'Umbral {n} EACO',tier_alt:'≈ {u} USDT · {s} SOL',
+ t_small:'Colaborador Básico',t_standard:'Colaborador Estándar',t_partner:'Socio del Ecosistema',t_dao:'Constructor Núcleo DAO',
+ p_small:'Informe mensual · voto general · certificado',p_standard:'Informe trimestral · voto sectorial · insignia',p_partner:'Bonificación · canal directo · asientos prioritarios',b_small:'Asigne capital a los sectores preferidos y obtenga derechos de reparto de beneficios; reciba informes mensuales y avisos comunitarios; dispone de voto general de gobernanza; recibe certificado de colaboración en cadena.',h_small:'Figura en el listado de colaboradores de la Aldea Terrestre EACO; insignia básica en la comunidad; acceso a eventos públicos de intercambio ecosistémico.',b_standard:'Configure libremente su cartera entre sectores y reciba dividendos estables; acceso prioritario a informes trimestrales detallados; vote sobre propuestas sectoriales; datos de contribución guardados permanentemente en cadena.',h_standard:'Insignia exclusiva de colaborador; invitación a reuniones trimestrales online; derecho a nominar nombres para obras o estaciones; exposición en la galería de colaboradores.',b_partner:'Distribuya libremente el capital entre los cinco sectores y obtenga bonificación de dividendos; canal de comunicación individual; participe en debates y revisión previa de planes; activos y derechos confirmados en cadena.',h_partner:'Etiqueta de socio exclusiva; asientos prioritarios en eventos presenciales; derecho a proponer proyectos para evaluación; lista pública de socios; derechos de co-nominación.',b_dao:'Distribución en los cinco sectores con mayor peso de reparto; integración en el consejo núcleo DAO, vota reglas generales, presupuestos y estrategias clave; recibe documentos de auditoría exclusivos; alineación estratégica a largo plazo.',h_dao:'Miembro del consejo ecosistémico; derecho de denominación para estaciones, campamentos y obras IP; reconocimiento público como constructor estratégico; agradecimiento estratégico formal; NFT conmemorativo.',lbl_benefit:'Beneficios',lbl_honor:'Reconocimiento',p_dao:'Máximo peso · consejo DAO · derechos de naming',
+ settle_title:'Reglas de liquidación y salida',settle_sub:'Cuatro pasos y cuatro reglas duras: fondos trazables, derechos canjeables, salida documentada.',
+ s1:['Bloquear cotización','Precio del oráculo fijado 60s, luego vence'],s2:['Pagar on-chain','Envío a tesorería multifirma, una confirmación Solana'],s3:['Contabilizar','Equivalente EACO al precio de ejecución'],s4:['Confirmar y certificar','Se acuña NFT de derechos tras confirmar'],
+ r1t:'Criterio de confirmación',r1:'Solo cuenta la recepción real en la tesorería. Los pagos sin confirmar aparecen como «Confirmando» y no entran en progreso ni base de dividendos.',
+ r2t:'Objetivo y reembolsos',r2:'Si no se alcanza el objetivo base, el principal se devuelve por la vía original en 30 días tras el cierre, neto de comisiones y costes de terceros incurridos.',
+ r3t:'Derechos y dividendos',r3:'Dividendos nominados en EACO y pagados en USDT mensualmente. El peso depende de nivel y sector, publicado on-chain.',
+ r4t:'Salida y transferencia',r4:'Los certificados son transferibles dentro del ecosistema; la transferencia no cancela obligaciones devengadas. Quien sale pierde nuevos derechos de voto.',
+ faq_title:'Preguntas frecuentes',
+ disc_title:'Aviso de cumplimiento y riesgo: ',
+ disc_text:'Esta página es una demo funcional e informativa; no es oferta de valores, solicitud de inversión ni garantía de rendimiento. La recaudación con tokens está estrictamente regulada; China continental prohíbe la emisión de tokens y operaciones relacionadas, y esta página no se dirige a regiones restringidas. Tipos, importes y hashes son ilustrativos. Consulte asesores legales y fiscales autorizados.',
+ volatility_title:'Aviso de Volatilidad de Precios',volatility_desc1:'La cuota de contribución está denominada en EACO y los umbrales de nivel son fijos. USDT, USDC y SOL son solo monedas de pago; los importes se calculan dinámicamente con los precios TWAP del oráculo.',volatility_desc2:'El tipo de cambio se bloquea al enviar el pedido durante 60 segundos. Si no se completa la transferencia en ese plazo, el tipo se actualiza y debes bloquear uno nuevo.',volatility_desc3:'Existen protección de rango y disyuntor automático. Movimientos extremos de EACO o SOL pueden activar límites de precio o suspender temporalmente el pago con SOL para garantizar equidad.',volatility_desc4:'Este sistema solo gestiona diferencias de cambio entre el pedido y la confirmación on-chain. No hay garantía de capital ni compensación por riesgos del mercado secundario. Todos los parámetros de riesgo se aprueban por votación DAO.',footer_line:'Positividad × Iniciativa × Colaboración × Mejora',
+ modal_title:'Confirmar participación',modal_tier:'Nivel elegido',modal_cur:'Moneda de pago',modal_amount:'Importe ({c})',modal_cancel:'Cancelar',modal_confirm:'Pagar y registrar',
+ equiv_txt:'≈ {e} EACO equivalente (precio de referencia)',quote_txt:'Cotización válida {s}s',quote_exp:'Cotización vencida: vuelve a abrir',
+ err_min:'El mínimo para {c} es {m}',err_tier:'Este nivel requiere {n} EACO equiv.',err_amt:'Introduce un importe válido',err_wallet:'Conecta una wallet primero',
+ toast_copy:'Contrato copiado',toast_wallet:'Wallet conectada (demo)',toast_pay:'Pago enviado, esperando confirmación',toast_ok:'Confirmado. Certificado de derechos emitido',
+ faq:[
+  ['¿Por qué contabilizar en EACO?','Los cuatro activos tienen escalas de precio distintas. Libros separados distorsionarían progreso y dividendos; el equivalente EACO unifica el criterio.'],
+  ['Si pago USDT (SPL)/USDC (SPL), ¿recibo EACO?','No hay canje automático. El pago se convierte a equivalente EACO para nivel y peso de dividendos; el principal entra en tesorería en la moneda original.'],
+  ['¿Qué diferencia hay al pagar con SOL?','SOL comparte la red Solana con EACO: confirmación más rápida y comisiones mínimas. Pero es volátil, por eso la cotización se bloquea 60s y debe renovarse.'],
+  ['¿Quién fija el tipo?','La demo usa valores fijos. En producción se integra Pyth / Switchboard con TWAP de 30s.'],
+  ['¿Y si no se alcanza el objetivo?','Devolución por la vía original en 30 días tras el cierre, neto de comisiones y costes de terceros incurridos.']
+ ]
+},
+ar:{
+ nav_pay:'الدفع والتسوية',nav_industries:'القطاعات',nav_map:'الخريطة',nav_campaign:'المشاركة',nav_settle:'القواعد',nav_faq:'الأسئلة',
+ hero_badge:'سولانا · AI + RWA + Web3 · الدفع بـ EACO / USDT (SPL) / USDC (SPL) / SOL',
+ hero_t1:'بادرة خير واحدة،',hero_t2:'أربعة أصول، قرية أرض واحدة',
+ hero_sub:'على أساس الإيجابية والمبادرة والتعاون العالمي والتحسين المستمر. يمكن المساهمة بـ EACO أو USDT أو USDC أو SOL، ويُحوَّل كل شيء إلى معادل EACO ويُقيَّد في سجل واحد مع تقدم مباشر.',
+ cta_join:'اختر المستوى',cta_copy:'نسخ العقد',cta_pledge:'شارك الآن',cta_connect:'ربط المحفظة',cta_connected:'متصل ',
+ tk_symbol:'الرمز',tk_ca:'عنوان العقد',tk_supply:'إجمالي المعروض',tk_lp:'السيولة مقفلة',tk_forever:'دائمًا',tk_net:'الشبكة',tk_treasury:'الخزينة (توقيع متعدد تجريبي)',tk_link:'السوق والحاملون',tk_site:'الموقع الرسمي',
+ pay_title:'أربعة أصول تسوية: EACO وUSDT (SPL) وUSDC (SPL) وSOL',
+ pay_sub:'تُقيَّد كل المساهمات بـ EACO. تُحوَّل أي عملة إلى معادل EACO بسعر الأوراكل وتُسجَّل في دفتر واحد.',
+ pay_oracle:'مصدر السعر',pay_oracle_v:'Pyth / Switchboard متوسط 30 ثانية',pay_pair:'أزواج التحويل',pay_lock:'صلاحية العرض السعري',pay_lock_v:'60 ثانية (يُجدَّد بعدها)',pay_fee:'رسوم الشبكة',pay_fee_v:'على المساهم (~0.000005 SOL)',pay_note_label:'ملاحظة',
+ pay_note:'الأسعار المعروضة مرجعية تجريبية وليست سوقية. النشر الحقيقي يتطلب أوراكل على السلسلة والتسوية بسعر التنفيذ.',sc_title:'تسوية في نفس السلسلة: الأصول الأربعة على Solana Mainnet',sc_d1:'بدون جسر بين السلاسل: EACO و USDT (SPL) و USDC (SPL) و SOL أصول على سلسلة Solana؛ يتم الدفع والتسجيل في معاملة واحدة على السلسلة.',sc_d2:'رسوم منخفضة ووصول سريع: بلا تأكيدات عبر السلاسل ولا انزلاق جسر؛ تُدفع الغاز بعملة SOL، وعادة يكتمل التسوية خلال ثوانٍ.',sc_d3:'سجل موحد: تُحوَّل كل عملة إلى معادل EACO عبر TWAP الخاص بالأوراكل؛ السجل والمستوى وأوزان الأرباح على أساس واحد.',
+ rate_line:'1 {c} ≈ {e} EACO',
+ ind_title:'خمسة قطاعات بمعيار أهداف واحد',
+ ladder_title:'تدرج الأهداف: الأخف أدنى والأثقل أعلى (خطوات 27M EACO)',ind_sub:'كل هدف من مضاعفات 27,000,000 EACO (أساسي / موسّع). يُعتمد كل قطاع ويُحاسب ويُعلن بشكل مستقل.',
+ map_title:'ولايات صديقة لـ Web3 في القارات الست',map_sub:'ولايات تمثيلية بأطر واضحة نسبيًا. يلزم فحص امتثال محلي؛ تُستثنى المناطق المقيدة (بما فيها البر الرئيسي الصيني).',
+ camp_title:'حملة البناء المشترك · تجريبي',camp_sub:'المستوى → العملة → تثبيت السعر → الدفع على السلسلة → التأكيد → شهادة الحقوق.',
+ proj_name:'المجمع المشترك للقطاعات الخمسة (تجريبي)',raised:'تم جمعه (معادل EACO)',raised_usd:'معادل الدولار',target:'الهدف (معادل EACO)',backers:'المساهمون',days:'أيام متبقية',
+ th_wallet:'المحفظة',th_cur:'العملة',th_amount:'المدفوع',th_eaco:'معادل EACO',th_status:'الحالة',th_hash:'معرّف المعاملة',
+ st_pending:'قيد التأكيد',st_ok:'مؤكد',empty_history:'لا مساهمات بعد — كن أول باني.',
+ tier_note:'الحدود محسوبة بـ EACO؛ تُحوَّل العملات الأخرى بسعر العرض. يمكن للمحفظة نفسها المساهمة عدة مرات وفي قطاعات مختلفة.',
+ tier_need:'الحد {n} EACO',tier_alt:'≈ {u} USDT · {s} SOL',
+ t_small:'باني صغير',t_standard:'باني قياسي',t_partner:'شريك النظام البيئي',t_dao:'باني جوهر DAO',
+ p_small:'تقرير شهري · تصويت عام · شهادة',p_standard:'تقرير ربع سنوي · تصويت قطاعي · شارة',p_partner:'علاوة أرباح · قناة مباشرة · مقاعد أولوية',b_small:'توجيه رأس المال للقطاعات المختارة والحصول على حصص الأرباح؛ استلم التقارير الشهرية وإشعارات المجتمع؛ لديك حق التصويت العام؛ شهادة مساهمة موثقة على السلسلة.',h_small:'مدرج في قائمة مساهمي قرية الأرض EACO؛ شارة مساهم أساسية داخل المجتمع؛ الحضور في فعاليات المشاركة العامة للنظام البيئي.',b_standard:'تكوين محفظة قطاعات بحرية والحصول على أرباح مستقرة؛ أولوية الوصول للتقارير الربعية المفصلة؛ حق التصويت على مقترحات القطاعات؛ بيانات المساهمة محفوظة دائمًا على السلسلة.',h_standard:'شارة مساهم حصرية؛ دعوة لاجتماعات النظام البيئي الربعية عبر الإنترنت؛ حق ترشيح أسماء الأعمال أو المحطات؛ عرض في معرض المساهمين.',b_partner:'وزع رأس المال بحرية على الخمسة قطاعات مع علاوة أرباح؛ قناة تواصل شخصية؛ شارك في النقاشات ومراجعة المقترحات المسبقة؛ الأصول والحقوق موثقة على السلسلة.',h_partner:'هوية شريك حصرية؛ أولوية المقاعد في الفعاليات الميدانية؛ حق تقديم المشاريع للتقييم؛ قائمة الشركاء العامة؛ حق التسمية المشتركة.',b_dao:'توزيع على كل الخمسة قطاعات وأعلى وزن للأرباح؛ عضوية مجلس DAO الأساسي، التصويت على القواعد والميزانيات والاستراتيجيات الكبرى؛ مواد تدقيق حصرية؛ تناغم استراتيجي طويل الأمد.',h_dao:'عضو مجلس النظام البيئي؛ حق تسمية المحطات والمخيمات وأعمال الملكية الفكرية؛ تقدير عام كباني استراتيجي؛ شكر استراتيجي رسمي؛ NFT تذكاري.',lbl_benefit:'المزايا',lbl_honor:'التكريم',p_dao:'أعلى وزن أرباح · مقعد مجلس DAO · حق التسمية',
+ settle_title:'قواعد التسوية والخروج',settle_sub:'أربع خطوات وأربع قواعد صارمة: أموال قابلة للتتبع، حقوق قابلة للاسترداد، خروج موثق.',
+ s1:['تثبيت السعر','سعر الأوراكل مثبت 60 ثانية ثم ينتهي'],s2:['الدفع على السلسلة','تحويل إلى خزينة التوقيع المتعدد، تأكيد واحد على سولانا'],s3:['قيود التحويل','معادل EACO بسعر التنفيذ'],s4:['التأكيد والشهادة','يُصدر NFT للحقوق بعد التأكيد'],
+ r1t:'معيار التأكيد',r1:'يُحتسب فقط الوصول الفعلي إلى عنوان الخزينة. المدفوعات غير المؤكدة تظهر «قيد التأكيد» ولا تدخل التقدم أو أساس الأرباح.',
+ r2t:'الهدف والاسترداد',r2:'إذا لم يتحقق الهدف الأساسي، يُرد أصل المبلغ عبر المسار نفسه خلال 30 يومًا من الإغلاق، بعد خصم رسوم الشبكة والتكاليف الخارجية الفعلية.',
+ r3t:'الحقوق والأرباح',r3:'الأرباح مقومة بـ EACO وتُدفع بـ USDT شهريًا. الوزن يعتمد على المستوى والقطاع ويُنشر على السلسلة.',
+ r4t:'الخروج والتحويل',r4:'الشهادات قابلة للتحويل داخل النظام البيئي؛ التحويل لا يلغي التزامات الأرباح المستحقة. من يخرج يفقد حقوق التصويت الجديدة.',
+ faq_title:'الأسئلة الشائعة',
+ disc_title:'إشعار الامتثال والمخاطر: ',
+ disc_text:'هذه الصفحة عرض وظيفي ومعلومات، وليست طرح أوراق مالية أو دعوة استثمار أو ضمان عائد. تمويل الرموز منظم بصرامة؛ البر الرئيسي الصيني يحظر إصدار الرموز والعمليات المرتبطة، والصفحة لا تستهدف المناطق المقيدة. الأسعار والمبالغ والمعرفات توضيحية. استشر مستشارين قانونيين وضريبيين مرخصين.',
+ volatility_title:'إشعار تقلب الأسعار',volatility_desc1:'حصة المساهمة محسوبة بعملة EACO، وحدود المستويات ثابتة. USDT و USDC و SOL هي عملات دفع فقط، والمبالغ المستحقة تحسب ديناميكياً من أسعار TWAP الخاصة بالأوراكل.',volatility_desc2:'يتم قفل سعر الصرف عند إرسال الطلب لمدة 60 ثانية. إذا لم تكتمل التحويل خلال هذه الفترة، يتم تحديث السعر تلقائياً وتحتاج إلى قفل سعر جديد.',volatility_desc3:'يوجد حماية نطاق وآلية إيقاف تلقائية. التقلبات الحادة لـ EACO أو SOL قد تفرض حدود سعر أو إيقاف مؤقت للدفع بواسطة SOL لضمان العدالة.',volatility_desc4:'هذه الآلية تعالج فقط فروق الصرف بين إرسال الطلب والتأكيد على السلسلة. لا يوجد ضمان رأس مال ولا تعويض عن مخاطر السوق الثانوي. جميع معايير المخاطرة تخضع لتصويت DAO.',footer_line:'إيجابية × مبادرة × تعاون × تحسين',
+ modal_title:'تأكيد المشاركة',modal_tier:'المستوى المختار',modal_cur:'عملة الدفع',modal_amount:'المبلغ ({c})',modal_cancel:'إلغاء',modal_confirm:'ادفع وسجّل',
+ equiv_txt:'≈ {e} EACO معادل (بسعر المرجع)',quote_txt:'السعر مثبت {s} ثانية',quote_exp:'انتهى السعر — أعد فتح النافذة',
+ err_min:'الحد الأدنى لـ {c} هو {m}',err_tier:'هذا المستوى يتطلب {n} EACO معادل',err_amt:'أدخل مبلغًا صحيحًا',err_wallet:'اربط محفظة أولاً',
+ toast_copy:'تم نسخ العقد',toast_wallet:'تم ربط المحفظة (تجريبي)',toast_pay:'تم إرسال الدفع، بانتظار التأكيد',toast_ok:'تم التأكيد. أُصدرت شهادة الحقوق',
+ faq:[
+  ['لماذا القيد بـ EACO؟','الأصول الأربعة بمقاييس سعرية مختلفة؛ الحسابات المنفصلة تشوّه التقدم والأرباح. معادل EACO يوحد المعيار.'],
+  ['إذا دفعت USDT (SPL)/USDC (SPL) هل أستلم EACO؟','لا تحويل تلقائي. يُحوَّل الدفع إلى معادل EACO لتحديد المستوى ووزن الأرباح، ويدخل أصل المبلغ الخزينة بالعملة الأصلية.'],
+  ['ما الفرق عند الدفع بـ SOL؟','SOL على نفس شبكة سولانا: أسرع تأكيد وأقل رسوم. لكنه متقلب، لذا يُثبت السعر 60 ثانية ثم يُجدَّد.'],
+  ['من يحدد السعر؟','النسخة التجريبية تستخدم قيمًا ثابتة. الإنتاج يستخدم Pyth / Switchboard بمتوسط 30 ثانية.'],
+  ['إذا لم يتحقق الهدف؟','استرداد عبر المسار نفسه خلال 30 يومًا من الإغلاق، بعد خصم رسوم الشبكة والتكاليف الخارجية.']
+ ]
+},
+fr:{
+ nav_pay:'Paiements',nav_industries:'Filières',nav_map:'Carte',nav_campaign:'Participer',nav_settle:'Règles',nav_faq:'FAQ',
+ hero_badge:'Solana · AI + RWA + Web3 · paiement en EACO / USDT (SPL) / USDC (SPL) / SOL',
+ hero_t1:'Un geste de bienveillance,',hero_t2:'quatre actifs, un seul village planétaire',
+ hero_sub:'Fondé sur la positivité, l’initiative, la collaboration mondiale et l’amélioration continue. Contribuez en EACO ou en USDT, USDC, SOL : tout est converti en équivalent EACO et inscrit dans un registre unique avec progression en direct.',
+ cta_join:'Choisir un palier',cta_copy:'Copier le contrat',cta_pledge:'Participer',cta_connect:'Connecter le portefeuille',cta_connected:'Connecté ',
+ tk_symbol:'Symbole',tk_ca:'Adresse du contrat',tk_supply:'Offre totale',tk_lp:'LP verrouillé',tk_forever:'à vie',tk_net:'Réseau',tk_treasury:'Trésorerie (multisig démo)',tk_link:'Marché et détenteurs',tk_site:'Site officiel',
+ pay_title:'Quatre actifs de règlement : EACO, USDT (SPL), USDC (SPL), SOL',
+ pay_sub:'Toutes les contributions sont comptabilisées en EACO. Toute devise est convertie en équivalent EACO au prix oracle et inscrite dans un registre unique.',
+ pay_oracle:'Source de prix',pay_oracle_v:'Pyth / Switchboard TWAP 30 s',pay_pair:'Paires de conversion',pay_lock:'Validité du devis',pay_lock_v:'60 secondes (re-cotation ensuite)',pay_fee:'Frais réseau',pay_fee_v:'À la charge du participant (~0,000005 SOL)',pay_note_label:'Note',
+ pay_note:'Les taux affichés sont des références de démonstration, pas des cours en direct. Un déploiement réel exige un oracle on-chain et un règlement au prix d’exécution.',sc_title:'Règlement sur la même chaîne : les quatre actifs sur Solana Mainnet',sc_d1:'Pas de pont cross-chain : EACO, USDT (SPL), USDC (SPL) et SOL sont tous des actifs Solana on-chain ; paiement et enregistrement réglés en une seule transaction.',sc_d2:'Frais réduits, règlement rapide : sans confirmations cross-chain ni slippage de pont ; le gas est payé en SOL, règlement en quelques secondes.',sc_d3:'Livre unique : chaque actif est converti en équivalent EACO via le TWAP de l’oracle ; livre, palier et pondérations de dividendes partagent la même base.',
+ rate_line:'1 {c} ≈ {e} EACO',
+ ind_title:'Cinq filières, un même référentiel d’objectifs',
+ ladder_title:'Échelle des objectifs : léger en bas, lourd en haut (pas de 27M EACO)',ind_sub:'Chaque objectif est un multiple de 27 000 000 EACO (base / étendu). Chaque filière est budgétée, comptabilisée et publiée séparément.',
+ map_title:'Juridictions favorables au Web3 sur six continents',map_sub:'Juridictions représentatives aux cadres relativement clairs. Une revue de conformité locale est requise ; les régions restreintes (y compris la Chine continentale) sont exclues.',
+ camp_title:'Campagne de co-construction · démo',camp_sub:'Palier → devise → devis verrouillé → paiement on-chain → confirmation → certificat de droits.',
+ proj_name:'Pot commun des cinq filières (démo)',raised:'Collecté (éq. EACO)',raised_usd:'Équivalent USD',target:'Objectif (éq. EACO)',backers:'Contributeurs',days:'Jours restants',
+ th_wallet:'Portefeuille',th_cur:'Devise',th_amount:'Payé',th_eaco:'Éq. EACO',th_status:'Statut',th_hash:'Hash',
+ st_pending:'Confirmation',st_ok:'Confirmé',empty_history:'Aucune contribution — soyez le premier.',
+ tier_note:'Les seuils sont en EACO ; les autres devises sont converties selon le devis. Un même portefeuille peut contribuer plusieurs fois, sur plusieurs filières.',
+ tier_need:'Seuil {n} EACO',tier_alt:'≈ {u} USDT · {s} SOL',
+ t_small:'Petit Bâtisseur',t_standard:'Bâtisseur Standard',t_partner:'Partenaire Écosystème',t_dao:'Bâtisseur Noyau DAO',
+ p_small:'Point mensuel · vote général · certificat',p_standard:'Rapport trimestriel · vote filière · badge',p_partner:'Prime dividendes · canal direct · places prioritaires',b_small:'Affectez vos fonds aux secteurs de votre choix et bénéficiez des dividendes correspondants ; recevez les bulletins mensuels et annonces communautaires ; disposez d’un vote de gouvernance général ; certificat de contributeur sur chaîne.',h_small:'Figurant sur la liste des contributeurs Terre-Village EACO ; badge contributeur basique dans la communauté ; accès aux évènements publics de partage de l’écosystème.',b_standard:'Composez librement votre portefeuille entre secteurs et percevez des dividendes stables ; accès prioritaire aux rapports trimestriels détaillés ; vote sur les propositions sectorielles ; données de contribution enregistrées durablement sur chaîne.',h_standard:'Badge contributeur exclusif ; invitation aux réunions trimestrielles en ligne ; droit de nomination pour les œuvres ou stations ; mise en valeur dans la vitrine des contributeurs.',b_partner:'Répartissez librement vos fonds sur les cinq secteurs avec prime sur dividendes ; canal de communication individuel ; participez aux échanges et à la pré-évaluation des plans ; actifs et droits validés sur chaîne.',h_partner:'Identité partenaire exclusive ; places prioritaires aux évènements physiques ; droit de soumettre des projets à l’examen ; liste publique des partenaires ; droits de co-baptême.',b_dao:'Répartition sur les cinq secteurs avec pondération maximale aux dividendes ; intégrez le conseil noyau DAO, votez sur les règles cadres, budgets et orientations majeures ; documents d’audit approfondi exclusifs ; alignement stratégique long terme.',h_dao:'Membre du conseil écosystème ; droit de baptiser stations, campings et œuvres IP ; reconnaissance publique en tant que bâtisseur stratégique ; remerciement stratégique officiel ; NFT commémoratif.',lbl_benefit:'Avantages',lbl_honor:'Distinctions',p_dao:'Pondération max · siège conseil DAO · droit de nom',
+ settle_title:'Règles de règlement et de sortie',settle_sub:'Quatre étapes et quatre règles fermes : fonds traçables, droits échangeables, sortie documentée.',
+ s1:['Verrouiller le devis','Prix oracle figé 60 s, puis expire'],s2:['Payer on-chain','Vers la trésorerie multisig, une confirmation Solana'],s3:['Comptabiliser','Équivalent EACO au prix d’exécution'],s4:['Confirmer et certifier','NFT de droits émis après confirmation'],
+ r1t:'Critère de confirmation',r1:'Seule la réception effective sur l’adresse de trésorerie compte. Les paiements non confirmés apparaissent « en confirmation » et sont exclus de la progression et de la base de dividendes.',
+ r2t:'Objectif et remboursements',r2:'Si l’objectif de base n’est pas atteint, le principal est remboursé par la voie d’origine dans les 30 jours suivant la clôture, net des frais on-chain et coûts tiers engagés.',
+ r3t:'Droits et dividendes',r3:'Dividendes libellés en EACO, versés en USDT mensuellement. La pondération dépend du palier et de la filière, publiée on-chain.',
+ r4t:'Sortie et transfert',r4:'Les certificats sont transférables dans l’écosystème ; le transfert n’annule pas les obligations de dividendes acquises. Sortir fait perdre les nouveaux droits de vote.',
+ faq_title:'Questions fréquentes',
+ disc_title:'Avertissement conformité et risques : ',
+ disc_text:'Cette page est une démonstration et une information ; elle ne constitue pas une offre de titres, une sollicitation d’investissement ni une garantie de rendement. Le financement par jetons est strictement encadré ; la Chine continentale interdit l’émission de jetons et les opérations liées, et cette page ne cible pas les régions restreintes. Taux, montants et hashes sont illustratifs. Consultez des conseillers juridiques et fiscaux agréés.',
+ volatility_title:'Avis sur la volatilité des prix',volatility_desc1:'Le quota de contribution est libellé en EACO, les seuils des paliers sont fixes. USDT, USDC et SOL sont uniquement des moyens de paiement ; les montants sont calculés dynamiquement depuis les prix TWAP de l’oracle.',volatility_desc2:'Le taux de change est verrouillé à la validation de la commande pour 60 secondes. Si le transfert n’est pas achevé dans ce délai, le taux se rafraîchit et vous devez verrouiller un nouveau taux.',volatility_desc3:'Une protection de plage et un disjoncteur automatique sont actifs. Des variations extrêmes d’EACO ou de SOL peuvent activer des limites tarifaires ou suspendre temporairement le paiement en SOL pour préserver l’équité.',volatility_desc4:'Ce dispositif ne couvre que les écarts de change entre la commande et la confirmation on-chain. Aucune garantie de capital, aucune indemnisation pour les risques du marché secondaire. Tous les paramètres de risque sont votés par la DAO.',footer_line:'Positivité × Initiative × Collaboration × Amélioration',
+ modal_title:'Confirmer la participation',modal_tier:'Palier choisi',modal_cur:'Devise de paiement',modal_amount:'Montant ({c})',modal_cancel:'Annuler',modal_confirm:'Payer et enregistrer',
+ equiv_txt:'≈ {e} EACO équivalent (prix de référence)',quote_txt:'Devis valable {s} s',quote_exp:'Devis expiré — rouvrez la fenêtre',
+ err_min:'Minimum pour {c} : {m}',err_tier:'Ce palier exige {n} EACO équivalent',err_amt:'Saisissez un montant valide',err_wallet:'Connectez d’abord un portefeuille',
+ toast_copy:'Contrat copié',toast_wallet:'Portefeuille connecté (démo)',toast_pay:'Paiement envoyé, en attente de confirmation',toast_ok:'Confirmé. Certificat de droits émis',
+ faq:[
+  ['Pourquoi tout comptabiliser en EACO ?','Les quatre actifs ont des échelles de prix différentes. Des registres séparés fausseraient progression et dividendes ; l’équivalent EACO unifie le référentiel.'],
+  ['Si je paie en USDT (SPL)/USDC (SPL), vais-je recevoir des EACO ?','Pas de conversion automatique. Le paiement est converti en équivalent EACO pour le palier et la pondération ; le principal entre en trésorerie dans la devise d’origine.'],
+  ['Quelle différence avec un paiement en SOL ?','SOL partage la chaîne Solana : confirmation la plus rapide et frais minimes. Mais il est volatil, d’où un devis verrouillé 60 s à renouveler.'],
+  ['Qui fixe le taux ?','La démo utilise des valeurs fixes. En production : Pyth / Switchboard avec le TWAP 30 s indiqué.'],
+  ['Et si l’objectif n’est pas atteint ?','Remboursement par la voie d’origine dans les 30 jours après clôture, net des frais on-chain et coûts tiers engagés.']
+ ]
+}
+};
+
+/* ================= 六大洲 ================= */
+const REGIONS=[
+ {icon:'🗺️',name:{zh:'亚洲',en:'Asia',ru:'Азия',es:'Asia',ar:'آسيا',fr:'Asie'},list:[
+  {n:'Singapore',note:{zh:'MAS 审慎框架，持牌 VASP 体系成熟，RWA 枢纽。',en:'MAS prudential framework; mature VASP licensing; RWA hub.',ru:'Осторожный MAS, зрелое лицензирование VASP, хаб RWA.',es:'Marco MAS; VASP regulados; centro RWA.',ar:'إطار MAS؛ تراخيص VASP ناضجة؛ مركز RWA.',fr:'Cadre MAS ; VASP agréés ; hub RWA.'}},
+  {n:'Hong Kong SAR, China',note:{zh:'SFC 发牌，代币化债券与绿色资产领先，稳定币牌照推进。',en:'SFC licensing; leading tokenized bonds and green assets.',ru:'Лицензии SFC, лидер токенизации облигаций.',es:'Licencias SFC; líder en bonos tokenizados.',ar:'تراخيص SFC؛ رائد في السندات الرمزية.',fr:'Licences SFC ; leader des obligations tokenisées.'}},
+  {n:'Japan / South Korea',note:{zh:'FSA 登记制与实名交易体系，消费者保护成熟。',en:'FSA registration and real-name trading; mature consumer protection.',ru:'Регистрация FSA и реальные имена, зрелая защита.',es:'Registro FSA y trading con nombre real.',ar:'تسجيل FSA وتداول بالاسم الحقيقي.',fr:'Enregistrement FSA et trading nominatif.'}},
+  {n:'UAE（Dubai / Abu Dhabi）',note:{zh:'VARA 与 ADGM/FSRA 双层框架，自由区注册高效。',en:'Dual VARA and ADGM/FSRA regimes; efficient free zones.',ru:'Двойной режим VARA и ADGM/FSRA.',es:'Marcos VARA y ADGM/FSRA.',ar:'إطارا VARA وADGM/FSRA.',fr:'Cadres VARA et ADGM/FSRA.'}},
+  {n:'Thailand / Malaysia / Indonesia',note:{zh:'新兴市场，数字资产与代币发行规则逐步出台。',en:'Emerging markets with progressive digital-asset rules.',ru:'Развивающиеся рынки с новыми правилами.',es:'Mercados emergentes con normas progresivas.',ar:'أسواق ناشئة بقواعد تدريجية.',fr:'Marchés émergents, règles progressives.'}}
+ ]},
+ {icon:'🏛️',name:{zh:'欧洲',en:'Europe',ru:'Европа',es:'Europa',ar:'أوروبا',fr:'Europe'},list:[
+  {n:'Switzerland（Zug / Zurich）',note:{zh:'Crypto Valley，私法友好，基金会与机构密集。',en:'Crypto Valley; friendly private law; dense institutions.',ru:'Crypto Valley, дружелюбное частное право.',es:'Crypto Valley; derecho privado favorable.',ar:'وادي العملات المشفرة وقانون خاص ودود.',fr:'Crypto Valley ; droit privé favorable.'}},
+  {n:'United Kingdom（London）',note:{zh:'FCA 监管清晰，机构采用与衍生品市场活跃。',en:'Clear FCA regime; active institutional and derivatives market.',ru:'Понятный режим FCA, активный рынок.',es:'Régimen FCA claro; mercado activo.',ar:'نظام FCA واضح؛ سوق نشط.',fr:'Régime FCA clair ; marché actif.'}},
+  {n:'Estonia / Lithuania / Malta',note:{zh:'MiCA 下 VASP 登记精简，便于欧盟跨境展业。',en:'Streamlined VASP registration under MiCA for EU operations.',ru:'Упрощённая регистрация VASP по MiCA.',es:'Registro VASP simplificado bajo MiCA.',ar:'تسجيل VASP مبسط بموجب MiCA.',fr:'Enregistrement VASP simplifié sous MiCA.'}},
+  {n:'Germany / Portugal / Liechtenstein',note:{zh:'机构法规稳定，部分辖区税优，列支敦士登基金会制度完善。',en:'Stable rules; some tax-friendly; robust foundation regime.',ru:'Стабильные правила, льготы, надёжные фонды.',es:'Normas estables; fiscalidad favorable; fundaciones sólidas.',ar:'قواعد مستقرة ومزايا ضريبية ومؤسسات قوية.',fr:'Règles stables ; fiscalité favorable ; fondations solides.'}}
+ ]},
+ {icon:'🌍',name:{zh:'非洲',en:'Africa',ru:'Африка',es:'África',ar:'أفريقيا',fr:'Afrique'},list:[
+  {n:'Nigeria（Lagos）',note:{zh:'SEC 2025 框架覆盖发行、托管与交易所，采用率高。',en:'SEC 2025 framework covers issuance, custody and exchanges.',ru:'Рамки SEC 2025: выпуск, кастоди, биржи.',es:'Marco SEC 2025: emisión, custodia, exchanges.',ar:'إطار SEC 2025 للإصدار والحفظ والبورصات.',fr:'Cadre SEC 2025 : émission, garde, exchanges.'}},
+  {n:'South Africa（Cape Town / Joburg）',note:{zh:'FSCA 将加密资产纳入金融服务监管。',en:'FSCA regulates crypto assets as financial services.',ru:'FSCA регулирует криптоактивы как фин. услуги.',es:'FSCA regula cripto como servicio financiero.',ar:'FSCA تنظم الأصول المشفرة كخدمة مالية.',fr:'FSCA régule la crypto comme service financier.'}},
+  {n:'Mauritius / Seychelles',note:{zh:'专门立法覆盖 CASP、ICO 与稳定币，离岸牌照成熟。',en:'Dedicated laws cover CASP, ICOs and stablecoins.',ru:'Специальные законы: CASP, ICO, стейблкоины.',es:'Leyes específicas para CASP, ICO y stablecoins.',ar:'قوانين خاصة تغطي CASP وICO والعملات المستقرة.',fr:'Lois dédiées CASP, ICO et stablecoins.'}},
+  {n:'Rwanda / Namibia / Kenya',note:{zh:'2023–2026 陆续出台 VASP 与消费者保护规则。',en:'VASP and consumer-protection rules enacted 2023–2026.',ru:'Правила VASP и защиты потребителей 2023–2026.',es:'Normas VASP y consumo 2023–2026.',ar:'قواعد VASP وحماية المستهلك 2023–2026.',fr:'Règles VASP et protection consommateur 2023–2026.'}}
+ ]},
+ {icon:'🗽',name:{zh:'北美洲',en:'North America',ru:'Северная Америка',es:'Norteamérica',ar:'أمريكا الشمالية',fr:'Amérique du Nord'},list:[
+  {n:'United States（NY / WY / CO）',note:{zh:'州级差异大：怀俄明与科罗拉多友好，纽约 BitLicense 严格。',en:'Wide state divergence: WY/CO friendly; NY BitLicense strict.',ru:'Большие различия штатов: WY/CO мягче, NY строг.',es:'Fuerte divergencia estatal: WY/CO favorables; NY estricta.',ar:'تباين ولائي كبير: WY/CO ودودان؛ NY صارم.',fr:'Forte divergence : WY/CO favorables ; NY stricte.'}},
+  {n:'Canada（Toronto）',note:{zh:'OSC 等省级监管明确，交易所注册与披露成熟。',en:'Provincial regulators such as OSC are clear.',ru:'Провинциальные регуляторы (OSC) понятны.',es:'Reguladores provinciales como OSC claros.',ar:'منظمون مقاطعيون واضحون مثل OSC.',fr:'Régulateurs provinciaux clairs (OSC).'}},
+  {n:'Bahamas / Mexico',note:{zh:'SCB 数字资产法；墨西哥推进金融科技与加密规则。',en:'SCB digital-asset law; Mexico advancing fintech rules.',ru:'Закон SCB; Мексика развивает финтех-правила.',es:'Ley SCB de activos digitales; México avanza.',ar:'قانون SCB؛ المكسيك تتقدم في قواعد التقنية المالية.',fr:'Loi SCB ; le Mexique progresse.'}}
+ ]},
+ {icon:'🌴',name:{zh:'拉丁美洲',en:'Latin America',ru:'Латинская Америка',es:'Latinoamérica',ar:'أمريكا اللاتينية',fr:'Amérique latine'},list:[
+  {n:'El Salvador',note:{zh:'比特币法定地位立法先驱，美元化经济下采用率高。',en:'Pioneer of Bitcoin legal-tender law; high adoption.',ru:'Первопроходец статуса Bitcoin, высокое принятие.',es:'Pionero del curso legal del Bitcoin; adopción alta.',ar:'رائد قانونية بيتكوين؛ تبنٍّ مرتفع.',fr:'Pionnier du cours légal du Bitcoin ; forte adoption.'}},
+  {n:'Brazil（São Paulo）',note:{zh:'综合加密立法，交易所须注册，拉美最大市场之一。',en:'Comprehensive crypto law; exchanges must register.',ru:'Комплексный закон, биржи регистрируются.',es:'Ley cripto integral; exchanges registrados.',ar:'تشريع شامل؛ تسجيل البورصات.',fr:'Loi crypto complète ; exchanges enregistrés.'}},
+  {n:'Argentina / Chile / Colombia / Uruguay',note:{zh:'框架演进中，稳定币与跨境支付需求旺盛，需逐国核验。',en:'Evolving frameworks; strong stablecoin demand; verify per country.',ru:'Меняющиеся рамки, спрос на стейблкоины; проверка по странам.',es:'Marcos en evolución; demanda de stablecoins; verificar país.',ar:'أطر متطورة وطلب على العملات المستقرة؛ تحقق قطري.',fr:'Cadres évolutifs ; demande de stablecoins ; vérifier pays par pays.'}}
+ ]},
+ {icon:'🏝️',name:{zh:'大洋洲',en:'Oceania',ru:'Океания',es:'Oceanía',ar:'أوقيانوسيا',fr:'Océanie'},list:[
+  {n:'Australia（Sydney）',note:{zh:'ASIC 监管下交易所注册与消费者保护完善。',en:'ASIC-regulated exchange registration and consumer protection.',ru:'Регистрация бирж и защита при ASIC.',es:'Registro y protección del consumidor bajo ASIC.',ar:'تسجيل البورصات وحماية المستهلك تحت ASIC.',fr:'Inscription et protection sous ASIC.'}},
+  {n:'New Zealand（Auckland）',note:{zh:'FMA 数字资产指引清晰，AML 与发行规则落地中。',en:'Clear FMA guidance; AML and issuance rules rolling out.',ru:'Понятные указания FMA, внедряются AML-правила.',es:'Guía FMA clara; normas AML en despliegue.',ar:'إرشادات FMA واضحة؛ قواعد AML قيد التطبيق.',fr:'Orientations FMA claires ; règles AML en déploiement.'}}
+ ]}
+];
+
+/* ================= 状态 ================= */
+const store={
+  get(k){try{return localStorage.getItem(k)}catch(e){return null}},
+  set(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+};
+const state={
+  lang:store.get('eaco_lang')||'zh',
+  theme:store.get('eaco_theme')||'cn',
+  wallet:null, tier:0, cur:'USDT',
+  pledges:(function(){try{return JSON.parse(store.get('eaco_pledges2')||'[]')}catch(e){return []}})(),
+  quote:{unit:null,at:0,ttl:60}
+};
+
+const $=id=>document.getElementById(id);
+function t(k,vars){
+  let s=(I18N[state.lang]&&I18N[state.lang][k]);
+  if(s===undefined) s=I18N.zh[k]!==undefined?I18N.zh[k]:k;
+  if(vars&&typeof s==='string'){Object.keys(vars).forEach(x=>{s=s.split('{'+x+'}').join(vars[x]);});}
+  return s;
+}
+function fmt(n,dec){
+  if(n===null||n===undefined||isNaN(n))return '—';
+  return Number(n).toLocaleString(state.lang==='ar'?'en-US':'zh-CN',{maximumFractionDigits:dec===undefined?2:dec,minimumFractionDigits:0});
+}
+function toast(msg){const el=$('toast');el.textContent=msg;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('show'),2500);}
+
+/* ================= 渲染 ================= */
+function renderStatic(){
+  document.documentElement.lang=state.lang;
+  document.documentElement.dataset.theme=state.theme;
+  document.documentElement.dir=(state.lang==='ar')?'rtl':'ltr';
+  document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.dataset.i18n;
+    const v=(k==='modal_amount')?t(k,{c:state.cur}):t(k);
+    if(typeof v==='string')el.textContent=v;});
+  $('langSelect').innerHTML=LANGS.map(l=>`<option value="${l.code}"${l.code===state.lang?' selected':''}>${l.label}</option>`).join('');
+  $('themeSelect').innerHTML=STYLES.map(s=>`<option value="${s.code}"${s.code===state.theme?' selected':''}>${s.label}</option>`).join('');
+}
+
+function renderCoins(){
+  $('coinGrid').innerHTML=CUR_KEYS.map(k=>{
+    const c=COINS[k];
+    const e=eacoPer(k);
+    return `<div class="coin ${k.toLowerCase()}">
+      <div class="top"><div class="sym"><span class="tick">${k==='EACO'?'E':k.slice(0,1)}</span>${c.name}</div><span class="type">${c.type[state.lang]}</span></div>
+      <div class="rate">${k==='EACO'?('1 EACO ≈ $'+fmt(c.usd,4)):t('rate_line',{c:c.name,e:fmt(e,0)})}</div>
+      <div class="desc">${c.desc[state.lang]}</div>
+      <div class="use">${c.use[state.lang]} · 1 ${c.name} ≈ $${fmt(c.usd,4)}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderIndustries(){
+  $('industryGrid').innerHTML=SECTORS.map(s=>{
+    const txt=SECTOR_TXT[state.lang][s.key];
+    return `<div class="ind"><div class="icon">${s.icon}</div><h3>${txt[0]}</h3><p>${txt[1]}</p><div class="tags"><span>${txt[2]}</span></div></div>`;
+  }).join('');
+}
+
+function renderLadder(){
+  const max=Math.max(...SECTORS.map(x=>x.goal));
+  $('ladderList').innerHTML=SECTORS.map(s=>{
+    const name=SECTOR_TXT[state.lang][s.key][0];
+    const w=(s.goal/max*100).toFixed(1);
+    return `<div class="lad">
+      <div class="nm">${s.icon} ${name}</div>
+      <div class="bar"><i style="width:${w}%"></i></div>
+      <div class="val mono">${fmt(s.goal/1e6,0)}M → ${fmt(s.stretch/1e6,0)}M</div>
+    </div>`;
+  }).join('');
+}
+
+function renderRegions(){
+  $('regionList').innerHTML=REGIONS.map(r=>`<div class="region"><h3>${r.icon} ${r.name[state.lang]}</h3>${
+    r.list.map(c=>`<div class="country"><div class="cn">${c.n}</div><div class="note">${c.note[state.lang]}</div></div>`).join('')
+  }</div>`).join('');
+}
+
+function tierAlt(needEaco){
+  const usdt=needEaco/eacoPer('USDT'), sol=needEaco/eacoPer('SOL');
+  return t('tier_alt',{u:fmt(usdt,0),s:fmt(sol,2)});
+}
+function renderTiers(){
+  $('tierList').innerHTML=TIERS.map((tr,i)=>{
+    return `<div class="tier ${state.tier===i?'active':''}" onclick="selectTier(${i})">
+      <h4><span>${t('t_'+tr.key)}</span><span class="price">${t('tier_need',{n:fmt(tr.need,0)})}</span></h4>
+      <div class="alt">${tierAlt(tr.need)}</div>
+      <div class="sub"><h5>${t('lbl_benefit')}</h5><p>${t('b_'+tr.key)}</p></div>
+      <div class="sub"><h5>${t('lbl_honor')}</h5><p>${t('h_'+tr.key)}</p></div>
+    </div>`;
+  }).join('');
+}
+
+function totals(){
+  const myEaco=state.pledges.reduce((s,p)=>s+p.eaco,0);
+  const raised=SEED_RAISED+myEaco;
+  return {raised,usd:raised*EACO_USD,backers:SEED_BACKERS+state.pledges.length,pct:Math.min(100,raised/TARGET*100)};
+}
+function renderProgress(){
+  const tt=totals();
+  $('progBar').style.width=tt.pct.toFixed(1)+'%';
+  $('raisedEaco').textContent=fmt(tt.raised,0);
+  $('raisedUsd').textContent='$'+fmt(tt.usd,0);
+  $('targetEaco').textContent=fmt(TARGET,0);
+  $('backers').textContent=fmt(tt.backers,0);
+  const body=$('ledgerBody');
+  if(!state.pledges.length){body.innerHTML='';$('ledgerEmpty').style.display='block';return;}
+  $('ledgerEmpty').style.display='none';
+  body.innerHTML=state.pledges.slice().reverse().map(p=>`<tr>
+    <td class="mono">${p.wallet.slice(0,4)}…${p.wallet.slice(-4)}</td>
+    <td>${p.cur}</td>
+    <td>${fmt(p.amt,COINS[p.cur].dec)}</td>
+    <td>${fmt(p.eaco,0)}</td>
+    <td><span class="st ${p.status==='ok'?'ok':'pending'}">${t(p.status==='ok'?'st_ok':'st_pending')}</span></td>
+    <td class="hash mono">${p.hash.slice(0,8)}…${p.hash.slice(-6)}</td>
+  </tr>`).join('');
+}
+
+function renderSettle(){
+  $('stepList').innerHTML=[1,2,3,4].map(i=>{
+    const a=t('s'+i);
+    return `<div class="step"><div class="n">${i}</div><h4>${a[0]}</h4><p>${a[1]}</p></div>`;
+  }).join('');
+  $('ruleList').innerHTML=[1,2,3,4].map(i=>{
+    return `<div class="faq-item"><h4>${t('r'+i+'t')}</h4><p>${t('r'+i)}</p></div>`;
+  }).join('');
+}
+
+function renderFAQ(){
+  $('faqList').innerHTML=t('faq').map(a=>`<div class="faq-item"><h4>${a[0]}</h4><p>${a[1]}</p></div>`).join('');
+}
+
+function renderAll(){
+  renderStatic();renderCoins();renderIndustries();renderLadder();renderRegions();renderTiers();renderProgress();renderSettle();renderFAQ();updateConnectBtn();
+}
+
+/* ================= 交互 ================= */
+function scrollToCampaign(){$('campaign').scrollIntoView({behavior:'smooth'});}
+function selectTier(i){state.tier=i;renderTiers();}
+
+function connectWallet(){
+  const sol=window.solana;
+  if(sol&&sol.isPhantom){
+    sol.connect().then(()=>{state.wallet=sol.publicKey.toString();toast(t('toast_wallet'));updateConnectBtn();})
+      .catch(()=>demoWallet());
+  }else demoWallet();
+}
+function demoWallet(){
+  const cs='123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
+  let w='';for(let i=0;i<44;i++)w+=cs[(Math.random()*cs.length)|0];
+  state.wallet=w;toast(t('toast_wallet'));updateConnectBtn();
+}
+function updateConnectBtn(){
+  const b=$('connectBtn');if(!b)return;
+  b.textContent=state.wallet?state.wallet.slice(0,4)+'…'+state.wallet.slice(-4):t('cta_connect');
+}
+
+function renderCurSeg(){
+  $('curSeg').innerHTML=CUR_KEYS.map(k=>`<button class="${state.cur===k?'on':''}" onclick="setCur('${k}')">${k}</button>`).join('');
+}
+function setCur(k){
+  state.cur=k;renderCurSeg();
+  const tr=TIERS[state.tier];
+  let v=tr.need/eacoPer(k);
+  v=COINS[k].dec===0?Math.round(v):Math.round(v*100)/100;
+  $('amountInput').value=v;
+  $('modalErr').textContent='';
+  $('modal_amount').textContent=t('modal_amount',{c:k});
+  refreshEquiv(true);
+}
+function minFor(k){return COINS[k].min;}
+
+function openModal(){
+  if(!state.wallet){toast(t('err_wallet'));connectWallet();}
+  const tr=TIERS[state.tier];
+  $('modalTier').textContent=t('t_'+tr.key)+' · '+t('tier_need',{n:fmt(tr.need,0)});
+  state.cur=state.cur||'USDT';
+  renderCurSeg();
+  let v=tr.need/eacoPer(state.cur);
+  v=COINS[state.cur].dec===0?Math.round(v):Math.round(v*100)/100;
+  $('amountInput').value=v;
+  $('modalErr').textContent='';
+  lockQuote();
+  $('modalMask').classList.add('show');
+}
+function closeModal(){$('modalMask').classList.remove('show');stopQuote();}
+
+function lockQuote(){
+  state.quote.unit=state.cur;state.quote.at=Date.now();
+  refreshEquiv(true);
+  stopQuote();
+  state._timer=setInterval(()=>{
+    const left=Math.max(0,state.quote.ttl-Math.floor((Date.now()-state.quote.at)/1000));
+    if(left<=0){stopQuote();$('quoteBox').textContent=t('quote_exp');$('confirmBtn').disabled=true;return;}
+    $('quoteBox').textContent=t('quote_txt',{s:left});
+    $('confirmBtn').disabled=(left<=0);
+  },1000);
+}
+function stopQuote(){if(state._timer){clearInterval(state._timer);state._timer=null;}}
+
+function refreshEquiv(reset){
+  const amt=parseFloat($('amountInput').value);
+  const c=COINS[state.cur];
+  if(!amt||amt<=0){$('equivBox').textContent='—';return;}
+  const eaco=amt*eacoPer(state.cur);
+  $('equivBox').textContent=t('equiv_txt',{e:fmt(eaco,0)});
+  if(reset){$('confirmBtn').disabled=false;$('modalErr').textContent='';}
+}
+
+function confirmPledge(){
+  const amt=parseFloat($('amountInput').value);
+  const c=COINS[state.cur];
+  if(!amt||amt<=0){$('modalErr').textContent=t('err_amt');return;}
+  if(amt<c.min){$('modalErr').textContent=t('err_min',{c:state.cur,m:fmt(c.min,c.dec)});return;}
+  const need=TIERS[state.tier].need;
+  if(amt*eacoPer(state.cur)<need){$('modalErr').textContent=t('err_tier',{n:fmt(need,0)});return;}
+  if(!state.wallet){$('modalErr').textContent=t('err_wallet');return;}
+  if(Date.now()-state.quote.at>state.quote.ttl*1000){$('modalErr').textContent=t('quote_exp');return;}
+  const B58='123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
+  const hash=Array.from({length:88},()=>B58[(Math.random()*58)|0]).join(''); // Solana 风格签名（演示）
+  const p={wallet:state.wallet,cur:state.cur,amt:amt,eaco:amt*eacoPer(state.cur),hash,status:'pending',time:Date.now()};
+  state.pledges.push(p);
+  persist();closeModal();renderProgress();
+  toast(t('toast_pay'));
+  setTimeout(()=>{
+    p.status='ok';persist();renderProgress();
+    toast(t('toast_ok'));
+  },7000);
+}
+function persist(){store.set('eaco_pledges2',JSON.stringify(state.pledges));}
+
+function copyCA(){
+  const ca=$('caText').textContent.trim();
+  const done=()=>toast(t('toast_copy'));
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(ca).then(done).catch(done);}
+  else{const ta=document.createElement('textarea');ta.value=ca;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();done();}
+}
+
+/* 事件绑定 */
+$('langSelect').addEventListener('change',e=>{
+  state.lang=e.target.value;store.set('eaco_lang',state.lang);renderAll();
+  if($('modalMask').classList.contains('show')){$('modal_amount').textContent=t('modal_amount',{c:state.cur});refreshEquiv(false);}
+});
+$('themeSelect').addEventListener('change',e=>{state.theme=e.target.value;store.set('eaco_theme',state.theme);renderStatic();});
+$('amountInput').addEventListener('input',()=>refreshEquiv(true));
+$('modalMask').addEventListener('click',e=>{if(e.target===$('modalMask'))closeModal();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+
+/* 演示金库地址（明确的假地址，避免误转） */
+const TREASURY='MYDeiwQV8H4MR8P33p76UcjDEu1hp4kwDXKs4QzCxE8Y';  // 演示金库地址（非真实，请勿转入）
+$('treasuryShort').textContent='DEMO·'+TREASURY.slice(0,5)+'…'+TREASURY.slice(-5);
+
+/* 刷新后校准：超过 7 秒的待确认支付视为已确认 */
+state.pledges.forEach(p=>{if(p.status==='pending'&&Date.now()-p.time>7000)p.status='ok';});
+
+renderAll();
+</script>
+</body>
+</html>
+<!-- （注：内容由AI生成） -->
