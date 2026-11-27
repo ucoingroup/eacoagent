@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="zh" data-theme="cn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EACO · Earth's Best Coin 全球众筹平台</title>
+<meta name="description" content="EACO (Earth's Best Coin) Solana 链上 AI+RWA+Web3 众筹演示页：行业适配、全球友好版图、多语言与多风格闭环体验。">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+<style>
+/* ============ 基础与主题变量 ============ */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --paper:#f6f1e7; --ink:#1c1a17; --muted:#6b6257; --accent:#a63a2e; --accent2:#3d6b54;
+  --line:#d9cdb4; --card:#fffdf8; --soft:rgba(166,58,46,.08); --shadow:0 10px 30px rgba(40,30,20,.12);
+  --radius:18px; --font:"Noto Serif SC", "Noto Sans SC", system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+html[data-theme="jp"]{
+  --paper:#f3f1ec; --ink:#26323f; --muted:#68717c; --accent:#46586f; --accent2:#8a7a5c;
+  --line:#ddd6c8; --card:#fbfaf6; --soft:rgba(70,88,111,.08); --shadow:0 8px 24px rgba(40,50,60,.10);
+  --radius:14px; --font:"Noto Sans SC", system-ui, -apple-system, "Hiragino Sans", sans-serif;
+}
+html[data-theme="kr"]{
+  --paper:#f7f7fb; --ink:#1d1b2e; --muted:#5b5872; --accent:#7c5cff; --accent2:#ff7eb6;
+  --line:#e6e2f5; --card:#ffffff; --soft:rgba(124,92,255,.08); --shadow:0 14px 36px rgba(90,70,180,.16);
+  --radius:22px; --font:"Noto Sans SC", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+html[dir="rtl"]{font-family:var(--font)}
+body{background:var(--paper);color:var(--ink);font-family:var(--font);line-height:1.7;transition:background .3s,color .3s}
+a{color:var(--accent);text-decoration:none}
+img{max-width:100%}
+.wrap{max-width:1180px;margin:0 auto;padding:0 22px}
+/* ============ 顶部导航 ============ */
+header{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;gap:18px;padding:14px 0;flex-wrap:wrap}
+.logo{font-weight:900;font-size:20px;letter-spacing:.5px;display:flex;align-items:center;gap:8px}
+.logo .dot{width:12px;height:12px;border-radius:50%;background:var(--accent);display:inline-block}
+.nav-links{display:flex;gap:18px;flex-wrap:wrap;margin-left:auto}
+.nav-links a{color:var(--muted);font-size:14px}
+.nav-links a:hover{color:var(--accent)}
+select{background:var(--card);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:6px 10px;font-family:inherit;font-size:13px;cursor:pointer}
+/* ============ Hero ============ */
+.hero{padding:64px 0 40px;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 300px at 80% 0%,var(--soft),transparent 70%);pointer-events:none}
+.hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:36px;align-items:center;position:relative}
+.badge{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:13px;color:var(--muted);margin-bottom:18px;background:var(--card)}
+h1{font-size:clamp(30px,4.4vw,46px);line-height:1.25;font-weight:900;margin-bottom:16px}
+h1 .hl{color:var(--accent)}
+.hero p.sub{color:var(--muted);font-size:16px;max-width:560px;margin-bottom:26px}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:26px 0}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px}
+.stat .k{font-size:12px;color:var(--muted);margin-bottom:4px}
+.stat .v{font-size:18px;font-weight:700;word-break:break-all}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn{border:none;cursor:pointer;font-family:inherit;font-size:15px;font-weight:600;border-radius:12px;padding:12px 22px;transition:transform .15s,box-shadow .15s}
+.btn-primary{background:var(--accent);color:#fff}
+html[data-theme="kr"] .btn-primary{background:linear-gradient(120deg,var(--accent),var(--accent2));color:#fff}
+.btn-ghost{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+.btn:hover{transform:translateY(-2px)}
+/* 卡片面板 */
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:26px}
+.token-card .ca{font-size:12px;background:var(--soft);border-radius:10px;padding:10px;word-break:break-all;font-family:ui-monospace,monospace}
+.token-card .row{display:flex;justify-content:space-between;font-size:13px;padding:8px 0;border-bottom:1px dashed var(--line)}
+.token-card .row:last-child{border-bottom:none}
+/* ============ 区块通用 ============ */
+section{padding:56px 0}
+.sec-head{margin-bottom:28px}
+.sec-head h2{font-size:clamp(22px,3vw,30px);font-weight:800;margin-bottom:8px}
+.sec-head p{color:var(--muted);max-width:640px}
+/* 行业网格 */
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.ind{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px;transition:transform .2s}
+.ind:hover{transform:translateY(-4px)}
+.ind .icon{font-size:28px;margin-bottom:10px}
+.ind h3{font-size:16px;margin-bottom:6px}
+.ind p{font-size:13px;color:var(--muted)}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.tags span{font-size:11px;background:var(--soft);color:var(--accent);border-radius:999px;padding:3px 10px}
+/* 全球版图 */
+.region{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;margin-bottom:18px}
+.region h3{font-size:18px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.country{border-top:1px dashed var(--line);padding:12px 0}
+.country:first-of-type{border-top:none}
+.country .cn{font-weight:700;font-size:15px}
+.country .cc{font-size:13px;color:var(--accent);margin:2px 0}
+.country .note{font-size:13px;color:var(--muted)}
+/* 众筹区 */
+.campaign{display:grid;grid-template-columns:1.1fr .9fr;gap:24px}
+.progress-bar{height:14px;background:var(--soft);border-radius:999px;overflow:hidden;margin:14px 0}
+.progress-bar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0;transition:width .6s}
+.camp-meta{display:flex;gap:24px;flex-wrap:wrap;font-size:14px}
+.camp-meta b{display:block;font-size:20px}
+.tier{border:1px solid var(--line);border-radius:var(--radius);padding:18px;margin-bottom:14px;cursor:pointer;transition:border .2s,background .2s}
+.tier.active{border-color:var(--accent);background:var(--soft)}
+.tier h4{font-size:16px;display:flex;justify-content:space-between}
+.tier .price{color:var(--accent);font-weight:700}
+.tier ul{margin:8px 0 0 18px;font-size:13px;color:var(--muted)}
+/* 账本 */
+.ledger{margin-top:18px}
+.ledger table{width:100%;border-collapse:collapse;font-size:13px}
+.ledger th,.ledger td{padding:10px 8px;border-bottom:1px dashed var(--line);text-align:left}
+.ledger td.mono{font-family:ui-monospace,monospace;font-size:12px}
+.empty{color:var(--muted);font-size:13px;padding:16px 0;text-align:center}
+/* FAQ */
+.faq-item{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;margin-bottom:12px}
+.faq-item h4{font-size:15px;margin-bottom:6px}
+.faq-item p{font-size:13px;color:var(--muted)}
+/* 弹窗 */
+.modal-mask{position:fixed;inset:0;background:rgba(10,10,20,.45);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
+.modal-mask.show{display:flex}
+.modal{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);max-width:440px;width:100%;padding:28px;box-shadow:var(--shadow)}
+.modal h3{margin-bottom:14px}
+.modal label{font-size:13px;color:var(--muted);display:block;margin:12px 0 6px}
+.modal input{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font-family:inherit;font-size:15px}
+.modal .err{color:#c0392b;font-size:12px;margin-top:6px;min-height:16px}
+.modal .actions{display:flex;gap:10px;margin-top:20px;justify-content:flex-end}
+/* 免责 */
+.disclaimer{background:var(--soft);border:1px dashed var(--line);border-radius:var(--radius);padding:20px;font-size:12.5px;color:var(--muted);margin-top:30px}
+footer{padding:30px 0 50px;color:var(--muted);font-size:13px;text-align:center;border-top:1px solid var(--line);margin-top:30px}
+.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:12px 20px;border-radius:12px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .3s;z-index:200}
+.toast.show{opacity:1}
+/* 响应式 */
+@media(max-width:900px){
+  .hero-grid,.campaign{grid-template-columns:1fr}
+  .grid-4{grid-template-columns:repeat(2,1fr)}
+  .grid-3{grid-template-columns:1fr}
+  .nav-links{margin-left:0}
+}
+@media(max-width:560px){
+  .grid-4{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <div class="logo"><span class="dot"></span>EACO · Earth's Best Coin</div>
+    <nav class="nav-links">
+      <a href="#overview" data-i18n="nav_overview">概览</a>
+      <a href="#industries" data-i18n="nav_industries">适配行业</a>
+      <a href="#map" data-i18n="nav_map">全球版图</a>
+      <a href="#campaign" data-i18n="nav_campaign">众筹参与</a>
+      <a href="#faq" data-i18n="nav_faq">常见问题</a>
+    </nav>
+    <select id="langSelect" aria-label="Language"></select>
+    <select id="themeSelect" aria-label="Style"></select>
+  </div>
+</header>
+
+<!-- ===== Hero ===== -->
+<section class="hero" id="overview">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="badge" data-i18n="hero_badge">Solana 链上 · AI + RWA + Web3 · 地球村共建</span>
+      <h1><span data-i18n="hero_title1">让每一份善意</span> <span class="hl" data-i18n="hero_title2">在链上汇聚成文明的力量</span></h1>
+      <p class="sub" data-i18n="hero_sub">EACO 以「正能量 × 积极态度 × 全球协作 × 持续优化」为理念，面向亚洲与地球村的实体项目开放众筹连接。本页为功能演示，不构成任何投资建议。</p>
+      <div class="stats">
+        <div class="stat"><div class="k" data-i18n="stat_supply">总供应量</div><div class="v">1,350,000,000 E</div></div>
+        <div class="stat"><div class="k" data-i18n="stat_lp">LP 永久锁定</div><div class="v">10%</div></div>
+        <div class="stat"><div class="k" data-i18n="stat_chain">公链</div><div class="v">Solana</div></div>
+        <div class="stat"><div class="k" data-i18n="stat_model">融合认知模型</div><div class="v">100+</div></div>
+      </div>
+      <div class="btns">
+        <button class="btn btn-primary" onclick="scrollToCampaign()" data-i18n="cta_join">参与众筹</button>
+        <button class="btn btn-ghost" onclick="copyCA()" data-i18n="cta_copy">复制合约地址</button>
+      </div>
+    </div>
+    <div class="panel token-card">
+      <div class="row"><span data-i18n="tk_symbol">代币符号</span><b>EACO / E</b></div>
+      <div class="row"><span data-i18n="tk_ca">合约地址 CA</span></div>
+      <div class="ca" id="caText">DqfoyZH96RnvZusSp3Cdncjpyp3C74ZmJzGhjmHnDHRH</div>
+      <div class="row" style="margin-top:12px"><span data-i18n="tk_official">官网</span><a href="https://ucoingroup.github.io/earths-best-coin/" target="_blank" rel="noopener">ucoingroup.github.io</a></div>
+      <div class="row"><span data-i18n="tk_market">行情页面</span><a href="https://orbmarkets.io/token/DqfoyZH96RnvZusSp3Cdncjpyp3C74ZmJzGhjmHnDHRH" target="_blank" rel="noopener">Orb Markets</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 行业 ===== -->
+<section id="industries">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 data-i18n="ind_title">哪些行业适合使用 EACO 模式众筹</h2>
+      <p data-i18n="ind_sub">优先选择可验证、可溯源、具备真实产出与利他属性的实体与内容项目；链上记录用于公示资金用途与进度，降低跨区域协作的信任成本。</p>
+    </div>
+    <div class="grid-4" id="industryGrid"></div>
+  </div>
+</section>
+
+<!-- ===== 全球版图 ===== -->
+<section id="map" style="background:var(--soft)">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 data-i18n="map_title">地球村六大洲 Web3 友好国家与城市</h2>
+      <p data-i18n="map_sub">以下为公开监管框架相对清晰、允许或规范开展虚拟资产业务的代表性辖区；具体业务须先完成当地合规评估，受限辖区不在服务范围。</p>
+    </div>
+    <div id="regionList"></div>
+  </div>
+</section>
+
+<!-- ===== 众筹闭环 ===== -->
+<section id="campaign">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 data-i18n="camp_title">EACO 地球村共建计划 · 演示众筹</h2>
+      <p data-i18n="camp_sub">选择档位 → 连接钱包 → 确认金额 → 链上记账 → 进度实时更新，全流程在本页内闭环演示。</p>
+    </div>
+    <div class="campaign">
+      <div class="panel">
+        <h3 data-i18n="proj_name">全球户用储能与社区教育共建项目（示范）</h3>
+        <div class="progress-bar"><i id="progBar"></i></div>
+        <div class="camp-meta">
+          <div><b id="raised">0</b><span data-i18n="raised">已筹 (EACO)</span></div>
+          <div><b>10,000,000</b><span data-i18n="target">目标 (EACO)</span></div>
+          <div><b id="backers">0</b><span data-i18n="backers">支持者</span></div>
+          <div><b>27</b><span data-i18n="days">剩余天数</span></div>
+        </div>
+        <div class="ledger">
+          <table>
+            <thead><tr><th data-i18n="th_wallet">钱包</th><th data-i18n="th_tier">档位</th><th data-i18n="th_amount">金额</th><th data-i18n="th_hash">交易哈希</th></tr></thead>
+            <tbody id="ledgerBody"></tbody>
+          </table>
+          <div class="empty" id="ledgerEmpty" data-i18n="empty_history">暂无众筹记录，等待第一位共建者。</div>
+        </div>
+      </div>
+      <div>
+        <div id="tierList"></div>
+        <div class="btns" style="margin-top:14px">
+          <button class="btn btn-primary" id="connectBtn" onclick="connectWallet()" data-i18n="cta_connect">连接钱包</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head"><h2 data-i18n="faq_title">常见问题</h2></div>
+    <div id="faqList"></div>
+    <div class="disclaimer">
+      <b data-i18n="disc_title">合规与风险提示：</b>
+      <span data-i18n="disc_text">本页面为产品功能演示与信息展示，不构成证券发行、投资要约或收益承诺。代币融资在不同辖区受严格监管，参与前请咨询当地持牌法律与税务顾问，遵守所在国家/地区法律法规；被列为受限辖区的用户请勿参与。页面数据为示例数据，链上交易哈希为演示生成。</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>EACO · Earth's Best Coin · <span data-i18n="footer_line">正能量 × 积极态度 × 全球协作 × 持续优化</span></div>
+  <div style="margin-top:8px" id="footerCa">CA: DqfoyZH96RnvZusSp3Cdncjpyp3C74ZmJzGhjmHnDHRH</div>
+</footer>
+
+<!-- 弹窗 -->
+<div class="modal-mask" id="modalMask">
+  <div class="modal">
+    <h3 data-i18n="modal_title">确认众筹参与</h3>
+    <div class="row" style="font-size:13px;color:var(--muted)" data-i18n="modal_tier">已选档位</div>
+    <div id="modalTier" style="font-weight:700;margin-bottom:6px"></div>
+    <label for="amountInput" data-i18n="modal_amount">参与金额（EACO）</label>
+    <input id="amountInput" type="number" min="1" placeholder="50">
+    <div class="err" id="modalErr"></div>
+    <div class="actions">
+      <button class="btn btn-ghost" onclick="closeModal()" data-i18n="modal_cancel">取消</button>
+      <button class="btn btn-primary" onclick="confirmPledge()" data-i18n="modal_confirm">确认并记账</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ==================== 数据：语言与风格 ==================== */
+const LANGS = [
+  {code:'zh', label:'中文'},
+  {code:'en', label:'English'},
+  {code:'ru', label:'Русский'},
+  {code:'es', label:'Español'},
+  {code:'ar', label:'العربية'},
+  {code:'fr', label:'Français'}
+];
+const STYLES = [
+  {code:'cn', label:'新中式水墨'},
+  {code:'jp', label:'日式极简'},
+  {code:'kr', label:'韩系潮流'}
+];
+
+/* ==================== i18n 文案 ==================== */
+const I18N = {
+zh:{
+  nav_overview:'概览',nav_industries:'适配行业',nav_map:'全球版图',nav_campaign:'众筹参与',nav_faq:'常见问题',
+  hero_badge:'Solana 链上 · AI + RWA + Web3 · 地球村共建',
+  hero_title1:'让每一份善意',hero_title2:'在链上汇聚成文明的力量',
+  hero_sub:'EACO 以「正能量 × 积极态度 × 全球协作 × 持续优化」为理念，面向亚洲与地球村的实体项目开放众筹连接。本页为功能演示，不构成任何投资建议。',
+  stat_supply:'总供应量',stat_lp:'LP 永久锁定',stat_chain:'公链',stat_model:'融合认知模型',
+  cta_join:'参与众筹',cta_copy:'复制合约地址',
+  tk_symbol:'代币符号',tk_ca:'合约地址 CA',tk_official:'官网',tk_market:'行情页面',
+  ind_title:'哪些行业适合使用 EACO 模式众筹',
+  ind_sub:'优先选择可验证、可溯源、具备真实产出与利他属性的实体与内容项目；链上记录用于公示资金用途与进度，降低跨区域协作的信任成本。',
+  map_title:'地球村六大洲 Web3 友好国家与城市',
+  map_sub:'以下为公开监管框架相对清晰、允许或规范开展虚拟资产业务的代表性辖区；具体业务须先完成当地合规评估，受限辖区不在服务范围。',
+  camp_title:'EACO 地球村共建计划 · 演示众筹',
+  camp_sub:'选择档位 → 连接钱包 → 确认金额 → 链上记账 → 进度实时更新，全流程在本页内闭环演示。',
+  proj_name:'全球户用储能与社区教育共建项目（示范）',
+  raised:'已筹 (EACO)',target:'目标 (EACO)',backers:'支持者',days:'剩余天数',
+  th_wallet:'钱包',th_tier:'档位',th_amount:'金额',th_hash:'交易哈希',empty_history:'暂无众筹记录，等待第一位共建者。',
+  faq_title:'常见问题',
+  disc_title:'合规与风险提示：',
+  disc_text:'本页面为产品功能演示与信息展示，不构成证券发行、投资要约或收益承诺。代币融资在不同辖区受严格监管，参与前请咨询当地持牌法律与税务顾问，遵守所在国家/地区法律法规；被列为受限辖区的用户请勿参与。页面数据为示例数据，链上交易哈希为演示生成。',
+  footer_line:'正能量 × 积极态度 × 全球协作 × 持续优化',
+  cta_connect:'连接钱包',cta_connected:'已连接：',
+  modal_title:'确认众筹参与',modal_tier:'已选档位',modal_amount:'参与金额（EACO）',modal_cancel:'取消',modal_confirm:'确认并记账',
+  toast_copied:'合约地址已复制',toast_wallet:'钱包已连接（演示）',toast_done:'记账成功，感谢共建！',
+  err_amount:'请输入不小于 1 的有效金额',err_wallet:'请先连接钱包',
+  ind_tags:['RWA','实体','内容','社区'],
+  faq:[
+    ['EACO 是什么？','EACO（Earth\'s Best Coin）是部署在 Solana 链上的 AI + RWA + Web3 代币，理念为正能量、积极态度、全球协作与持续优化，总供应量 13.5 亿枚，10% LP 永久锁定。'],
+    ['众筹资金用于哪里？','演示项目聚焦户用光伏储能与社区教育，资金用途、进度与交付将通过链上记录与定期公示向支持者公开。'],
+    ['如何参与？','选择档位、连接钱包（演示环境为模拟连接）、输入金额并确认，账本将在本页实时更新；真实参与须以合规渠道与持牌平台为准。'],
+    ['有哪些风险？','代币价格波动、监管政策变化、项目执行风险均需自行评估；本页不承诺任何收益，受限辖区用户请勿参与。']
+  ]
+},
+en:{
+  nav_overview:'Overview',nav_industries:'Industries',nav_map:'Global Map',nav_campaign:'Pledge',nav_faq:'FAQ',
+  hero_badge:'Solana · AI + RWA + Web3 · Global Village',
+  hero_title1:'Let every act of goodwill',hero_title2:'converge on-chain into civilizational strength',
+  hero_sub:'Guided by positivity, proactive attitude, global collaboration and continuous improvement, EACO connects real projects across Asia and the global village. This page is a demo and does not constitute investment advice.',
+  stat_supply:'Total Supply',stat_lp:'LP Locked Forever',stat_chain:'Blockchain',stat_model:'Mental Models',
+  cta_join:'Pledge Now',cta_copy:'Copy Contract',
+  tk_symbol:'Symbol',tk_ca:'Contract Address',tk_official:'Website',tk_market:'Market Page',
+  ind_title:'Industries Suited to EACO-Style Crowdfunding',
+  ind_sub:'Prefer verifiable, traceable projects with real output and altruistic value. On-chain records disclose fund use and progress, lowering trust costs across borders.',
+  map_title:'Web3-Friendly Countries & Cities by Six Continents',
+  map_sub:'Representative jurisdictions with relatively clear public frameworks that allow or regulate virtual-asset activity. Local compliance review is required; restricted jurisdictions are excluded.',
+  camp_title:'EACO Global Village Project · Demo Campaign',
+  camp_sub:'Pick a tier → connect wallet → confirm amount → on-chain ledger → live progress. A closed-loop demo on this page.',
+  proj_name:'Home Solar Storage & Community Education (Demo)',
+  raised:'Raised (EACO)',target:'Goal (EACO)',backers:'Backers',days:'Days Left',
+  th_wallet:'Wallet',th_tier:'Tier',th_amount:'Amount',th_hash:'Tx Hash',empty_history:'No pledges yet — be the first builder.',
+  faq_title:'FAQ',
+  disc_title:'Compliance & Risk Notice: ',
+  disc_text:'This page is a functional demo and information display only; it is not a securities offering, investment solicitation, or return guarantee. Token fundraising is strictly regulated in many jurisdictions. Consult licensed legal and tax advisors before participating, and comply with local laws. Restricted-jurisdiction users must not participate. Data are illustrative; tx hashes are generated for demo purposes.',
+  footer_line:'Positivity × Proactivity × Collaboration × Improvement',
+  cta_connect:'Connect Wallet',cta_connected:'Connected: ',
+  modal_title:'Confirm Pledge',modal_tier:'Selected Tier',modal_amount:'Amount (EACO)',modal_cancel:'Cancel',modal_confirm:'Confirm',
+  toast_copied:'Contract copied',toast_wallet:'Wallet connected (demo)',toast_done:'Pledge recorded. Thank you!',
+  err_amount:'Enter an amount ≥ 1',err_wallet:'Connect wallet first',
+  ind_tags:['RWA','Real Sector','Content','Community'],
+  faq:[
+    ['What is EACO?','EACO (Earth\'s Best Coin) is an AI + RWA + Web3 token on Solana, built on positivity, proactive attitude, global collaboration and continuous improvement. Supply: 1.35B; 10% LP permanently locked.'],
+    ['Where do funds go?','The demo project focuses on home solar storage and community education; use of funds, progress and delivery are disclosed on-chain and in periodic updates.'],
+    ['How to participate?','Choose a tier, connect a wallet (simulated in demo), enter an amount and confirm; the ledger updates live. Real participation must go through compliant channels and licensed platforms.'],
+    ['What are the risks?','Price volatility, regulatory changes and execution risk must be assessed by yourself. No returns are promised; restricted jurisdictions must not participate.']
+  ]
+},
+ru:{
+  nav_overview:'Обзор',nav_industries:'Отрасли',nav_map:'Карта мира',nav_campaign:'Участие',nav_faq:'Вопросы',
+  hero_badge:'Solana · AI + RWA + Web3 · Глобальная деревня',
+  hero_title1:'Пусть каждое доброе дело',hero_title2:'соединится в силе цивилизации',
+  hero_sub:'EACO строится на позитиве, инициативности, глобальном сотрудничестве и постоянном развитии, объединяя реальные проекты Азии и мира. Страница — демонстрация, не является инвестиционной рекомендацией.',
+  stat_supply:'Общее предложение',stat_lp:'LP заблокирован навсегда',stat_chain:'Блокчейн',stat_model:'Модели мышления',
+  cta_join:'Участвовать',cta_copy:'Скопировать CA',
+  tk_symbol:'Символ',tk_ca:'Адрес контракта',tk_official:'Сайт',tk_market:'Рынок',
+  ind_title:'Отрасли, подходящие для краудфандинга в стиле EACO',
+  ind_sub:'Приоритет — проверяемые, отслеживаемые проекты с реальным результатом и альтруистической ценностью. On-chain записи прозрачно показывают расход средств и прогресс.',
+  map_title:'Web3-дружелюбные страны и города по шести континентам',
+  map_sub:'Представительные юрисдикции с относительно понятным публичным регулированием виртуальных активов. Требуется локальная проверка соответствия; ограниченные юрисдикции исключены.',
+  camp_title:'Проект EACO · Демокампания',
+  camp_sub:'Выбор уровня → подключение кошелька → подтверждение суммы → on-chain реестр → живой прогресс. Полный цикл на одной странице.',
+  proj_name:'Домашние солнечные хранилища и общественное образование (демо)',
+  raised:'Собрано (EACO)',target:'Цель (EACO)',backers:'Участники',days:'Дней осталось',
+  th_wallet:'Кошелёк',th_tier:'Уровень',th_amount:'Сумма',th_hash:'Хэш',empty_history:'Пока нет записей — станьте первым.',
+  faq_title:'Частые вопросы',
+  disc_title:'Уведомление о соответствии и рисках: ',
+  disc_text:'Страница является демонстрацией функционала и информационным материалом, не является предложением ценных бумаг, офертой или гарантией дохода. Токен-сбор строго регулируется во многих юрисдикциях. Перед участием обратитесь к лицензированным юристам и налоговым консультантам, соблюдайте местное законодательство. Пользователям из ограниченных юрисдикций участие запрещено. Данные демонстрационные, хэши транзакций сгенерированы.',
+  footer_line:'Позитив × Инициатива × Сотрудничество × Развитие',
+  cta_connect:'Подключить кошелёк',cta_connected:'Подключено: ',
+  modal_title:'Подтвердить участие',modal_tier:'Выбранный уровень',modal_amount:'Сумма (EACO)',modal_cancel:'Отмена',modal_confirm:'Подтвердить',
+  toast_copied:'CA скопирован',toast_wallet:'Кошелёк подключён (демо)',toast_done:'Запись сохранена. Спасибо!',
+  err_amount:'Введите сумму ≥ 1',err_wallet:'Сначала подключите кошелёк',
+  ind_tags:['RWA','Реальный сектор','Контент','Сообщество'],
+  faq:[
+    ['Что такое EACO?','EACO (Earth\'s Best Coin) — токен AI + RWA + Web3 в сети Solana на основе позитива, инициативности, сотрудничества и развития. Поставка 1,35 млрд; 10% LP заблокированы навсегда.'],
+    ['Куда идут средства?','Демо-проект — солнечные хранилища и общественное образование; расходование, прогресс и результаты публикуются on-chain и в отчётах.'],
+    ['Как участвовать?','Выберите уровень, подключите кошелёк (в демо — имитация), введите сумму и подтвердите; реестр обновляется в реальном времени. Реальное участие — только через легальные каналы и лицензированные платформы.'],
+    ['Каковы риски?','Волатильность цены, изменения регулирования и риски исполнения оцениваются самостоятельно. Доходность не гарантируется; ограниченным юрисдикциям участвовать нельзя.']
+  ]
+},
+es:{
+  nav_overview:'Resumen',nav_industries:'Sectores',nav_map:'Mapa global',nav_campaign:'Participar',nav_faq:'FAQ',
+  hero_badge:'Solana · AI + RWA + Web3 · Aldea Global',
+  hero_title1:'Que cada gesto de bondad',hero_title2:'converja on-chain en fuerza civilizatoria',
+  hero_sub:'EACO se basa en positividad, iniciativa, colaboración global y mejora continua, conectando proyectos reales de Asia y el mundo. Esta página es una demo y no constituye asesoramiento de inversión.',
+  stat_supply:'Suministro total',stat_lp:'LP bloqueado para siempre',stat_chain:'Blockchain',stat_model:'Modelos mentales',
+  cta_join:'Participar',cta_copy:'Copiar contrato',
+  tk_symbol:'Símbolo',tk_ca:'Dirección CA',tk_official:'Sitio web',tk_market:'Mercado',
+  ind_title:'Sectores aptos para crowdfunding estilo EACO',
+  ind_sub:'Prioriza proyectos verificables, trazables, con resultado real y valor altruista. El registro on-chain revela el uso de fondos y el progreso, reduciendo costos de confianza.',
+  map_title:'Países y ciudades Web3-friendly por seis continentes',
+  map_sub:'Jurisdicciones representativas con marcos públicos relativamente claros para activos virtuales. Se requiere evaluación de cumplimiento local; se excluyen jurisdicciones restringidas.',
+  camp_title:'Proyecto Aldea Global EACO · Demo',
+  camp_sub:'Elige nivel → conecta wallet → confirma monto → registro on-chain → progreso en vivo. Ciclo cerrado en esta página.',
+  proj_name:'Almacenamiento solar doméstico y educación comunitaria (demo)',
+  raised:'Recaudado (EACO)',target:'Meta (EACO)',backers:'Patrocinadores',days:'Días restantes',
+  th_wallet:'Wallet',th_tier:'Nivel',th_amount:'Monto',th_hash:'Hash tx',empty_history:'Aún no hay aportes; sé el primero.',
+  faq_title:'Preguntas frecuentes',
+  disc_title:'Aviso de cumplimiento y riesgo: ',
+  disc_text:'Esta página es una demo funcional e informativa; no es una oferta de valores, solicitud de inversión ni garantía de rendimiento. La recaudación con tokens está regulada estrictamente en muchas jurisdicciones. Consulte asesores legales y fiscales autorizados y cumpla la normativa local. Usuarios de jurisdicciones restringidas no deben participar. Datos ilustrativos; hashes generados para la demo.',
+  footer_line:'Positividad × Iniciativa × Colaboración × Mejora',
+  cta_connect:'Conectar wallet',cta_connected:'Conectado: ',
+  modal_title:'Confirmar participación',modal_tier:'Nivel elegido',modal_amount:'Monto (EACO)',modal_cancel:'Cancelar',modal_confirm:'Confirmar',
+  toast_copied:'Contrato copiado',toast_wallet:'Wallet conectada (demo)',toast_done:'Aporte registrado. ¡Gracias!',
+  err_amount:'Introduzca un monto ≥ 1',err_wallet:'Conecte la wallet primero',
+  ind_tags:['RWA','Sector real','Contenido','Comunidad'],
+  faq:[
+    ['¿Qué es EACO?','EACO (Earth\'s Best Coin) es un token AI + RWA + Web3 en Solana, basado en positividad, iniciativa, colaboración y mejora continua. Suministro 1,350 M; 10% LP bloqueado permanentemente.'],
+    ['¿A dónde van los fondos?','El demo se centra en almacenamiento solar doméstico y educación comunitaria; el uso de fondos, progreso y entrega se divulgan on-chain y en informes periódicos.'],
+    ['¿Cómo participar?','Elige nivel, conecta wallet (simulada en demo), introduce el monto y confirma; el registro se actualiza en vivo. La participación real debe hacerse por canales cumplidos y plataformas autorizadas.'],
+    ['¿Cuáles son los riesgos?','Volatilidad, cambios regulatorios y riesgo de ejecución deben evaluarse por ti mismo. No se prometen rendimientos; jurisdicciones restringidas no pueden participar.']
+  ]
+},
+ar:{
+  nav_overview:'نظرة عامة',nav_industries:'القطاعات',nav_map:'الخريطة العالمية',nav_campaign:'المشاركة',nav_faq:'الأسئلة',
+  hero_badge:'سولانا · AI + RWA + Web3 · القرية العالمية',
+  hero_title1:'لِتتحد كل بادرة خير',hero_title2:'على السلسلة في قوة حضارية',
+  hero_sub:'تقوم EACO على الإيجابية والمبادرة والتعاون العالمي والتحسين المستمر، وتربط مشاريع حقيقية في آسيا والقرية العالمية. هذه الصفحة تجريبية وليست نصيحة استثمارية.',
+  stat_supply:'إجمالي المعروض',stat_lp:'مقفل للأبد',stat_chain:'البلوك تشين',stat_model:'نماذج معرفية',
+  cta_join:'شارك الآن',cta_copy:'نسخ العقد',
+  tk_symbol:'الرمز',tk_ca:'عنوان العقد',tk_official:'الموقع',tk_market:'السوق',
+  ind_title:'القطاعات المناسبة للتمويل الجماعي بنمط EACO',
+  ind_sub:'نفضّل المشاريع القابلة للتحقق والتتبع ذات المخرجات الحقيقية والقيمة الإيثارية. تسجيلات السلسلة توضّح استخدام الأموال والتقدم وتقلّل تكاليف الثقة.',
+  map_title:'دول ومدن Web3 الصديقة عبر القارات الست',
+  map_sub:'ولايات قضائية تمثيلية ذات أطر عامة واضحة نسبياً للأصول الافتراضية. يلزم تقييم الامتثال المحلي؛ تُستثنى الولايات المقيدة.',
+  camp_title:'مشروع القرية العالمية EACO · حملة تجريبية',
+  camp_sub:'اختر المستوى → اربط المحفظة → أكّد المبلغ → سجل على السلسلة → تقدم مباشر. دورة مغلقة على هذه الصفحة.',
+  proj_name:'تخزين الطاقة الشمسية المنزلي والتعليم المجتمعي (تجريبي)',
+  raised:'تم جمعه (EACO)',target:'الهدف (EACO)',backers:'الداعمون',days:'أيام متبقية',
+  th_wallet:'المحفظة',th_tier:'المستوى',th_amount:'المبلغ',th_hash:'معرّف المعاملة',empty_history:'لا توجد مساهمات بعد — كن أول من يبني.',
+  faq_title:'الأسئلة الشائعة',
+  disc_title:'إشعار الامتثال والمخاطر: ',
+  disc_text:'هذه الصفحة عرض تجريبي ووظيفي فقط، وليست طرحاً للأوراق المالية أو دعوة استثمارية أو ضماناً للعائد. يخضع التمويل بالرموز لرقابة صارمة في ولايات كثيرة. استشر مستشارين قانونيين وضريبيين مرخّصين والتزم بالقوانين المحلية. يُمنع المشاركة من الولايات المقيدة. البيانات توضيحية ومعرّفات المعاملات مولّدة للتجربة.',
+  footer_line:'إيجابية × مبادرة × تعاون × تحسين',
+  cta_connect:'ربط المحفظة',cta_connected:'متصل: ',
+  modal_title:'تأكيد المشاركة',modal_tier:'المستوى المختار',modal_amount:'المبلغ (EACO)',modal_cancel:'إلغاء',modal_confirm:'تأكيد',
+  toast_copied:'تم نسخ العقد',toast_wallet:'تم ربط المحفظة (تجريبي)',toast_done:'تم التسجيل. شكراً لك!',
+  err_amount:'أدخل مبلغاً ≥ 1',err_wallet:'اربط المحفظة أولاً',
+  ind_tags:['RWA','قطاع حقيقي','محتوى','مجتمع'],
+  faq:[
+    ['ما هي EACO؟','EACO (Earth\'s Best Coin) رمز AI + RWA + Web3 على سولانا، قائم على الإيجابية والمبادرة والتعاون والتحسين المستمر. المعروض 1.35 مليار؛ 10% من السيولة مقفل دائماً.',],
+    ['إلى أين تذهب الأموال؟','يركّز المشروع التجريبي على التخزين الشمسي المنزلي والتعليم المجتمعي؛ ويُعلن عن استخدام الأموال والتقدم والتسليم عبر السلسلة وفي تقارير دورية.',],
+    ['كيف أشارك؟','اختر المستوى، اربط المحفظة (محاكاة في التجربة)، أدخل المبلغ وأكّد؛ يتحدث السجل مباشرة. المشاركة الحقيقية تكون عبر قنوات ملتزمة ومنصات مرخّصة فقط.',],
+    ['ما المخاطر؟','التقلب وتغيّر التشريعات ومخاطر التنفيذ تقيَّم ذاتياً. لا عائدات مضمونة؛ يُمنع المشاركة من الولايات المقيدة.',]
+  ]
+},
+fr:{
+  nav_overview:'Aperçu',nav_industries:'Secteurs',nav_map:'Carte mondiale',nav_campaign:'Participation',nav_faq:'FAQ',
+  hero_badge:'Solana · AI + RWA + Web3 · Village global',
+  hero_title1:'Que chaque geste de bienveillance',hero_title2:'se rassemble on-chain en force civilisationnelle',
+  hero_sub:'Portée par positivité, initiative, collaboration mondiale et amélioration continue, EACO relie des projets réels en Asie et dans le village global. Cette page est une démo et ne constitue pas un conseil en investissement.',
+  stat_supply:'Supply totale',stat_lp:'LP verrouillé à vie',stat_chain:'Blockchain',stat_model:'Modèles mentaux',
+  cta_join:'Participer',cta_copy:'Copier le contrat',
+  tk_symbol:'Symbole',tk_ca:'Adresse contrat',tk_official:'Site',tk_market:'Marché',
+  ind_title:'Secteurs adaptés au financement participatif façon EACO',
+  ind_sub:'Privilégiez des projets vérifiables, traçables, à réel apport et valeur altruiste. Les registres on-chain publient l\'usage des fonds et l\'avancement, réduisant les coûts de confiance.',
+  map_title:'Pays et villes Web3-friendly sur six continents',
+  map_sub:'Juridictions représentatives aux cadres publics relativement clairs pour les actifs virtuels. Une conformité locale est requise ; les juridictions restreintes sont exclues.',
+  camp_title:'Projet Village global EACO · Campagne démo',
+  camp_sub:'Choisir un niveau → connecter le portefeuille → confirmer le montant → registre on-chain → progression en direct. Boucle complète sur cette page.',
+  proj_name:'Stockage solaire domestique et éducation communautaire (démo)',
+  raised:'Collecté (EACO)',target:'Objectif (EACO)',backers:'Soutiens',days:'Jours restants',
+  th_wallet:'Portefeuille',th_tier:'Niveau',th_amount:'Montant',th_hash:'Hash tx',empty_history:'Aucune participation — soyez le premier contributeur.',
+  faq_title:'Questions fréquentes',
+  disc_title:'Avertissement conformité & risques : ',
+  disc_text:'Cette page est une démonstration fonctionnelle et une information ; elle ne constitue pas une offre de titres, une sollicitation d\'investissement ni une garantie de rendement. Le financement par tokens est strictement réglementé dans de nombreuses juridictions. Consultez des conseillers légaux et fiscaux agréés et respectez la réglementation locale. Les utilisateurs des juridictions restreintes ne doivent pas participer. Données illustratives ; hashes générés pour la démo.',
+  footer_line:'Positivité × Initiative × Collaboration × Amélioration',
+  cta_connect:'Connecter le portefeuille',cta_connected:'Connecté : ',
+  modal_title:'Confirmer la participation',modal_tier:'Niveau choisi',modal_amount:'Montant (EACO)',modal_cancel:'Annuler',modal_confirm:'Confirmer',
+  toast_copied:'Contrat copié',toast_wallet:'Portefeuille connecté (démo)',toast_done:'Participation enregistrée. Merci !',
+  err_amount:'Saisissez un montant ≥ 1',err_wallet:'Connectez d\'abord le portefeuille',
+  ind_tags:['RWA','Secteur réel','Contenu','Communauté'],
+  faq:[
+    ['Qu\'est-ce qu\'EACO ?','EACO (Earth\'s Best Coin) est un token AI + RWA + Web3 sur Solana, fondé sur positivité, initiative, collaboration et amélioration continue. Supply 1,35 Mrd ; 10 % LP verrouillé à vie.'],
+    ['À quoi servent les fonds ?','La démo porte sur le stockage solaire domestique et l\'éducation communautaire ; usage des fonds, avancement et livraison sont publiés on-chain et dans des rapports périodiques.'],
+    ['Comment participer ?','Choisissez un niveau, connectez un portefeuille (simulé en démo), saisissez un montant et confirmez ; le registre se met à jour en direct. La participation réelle passe par des canaux conformes et des plateformes agréées.'],
+    ['Quels sont les risques ?','Volatilité, évolutions réglementaires et risque d\'exécution sont à évaluer par chacun. Aucun rendement n\'est promis ; les juridictions restreintes ne doivent pas participer.']
+  ]
+}
+};
+
+/* ==================== 行业数据 ==================== */
+const INDUSTRIES = [
+  {icon:'☀️', tags:[0,1],
+    name:{zh:'户用光伏与储能',en:'Solar & Home Storage',ru:'Солнечная энергия и хранилища',es:'Solar y almacenamiento doméstico',ar:'الطاقة الشمسية والتخزين المنزلي',fr:'Solaire et stockage domestique'},
+    desc:{zh:'面向缺电地区的户用光伏、0.3–6kW 储能系统，收益与发电量可链上溯源。',en:'Home solar and 0.3–6kW storage for off-grid regions; output and yield traceable on-chain.',ru:'Домашняя солнечная генерация и накопители 0,3–6 кВт для регионов без сети.',es:'Solar doméstico y almacenamiento 0,3–6kW para zonas sin red; rendimiento on-chain.',ar:'ألواح شمسية منزلية وتخزين 0.3–6 كيلوواط للمناطق خارج الشبكة.',fr:'Solaire domestique et stockage 0,3–6kW pour zones hors réseau ; rendement tracé on-chain.'}},
+  {icon:'🌾', tags:[1],
+    name:{zh:'农业与跨境农畜产品',en:'Agriculture & Cross-border Agri',ru:'Сельское хозяйство и агроэкспорт',es:'Agricultura y agrocomercio',ar:'الزراعة والمنتجات الزراعية العابرة للحدود',fr:'Agriculture et agro-commerce'},
+    desc:{zh:'特色农畜产品、合作社与冷链溯源项目，连接产地与地球村市场。',en:'Specialty produce, cooperatives and cold-chain traceability linking farms to global markets.',ru:'Эксклюзивная агропродукция, кооперативы и прослеживаемость холодовой цепи.',es:'Productos especiales, cooperativas y trazabilidad de cadena de frío.',ar:'منتجات زراعية مميزة وتعاونيات وتتبع سلسلة التبريد.',fr:'Produits spécialisés, coopératives et traçabilité de la chaîne du froid.'}},
+  {icon:'🎓', tags:[3],
+    name:{zh:'教育与认知课程',en:'Education & Cognitive Courses',ru:'Образование и когнитивные курсы',es:'Educación y cursos cognitivos',ar:'التعليم والدورات المعرفية',fr:'Éducation et cours cognitifs'},
+    desc:{zh:'跨学科课程、100 种认知模型普及与社区学习社群，按学习进度链上奖励。',en:'Interdisciplinary courses, mental-model literacy and learning communities rewarded by progress.',ru:'Междисциплинарные курсы и сообщества по моделям мышления.',es:'Cursos interdisciplinarios y comunidades de aprendizaje.',ar:'دورات متعددة التخصصات ومجتمعات تعلم للنماذج المعرفية.',fr:'Cours interdisciplinaires et communautés d\'apprentissage des modèles mentaux.'}},
+  {icon:'🤖', tags:[0,2],
+    name:{zh:'AI 工具与 Web3 基础设施',en:'AI Tools & Web3 Infrastructure',ru:'AI-инструменты и Web3-инфраструктура',es:'Herramientas IA e infraestructura Web3',ar:'أدوات الذكاء الاصطناعي وبنية Web3',fr:'Outils IA et infrastructure Web3'},
+    desc:{zh:'Agent 工具、钱包、数据市场与开发者组件，面向全球开发者共建。',en:'Agent tools, wallets, data marketplaces and dev components built with global developers.',ru:'Агенты, кошельки, маркеты данных и dev-компоненты для глобальных разработчиков.',es:'Agentes, wallets, mercados de datos y componentes de desarrollo.',ar:'أدوات وكلاء ومحافظ وأسواق بيانات ومكونات مطوري Web3.',fr:'Agents, portefeuilles, places de données et composants développeurs.'}},
+  {icon:'🎨', tags:[2,3],
+    name:{zh:'文化艺术与内容 IP',en:'Culture, Art & Content IP',ru:'Культура, искусство и контент-IP',es:'Cultura, arte e IP de contenido',ar:'الثقافة والفن والملكية الفكرية للمحتوى',fr:'Culture, art et IP de contenu'},
+    desc:{zh:'音乐、影像、出版与星际叙事 IP，粉丝众筹支持创作与版权确权。',en:'Music, film, publishing and story IP; fans fund creation and rights registration on-chain.',ru:'Музыка, видео, издательское дело и сюжетные IP при поддержке фанатов.',es:'Música, vídeo, editorial e IP narrativa con mecenas fans.',ar:'موسيقى وصور ونشر وعوالم قصصية بدعم مجتمعي.',fr:'Musique, vidéo, édition et IP narrative financés par les fans.'}},
+  {icon:'🌱', tags:[3],
+    name:{zh:'社区公益与可持续项目',en:'Community Charity & Sustainability',ru:'Социальные проекты и устойчивость',es:'Acción comunitaria y sostenibilidad',ar:'العمل الخيري المجتمعي والاستدامة',fr:'Charité communautaire et durabilité'},
+    desc:{zh:'环保、扶弱、社区共建项目，资金流向与成果公开公示。',en:'Environment, inclusion and community projects with public fund flow and outcomes.',ru:'Экология, поддержка уязвимых и общественные проекты с прозрачным отчётом.',es:'Proyectos ambientales, inclusivos y comunitarios con rendición pública.',ar:'مشاريع بيئية ودعم الفئات ومجتمعية مع شفافية التمويل.',fr:'Projets environnementaux, solidaires et communautaires avec comptes publics.'}},
+  {icon:'🏪', tags:[1],
+    name:{zh:'本地零售与供应链数字化',en:'Local Retail & Digital Supply Chain',ru:'Ритейл и цифровизация цепочек',es:'Retail local y cadena digital',ar:'التجزئة المحلية وسلسلة التوريد الرقمية',fr:'Commerce local et chaîne digitale'},
+    desc:{zh:'小店、批发市场与跨境贸易的数字化订单、分账与溯源。',en:'Digital orders, revenue sharing and traceability for shops, wholesale and cross-border trade.',ru:'Цифровые заказы, раздел платежей и прослеживаемость для ритейла и трансграничной торговли.',es:'Pedidos digitales, reparto de ingresos y trazabilidad del comercio.',ar:'طلبات رقمية وتقاسم إيرادات وتتبع للتجارة المحلية والعابرة للحدود.',fr:'Commandes digitales, partage des revenus et traçabilité du commerce.'}},
+  {icon:'🚀', tags:[2],
+    name:{zh:'创作者与小商户启动',en:'Creators & Small Business Launch',ru:'Стартапы авторов и малого бизнеса',es:'Creadores y pequeños negocios',ar:'المبدعون وأصحاب الأعمال الصغيرة',fr:'Créateurs et petites entreprises'},
+    desc:{zh:'个人创作者、小商户的启动资金与首批用户，以档位回馈支持者。',en:'Seed funding and first users for creators and small merchants, rewarded by tier benefits.',ru:'Стартовое финансирование и первые пользователи для авторов и малого бизнеса.',es:'Capital inicial y primeros usuarios para creadores y pequeños comercios.',ar:'تمويل أولي وأوائل المستخدمين للمبدعين وأصحاب الأعمال الصغيرة.',fr:'Amorçage et premiers utilisateurs pour créateurs et petits commerces.'}}
+];
+
+/* ==================== 六大洲版图 ==================== */
+const REGIONS = [
+  {id:'asia', icon:'🗺️',
+    name:{zh:'亚洲',en:'Asia',ru:'Азия',es:'Asia',ar:'آسيا',fr:'Asie'},
+    countries:[
+      {n:'Singapore', c:'新加坡 · Singapore',
+        note:{zh:'MAS 审慎框架，金融科技与 RWA 枢纽，持牌 VASP 体系成熟。',en:'MAS prudential framework; fintech and RWA hub with licensed VASP regime.',ru:'Осторожный регулятор MAS, хаб финтеха и RWA.',es:'Marco MAS; centro de fintech y RWA con VASP regulados.',ar:'إطار MAS الحصيف؛ مركز التقنية المالية وRWA.',fr:'Cadre MAS ; hub fintech et RWA avec VASP licenciés.'}},
+      {n:'Hong Kong SAR, China', c:'中国香港 · Hong Kong',
+        note:{zh:'SFC 发牌制度，RWA 代币化债券与绿色资产领先，稳定币牌照推进中。',en:'SFC licensing; leader in RWA tokenized bonds and green assets; stablecoin licenses underway.',ru:'Лицензирование SFC, лидер в токенизации облигаций и зелёных активов.',es:'Licencias SFC; líder en bonos tokenizados y activos verdes.',ar:'ترخيص لجنة الأوراق المالية؛ رائد في سندات RWA الرمزية.',fr:'Licences SFC ; leader des obligations tokenisées RWA et actifs verts.'}},
+      {n:'Japan', c:'东京 · Tokyo',
+        note:{zh:'金融厅登记制，交易所合规历史长，消费者保护框架完善。',en:'FSA registration; long compliant exchange history and mature consumer protection.',ru:'Регистрация при FSA, зрелая защита потребителей.',es:'Registro FSA; historia regulada y protección del consumidor.',ar:'تسجيل وكالة الخدمات المالية؛ حماية مستهلكين ناضجة.',fr:'Enregistrement FSA ; histoire régulée et protection consommateur mature.'}},
+      {n:'South Korea', c:'首尔 · Seoul',
+        note:{zh:'合规驱动的成熟市场，实名交易与税收申报制度明确。',en:'Compliance-driven mature market with real-name trading and tax reporting.',ru:'Зрелый рынок с упором на комплаенс и налоги.',es:'Mercado maduro orientado al cumplimiento e información fiscal.',ar:'سوق ناضج قائم على الامتثال والإبلاغ الضريبي.',fr:'Marché mature axé conformité et déclaration fiscale.'}},
+      {n:'UAE', c:'迪拜 · 阿布扎比 Dubai / Abu Dhabi',
+        note:{zh:'VARA（迪拜）与 ADGM/FSRA（阿布扎比）双层框架，自由区注册高效。',en:'Dual VARA (Dubai) and ADGM/FSRA (Abu Dhabi) frameworks; efficient free-zone setup.',ru:'Двойной режим VARA и ADGM/FSRA, быстрый реестр во фризонах.',es:'Marcos VARA y ADGM/FSRA; registro rápido en zonas francas.',ar:'إطارا VARA وADGM/FSRA مع تسجيل سريع في المناطق الحرة.',fr:'Cadres VARA et ADGM/FSRA ; implantation rapide en zone franche.'}},
+      {n:'Thailand / Malaysia / Indonesia', c:'曼谷 · 吉隆坡 · 雅 Bangkok / Kuala Lumpur / Jakarta',
+        note:{zh:'东南亚新兴市场，证监会逐步出台数字资产与代币发行规则。',en:'Emerging SEA markets; securities regulators progressively issue digital-asset rules.',ru:'Развивающиеся рынки ЮВА, регуляторы постепенно вводят правила.',es:'Mercados emergentes del Sudeste Asiático con normas progresivas.',ar:'أسواق ناشئة في جنوب شرق آسيا مع قواعد أصول رقمية تدريجية.',fr:'Marchés émergents d\'Asie du Sud-Est, règles progressives d\'actifs digitaux.'}}
+    ]},
+  {id:'europe', icon:'🏛️',
+    name:{zh:'欧洲',en:'Europe',ru:'Европа',es:'Europa',ar:'أوروبا',fr:'Europe'},
+    countries:[
+      {n:'Switzerland', c:'楚格 · 苏黎世 Zug / Zurich',
+        note:{zh:'Crypto Valley 生态成熟，私法友好，机构与基金会聚集。',en:'Mature Crypto Valley; friendly private law, dense institutional and foundation ecosystem.',ru:'Зрелая Crypto Valley, благоприятное частное право.',es:'Crypto Valley consolidada; derecho privado favorable.',ar:'وادي العملات المشفرة الناضج؛ قانون خاص ودود.',fr:'Crypto Valley mature ; droit privé favorable, écosystème dense.'}},
+      {n:'United Kingdom', c:'伦敦 · London',
+        note:{zh:'FCA 监管清晰，机构采用与衍生品市场活跃。',en:'Clear FCA regulation; active institutional adoption and derivatives market.',ru:'Понятное регулирование FCA, активный институциональный рынок.',es:'Regulación FCA clara; adopción institucional y derivados activos.',ar:'تنظيم FCA واضح؛ تبني مؤسسي ومشتقات نشطة.',fr:'Régulation FCA claire ; adoption institutionnelle et dérivés actifs.'}},
+      {n:'Estonia / Lithuania / Malta', c:'塔林 · 维尔纽斯 · 瓦莱塔 Tallinn / Vilnius / Valletta',
+        note:{zh:'欧盟 MiCA 框架下 VASP 登记流程精简，利于跨境展业。',en:'Streamlined VASP registration under EU MiCA; suited to cross-border operations.',ru:'Упрощённая регистрация VASP по MiCA для кросс-границы.',es:'Registro VASP simplificado bajo MiCA para actividad transfronteriza.',ar:'تسجيل VASP مبسّط بموجب MiCA للعمل عبر الحدود.',fr:'Enregistrement VASP simplifié sous MiCA, adapté au transfrontalier.'}},
+      {n:'Germany / Portugal / Liechtenstein', c:'柏林 · 里斯本 · 瓦杜兹 Berlin / Lisbon / Vaduz',
+        note:{zh:'机构法规稳定，部分辖区税收友好，列支敦士登基金会制度完善。',en:'Stable institutional rules; some tax-friendly; Liechtenstein foundation regime robust.',ru:'Стабильные институты, льготный налог в ряде юрисдикций.',es:'Normas institucionales estables; algunas favorables fiscalmente.',ar:'قواعد مؤسسية مستقرة وبعضها ودود ضريبياً ونظام مؤسسات قوي.',fr:'Règles institutionnelles stables ; fiscalité favorable par endroits, régime fondations robuste.'}}
+    ]},
+  {id:'africa', icon:'🌍',
+    name:{zh:'非洲',en:'Africa',ru:'Африка',es:'África',ar:'أفريقيا',fr:'Afrique'},
+    countries:[
+      {n:'Nigeria', c:'拉各斯 · Lagos',
+        note:{zh:'SEC 2025 框架覆盖发行、托管与交易所，人口采用率高。',en:'SEC 2025 framework covers issuance, custody and exchanges; high adoption.',ru:'Рамки SEC 2025: выпуск, кастоди, биржи; высокое проникновение.',es:'Marco SEC 2025 de emisión, custodia y exchanges; adopción alta.',ar:'إطار هيئة الأوراق المالية 2025 للإصدار والحفظ والبورصات.',fr:'Cadre SEC 2025 : émission, garde et exchanges ; adoption forte.'}},
+      {n:'South Africa', c:'开普敦 · 约翰内斯堡 Cape Town / Johannesburg',
+        note:{zh:'FSCA 将加密资产纳入金融服务监管，框架透明。',en:'FSCA brings crypto under financial-services regulation with a transparent framework.',ru:'FSCA регулирует крипто как финансовую услугу, прозрачный режим.',es:'FSCA regula cripto como servicio financiero, marco transparente.',ar:'هيئة السلوك المالي تنظم الأصول المشفرة كخدمة مالية شفافة.',fr:'FSCA régule la crypto comme service financier, cadre transparent.'}},
+      {n:'Mauritius / Seychelles', c:'路易港 · 维多利亚 Port Louis / Victoria',
+        note:{zh:'FSC 专门立法覆盖 CASP、ICO 与稳定币，离岸牌照体系成熟。',en:'Dedicated FSC laws cover CASP, ICOs and stablecoins; mature offshore licensing.',ru:'Специальное законодательство FSC: CASP, ICO, стейблкоины.',es:'Leyes FSC para CASP, ICO y stablecoins; licencias offshore consolidadas.',ar:'قوانين FSC تغطي CASP والعملات الرمزية المستقرة وأنظمة ترخيص ناضجة.',fr:'Lois FSC dédiées CASP, ICO et stablecoins ; licences offshore matures.'}},
+      {n:'Rwanda / Namibia / Kenya', c:'基加利 · 温得和克 · 内罗毕 Kigali / Windhoek / Nairobi',
+        note:{zh:'新兴立法辖区，2023–2026 年陆续出台 VASP 与消费者保护规则。',en:'Emerging jurisdictions enacting VASP and consumer-protection rules 2023–2026.',ru:'Новые юрисдикции, вводящие правила VASP и защиты потребителей.',es:'Jurisdicciones emergentes con normas VASP y de consumo 2023–2026.',ar:'ولايات ناشئة تصدر قواعد VASP وحماية المستهلك 2023–2026.',fr:'Juridictions émergentes adoptant règles VASP et protection consommateur 2023–2026.'}}
+    ]},
+  {id:'namerica', icon:'🗽',
+    name:{zh:'北美洲',en:'North America',ru:'Северная Америка',es:'Norteamérica',ar:'أمريكا الشمالية',fr:'Amérique du Nord'},
+    countries:[
+      {n:'United States', c:'纽约 · 怀俄明 · 科罗拉多 New York / Wyoming / Colorado',
+        note:{zh:'州级差异明显：怀俄明、科罗拉多立法友好；纽约 BitLicense 体系严格。',en:'Strong state divergence: Wyoming/Colorado friendly statutes; New York BitLicense strict.',ru:'Разница между штатами: Вайоминг и Колорадо дружелюбны, NY BitLicense строг.',es:'Divergencia estatal: Wyoming/Colorado favorables; BitLicense de NY estricta.',ar:'تباين ولائي: وايومنغ وكولورادو ودودان؛ ترخيص نيويورك صارم.',fr:'Forte divergence d\'État : Wyoming/Colorado favorables ; BitLicense NY stricte.'}},
+      {n:'Canada', c:'多伦多 · 多伦多 Toronto',
+        note:{zh:'OSC 等省级监管明确，交易所注册与披露制度成熟。',en:'Provincial regulators e.g. OSC clear; exchange registration and disclosure mature.',ru:'Провинциальные регуляторы (OSC) ясны, зрелая регистрация бирж.',es:'Reguladores provinciales como OSC claros; registro y divulgación maduros.',ar:'منظمون مقاطعيون واضحون مثل OSC مع تسجيل وإفصاح ناضجين.',fr:'Régulateurs provinciaux clairs (OSC) ; inscription et divulgation matures.'}},
+      {n:'Bahamas / Mexico', c:'拿骚 · 拿骚 Nassau / Ciudad de México',
+        note:{zh:'SCB 数字资产法体系；墨西哥推进金融科技与加密服务规则。',en:'SCB digital-asset regime; Mexico advancing fintech and crypto-service rules.',ru:'Цифровое право SCB; Мексика развивает правила финтеха и крипто.',es:'Régimen SCB de activos digitales; México avanza en normas fintech.',ar:'نظام SCB للأصول الرقمية؛ المكسيك تدفع قواعد التقنية المالية.',fr:'Régimen SCB actifs digitaux ; Mexique fait progresser règles fintech.'}}
+    ]},
+  {id:'latam', icon:'🌴',
+    name:{zh:'拉丁美洲',en:'Latin America',ru:'Латинская Америка',es:'Latinoamérica',ar:'أمريكا اللاتينية',fr:'Amérique latine'},
+    countries:[
+      {n:'El Salvador', c:'圣萨尔瓦多 · San Salvador',
+        note:{zh:'Bitcoin 法定地位立法先驱，美元化经济下采用率高。',en:'Pioneer law granting Bitcoin legal tender; high adoption in dollarized economy.',ru:'Первый закон о законном статусе Bitcoin, высокое принятие.',es:'Ley pionera del Bitcoin como moneda de curso legal; adopción alta.',ar:'قانون رائد يمنح بيتكوين صفة المناقصة القانونية وتبنٍّ مرتفع.',fr:'Loi pionnière donnant cours légal au Bitcoin ; adoption forte.'}},
+      {n:'Brazil', c:'圣保罗 · 圣保罗 São Paulo',
+        note:{zh:'综合加密立法，交易所须在监管机构注册，市场规模居拉美前列。',en:'Comprehensive crypto law; exchanges register with regulators; leading LATAM market.',ru:'Комплексный закон, биржи регистрируются; крупнейший рынок ЛАМ.',es:'Ley cripto integral; exchanges registrados; mercado líder en LATAM.',ar:'تشريع مشفّر شامل؛ تسجيل البورصات وسوق رائد في أمريكا اللاتينية.',fr:'Loi crypto complète ; exchanges enregistrés ; marché leader en LATAM.'}},
+      {n:'Argentina / Chile / Colombia / Uruguay', c:'布宜诺斯艾利斯 · 圣地亚哥 · 波哥大 · 蒙得维的亚',
+        note:{zh:'监管框架演进中，稳定币与跨境支付需求旺盛，需逐国合规核验。',en:'Evolving frameworks; strong stablecoin and cross-border payment demand; country-by-country compliance check needed.',ru:'Эволюция режимов, спрос на стейблкоины и платежи; проверка по странам.',es:'Marcos en evolución; demanda de stablecoins y pagos; verificar por país.',ar:'أطر متطورة؛ طلب قوي على العملات المستقرة والمدفوعات العابرة؛ تحقق قطري.',fr:'Cadres en évolution ; demande stablecoins et paiements ; vérifier pays par pays.'}}
+    ]},
+  {id:'oceania', icon:'🏝️',
+    name:{zh:'大洋洲',en:'Oceania',ru:'Океания',es:'Oceanía',ar:'أوقيانوسيا',fr:'Océanie'},
+    countries:[
+      {n:'Australia', c:'悉尼 · 悉尼 Sydney',
+        note:{zh:'ASIC 监管下交易所注册与消费者保护制度完善，机构采用增长。',en:'ASIC-regulated exchange registration and consumer protection; growing institutional adoption.',ru:'Регистрация бирж и защита потребителей при ASIC, рост институционального спроса.',es:'Registro de exchanges y protección del consumidor con ASIC; adopción creciente.',ar:'تسجيل البورصات وحماية المستهلك تحت ASIC مع تبني مؤسسي متنامٍ.',fr:'Inscription exchanges et protection consommateur sous ASIC ; adoption institutionnelle croissante.'}},
+      {n:'New Zealand', c:'奥克兰 · 惠灵顿 Auckland / Wellington',
+        note:{zh:'FMA 数字资产指引清晰，反洗钱申报与发行规则逐步落地。',en:'Clear FMA digital-asset guidance; AML reporting and issuance rules rolling out.',ru:'Понятные指引 FMA, вводятся AML-отчётность и правила выпуска.',es:'Guía FMA clara; normas AML y de emisión en implementación.',ar:'إرشادات FMA واضحة؛ قواعد الإبلاغ لمكافحة غسل الأموال والإصدار.',fr:'Orientations FMA claires ; règles AML et d\'émission en déploiement.'}}
+    ]}
+];
+
+/* ==================== 众筹档位 ==================== */
+const TIERS = [
+  {id:'seed', price:50, perks:{zh:['EACO 纪念徽章','项目进度公开公示'],en:['EACO memorial badge','Public progress updates'],ru:['Мемориальный бейдж EACO','Публичные обновления прогресса'],es:['Insignia EACO','Actualizaciones públicas'],ar:'شارة تذكارية EACO · تقدم علني'.split(' · '),fr:['Badge EACO','Mises à jour publiques']}},
+  {id:'growth', price:300, perks:{zh:['成长者标识','周报与里程碑通报'],en:['Supporter badge','Weekly reports & milestones'],ru:['Знак «развитие»','Еженедельные отчёты'],es:['Insignia growth','Informes semanales e hitos'],ar:'هوية النمو · تقارير أسبوعية ومراحل'.split(' · '),fr:['Badge croissance','Rapports hebdo et jalons']}},
+  {id:'partner', price:1500, perks:{zh:['伙伴专属社群','季度项目收益份额（演示）','进度优先知情'],en:['Partner community','Quarterly revenue share (demo)','Early progress access'],ru:['Сообщество партнёров','Доля квартального дохода (демо)','Ранний доступ'],es:['Comunidad partner','Parte de ingresos trimestral (demo)','Acceso anticipado'],ar:'مجتمع الشركاء · حصة ربع سنوية (تجريبي) · إطلاع مبكر'.split(' · '),fr:['Communauté partenaire','Part revenu trimestriel (démo)','Accès prioritaire']}},
+  {id:'ambassador', price:5000, perks:{zh:['城市合伙人资格（演示）','治理投票参与','联合推广与资源对接'],en:['City partner status (demo)','Governance voting','Co-promotion & matchmaking'],ru:['Статус городского партнёра (демо)','Голосование управления','Совместное продвижение'],es:['Socio de ciudad (demo)','Voto de gobernanza','Co-promoción y contactos'],ar:'صفة شريك مدينة (تجريبي) · تصويت حوكمة · ترويج مشترك'.split(' · '),fr:['Statut partenaire ville (démo)','Vote de gouvernance','Co-promotion et mise en relation']}}
+];
+
+/* ==================== 状态 ==================== */
+const state = {
+  lang: localStorage.getItem('eaco_lang') || 'zh',
+  theme: localStorage.getItem('eaco_theme') || 'cn',
+  wallet: null,
+  tier: 0,
+  pledges: JSON.parse(localStorage.getItem('eaco_pledges') || '[]')
+};
+const TARGET = 10000000;
+const SEEDED_RAISED = 4372500;
+const SEEDED_BACKERS = 1286;
+
+/* ==================== 工具 ==================== */
+const $ = id => document.getElementById(id);
+function t(key){ return (I18N[state.lang] && I18N[state.lang][key]) || I18N.zh[key] || key; }
+function toast(msg){ const el=$('toast'); el.textContent=msg; el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),2200); }
+
+/* ==================== 渲染 ==================== */
+function renderStatic(){
+  document.documentElement.lang = state.lang;
+  document.documentElement.dataset.theme = state.theme;
+  document.documentElement.dir = state.lang === 'ar' ? 'rtl' : 'ltr';
+  document.querySelectorAll('[data-i18n]').forEach(el=>{ el.textContent = t(el.dataset.i18n); });
+  $('langSelect').innerHTML = LANGS.map(l=>`<option value="${l.code}" ${l.code===state.lang?'selected':''}>${l.label}</option>`).join('');
+  $('themeSelect').innerHTML = STYLES.map(s=>`<option value="${s.code}" ${s.code===state.theme?'selected':''}>${s.label}</option>`).join('');
+}
+
+function renderIndustries(){
+  const grid = $('industryGrid');
+  grid.innerHTML = INDUSTRIES.map((ind,i)=>`
+    <div class="ind">
+      <div class="icon">${ind.icon}</div>
+      <h3>${ind.name[state.lang]}</h3>
+      <p>${ind.desc[state.lang]}</p>
+      <div class="tags">${ind.tags.map(k=>`<span>${t('ind_tags')[k]}</span>`).join('')}</div>
+    </div>`).join('');
+}
+
+function renderRegions(){
+  const box = $('regionList');
+  box.innerHTML = REGIONS.map(r=>`
+    <div class="region">
+      <h3>${r.icon} ${r.name[state.lang]}</h3>
+      ${r.countries.map(c=>`
+        <div class="country">
+          <div class="cn">${c.n}</div>
+          <div class="cc">${c.c}</div>
+          <div class="note">${c.note[state.lang]}</div>
+        </div>`).join('')}
+    </div>`).join('');
+}
+
+function renderTiers(){
+  $('tierList').innerHTML = TIERS.map((tier,i)=>`
+    <div class="tier ${state.tier===i?'active':''}" onclick="selectTier(${i})">
+      <h4><span>${tier.id==='seed'?'🌱':tier.id==='growth'?'📈':tier.id==='partner'?'🤝':'🌟'} ${tier.id}</span><span class="price">${tier.price} EACO</span></h4>
+      <ul>${tier.perks[state.lang].map(p=>`<li>${p}</li>`).join('')}</ul>
+    </div>`).join('');
+}
+
+function renderProgress(){
+  const my = state.pledges.reduce((s,p)=>s+p.amount,0);
+  const raised = SEEDED_RAISED + my;
+  const backers = SEEDED_BACKERS + state.pledges.length;
+  const pct = Math.min(100, raised/TARGET*100);
+  $('progBar').style.width = pct.toFixed(1)+'%';
+  $('raised').textContent = raised.toLocaleString();
+  $('backers').textContent = backers.toLocaleString();
+  const body = $('ledgerBody');
+  if(!state.pledges.length){ body.innerHTML=''; $('ledgerEmpty').style.display='block'; return; }
+  $('ledgerEmpty').style.display='none';
+  body.innerHTML = state.pledges.slice().reverse().map(p=>`
+    <tr><td class="mono">${p.wallet}</td><td>${TIERS[p.tier].id}</td><td>${p.amount.toLocaleString()}</td><td class="mono">${p.hash}</td></tr>`).join('');
+}
+
+function renderFAQ(){
+  $('faqList').innerHTML = t('faq').map(([q,a])=>`
+    <div class="faq-item"><h4>${q}</h4><p>${a}</p></div>`).join('');
+}
+
+function renderAll(){ renderStatic(); renderIndustries(); renderRegions(); renderTiers(); renderProgress(); renderFAQ(); }
+
+/* ==================== 交互 ==================== */
+function selectTier(i){ state.tier=i; renderTiers(); }
+
+function connectWallet(){
+  const solana = window.solana;
+  if(solana && solana.isPhantom){
+    solana.connect().then(()=>{
+      state.wallet = solana.publicKey.toString();
+      toast(t('toast_wallet')); updateConnectBtn();
+    }).catch(()=>{ demoWallet(); });
+  } else { demoWallet(); }
+}
+function demoWallet(){
+  const chars='123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
+  let w=''; for(let i=0;i<=39;i++) w+=chars[Math.floor(Math.random()*chars.length)];
+  state.wallet = w; toast(t('toast_wallet')); updateConnectBtn();
+}
+function updateConnectBtn(){
+  const btn=$('connectBtn');
+  btn.textContent = state.wallet ? t('cta_connected')+state.wallet.slice(0,6)+'…'+state.wallet.slice(-4) : t('cta_connect');
+}
+
+function scrollToCampaign(){ $('campaign').scrollIntoView({behavior:'smooth'}); }
+
+function openModal(){
+  if(!state.wallet){ toast(t('err_wallet')); connectWallet(); return; }
+  $('modalTier').textContent = TIERS[state.tier].id + ' · ' + TIERS[state.tier].price + ' EACO';
+  $('amountInput').value = TIERS[state.tier].price;
+  $('modalErr').textContent='';
+  $('modalMask').classList.add('show');
+}
+function closeModal(){ $('modalMask').classList.remove('show'); }
+
+function confirmPledge(){
+  const amt = parseFloat($('amountInput').value);
+  if(!amt || amt < 1){ $('modalErr').textContent=t('err_amount'); return; }
+  const hash = '0x'+Array.from({length:32},()=>'0123456789abcdef'[Math.floor(Math.random()*16)]).join('');
+  state.pledges.push({wallet:state.wallet, tier:state.tier, amount:amt, hash, time:Date.now()});
+  localStorage.setItem('eaco_pledges', JSON.stringify(state.pledges));
+  closeModal(); renderProgress(); toast(t('toast_done'));
+}
+
+function copyCA(){
+  const ca=$('caText').textContent.trim();
+  if(navigator.clipboard){ navigator.clipboard.writeText(ca).then(()=>toast(t('toast_copied'))); }
+  else { const ta=document.createElement('textarea'); ta.value=ca; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); toast(t('toast_copied')); }
+}
+
+/* 档位卡片点击后进入弹窗（连接钱包后） */
+document.addEventListener('click', e=>{
+  if(e.target.closest('.tier')){ setTimeout(openModal, 120); }
+});
+
+$('langSelect').addEventListener('change', e=>{ state.lang=e.target.value; localStorage.setItem('eaco_lang',state.lang); renderAll(); updateConnectBtn(); });
+$('themeSelect').addEventListener('change', e=>{ state.theme=e.target.value; localStorage.setItem('eaco_theme',state.theme); renderStatic(); });
+$('modalMask').addEventListener('click', e=>{ if(e.target===$('modalMask')) closeModal(); });
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
+
+renderAll(); updateConnectBtn();
+</script>
+</body>
+</html>
+<!-- （注：内容由AI生成） -->
