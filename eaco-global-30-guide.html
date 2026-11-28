@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="zh" dir="ltr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EACO 全球30国兑换指南 · Global Guide</title>
+<style>
+/* ============ 基础变量 ============ */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0e1a; --surface:#131a2e; --surface2:#1b2440; --text:#e8ecf5;
+  --text2:#9aa5c0; --accent:#7c5cff; --accent2:#22d3ee; --border:rgba(255,255,255,.09);
+  --shadow:0 10px 30px rgba(0,0,0,.35); --radius:18px;
+}
+body[data-theme="minimal"]{
+  --bg:#f5f7fa; --surface:#ffffff; --surface2:#eef1f6; --text:#16181d;
+  --text2:#5b6270; --accent:#1f6feb; --accent2:#0ea5a4; --border:rgba(0,0,0,.1);
+  --shadow:0 8px 24px rgba(20,30,60,.1);
+}
+body[data-theme="gradient"]{
+  --bg:linear-gradient(135deg,#667eea 0%,#764ba2 50%,#f093fb 100%);
+  --surface:rgba(255,255,255,.14); --surface2:rgba(255,255,255,.2);
+  --text:#ffffff; --text2:rgba(255,255,255,.8); --accent:#ffd166; --accent2:#4ecdc4;
+  --border:rgba(255,255,255,.25); --shadow:0 12px 32px rgba(80,40,120,.35);
+}
+html,body{height:100%}
+body{
+  background:var(--bg); color:var(--text);
+  font-family:"Segoe UI","PingFang SC","Noto Sans","Helvetica Neue",Arial,sans-serif;
+  line-height:1.6; transition:background .3s,color .3s;
+}
+.container{max-width:1200px;margin:0 auto;padding:0 20px}
+a{color:var(--accent);text-decoration:none}
+
+/* ============ 顶部导航 ============ */
+header.topbar{
+  position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);
+  background:var(--surface);border-bottom:1px solid var(--border);
+}
+.topbar-inner{display:flex;align-items:center;gap:16px;padding:14px 20px;max-width:1200px;margin:0 auto;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px}
+.brand .logo{
+  width:38px;height:38px;border-radius:12px;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-weight:900;font-size:20px;
+}
+.brand small{display:block;font-size:11px;color:var(--text2);font-weight:500}
+.topbar-spacer{flex:1}
+.controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+select,.btn{
+  background:var(--surface2);color:var(--text);border:1px solid var(--border);
+  border-radius:12px;padding:9px 12px;font-size:14px;cursor:pointer;
+}
+.btn{transition:.2s}
+.btn:hover{border-color:var(--accent);transform:translateY(-1px)}
+.theme-group{display:flex;gap:6px}
+.theme-group .btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* ============ Hero ============ */
+.hero{padding:48px 0 28px;text-align:center}
+.hero h1{font-size:clamp(26px,4vw,42px);font-weight:900;letter-spacing:.5px}
+.hero p.sub{color:var(--text2);max-width:720px;margin:14px auto 0;font-size:16px}
+.ca-card{
+  max-width:760px;margin:26px auto 0;background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);text-align:left;
+}
+.ca-card .ca-label{font-size:13px;color:var(--text2);margin-bottom:8px}
+.ca-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.ca-address{
+  flex:1;min-width:220px;font-family:"SFMono-Regular",Consolas,monospace;font-size:14px;
+  background:var(--surface2);border:1px dashed var(--border);border-radius:12px;padding:12px;word-break:break-all;
+}
+.copy-btn{white-space:nowrap}
+
+/* ============ 区块 ============ */
+section{padding:36px 0}
+.section-title{font-size:24px;font-weight:800;margin-bottom:6px}
+.section-desc{color:var(--text2);margin-bottom:22px;max-width:760px}
+
+/* 步骤 */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+.step{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:20px;box-shadow:var(--shadow);position:relative;
+}
+.step .num{
+  width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-weight:800;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;margin-bottom:12px;
+}
+.step h3{font-size:16px;margin-bottom:6px}
+.step p{font-size:14px;color:var(--text2)}
+
+/* 工具条 */
+.toolbar{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px;align-items:center}
+.toolbar input,.toolbar select{flex:1;min-width:180px}
+
+/* 视图切换 */
+.view-toggle{display:flex;gap:6px}
+.view-toggle .btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* 数据表 */
+.table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow)}
+table.country-table{width:100%;border-collapse:collapse;min-width:780px;font-size:14px}
+.country-table thead th{text-align:left;padding:14px 16px;color:var(--text2);font-weight:700;border-bottom:1px solid var(--border);white-space:nowrap}
+.country-table tbody td{padding:13px 16px;border-bottom:1px solid var(--border);vertical-align:middle}
+.country-table tbody tr:last-child td{border-bottom:none}
+.country-table tbody tr:hover{background:var(--surface2)}
+.country-table .flag-dot{width:24px;height:14px;border-radius:3px;display:inline-block;margin-right:8px;vertical-align:middle}
+.country-table .cname{font-weight:600}
+.country-table .clocal{font-size:12px;color:var(--text2)}
+.country-table .cell-stack{display:grid;gap:4px}
+
+/* 国家卡片 */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  overflow:hidden;box-shadow:var(--shadow);transition:.2s;
+}
+.card:hover{transform:translateY(-4px)}
+.card .flag-bar{height:8px}
+.card-body{padding:18px}
+.card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:10px}
+.card-head h3{font-size:17px}
+.card-head .local{font-size:12px;color:var(--text2)}
+.pill{
+  display:inline-block;font-size:11px;padding:3px 9px;border-radius:999px;
+  background:var(--surface2);color:var(--text2);margin:2px 4px 2px 0;
+}
+.pill.tag{color:var(--accent2)}
+.meta{margin-top:10px;font-size:13px;display:grid;gap:6px}
+.meta b{color:var(--text);font-weight:600}
+.meta .row{display:flex;gap:6px;flex-wrap:wrap}
+.lang-chip{font-size:12px;padding:2px 8px;border-radius:8px;background:var(--surface2)}
+
+/* 关于 */
+.about{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:26px}
+.about p{color:var(--text2);margin-top:10px}
+
+/* FAQ 常见问答 */
+.faq{display:grid;gap:12px}
+.faq-item{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  overflow:hidden;box-shadow:var(--shadow);transition:.2s;
+}
+.faq-item summary{
+  cursor:pointer;list-style:none;padding:18px 20px;font-weight:600;font-size:15px;
+  display:flex;justify-content:space-between;align-items:center;gap:12px;
+}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary::after{
+  content:"+";font-size:22px;font-weight:700;color:var(--accent);flex-shrink:0;line-height:1;
+}
+.faq-item[open] summary::after{content:"−"}
+.faq-a{padding:0 20px 18px;color:var(--text2);font-size:14px}
+.faq-search{margin-bottom:18px}
+
+/* 页脚 */
+footer{padding:34px 0 46px;text-align:center;border-top:1px solid var(--border);margin-top:20px}
+footer .slogan{font-size:22px;font-weight:900;margin:14px 0;color:var(--accent)}
+footer .disclaimer{font-size:12px;color:var(--text2);max-width:760px;margin:0 auto}
+footer .ca-foot{font-family:Consolas,monospace;font-size:13px;margin-top:10px;word-break:break-all}
+
+.empty{text-align:center;color:var(--text2);padding:40px 0}
+@media(max-width:600px){
+  .topbar-inner{gap:10px}
+  .brand small{display:none}
+}
+</style>
+</head>
+<body data-theme="dark">
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <div class="logo">E</div>
+      <div>EACO<small data-i18n="brand_sub">Global Web3 Guide</small></div>
+    </div>
+    <div class="topbar-spacer"></div>
+    <div class="controls">
+      <select id="langSelect" aria-label="Language"></select>
+      <div class="theme-group" id="themeGroup">
+        <button class="btn" data-theme-btn="dark" data-i18n="t_dark">Dark</button>
+        <button class="btn" data-theme-btn="minimal" data-i18n="t_minimal">Minimal</button>
+        <button class="btn" data-theme-btn="gradient" data-i18n="t_gradient">Gradient</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <section class="hero">
+    <h1 data-i18n="app_title">EACO 全球30国兑换指南</h1>
+    <p class="sub" data-i18n="app_sub">从地球村草根视角：30个高贬值风险国家的语言、货币与兑换 EACO 的方式方法。</p>
+    <div class="ca-card">
+      <div class="ca-label" data-i18n="ca_label">EACO Token CA（Solana SPL Token）</div>
+      <div class="ca-row">
+        <div class="ca-address" id="caAddress">DqfoyZH96RnvZusSp3Cdncjpyp3C74ZmJzGhjmHnDHRH</div>
+        <button class="btn copy-btn" id="copyBtn" data-i18n="copy_btn">复制地址</button>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title" data-i18n="sec_how">如何兑换 EACO：通用七步路径</h2>
+    <p class="section-desc" data-i18n="how_intro">以下路径适用于各国草根参与者；请优先遵守当地法律法规，只用可承受风险的资金参与。</p>
+    <div class="steps" id="stepsGrid"></div>
+  </section>
+
+  <section>
+    <h2 class="section-title" data-i18n="sec_countries">30国语言 · 货币 · 风险标签</h2>
+    <p class="section-desc" data-i18n="countries_desc">按国家查看官方语言、流通货币、所在区域与主要经济风险标签。</p>
+    <div class="toolbar">
+      <input type="text" id="searchInput" data-i18n-ph="search_ph" placeholder="搜索国家 / 货币 / 语言…">
+      <select id="regionSelect"></select>
+      <div class="view-toggle" id="viewToggle">
+        <button class="btn active" data-view="grid" data-i18n="view_card">卡片视图</button>
+        <button class="btn" data-view="table" data-i18n="view_table">表格视图</button>
+      </div>
+    </div>
+    <div class="grid" id="countryGrid"></div>
+    <div class="table-wrap" id="countryTableWrap" style="display:none">
+      <table class="country-table" id="countryTable">
+        <thead>
+          <tr>
+            <th data-i18n="col_country">国家 / 地区</th>
+            <th data-i18n="col_currency">货币</th>
+            <th data-i18n="col_lang">官方语言</th>
+            <th data-i18n="col_region">区域</th>
+            <th data-i18n="col_method">兑换方式</th>
+            <th data-i18n="col_tags">风险标签</th>
+          </tr>
+        </thead>
+        <tbody id="countryTbody"></tbody>
+      </table>
+    </div>
+    <div class="empty" id="emptyBox" style="display:none" data-i18n="empty">未找到匹配国家</div>
+  </section>
+
+  <section>
+    <div class="about">
+      <h2 class="section-title" data-i18n="about_title">关于 EACO</h2>
+      <p data-i18n="about_body">EACO 是部署在 Solana 链上的原生 SPL Token，定位 AI + RWA 地球村数字资产生态，生态内含 eCNH，以 DAO 治理为核心。未来 EACO 可能成为地球村通用数字资产之一；当前阶段面向全球寻找长期市场合作伙伴。本页面仅作信息科普与生态介绍，不构成任何投资建议。</p>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title" data-i18n="sec_faq">常见 30 个问答</h2>
+    <p class="section-desc" data-i18n="faq_desc">围绕 EACO 是什么、怎么兑换、风险与安全、生态合作等常见问题逐一解答。</p>
+    <div class="toolbar faq-search">
+      <input type="text" id="faqSearch" data-i18n-ph="faq_search_ph" placeholder="搜索问题关键词…">
+    </div>
+    <div class="faq" id="faqList"></div>
+    <div class="empty" id="faqEmpty" style="display:none" data-i18n="faq_empty">未找到相关问答</div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="container">
+    <div class="ca-foot">CA: DqfoyZH96RnvZusSp3Cdncjpyp3C74ZmJzGhjmHnDHRH</div>
+    <div class="slogan" data-i18n="slogan">发展才是硬道理。</div>
+    <p class="disclaimer" data-i18n="disclaimer">风险提示：Web3 资产价格波动大，各国监管差异显著。请核实项目合规性，保管好钱包助记词与私钥，警惕诈骗、跑路与未经核实的理财质押。本页面内容不构成投资、法律或税务建议。</p>
+  </div>
+</footer>
+
+<script>
+/* ==================== 语言表 ==================== */
+const LANGS = {
+  zh:{name:"中文",native:"简体中文",dir:"ltr"},
+  en:{name:"English",native:"English",dir:"ltr"},
+  fa:{name:"Persian",native:"فارسی",dir:"rtl"},
+  ar:{name:"Arabic",native:"العربية",dir:"rtl"},
+  ur:{name:"Urdu",native:"اردو",dir:"rtl"},
+  es:{name:"Spanish",native:"Español",dir:"ltr"},
+  fr:{name:"French",native:"Français",dir:"ltr"},
+  pt:{name:"Portuguese",native:"Português",dir:"ltr"},
+  tr:{name:"Turkish",native:"Türkçe",dir:"ltr"},
+  my:{name:"Burmese",native:"မြန်မာ",dir:"ltr"},
+  am:{name:"Amharic",native:"አማርኛ",dir:"ltr"},
+  bn:{name:"Bengali",native:"বাংলা",dir:"ltr"},
+  si:{name:"Sinhala",native:"සිංහල",dir:"ltr"},
+  sw:{name:"Swahili",native:"Kiswahili",dir:"ltr"},
+  id:{name:"Indonesian",native:"Bahasa Indonesia",dir:"ltr"},
+  vi:{name:"Vietnamese",native:"Tiếng Việt",dir:"ltr"},
+  hi:{name:"Hindi",native:"हिन्दी",dir:"ltr"},
+  ms:{name:"Malay",native:"Bahasa Melayu",dir:"ltr"},
+  tl:{name:"Filipino",native:"Filipino",dir:"ltr"}
+};
+
+/* ==================== 30国数据 ==================== */
+/* region: me 中东 / af 非洲 / as 亚洲 / sa 南美 / na 北美 / eu 欧亚 */
+const COUNTRIES = [
+  {id:1, name:"Iran", local:"ایران", code:"IR", currency:"IRR", currencyName:"Iranian Rial", langs:["fa"], region:"me", flags:["#239f40","#fff","#da0000"], tags:["conflict","sanctions","high_inflation"]},
+  {id:2, name:"Lebanon", local:"لبنان", code:"LB", currency:"LBP", currencyName:"Lebanese Pound", langs:["ar"], region:"me", flags:["#ee161f","#fff","#00a651"], tags:["banking_crisis","high_inflation"]},
+  {id:3, name:"Syria", local:"سوريا", code:"SY", currency:"SYP", currencyName:"Syrian Pound", langs:["ar"], region:"me", flags:["#ce1126","#fff","#007a3d"], tags:["conflict","sanctions"]},
+  {id:4, name:"Venezuela", local:"Venezuela", code:"VE", currency:"VES", currencyName:"Bolívar", langs:["es"], region:"sa", flags:["#f6b40e","#003da5","#cf142b"], tags:["hyperinflation","capital_control"]},
+  {id:5, name:"Zimbabwe", local:"Zimbabwe", code:"ZW", currency:"ZWL", currencyName:"Zimbabwe Dollar", langs:["en"], region:"af", flags:["#319236","#ffd200","#000"], tags:["hyperinflation"]},
+  {id:6, name:"Sudan", local:"السودان", code:"SD", currency:"SDG", currencyName:"Sudanese Pound", langs:["ar","en"], region:"af", flags:["#d21034","#fff","#007229"], tags:["conflict"]},
+  {id:7, name:"Yemen", local:"اليمن", code:"YE", currency:"YER", currencyName:"Yemeni Rial", langs:["ar"], region:"me", flags:["#ce1126","#fff","#000","#ce1126"], tags:["conflict"]},
+  {id:8, name:"Myanmar", local:"မြန်မာ", code:"MM", currency:"MMK", currencyName:"Myanmar Kyat", langs:["my"], region:"as", flags:["#fecb00","#34b233","#ea2839"], tags:["capital_control","conflict"]},
+  {id:9, name:"Haiti", local:"Haïti", code:"HT", currency:"HTG", currencyName:"Haitian Gourde", langs:["fr"], region:"na", flags:["#00209f","#d21034"], tags:["political_instability"]},
+  {id:10, name:"Argentina", local:"Argentina", code:"AR", currency:"ARS", currencyName:"Argentine Peso", langs:["es"], region:"sa", flags:["#74acdf","#fff","#74acdf"], tags:["high_inflation","capital_control"]},
+  {id:11, name:"Türkiye", local:"Türkiye", code:"TR", currency:"TRY", currencyName:"Turkish Lira", langs:["tr"], region:"eu", flags:["#e30a17","#fff"], tags:["high_inflation"]},
+  {id:12, name:"Egypt", local:"مصر", code:"EG", currency:"EGP", currencyName:"Egyptian Pound", langs:["ar"], region:"me", flags:["#ce1126","#fff","#000"], tags:["fx_shortage"]},
+  {id:13, name:"Ethiopia", local:"ኢትዮጵያ", code:"ET", currency:"ETB", currencyName:"Ethiopian Birr", langs:["am"], region:"af", flags:["#078930","#fdd835","#da121a"], tags:["fx_restriction"]},
+  {id:14, name:"Nigeria", local:"Nigeria", code:"NG", currency:"NGN", currencyName:"Nigerian Naira", langs:["en"], region:"af", flags:["#008751","#fff","#008751"], tags:["fx_dual_rate"]},
+  {id:15, name:"Pakistan", local:"پاکستان", code:"PK", currency:"PKR", currencyName:"Pakistani Rupee", langs:["ur","en"], region:"as", flags:["#01411c","#fff"], tags:["debt_pressure"]},
+  {id:16, name:"Bangladesh", local:"বাংলাদেশ", code:"BD", currency:"BDT", currencyName:"Bangladeshi Taka", langs:["bn"], region:"as", flags:["#006a4e","#f42a41"], tags:["fx_reserve"]},
+  {id:17, name:"Sri Lanka", local:"ශ්‍රී ලංකාව", code:"LK", currency:"LKR", currencyName:"Sri Lankan Rupee", langs:["si"], region:"as", flags:["#8d153a","#f7b800","#197849"], tags:["debt_crisis"]},
+  {id:18, name:"Ghana", local:"Ghana", code:"GH", currency:"GHS", currencyName:"Ghanaian Cedi", langs:["en"], region:"af", flags:["#ce1126","#fcd116","#006b3f"], tags:["debt_inflation"]},
+  {id:19, name:"Angola", local:"Angola", code:"AO", currency:"AOA", currencyName:"Angolan Kwanza", langs:["pt"], region:"af", flags:["#ce1126","#000","#ffcc00"], tags:["oil_dependent"]},
+  {id:20, name:"Zambia", local:"Zambia", code:"ZM", currency:"ZMW", currencyName:"Zambian Kwacha", langs:["en"], region:"af", flags:["#198a00","#e3000b","#000"], tags:["debt_reform"]},
+  {id:21, name:"Malawi", local:"Malawi", code:"MW", currency:"MWK", currencyName:"Malawian Kwacha", langs:["en"], region:"af", flags:["#000","#ce1126","#339e35"], tags:["fx_shortage"]},
+  {id:22, name:"Burundi", local:"Burundi", code:"BI", currency:"BIF", currencyName:"Burundian Franc", langs:["fr"], region:"af", flags:["#ce1126","#fff","#199a44"], tags:["political_risk"]},
+  {id:23, name:"DR Congo", local:"RDC", code:"CD", currency:"CDF", currencyName:"Congolese Franc", langs:["fr"], region:"af", flags:["#0067a9","#f7d618","#ce1021"], tags:["conflict"]},
+  {id:24, name:"Uganda", local:"Uganda", code:"UG", currency:"UGX", currencyName:"Ugandan Shilling", langs:["sw","en"], region:"af", flags:["#000","#fcd116","#007a3d","#ce1126"], tags:["inflation"]},
+  {id:25, name:"Tanzania", local:"Tanzania", code:"TZ", currency:"TZS", currencyName:"Tanzanian Shilling", langs:["sw"], region:"af", flags:["#1eb53a","#00a3dd","#000"], tags:["external_pressure"]},
+  {id:26, name:"Indonesia", local:"Indonesia", code:"ID", currency:"IDR", currencyName:"Indonesian Rupiah", langs:["id"], region:"as", flags:["#ff0000","#fff"], tags:["weak_currency"]},
+  {id:27, name:"Vietnam", local:"Việt Nam", code:"VN", currency:"VND", currencyName:"Vietnamese Dong", langs:["vi"], region:"as", flags:["#da251d","#ffff00"], tags:["managed_float"]},
+  {id:28, name:"India", local:"भारत", code:"IN", currency:"INR", currencyName:"Indian Rupee", langs:["hi","en"], region:"as", flags:["#ff9933","#fff","#138808"], tags:["gradual_depreciation"]},
+  {id:29, name:"Malaysia", local:"Malaysia", code:"MY", currency:"MYR", currencyName:"Malaysian Ringgit", langs:["ms","en"], region:"as", flags:["#cc0001","#fff","#010066"], tags:["regional_pressure"]},
+  {id:30, name:"Philippines", local:"Pilipinas", code:"PH", currency:"PHP", currencyName:"Philippine Peso", langs:["tl","en"], region:"as", flags:["#0038a8","#ce1126","#fff"], tags:["remittance_dependent"]}
+];
+
+/* ==================== i18n 字典 ==================== */
+/* 核心 UI 文案：每种语言都给；缺失键回退 en，再回退 zh */
+const I18N = {
+zh:{
+  brand_sub:"全球 Web3 指南", app_title:"EACO 全球30国兑换指南",
+  app_sub:"从地球村草根视角：30个高贬值风险国家的语言、货币与兑换 EACO 的方式方法。",
+  t_dark:"深色科技", t_minimal:"极简浅色", t_gradient:"渐变霓虹",
+  ca_label:"EACO Token CA（Solana SPL Token）", copy_btn:"复制地址", copied:"已复制",
+  sec_how:"如何兑换 EACO：通用七步路径",
+  how_intro:"以下路径适用于各国草根参与者；请优先遵守当地法律法规，只用可承受风险的资金参与。",
+  sec_countries:"30国语言 · 货币 · 风险标签", countries_desc:"按国家查看官方语言、流通货币、所在区域与主要经济风险标签。",
+  search_ph:"搜索国家 / 货币 / 语言…", all_region:"全部区域", empty:"未找到匹配国家",
+  sec_faq:"常见 30 个问答", faq_desc:"围绕 EACO 是什么、怎么兑换、风险与安全、生态合作等常见问题逐一解答。",
+  faq_search_ph:"搜索问题关键词…", faq_empty:"未找到相关问答",
+  about_title:"关于 EACO",
+  about_body:"EACO 是部署在 Solana 链上的原生 SPL Token，定位 AI + RWA 地球村数字资产生态，生态内含 eCNH，以 DAO 治理为核心。未来 EACO 可能成为地球村通用数字资产之一；当前阶段面向全球寻找长期市场合作伙伴。本页面仅作信息科普与生态介绍，不构成任何投资建议。",
+  slogan:"发展才是硬道理。",
+  disclaimer:"风险提示：Web3 资产价格波动大，各国监管差异显著。请核实项目合规性，保管好钱包助记词与私钥，警惕诈骗、跑路与未经核实的理财质押。本页面内容不构成投资、法律或税务建议。",
+  region_me:"中东", region_af:"非洲", region_as:"亚洲", region_sa:"南美", region_na:"北美", region_eu:"欧亚",
+  col_currency:"货币", col_lang:"官方语言", col_region:"区域", col_tags:"风险标签",
+  col_country:"国家 / 地区", col_method:"兑换方式", view_card:"卡片视图", view_table:"表格视图",
+  method_a:"社群 C2C 直兑为主、DEX 为辅；先小额试单并核验资质",
+  method_b:"稳定币中转 → DEX（Jupiter/Raydium）兑换，亦可社群 C2C 直兑",
+  s1:"安装 Solana 钱包", s1d:"使用 Phantom / Solflare 等兼容钱包，离线备份助记词，助记词与私钥绝不向任何人泄露。",
+  s2:"本币兑换稳定币", s2d:"通过本地合规 C2C / P2P 渠道或认证合作节点，把法币换成 USDT / USDC；管制地区优先选择信任社群渠道，先小额试单并核验对方身份与信誉。",
+  s3:"划转钱包并准备 Gas", s3d:"将稳定币转入自己的钱包，再兑换少量 SOL，作为 Solana 链上交易手续费（Gas）。",
+  s4:"去中心化兑换 EACO", s4d:"通过 Jupiter、Raydium 等 Solana 原生 DEX，用 SOL 或 USDC 兑换 EACO（SPL Token，CA 见页面顶部）。",
+  s5:"社群 C2C 直兑", s5d:"通过本地 DAO 社群、认证合作伙伴点对点兑换；先确认对方资质与凭证，再完成交易。",
+  s6:"任务与服务赚取 EACO", s6d:"参与市场推广、区域合作、实体服务与 RWA 任务，以贡献换取 EACO 奖励。",
+  s7:"安全自托管", s7d:"不把资产押注在单一平台；定期检查钱包授权合约，助记词离线保存，远离高风险质押与空投陷阱。",
+  tag_conflict:"冲突", tag_sanctions:"制裁", tag_high_inflation:"高通胀", tag_hyperinflation:"恶性通胀",
+  tag_capital_control:"外汇管制", tag_banking_crisis:"银行业危机", tag_political_instability:"政局不稳",
+  tag_fx_shortage:"外汇短缺", tag_fx_restriction:"换汇限制", tag_fx_dual_rate:"双汇率",
+  tag_debt_pressure:"债务压力", tag_fx_reserve:"储备紧张", tag_debt_crisis:"债务危机",
+  tag_debt_inflation:"债务通胀", tag_oil_dependent:"依赖油价", tag_debt_reform:"债务重组",
+  tag_political_risk:"政治风险", tag_inflation:"通胀", tag_external_pressure:"外部压力",
+  tag_weak_currency:"币值偏弱", tag_managed_float:"管理浮动", tag_gradual_depreciation:"缓慢贬值",
+  tag_remittance_dependent:"依赖侨汇", tag_regional_pressure:"区域承压"
+},
+en:{
+  brand_sub:"Global Web3 Guide", app_title:"EACO Global 30-Country Exchange Guide",
+  app_sub:"From a grassroots village perspective: languages, currencies and ways to exchange EACO across 30 high-depreciation-risk countries.",
+  t_dark:"Dark", t_minimal:"Minimal", t_gradient:"Gradient",
+  ca_label:"EACO Token CA (Solana SPL Token)", copy_btn:"Copy Address", copied:"Copied",
+  sec_how:"How to Exchange EACO: 7-Step Path",
+  how_intro:"This path applies to grassroots users in every country. Comply with local laws and only use funds you can afford to risk.",
+  sec_countries:"30 Countries: Languages · Currencies · Risk Tags", countries_desc:"Browse official languages, circulating currencies, region and main economic risk tags by country.",
+  search_ph:"Search country / currency / language…", all_region:"All Regions", empty:"No matching country found",
+  sec_faq:"30 Common Questions", faq_desc:"Answers to common questions about what EACO is, how to exchange it, risks, security and ecosystem partnerships.",
+  faq_search_ph:"Search question keywords…", faq_empty:"No related question found",
+  about_title:"About EACO",
+  about_body:"EACO is a native SPL Token deployed on Solana, positioned as an AI + RWA global village digital-asset ecosystem, including eCNH, governed by a DAO. EACO may become one of the universal digital assets of the global village; at this stage we are looking for long-term market partners worldwide. This page is for education and ecosystem introduction only and does not constitute investment advice.",
+  slogan:"Development is the hard truth.",
+  disclaimer:"Risk warning: Web3 assets are highly volatile and regulation varies by country. Verify compliance, keep your seed phrase and keys safe, and beware of scams, rug pulls and unverified staking offers. This page is not investment, legal or tax advice.",
+  region_me:"Middle East", region_af:"Africa", region_as:"Asia", region_sa:"South America", region_na:"North America", region_eu:"Eurasia",
+  col_currency:"Currency", col_lang:"Official Language", col_region:"Region", col_tags:"Risk Tags",
+  col_country:"Country / Region", col_method:"Exchange Method", view_card:"Cards", view_table:"Table",
+  method_a:"Community C2C first, DEX secondary; start small and verify credentials",
+  method_b:"Stablecoin bridge → DEX (Jupiter/Raydium) swap; community C2C also available",
+  s1:"Set up a Solana wallet", s1d:"Use a compatible wallet such as Phantom or Solflare. Back up your seed phrase offline; never share it or your private key with anyone.",
+  s2:"Convert local currency to stablecoins", s2d:"Buy USDT/USDC through compliant local C2C/P2P channels or certified partners. In restricted regions, prefer trusted community channels, start small and verify counterparty identity and reputation.",
+  s3:"Transfer to wallet and prepare Gas", s3d:"Move stablecoins to your own wallet, then swap a small amount of SOL to cover on-chain transaction fees (Gas).",
+  s4:"Swap for EACO on-chain", s4d:"Use Solana-native DEXs such as Jupiter or Raydium to swap SOL or USDC for EACO (SPL Token; CA at the top of this page).",
+  s5:"Community C2C direct swap", s5d:"Trade peer-to-peer through local DAO communities and certified partners. Verify credentials before settling.",
+  s6:"Earn EACO through tasks & services", s6d:"Join marketing, regional partnerships, real-world services and RWA tasks; earn EACO for your contribution.",
+  s7:"Self-custody securely", s7d:"Do not concentrate assets on one platform. Review wallet approvals regularly, keep seed phrases offline, and avoid high-risk staking and airdrop traps.",
+  tag_conflict:"Conflict", tag_sanctions:"Sanctions", tag_high_inflation:"High Inflation", tag_hyperinflation:"Hyperinflation",
+  tag_capital_control:"Capital Control", tag_banking_crisis:"Banking Crisis", tag_political_instability:"Political Instability",
+  tag_fx_shortage:"FX Shortage", tag_fx_restriction:"FX Restriction", tag_fx_dual_rate:"Dual FX Rate",
+  tag_debt_pressure:"Debt Pressure", tag_fx_reserve:"Low Reserves", tag_debt_crisis:"Debt Crisis",
+  tag_debt_inflation:"Debt & Inflation", tag_oil_dependent:"Oil Dependent", tag_debt_reform:"Debt Restructuring",
+  tag_political_risk:"Political Risk", tag_inflation:"Inflation", tag_external_pressure:"External Pressure",
+  tag_weak_currency:"Weak Currency", tag_managed_float:"Managed Float", tag_gradual_depreciation:"Gradual Depreciation",
+  tag_remittance_dependent:"Remittance Dependent", tag_regional_pressure:"Regional Pressure"
+}
+};
+
+/* 其余语言：核心标题/导航翻译，其余回退 en */
+const EXTRA = {
+ar:{app_title:"دليل EACO العالمي لـ 30 دولة", t_dark:"داكن", t_minimal:"بسيط", t_gradient:"متدرج",
+  sec_how:"كيفية تبادل EACO: مسار من 7 خطوات", sec_countries:"30 دولة: اللغات · العملات · مخاطر",
+  copy_btn:"نسخ العنوان", copied:"تم النسخ", slogan:"التنمية هي الحقيقة الجازمة.",
+  about_title:"حول EACO", region_me:"الشرق الأوسط", region_af:"أفريقيا", region_as:"آسيا", region_sa:"أمريكا الجنوبية", region_na:"أمريكا الشمالية", region_eu:"أوراسيا"},
+fa:{app_title:"راهنمای جهانی EACO برای ۳۰ کشور", t_dark:"تیره", t_minimal:"مینیمال", t_gradient:"گرادیان",
+  sec_how:"نحوه تبادل EACO: مسیر هفت‌مرحله‌ای", sec_countries:"۳۰ کشور: زبان‌ها · ارزها · ریسک‌ها",
+  copy_btn:"کپی آدرس", copied:"کپی شد", slogan:"توسعه، قانون اساسی است.",
+  about_title:"درباره EACO", region_me:"خاورمیانه", region_af:"آفریقا", region_as:"آسیا", region_sa:"آمریکای جنوبی", region_na:"آمریکای شمالی", region_eu:"اوراسیا"},
+ur:{app_title:"EACO گلوبل 30 ممالک گائیڈ", t_dark:"ڈارک", t_minimal:"منیمل", t_gradient:"گریڈینٹ",
+  sec_how:"EACO کا تبادل: 7 قدمی راستہ", sec_countries:"30 ممالک: زبانیں · کرنسیاں · خطرے",
+  copy_btn:"ایڈریس کاپی", copied:"کاپی ہو گیا", slogan:"ترقی ہی بنیادی اصول ہے۔",
+  about_title:"EACO کے بارے میں", region_me:"مشرق وسطیٰ", region_af:"افریقہ", region_as:"ایشیا", region_sa:"جنوبی امریکہ", region_na:"شمالی امریکہ", region_eu:"یوریشیا"},
+es:{app_title:"Guía Global EACO de 30 Países", t_dark:"Oscuro", t_minimal:"Minimal", t_gradient:"Degradado",
+  sec_how:"Cómo intercambiar EACO: ruta de 7 pasos", sec_countries:"30 países: idiomas · monedas · riesgos",
+  copy_btn:"Copiar dirección", copied:"Copiado", slogan:"El desarrollo es la verdad fundamental.",
+  about_title:"Sobre EACO", region_me:"Oriente Medio", region_af:"África", region_as:"Asia", region_sa:"Sudamérica", region_na:"Norteamérica", region_eu:"Eurasia"},
+fr:{app_title:"Guide Mondial EACO de 30 Pays", t_dark:"Sombre", t_minimal:"Minimal", t_gradient:"Dégradé",
+  sec_how:"Comment échanger EACO : parcours en 7 étapes", sec_countries:"30 pays : langues · monnaies · risques",
+  copy_btn:"Copier l'adresse", copied:"Copié", slogan:"Le développement est la vérité première.",
+  about_title:"À propos d'EACO", region_me:"Moyen-Orient", region_af:"Afrique", region_as:"Asie", region_sa:"Amérique du Sud", region_na:"Amérique du Nord", region_eu:"Eurasie"},
+pt:{app_title:"Guia Global EACO de 30 Países", t_dark:"Escuro", t_minimal:"Minimal", t_gradient:"Gradiente",
+  sec_how:"Como trocar EACO: roteiro em 7 passos", sec_countries:"30 países: idiomas · moedas · riscos",
+  copy_btn:"Copiar endereço", copied:"Copiado", slogan:"O desenvolvimento é a verdade fundamental.",
+  about_title:"Sobre a EACO", region_me:"Oriente Médio", region_af:"África", region_as:"Ásia", region_sa:"América do Sul", region_na:"América do Norte", region_eu:"Eurásia"},
+tr:{app_title:"EACO Küresel 30 Ülke Rehberi", t_dark:"Koyu", t_minimal:"Minimal", t_gradient:"Gradyan",
+  sec_how:"EACO Nasıl Değiştirilir: 7 Adımlı Yol", sec_countries:"30 ülke: diller · para birimleri · riskler",
+  copy_btn:"Adresi Kopyala", copied:"Kopyalandı", slogan:"Gelişme temel ilkedir.",
+  about_title:"EACO Hakkında", region_me:"Orta Doğu", region_af:"Afrika", region_as:"Asya", region_sa:"Güney Amerika", region_na:"Kuzey Amerika", region_eu:"Avrasya"},
+my:{app_title:"EACO ကမ္ဘာလုံးဆိုင်ရာ ၃၀ နိုင်ငံလမ်းညွှန်", t_dark:"အမှောင်", t_minimal:"ရိုးရှင်း", t_gradient:"ဂရက်ဒီယန့်",
+  sec_how:"EACO လဲလှယ်နည်း - ၇ ဆင့်လမ်းကြောင်း", sec_countries:"၃၀ နိုင်ငံ: ဘာသာစကား · ငွေကြေး · အန္တရာယ်",
+  copy_btn:"လိပိာကူးယူ", copied:"ကူးယူပြီး", slogan:"ဖွံ့ဖြိုးတိုးတက်မှုသည် အဓိကမူဖြစ်သည်။",
+  about_title:"EACO အကြောင်း", region_me:"အရှေ့အလယ်ပိုင်း", region_af:"အာဖရိက", region_as:"အာရှ", region_sa:"တောင်အမေရိက", region_na:"မြောက်အမေရိက", region_eu:"ယူရေးရှား"},
+am:{app_title:"የEACO የአለምአቀፍ የ30 ሀገራት መመሪያ", t_dark:"ጨለማ", t_minimal:"ቀላል", t_gradient:"ግራዲየንት",
+  sec_how:"EACO እንዴት እንደሚለወጥ - 7 እርምጃዎች", sec_countries:"30 ሀገራት: ቋንቋዎች · ገንዘቦች · ስጋቶች",
+  copy_btn:"አድራሻ ቅዳ", copied:"ተቀድቷል", slogan:"ልማት ዋናው እውነት ነው።",
+  about_title:"ስለ EACO", region_me:"መካከለኛው ምስራቅ", region_af:"አፍሪካ", region_as:"እስያ", region_sa:"ደቡብ አሜሪካ", region_na:"ሰሜን አሜሪካ", region_eu:"ኢራሲያ"},
+bn:{app_title:"EACO গ্লোবাল ৩০ দেশের গাইড", t_dark:"ডার্ক", t_minimal:"মিনিমাল", t_gradient:"গ্রেডিয়েন্ট",
+  sec_how:"EACO কীভাবে কিনবেন: ৭ ধাপের পথ", sec_countries:"৩০ দেশ: ভাষা · মুদ্রা · ঝুঁকি",
+  copy_btn:"ঠিকানা কপি", copied:"কপি হয়েছে", slogan:"উন্নয়নই মূল কথা।",
+  about_title:"EACO সম্পর্কে", region_me:"মধ্যপ্রাচ্য", region_af:"আফ্রিকা", region_as:"এশিয়া", region_sa:"দক্ষিণ আমেরিকা", region_na:"উত্তর আমেরিকা", region_eu:"ইউরেশিয়া"},
+si:{app_title:"EACO ගෝලීය රට 30ක මාර්ගෝපදේශය", t_dark:"අඳුරු", t_minimal:"සරල", t_gradient:"ග්‍රේඩියන්ට්",
+  sec_how:"EACO හුවමාරු කර ගන්නේ කෙසේ: පියවර 7ක මාර්ගය", sec_countries:"රට 30ක්: භාෂා · මුදල් · අවදානම්",
+  copy_btn:"ලිපිනය පිටපත්", copied:"පිටපත් විය", slogan:"සංවර්ධනය මූලික ප්‍රතිපත්තියයි.",
+  about_title:"EACO ගැන", region_me:"මැද පෙරදිග", region_af:"අප්‍රිකාව", region_as:"ආසියාව", region_sa:"දකුණු ඇමරිකාව", region_na:"උතුරු ඇමරිකාව", region_eu:"යුරේසියාව"},
+sw:{app_title:"Mwongozo wa Kimataifa wa EACO wa Nchi 30", t_dark:"Meusi", t_minimal:"Rahisi", t_gradient:"Gradienti",
+  sec_how:"Jinsi ya Kubadilisha EACO: Njia ya Hatua 7", sec_countries:"Nchi 30: Lugha · Sarafu · Hatari",
+  copy_btn:"Nakili Anwani", copied:"Imenakiliwa", slogan:"Maendeleo ndiyo ukweli wa msingi.",
+  about_title:"Kuhusu EACO", region_me:"Mashariki ya Kati", region_af:"Afrika", region_as:"Asia", region_sa:"Amerika ya Kusini", region_na:"Amerika ya Kaskazini", region_eu:"Eurasia"},
+id:{app_title:"Panduan Global EACO 30 Negara", t_dark:"Gelap", t_minimal:"Minimal", t_gradient:"Gradien",
+  sec_how:"Cara Menukar EACO: Jalur 7 Langkah", sec_countries:"30 Negara: Bahasa · Mata Uang · Risiko",
+  copy_btn:"Salin Alamat", copied:"Tersalin", slogan:"Pembangunan adalah kebenaran utama.",
+  about_title:"Tentang EACO", region_me:"Timur Tengah", region_af:"Afrika", region_as:"Asia", region_sa:"Amerika Selatan", region_na:"Amerika Utara", region_eu:"Eurasia"},
+vi:{app_title:"Hướng Dẫn EACO Toàn Cầu 30 Quốc Gia", t_dark:"Tối", t_minimal:"Tối giản", t_gradient:"Gradien",
+  sec_how:"Cách Đổi EACO: Quy Trình 7 Bước", sec_countries:"30 Quốc Gia: Ngôn ngữ · Tiền tệ · Rủi ro",
+  copy_btn:"Sao chép địa chỉ", copied:"Đã sao chép", slogan:"Phát triển là lý đạo căn bản.",
+  about_title:"Về EACO", region_me:"Trung Đông", region_af:"Châu Phi", region_as:"Châu Á", region_sa:"Nam Mỹ", region_na:"Bắc Mỹ", region_eu:"Âu-Á"},
+hi:{app_title:"EACO ग्लोबल 30 देश गाइड", t_dark:"डार्क", t_minimal:"मिनिमल", t_gradient:"ग्रेडिएंट",
+  sec_how:"EACO कैसे बदलें: 7-चरण पथ", sec_countries:"30 देश: भाषाएँ · मुद्राएँ · जोखिम",
+  copy_btn:"पता कॉपी करें", copied:"कॉपी हो गया", slogan:"विकास ही मूल सिद्धांत है।",
+  about_title:"EACO के बारे में", region_me:"मध्य पूर्व", region_af:"अफ़्रीका", region_as:"एशिया", region_sa:"दक्षिण अमेरिका", region_na:"उत्तर अमेरिका", region_eu:"यूरेशिया"},
+ms:{app_title:"Panduan Global EACO 30 Negara", t_dark:"Gelap", t_minimal:"Minimal", t_gradient:"Kecerunan",
+  sec_how:"Cara Menukar EACO: Laluan 7 Langkah", sec_countries:"30 Negara: Bahasa · Mata Wang · Risiko",
+  copy_btn:"Salin Alamat", copied:"Disalin", slogan:"Pembangunan ialah kebenaran asas.",
+  about_title:"Tentang EACO", region_me:"Timur Tengah", region_af:"Afrika", region_as:"Asia", region_sa:"Amerika Selatan", region_na:"Amerika Utara", region_eu:"Eurasia"},
+tl:{app_title:"EACO Global 30 Bansa Gabay", t_dark:"Madilim", t_minimal:"Minimal", t_gradient:"Gradient",
+  sec_how:"Paano Magpalit ng EACO: 7-Hakbang na Landas", sec_countries:"30 Bansa: Wika · Salapi · Panganib",
+  copy_btn:"Kopyahin ang Address", copied:"Nakopya", slogan:"Ang pag-unlad ang pangunahing katotohanan.",
+  about_title:"Tungkol sa EACO", region_me:"Gitnang Silangan", region_af:"Aprika", region_as:"Asya", region_sa:"Timog Amerika", region_na:"Hilagang Amerika", region_eu:"Eurasia"}
+};
+Object.keys(EXTRA).forEach(k=>I18N[k]=Object.assign({},I18N.en,EXTRA[k]));
+
+let currentLang = localStorage.getItem("eaco_lang") || "zh";
+let currentTheme = localStorage.getItem("eaco_theme") || "dark";
+let currentView = localStorage.getItem("eaco_view") || "grid";
+
+function t(key){
+  const L = I18N[currentLang] || I18N.en;
+  return L[key] ?? I18N.en[key] ?? I18N.zh[key] ?? key;
+}
+function langName(code){ return (LANGS[code]||{}).native || code; }
+
+/* ==================== 渲染 ==================== */
+function renderStatic(){
+  document.documentElement.lang = currentLang;
+  document.documentElement.dir = (LANGS[currentLang]||{}).dir || "ltr";
+  document.querySelectorAll("[data-i18n]").forEach(el=>{
+    const k = el.getAttribute("data-i18n");
+    el.textContent = t(k);
+  });
+  document.querySelectorAll("[data-i18n-ph]").forEach(el=>{
+    el.placeholder = t(el.getAttribute("data-i18n-ph"));
+  });
+  // 主题按钮激活态
+  document.querySelectorAll("[data-theme-btn]").forEach(b=>{
+    b.classList.toggle("active", b.dataset.themeBtn===currentTheme);
+  });
+}
+
+function renderSteps(){
+  const grid = document.getElementById("stepsGrid");
+  const steps = ["s1","s2","s3","s4","s5","s6","s7"];
+  grid.innerHTML = steps.map((k,i)=>`
+    <div class="step">
+      <div class="num">${i+1}</div>
+      <h3>${t(k)}</h3>
+      <p>${t(k+"d")}</p>
+    </div>`).join("");
+}
+
+function flagBar(flags){
+  return `<div class="flag-bar" style="background:linear-gradient(90deg,${flags.join(",")})"></div>`;
+}
+
+const RESTRICTED = ["sanctions","conflict","capital_control","banking_crisis","fx_restriction","fx_shortage","political_instability","political_risk"];
+function methodFor(c){ return c.tags.some(t=>RESTRICTED.includes(t)) ? "method_a" : "method_b"; }
+
+function applyView(){
+  const grid = document.getElementById("countryGrid");
+  const wrap = document.getElementById("countryTableWrap");
+  grid.style.display = currentView==="grid" ? "" : "none";
+  wrap.style.display = currentView==="table" ? "" : "none";
+  document.querySelectorAll("#viewToggle [data-view]").forEach(b=>{
+    b.classList.toggle("active", b.dataset.view===currentView);
+  });
+}
+
+function renderCountries(filter="", region="all"){
+  const grid = document.getElementById("countryGrid");
+  const tbody = document.getElementById("countryTbody");
+  const empty = document.getElementById("emptyBox");
+  const q = filter.trim().toLowerCase();
+  const list = COUNTRIES.filter(c=>{
+    const okRegion = region==="all" || c.region===region;
+    const hay = [c.name,c.local,c.currency,c.currencyName,...c.langs.map(l=>langName(l))].join(" ").toLowerCase();
+    const okQ = !q || hay.includes(q);
+    return okRegion && okQ;
+  });
+  empty.style.display = list.length ? "none" : "block";
+  grid.innerHTML = list.map(c=>`
+    <div class="card">
+      ${flagBar(c.flags)}
+      <div class="card-body">
+        <div class="card-head">
+          <div>
+            <h3>${c.name}</h3>
+            <div class="local">${c.local}</div>
+          </div>
+          <span class="pill">${c.code}</span>
+        </div>
+        <div class="meta">
+          <div class="row"><b>${t("col_currency")}:</b>
+            <span class="lang-chip">${c.currency} · ${c.currencyName}</span>
+          </div>
+          <div class="row"><b>${t("col_lang")}:</b>
+            ${c.langs.map(l=>`<span class="lang-chip">${langName(l)}</span>`).join("")}
+          </div>
+          <div class="row"><b>${t("col_region")}:</b> <span>${t("region_"+c.region)}</span></div>
+          <div class="row">${c.tags.map(tag=>`<span class="pill tag">${t("tag_"+tag)}</span>`).join("")}</div>
+        </div>
+      </div>
+    </div>`).join("");
+  tbody.innerHTML = list.map(c=>`
+    <tr>
+      <td><span class="flag-dot" style="background:linear-gradient(90deg,${c.flags.join(",")})"></span><span class="cname">${c.name}</span><div class="clocal">${c.local} · ${c.code}</div></td>
+      <td><div class="cell-stack"><span class="lang-chip">${c.currency}</span><span class="clocal">${c.currencyName}</span></div></td>
+      <td>${c.langs.map(l=>`<span class="lang-chip">${langName(l)}</span>`).join(" ")}</td>
+      <td>${t("region_"+c.region)}</td>
+      <td>${t(methodFor(c))}</td>
+      <td>${c.tags.map(tag=>`<span class="pill tag">${t("tag_"+tag)}</span>`).join("")}</td>
+    </tr>`).join("");
+  applyView();
+}
+
+/* ==================== FAQ 30条问答 ==================== */
+const FAQ = [
+  {q:{zh:"EACO 是什么？",en:"What is EACO?"},a:{zh:"EACO 是部署在 Solana 链上的原生 SPL Token，定位 AI + RWA 地球村数字资产生态，以 DAO 治理为核心，生态内包含 eCNH。",en:"EACO is a native SPL Token deployed on Solana, positioned as an AI + RWA global-village digital-asset ecosystem governed by a DAO, including eCNH."}},
+  {q:{zh:"EACO 部署在哪条区块链上？",en:"Which blockchain is EACO on?"},a:{zh:"EACO 部署在 Solana 公链上，具备高吞吐、低手续费、确认速度快的特点。",en:"EACO is deployed on the Solana public chain, offering high throughput, low fees and fast confirmation."}},
+  {q:{zh:"EACO 属于什么 Token 标准？",en:"What token standard does EACO use?"},a:{zh:"EACO 采用 Solana 的 SPL Token 标准，兼容 Solana 原生钱包、DEX 与 DeFi 工具。",en:"EACO uses the Solana SPL Token standard and is compatible with Solana-native wallets, DEXs and DeFi tools."}},
+  {q:{zh:"EACO 的合约地址（CA）是什么？",en:"What is EACO's contract address (CA)?"},a:{zh:"CA：DqfoyZH96RnvZusSp3Cdncjpyp3C74ZmJzGhjmHnDHRH。转账前务必核对地址，防止假冒代币。",en:"CA: DqfoyZH96RnvZusSp3Cdncjpyp3C74ZmJzGhjmHnDHRH. Always verify the address before transferring to avoid fake tokens."}},
+  {q:{zh:"eCNH 是什么？",en:"What is eCNH?"},a:{zh:"eCNH 是 EACO 生态内的链上数字凭证/稳定价值锚点，用于生态内结算、记账与价值流转。",en:"eCNH is an on-chain digital voucher and stable value anchor within the EACO ecosystem, used for settlement, bookkeeping and value transfer."}},
+  {q:{zh:"DAO 治理是什么意思？",en:"What does DAO governance mean?"},a:{zh:"DAO 即去中心化自治组织，生态参与者通过提案、投票等方式共同参与规则制定与收益分配，而非由单一公司决定。",en:"A DAO is a decentralized autonomous organization where participants jointly set rules and share rewards through proposals and voting, rather than decisions made by a single company."}},
+  {q:{zh:"什么是 RWA？",en:"What is RWA?"},a:{zh:"RWA 指真实世界资产（Real World Assets），把实体产业、能源、光伏、基建等链上代币化，让普通人也能小额参与实体现金流。",en:"RWA means Real World Assets: tokenizing real industries, energy, solar power and infrastructure on-chain so ordinary people can participate in real cash flows in small amounts."}},
+  {q:{zh:"AI 在 EACO 生态里起什么作用？",en:"What role does AI play in the EACO ecosystem?"},a:{zh:"AI 用于解析全球经济数据、生成通俗化解读与风险提示，并支撑生态内的内容、推广与协作效率。",en:"AI analyzes global economic data, generates plain-language insights and risk alerts, and supports content, marketing and collaboration efficiency."}},
+  {q:{zh:"普通人可以参与 EACO 吗？",en:"Can ordinary people participate in EACO?"},a:{zh:"可以。EACO 面向全球草根参与者，小额即可参与生态，不要求专业投资背景；但请只用可承受风险的资金。",en:"Yes. EACO is open to grassroots participants worldwide; small amounts are enough to join the ecosystem. Use only funds you can afford to risk."}},
+  {q:{zh:"想参与 EACO，第一步该做什么？",en:"What is the first step to participate?"},a:{zh:"先安装并备份好 Solana 钱包，了解兑换路径与风险，再考虑小额参与；不要在未做准备前转账。",en:"First install and back up a Solana wallet, understand the exchange path and risks, then consider a small entry. Do not transfer before you are prepared."}},
+  {q:{zh:"需要下载什么钱包？",en:"What wallet do I need?"},a:{zh:"可使用 Phantom、Solflare 等 Solana 兼容钱包；在官方渠道下载，离线保存助记词，不向任何人泄露。",en:"Use Solana-compatible wallets such as Phantom or Solflare. Download from official channels, save your seed phrase offline and never share it."}},
+  {q:{zh:"为什么要准备少量 SOL？",en:"Why prepare a small amount of SOL?"},a:{zh:"SOL 用于支付 Solana 链上交易的 Gas（手续费），兑换、转账都需要少量 SOL。",en:"SOL pays for on-chain transaction fees (Gas) on Solana; swaps and transfers all require a small amount of SOL."}},
+  {q:{zh:"可以直接用法币买 EACO 吗？",en:"Can I buy EACO directly with fiat?"},a:{zh:"多数地区不能直接法币购买。通常路径是：法币→稳定币 USDT/USDC→转入钱包→DEX 兑换 EACO，或通过认证社群 C2C 直兑。",en:"Direct fiat purchase is usually not available. The common path is fiat → USDT/USDC stablecoin → transfer to wallet → swap EACO on a DEX, or direct C2C swap through a certified community."}},
+  {q:{zh:"稳定币 USDT/USDC 起什么作用？",en:"What role do USDT/USDC stablecoins play?"},a:{zh:"稳定币作为本地法币与链上资产之间的价值中转，价格锚定美元，便于保值与跨币种兑换。",en:"Stablecoins act as a value bridge between local fiat and on-chain assets, pegged to the U.S. dollar to preserve value and ease cross-currency swaps."}},
+  {q:{zh:"在哪些去中心化交易所可以兑换 EACO？",en:"On which DEXs can I swap EACO?"},a:{zh:"可通过 Jupiter、Raydium 等 Solana 原生 DEX，用 SOL 或 USDC 兑换 EACO；请核对合约地址后再交易。",en:"Swap SOL or USDC for EACO on Solana-native DEXs such as Jupiter and Raydium; verify the contract address before trading."}},
+  {q:{zh:"什么是社群 C2C 直兑？",en:"What is community C2C direct swap?"},a:{zh:"指在本地 DAO 社群或认证合作伙伴之间点对点买卖 EACO，先核验对方身份与信誉，先小额试单。",en:"Peer-to-peer buying and selling of EACO within a local DAO community or certified partners. Verify identity and reputation first and start with small orders."}},
+  {q:{zh:"除了买币，还能怎么获得 EACO？",en:"Besides buying, how else can I earn EACO?"},a:{zh:"可参与市场推广、区域合作、实体服务、内容创作与 RWA 任务，以贡献换取 EACO 奖励。",en:"Join marketing, regional partnerships, real-world services, content creation and RWA tasks; earn EACO in return for your contribution."}},
+  {q:{zh:"EACO 适合重仓或 All in 吗？",en:"Is EACO suitable for heavy or all-in allocation?"},a:{zh:"不建议。Web3 资产波动大，EACO 更适合作为风险增长仓的一小部分，绝不要投入生活备用金、贷款或借款。",en:"No. Web3 assets are highly volatile. EACO should be a small part of a growth-risk portfolio; never invest emergency funds, loans or borrowed money."}},
+  {q:{zh:"参与 EACO 会保本吗？",en:"Is EACO principal-protected?"},a:{zh:"不会。任何 Web3 数字资产都不保本，价格可能上涨也可能下跌，页面内容不构成收益承诺或投资建议。",en:"No. No Web3 digital asset is principal-protected; prices can rise or fall. This page makes no return guarantee or investment advice."}},
+  {q:{zh:"Web3 资产价格为什么波动大？",en:"Why are Web3 asset prices so volatile?"},a:{zh:"受流动性、市场情绪、监管政策、行业周期与宏观经济等多重因素影响，小盘数字资产波动通常更明显。",en:"Prices are affected by liquidity, market sentiment, regulation, industry cycles and macroeconomics; smaller-cap digital assets often swing more sharply."}},
+  {q:{zh:"本币贬值时，EACO 能帮我保值吗？",en:"Can EACO help preserve value when my local currency depreciates?"},a:{zh:"EACO 不能替代稳定资产，也不承诺保值；在高贬值地区，更稳妥的做法是先配置稳定币、黄金等保值层，再用极小仓位参与生态。",en:"EACO is not a substitute for stable assets and does not promise to hold value. In high-depreciation regions, first allocate stablecoins and gold, then participate with a very small position."}},
+  {q:{zh:"个人资产一般怎么分配更稳妥？",en:"What is a sensible personal asset allocation?"},a:{zh:"参考结构：生活备用金 20%–40%，稳定币/美元类 30%–50%，黄金或实体资产 10%–20%，数字资产（含 EACO）5%–15%，高风险项目 0%–5%。比例因人而异。",en:"Reference structure: emergency fund 20%–40%, stablecoins/USD 30%–50%, gold or real assets 10%–20%, digital assets (incl. EACO) 5%–15%, high-risk projects 0%–5%. Ratios vary by person."}},
+  {q:{zh:"怎么辨别 EACO 相关诈骗？",en:"How do I spot EACO-related scams?"},a:{zh:"警惕承诺高收益、拉群喊单、陌生私信、假冒客服、虚假质押理财；只通过官方渠道与认证节点，不点击陌生链接、不授权不明合约。",en:"Watch for promised high returns, pump groups, unsolicited DMs, fake support, and false staking plans. Use only official channels and certified nodes; do not click unknown links or approve unknown contracts."}},
+  {q:{zh:"助记词和私钥应该怎么保存？",en:"How should I store seed phrases and private keys?"},a:{zh:"手写在纸上离线保存，多处备份；不存入手机相册、云盘、聊天记录或邮件；任何人索要助记词都是诈骗。",en:"Write them on paper and store offline with multiple backups; do not save them in photos, cloud drives, chats or emails. Anyone asking for your seed phrase is a scammer."}},
+  {q:{zh:"钱包授权合约需要注意什么？",en:"What should I watch for with wallet approvals?"},a:{zh:"定期检查已授权的合约，撤销不再使用的授权；警惕无限额授权；只在官方 DEX 与认证应用上操作。",en:"Review approved contracts regularly and revoke unused approvals; beware unlimited allowances; operate only on official DEXs and certified apps."}},
+  {q:{zh:"不同国家监管不一样，要注意什么？",en:"Regulation varies by country—what should I note?"},a:{zh:"先了解所在地区关于数字资产、跨境转账与税务的规定；遵守当地法律，如实申报；管制地区优先选择合规、可追溯的渠道。",en:"First learn your local rules on digital assets, cross-border transfers and taxes. Comply with local law, declare honestly, and prefer compliant, traceable channels in restricted regions."}},
+  {q:{zh:"EACO 未来可能成为通用数字资产吗？",en:"Could EACO become a universal digital asset?"},a:{zh:"EACO 定位面向地球村的长期数字资产生态，未来存在成为通用数字资产之一的可能性，但这取决于生态建设、合规与市场发展，无法保证。",en:"EACO is positioned as a long-term global-village digital-asset ecosystem and may become one of the universal digital assets in the future, but this depends on ecosystem growth, compliance and market adoption and cannot be guaranteed."}},
+  {q:{zh:"现在加入有什么合作机会？",en:"What partnership opportunities exist now?"},a:{zh:"当前阶段面向全球寻找长期市场合作伙伴，可承接区域推广、社群运营、本地商家对接、内容创作与实体服务协作。",en:"At this stage we are looking for long-term global market partners, including regional promotion, community operations, local merchant outreach, content creation and real-world service collaboration."}},
+  {q:{zh:"想退出变现，一般怎么走？",en:"How do I exit and cash out if needed?"},a:{zh:"常规路径：在 DEX 把 EACO 换回 SOL/USDC，再通过合规 C2C 或本地渠道换回法币；大额退出建议分批并提前了解税务。",en:"Typical path: swap EACO back to SOL/USDC on a DEX, then convert to fiat through a compliant C2C or local channel. For large exits, stagger transactions and check taxes in advance."}},
+  {q:{zh:"遇到问题应该联系谁？",en:"Who should I contact if I have a problem?"},a:{zh:"通过官方社群、认证合作伙伴或页面公布的官方渠道咨询；警惕非官方私信与所谓“客服”，一切以官方合约地址与公告为准。",en:"Contact official communities, certified partners or the official channels listed on the page. Beware unofficial DMs and fake “support”; always rely on the official contract address and announcements."}}
+];
+
+function renderFaq(filter=""){
+  const box = document.getElementById("faqList");
+  const empty = document.getElementById("faqEmpty");
+  const q = filter.trim().toLowerCase();
+  const lang = I18N[currentLang] ? currentLang : "en";
+  const list = FAQ.map((f,i)=>{
+    const question = f.q[lang] || f.q.en;
+    const answer = f.a[lang] || f.a.en;
+    const hay = (question+" "+answer).toLowerCase();
+    return {i, question, answer, hit:!q || hay.includes(q)};
+  }).filter(x=>x.hit);
+  empty.style.display = list.length ? "none" : "block";
+  box.innerHTML = list.map(f=>`
+    <details class="faq-item">
+      <summary><span>${f.i+1}. ${f.question}</span></summary>
+      <div class="faq-a">${f.answer}</div>
+    </details>`).join("");
+}
+
+function fillLangSelect(){
+  const sel = document.getElementById("langSelect");
+  sel.innerHTML = Object.keys(LANGS).map(code=>
+    `<option value="${code}">${LANGS[code].native} · ${LANGS[code].name}</option>`).join("");
+  sel.value = currentLang;
+}
+function fillRegionSelect(){
+  const sel = document.getElementById("regionSelect");
+  const regions = ["me","af","as","sa","na","eu"];
+  sel.innerHTML = `<option value="all">${t("all_region")}</option>` +
+    regions.map(r=>`<option value="${r}">${t("region_"+r)}</option>`).join("");
+}
+
+/* ==================== 事件 ==================== */
+document.getElementById("langSelect").addEventListener("change",e=>{
+  currentLang = e.target.value;
+  localStorage.setItem("eaco_lang",currentLang);
+  init();
+});
+document.getElementById("themeGroup").addEventListener("click",e=>{
+  const btn = e.target.closest("[data-theme-btn]"); if(!btn) return;
+  currentTheme = btn.dataset.themeBtn;
+  localStorage.setItem("eaco_theme",currentTheme);
+  document.body.dataset.theme = currentTheme;
+  renderStatic();
+});
+document.getElementById("searchInput").addEventListener("input",e=>{
+  renderCountries(e.target.value, document.getElementById("regionSelect").value);
+});
+document.getElementById("regionSelect").addEventListener("change",e=>{
+  renderCountries(document.getElementById("searchInput").value, e.target.value);
+});
+document.getElementById("viewToggle").addEventListener("click",e=>{
+  const btn = e.target.closest("[data-view]"); if(!btn) return;
+  currentView = btn.dataset.view;
+  localStorage.setItem("eaco_view",currentView);
+  applyView();
+});
+document.getElementById("copyBtn").addEventListener("click",async()=>{
+  const addr = document.getElementById("caAddress").textContent.trim();
+  try{ await navigator.clipboard.writeText(addr); }
+  catch(e){
+    const ta=document.createElement("textarea"); ta.value=addr; document.body.appendChild(ta);
+    ta.select(); document.execCommand("copy"); ta.remove();
+  }
+  const btn = document.getElementById("copyBtn");
+  const old = btn.textContent;
+  btn.textContent = t("copied");
+  setTimeout(()=>{ btn.textContent = old; },1500);
+});
+document.getElementById("faqSearch").addEventListener("input",e=>{
+  renderFaq(e.target.value);
+});
+
+function init(){
+  document.body.dataset.theme = currentTheme;
+  fillLangSelect(); fillRegionSelect();
+  renderStatic(); renderSteps();
+  renderCountries(document.getElementById("searchInput").value, document.getElementById("regionSelect").value);
+  renderFaq(document.getElementById("faqSearch").value);
+}
+init();
+</script>
+</body>
+</html>
