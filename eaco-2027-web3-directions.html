@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="swiss">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EACO 2027 · Web3 应用 20 方向</title>
+<meta name="description" content="基于 QS 全球十大艺术与商学院课程知识点，推导 2027 年 20 大趋势方向，并映射为 EACO Web3 的 20 个应用方向。支持中英双语与三种设计风格。">
+<style>
+/* ============ THEME TOKENS ============ */
+:root,[data-theme="swiss"]{
+  --bg:#ffffff;--surface:#f7f7f4;--surface2:#ecece7;--text:#151515;--muted:#5d5d5d;
+  --accent:#d8231d;--accent2:#1a1a1a;--border:#dcdcd6;--grid:rgba(0,0,0,.045);
+  --header-bg:rgba(255,255,255,.9);--shadow:0 1px 0 rgba(0,0,0,.05);
+  --panel-bg:#141414;--panel-text:#f6f6f6;--panel-muted:#bdbdbd;--panel-border:#3a3a3a;
+  --radius:2px;--font-h:"Helvetica Neue",Arial,"PingFang SC","Microsoft YaHei",sans-serif;
+  --font-b:"Helvetica Neue",Arial,"PingFang SC","Microsoft YaHei",sans-serif;
+  --accent-text:#fff;
+}
+[data-theme="neo"]{
+  --bg:#070b1a;--surface:rgba(19,28,55,.76);--surface2:rgba(33,46,82,.7);--text:#e9f1ff;--muted:#9fb0d0;
+  --accent:#46e6ff;--accent2:#b58bff;--border:rgba(120,170,255,.22);--grid:rgba(90,140,255,.07);
+  --header-bg:rgba(7,11,26,.82);--shadow:0 8px 32px rgba(0,0,0,.35);
+  --panel-bg:linear-gradient(135deg,rgba(24,38,78,.92),rgba(45,24,82,.92));--panel-text:#f2f7ff;--panel-muted:#b9c9ee;--panel-border:rgba(120,170,255,.35);
+  --radius:16px;--font-h:"Segoe UI",Arial,"PingFang SC","Microsoft YaHei",sans-serif;
+  --font-b:"Segoe UI",Arial,"PingFang SC","Microsoft YaHei",sans-serif;
+  --accent-text:#04121c;
+}
+[data-theme="organic"]{
+  --bg:#f7f3e9;--surface:#fffdf6;--surface2:#efe9d9;--text:#20352d;--muted:#68766b;
+  --accent:#bd5f3c;--accent2:#2f6b57;--border:#dcd5c1;--grid:rgba(47,107,87,.055);
+  --header-bg:rgba(247,243,233,.9);--shadow:0 6px 22px rgba(47,80,60,.07);
+  --panel-bg:#2f5d50;--panel-text:#fffdf6;--panel-muted:#d3e3d8;--panel-border:rgba(255,255,255,.22);
+  --radius:22px;--font-h:Georgia,"Songti SC","Noto Serif CJK SC",serif;
+  --font-b:"Segoe UI",Arial,"PingFang SC","Microsoft YaHei",sans-serif;
+  --accent-text:#fff;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font-b);line-height:1.65;transition:background .35s,color .35s}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:64px 64px}
+[data-theme="neo"] body::before{background-image:radial-gradient(circle at 15% 10%,rgba(70,230,255,.13),transparent 42%),radial-gradient(circle at 85% 25%,rgba(181,139,255,.15),transparent 45%),radial-gradient(circle at 50% 90%,rgba(70,120,255,.1),transparent 50%)}
+[data-theme="organic"] body::before{background-image:radial-gradient(circle at 10% 15%,rgba(47,107,87,.09),transparent 38%),radial-gradient(circle at 90% 60%,rgba(189,95,60,.08),transparent 40%)}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1240px;margin:0 auto}
+
+/* ============ HEADER ============ */
+.site-header{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:18px;padding:11px 5vw;background:var(--header-bg);border-bottom:1px solid var(--border);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.brand{font-family:var(--font-h);font-weight:800;font-size:1.05rem;letter-spacing:-.02em;white-space:nowrap}
+.brand span{color:var(--accent)}
+.nav{display:flex;gap:16px;margin-left:auto;font-size:.82rem;flex-wrap:wrap}
+.nav a{color:var(--muted);font-weight:600}
+.nav a:hover{color:var(--accent);text-decoration:none}
+.controls{display:flex;gap:6px;align-items:center}
+.seg{display:flex;border:1px solid var(--border);border-radius:999px;overflow:hidden;background:var(--surface)}
+.seg button{border:0;background:transparent;color:var(--muted);font-size:.74rem;padding:6px 10px;cursor:pointer;font-family:inherit;white-space:nowrap}
+.seg button.active{background:var(--accent);color:var(--accent-text);font-weight:700}
+.seg button:hover:not(.active){color:var(--text)}
+
+/* ============ HERO ============ */
+.hero{padding:82px 5vw 58px}
+.kicker{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:800}
+.hero h1{font-family:var(--font-h);font-size:clamp(2.2rem,5.5vw,4.5rem);line-height:1.08;letter-spacing:-.035em;margin:18px 0 22px;max-width:1000px}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p.lead{max-width:820px;color:var(--muted);font-size:1.02rem;margin:0 0 30px}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--accent);background:var(--accent);color:var(--accent-text);padding:11px 18px;border-radius:var(--radius);font-size:.88rem;font-weight:700;cursor:pointer;font-family:inherit;transition:transform .15s,opacity .15s}
+.btn:hover{transform:translateY(-2px);text-decoration:none;opacity:.92}
+.btn.ghost{background:transparent;color:var(--text);border-color:var(--border)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin-top:48px;max-width:840px}
+.stat{border-top:2px solid var(--accent);padding-top:12px}
+.stat b{display:block;font-family:var(--font-h);font-size:2rem;line-height:1}
+.stat span{font-size:.76rem;color:var(--muted)}
+
+/* ============ SECTIONS ============ */
+section{padding:64px 5vw;border-top:1px solid var(--border)}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:28px}
+.sec-title{font-family:var(--font-h);font-size:clamp(1.65rem,3.2vw,2.5rem);margin:8px 0 6px;line-height:1.15}
+.sec-sub{color:var(--muted);font-size:.86rem;max-width:760px;margin:0}
+.sec-actions{display:flex;gap:8px;flex-wrap:wrap}
+.small-btn{border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:var(--radius);padding:7px 12px;font-size:.78rem;cursor:pointer;font-family:inherit}
+.small-btn:hover{border-color:var(--accent);color:var(--accent)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(295px,1fr));gap:14px}
+
+/* school card */
+.school{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:19px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:10px}
+.school-top{display:flex;gap:13px;align-items:flex-start}
+.rank{font-family:var(--font-h);font-size:1.75rem;line-height:1;color:var(--accent);font-weight:800;min-width:44px}
+.school h3{margin:0;font-family:var(--font-h);font-size:1rem;line-height:1.3}
+.school .meta{font-size:.73rem;color:var(--muted);margin-top:3px}
+.school .feature{font-size:.83rem;color:var(--muted);margin:0;min-height:3.2em}
+details.courses{border-top:1px dashed var(--border);padding-top:9px;margin-top:auto}
+summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:.8rem;font-weight:700;color:var(--accent)}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-size:1.1rem;line-height:1}
+details[open] summary::after{content:"−"}
+.course-list{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:6px}
+.course-list li{display:flex;flex-wrap:wrap;align-items:baseline;gap:3px 7px;font-size:.78rem;border-bottom:1px solid var(--border);padding-bottom:6px}
+.course-list li:last-child{border-bottom:0}
+.czh{font-weight:600}
+.cen{color:var(--muted);font-size:.72rem}
+.cnote{margin-left:auto;font-size:.64rem;color:var(--accent2);border:1px solid var(--border);border-radius:999px;padding:0 6px;white-space:nowrap}
+.school-link{font-size:.72rem;align-self:flex-start}
+
+/* methodology */
+.method-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-bottom:22px}
+.method-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px}
+.method-card b{display:block;font-family:var(--font-h);color:var(--accent);margin-bottom:6px}
+.method-card p{margin:0;font-size:.85rem;color:var(--muted)}
+.source-line{font-size:.8rem;color:var(--muted);display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:6px}
+
+/* filters + directions */
+.filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:22px 0}
+.chip{border:1px solid var(--border);background:var(--surface);color:var(--text);padding:7px 13px;border-radius:999px;cursor:pointer;font-size:.78rem;font-family:inherit}
+.chip.active{background:var(--accent);color:var(--accent-text);border-color:var(--accent);font-weight:700}
+.search{border:1px solid var(--border);background:var(--surface);color:var(--text);padding:8px 14px;border-radius:999px;font-size:.8rem;font-family:inherit;min-width:220px;outline:none}
+.search:focus{border-color:var(--accent)}
+.dir{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:19px;display:flex;flex-direction:column;gap:9px;box-shadow:var(--shadow)}
+.dir .num{font-family:var(--font-h);color:var(--accent);font-weight:800;font-size:.78rem;letter-spacing:.12em}
+.dir h3{font-family:var(--font-h);font-size:1.08rem;margin:0;line-height:1.28}
+.dir .trend{font-size:.82rem;color:var(--muted);margin:0}
+.dir .src{font-size:.74rem;color:var(--muted);background:var(--surface2);border-radius:var(--radius);padding:8px 10px;line-height:1.55}
+.dir .src b{color:var(--accent2)}
+.dir .app{font-size:.83rem;border-left:3px solid var(--accent);padding-left:11px;margin:0}
+.goal-tag{align-self:flex-start;font-size:.68rem;border:1px solid var(--accent);color:var(--accent);border-radius:999px;padding:2px 9px;margin-top:auto}
+.empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:40px 0}
+
+/* EACO panel */
+.eaco-panel{background:var(--panel-bg);color:var(--panel-text);border:1px solid var(--panel-border);border-radius:var(--radius);padding:34px}
+.eaco-panel .kicker{color:var(--accent)}
+.eaco-panel h2{font-family:var(--font-h);font-size:clamp(1.7rem,3vw,2.4rem);margin:8px 0 10px}
+.eaco-panel p,.eaco-panel li{color:var(--panel-muted)}
+.eaco-panel .lead{font-size:.92rem;max-width:900px}
+.eaco-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:26px;margin-top:26px}
+.eaco-cols h4{font-family:var(--font-h);font-size:.85rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 10px}
+.eaco-cols ul{margin:0;padding-left:18px;font-size:.85rem}
+.eaco-cols li{margin-bottom:5px}
+.ca-box{margin-top:26px;border:1px solid var(--panel-border);border-radius:var(--radius);padding:16px;background:rgba(128,128,128,.09)}
+.ca-label{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.ca-value{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.83rem;word-break:break-all;margin:8px 0;color:var(--panel-text)}
+.warn{font-size:.76rem;color:var(--panel-text);font-weight:700}
+.disclaimer{margin-top:24px;border-top:1px solid var(--panel-border);padding-top:18px;font-size:.78rem;color:var(--panel-muted)}
+.two-col{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-top:22px}
+.fact{border:1px solid var(--panel-border);border-radius:var(--radius);padding:14px;font-size:.84rem}
+.fact b{color:var(--panel-text)}
+
+/* footer */
+footer{padding:34px 5vw;border-top:1px solid var(--border);font-size:.78rem;color:var(--muted)}
+.footer-row{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center}
+footer a{font-weight:600}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--text);color:var(--bg);padding:10px 18px;border-radius:999px;font-size:.8rem;opacity:0;pointer-events:none;transition:.25s;z-index:99}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+#topBtn{position:fixed;right:20px;bottom:20px;z-index:40;border:1px solid var(--accent);background:var(--accent);color:var(--accent-text);width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:1rem;display:none}
+@media(max-width:760px){.nav{display:none}.hero{padding-top:56px}.site-header{gap:8px}.seg button{padding:6px 8px;font-size:.7rem}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="brand">EACO<span> / 2027</span></div>
+  <nav class="nav">
+    <a href="#method" data-i18n="navMethod">方法与口径</a>
+    <a href="#art" data-i18n="navArt">艺术 Top 10</a>
+    <a href="#biz" data-i18n="navBiz">商科 Top 10</a>
+    <a href="#trends" data-i18n="navTrend">20 大方向</a>
+    <a href="#eaco" data-i18n="navEaco">EACO 口径</a>
+  </nav>
+  <div class="controls">
+    <div class="seg" id="langSeg">
+      <button data-lang="zh" class="active">中文</button>
+      <button data-lang="en">EN</button>
+    </div>
+    <div class="seg" id="themeSeg">
+      <button data-theme="swiss" class="active" data-i18n="themeSwiss">极简</button>
+      <button data-theme="neo" data-i18n="themeNeo">科技</button>
+      <button data-theme="organic" data-i18n="themeOrganic">生态</button>
+    </div>
+  </div>
+</header>
+
+<main>
+<div class="hero wrap">
+  <div class="kicker" data-i18n="heroKicker">EARTH VILLAGE · 2027 SIGNAL MAP</div>
+  <h1 data-i18n-html="heroTitle">把全球顶尖艺术与商科知识，<br>编译成 <em>EACO Web3</em> 的 20 个应用方向。</h1>
+  <p class="lead" data-i18n="heroLead">从 QS 十大艺术学院与 QS 全球十大商学院的课程知识点出发，交叉推演 2027 年可能流行的 20 个方向，并逐一映射为可落地的 EACO Web3 应用。中英双语 · 三种设计风格 · 全链路可追溯。</p>
+  <div class="actions">
+    <a class="btn" href="#trends" data-i18n="heroBtn1">探索 20 个方向 ↓</a>
+    <a class="btn ghost" href="#eaco" data-i18n="heroBtn2">查看 EACO 权威口径</a>
+  </div>
+  <div class="stats">
+    <div class="stat"><b>10</b><span data-i18n="statArt">全球顶级艺术学院</span></div>
+    <div class="stat"><b>10</b><span data-i18n="statBiz">全球顶级商学院</span></div>
+    <div class="stat"><b>230+</b><span data-i18n="statCourses">代表性课程条目</span></div>
+    <div class="stat"><b>20</b><span data-i18n="statDir">2027 应用方向</span></div>
+  </div>
+</div>
+
+<section id="method">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="kicker" data-i18n="methodKicker">METHODOLOGY / 方法</div>
+        <h2 class="sec-title" data-i18n="methodTitle">从课程知识点到应用闭环</h2>
+        <p class="sec-sub" data-i18n="methodSub">不编造数据：排名、院校与课程均标注来源；趋势为基于公开课程结构的推演，而非确定性预测。</p>
+      </div>
+    </div>
+    <div class="method-grid">
+      <div class="method-card"><b data-i18n="m1t">01 · 取源</b><p data-i18n="m1d">艺术侧采用 QS 世界大学学科排名 2026「艺术与设计」前十；商科侧采用 QS Global MBA Rankings 2027（2026 年 9 月发布）前十。</p></div>
+      <div class="method-card"><b data-i18n="m2t">02 · 交叉</b><p data-i18n="m2d">把 20 所院校的 230+ 门代表性课程归入设计研究、服务系统、数据决策、组织行为、战略、伦理与可持续等知识簇，寻找交集与张力。</p></div>
+      <div class="method-card"><b data-i18n="m3t">03 · 映射</b><p data-i18n="m3d">每个方向都保留「艺术来源 → 商科来源 → 2027 趋势 → EACO 应用 → 五大目标」五段链路，形成可读、可查、可复核的闭环。</p></div>
+    </div>
+    <div class="source-line">
+      <span data-i18n="sourceLabel">数据源：</span>
+      <a href="https://qschina.cn/university-rankings/university-subject-rankings/2015/art-design" target="_blank" rel="noopener">QS Art &amp; Design 2026 ↗</a>
+      <a href="https://www.topuniversities.com/university-rankings-articles/full-time-mba-rankings-global/top-mba-programmes-world" target="_blank" rel="noopener">QS Global MBA ↗</a>
+      <a href="https://poetsandquants.com/2026/09/16/qs-global-mba-ranking-a-new-1-tops-stanford-harvard-wharton/3" target="_blank" rel="noopener">QS 2027 榜单核对 ↗</a>
+      <button class="small-btn" id="downloadJson" data-i18n="downloadJson">下载结构化数据 JSON</button>
+      <button class="small-btn" id="copyAll" data-i18n="copyAll">复制 20 方向文本</button>
+    </div>
+  </div>
+</section>
+
+<section id="art">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="kicker">ART &amp; DESIGN · TOP 10</div>
+        <h2 class="sec-title" data-i18n="artTitle">全球十大艺术学院 · 课程清单</h2>
+        <p class="sec-sub" data-i18n="artSub">QS 2026 艺术与设计学科排名前十。课程为各校官网现行学位项目/核心课的代表性节选，非全部课程。</p>
+      </div>
+      <div class="sec-actions">
+        <button class="small-btn" data-expand="art" data-i18n="expandAll">展开全部课程</button>
+        <button class="small-btn" data-collapse="art" data-i18n="collapseAll">收起全部</button>
+      </div>
+    </div>
+    <div class="grid" id="artGrid"></div>
+  </div>
+</section>
+
+<section id="biz">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="kicker">BUSINESS SCHOOL · TOP 10</div>
+        <h2 class="sec-title" data-i18n="bizTitle">全球十大商学院 · 课程清单</h2>
+        <p class="sec-sub" data-i18n="bizSub">QS Global MBA Rankings 2027（2026 年 9 月发布）前十。课程为核心/必修与知名选修的代表性节选；部分中文榜单沿用 QS 2026 顺序，本页统一采用最新一届。</p>
+      </div>
+      <div class="sec-actions">
+        <button class="small-btn" data-expand="biz" data-i18n="expandAll">展开全部课程</button>
+        <button class="small-btn" data-collapse="biz" data-i18n="collapseAll">收起全部</button>
+      </div>
+    </div>
+    <div class="grid" id="bizGrid"></div>
+  </div>
+</section>
+
+<section id="trends">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="kicker">2027 FORECAST · 20 DIRECTIONS</div>
+        <h2 class="sec-title" data-i18n="trendTitle">2027 年可能流行的 20 大方向</h2>
+        <p class="sec-sub" data-i18n="trendSub">每个方向都可回溯到具体的艺术与商科知识点，并对应 EACO 的五大核心目标之一。以下为趋势推演与应用构想，不构成任何投资建议。</p>
+      </div>
+    </div>
+    <div class="filters" id="goalFilters"></div>
+    <div class="filters"><input id="searchInput" class="search" type="search" data-i18n-ph="searchPh" placeholder="搜索方向、关键词或应用…"></div>
+    <div class="grid" id="dirGrid"></div>
+  </div>
+</section>
+
+<section id="eaco">
+  <div class="wrap">
+    <div class="eaco-panel">
+      <div class="kicker">EACO · OFFICIAL POSITIONING</div>
+      <h2 data-i18n="eacoTitle">EACO 权威口径</h2>
+      <p class="lead" data-i18n="eacoLead">Earth's Best Coin = EACO = E ｜ 中文：地球最好币。定位：Solana 链上「地球最好的 AI + RWA + Web3 代币」。最高原则：一切文明为人类文明服务，包括 EACO。</p>
+      <div class="eaco-cols">
+        <div>
+          <h4 data-i18n="fourTitle">四要素 / FOUR ELEMENTS</h4>
+          <ul>
+            <li data-i18n-html="four1">EACO = Positive Energy × Positive Mindset × Global Collaboration × Continuous Optimization</li>
+            <li data-i18n-html="four2">EACO = 正能量 × 积极态度 × 全球协作 × 持续优化</li>
+            <li data-i18n="four3">等价表述（早期资料）：Energy × Attitude × Cooperation × Optimization，缩写同为 EACO，互为解释。</li>
+          </ul>
+        </div>
+        <div>
+          <h4 data-i18n="goalsTitle">五大核心目标 / FIVE GOALS</h4>
+          <ul>
+            <li data-i18n="goal1">提升个体认知</li>
+            <li data-i18n="goal2">提升组织效率</li>
+            <li data-i18n="goal3">推动社会文明进步</li>
+            <li data-i18n="goal4">促进地球可持续发展</li>
+            <li data-i18n="goal5">融合 100 个认知模型</li>
+          </ul>
+        </div>
+        <div>
+          <h4 data-i18n="factTitle">基础信息 / KEY FACTS</h4>
+          <ul>
+            <li data-i18n="fact1">总供应量：13.5 亿枚（1.35 billion）</li>
+            <li data-i18n="fact2">LP：10% 永久锁定</li>
+            <li data-i18n="fact3">链：Solana</li>
+            <li><a href="https://ucoingroup.github.io/earths-best-coin/" target="_blank" rel="noopener" data-i18n="fact4">官方网站 ↗</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="ca-box">
+        <div class="ca-label" data-i18n="caLabel">CONTRACT ADDRESS / 合约地址（Solana Mint）</div>
+        <div class="ca-value" id="caValue">DqfoyZH96RnvZusSp3Cdncjpyp3C74ZmJzGhjmHnDHRH</div>
+        <button class="small-btn" id="copyCa" data-i18n="copyCa">复制合约地址</button>
+        <div class="warn" data-i18n="caWarn">认准合约地址，谨防假币。</div>
+      </div>
+      <div class="two-col">
+        <div class="fact"><b data-i18n="fact5">口径提示：</b><span data-i18n="fact5d">早期生态资料中的流动性 200M、DAO 基金 250M、城市配额 700M 等分配细项与「LP 10% 永久锁定」存在统计口径重叠，本站不作拆分计算，待官方澄清。</span></div>
+        <div class="fact"><b data-i18n="fact6">风险提示：</b><span data-i18n="fact6d">本页 20 个方向为知识推演与概念构想，不代表已上线产品或路线图承诺。</span></div>
+      </div>
+      <div class="disclaimer">
+        <b data-i18n="discTitle">免责声明 / DISCLAIMER：</b>
+        <span data-i18n="discText">本内容不构成投资建议；加密资产波动剧烈；请自行核实合约地址并遵守当地法律法规。DYOR.</span>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap footer-row">
+    <div>
+      <div class="brand">EACO<span> — Earth's Best Coin</span></div>
+      <div data-i18n="footDesc">地球最好币 · Solana 链上 AI + RWA + Web3 代币 · 地球村知识共创实验</div>
+    </div>
+    <div>
+      <a href="https://ucoingroup.github.io/earths-best-coin/" target="_blank" rel="noopener" data-i18n="footSite">官网 ↗</a>
+      &nbsp;·&nbsp; <span>CA: DqfoyZH96RnvZusSp3Cdncjpyp3C74ZmJzGhjmHnDHRH</span>
+      &nbsp;·&nbsp; <span data-i18n="footWarn">认准合约地址，谨防假币</span>
+    </div>
+  </div>
+  <div class="wrap" style="margin-top:14px;font-size:.74rem" data-i18n="footDisc">免责声明：不构成投资建议；加密资产波动剧烈；请自行核实 CA 与当地合规。</div>
+</footer>
+
+<button id="topBtn" title="Back to top">↑</button>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ================= I18N ================= */
+const I = {
+ zh:{
+  navMethod:"方法与口径",navArt:"艺术 Top 10",navBiz:"商科 Top 10",navTrend:"20 大方向",navEaco:"EACO 口径",
+  themeSwiss:"极简",themeNeo:"科技",themeOrganic:"生态",
+  heroKicker:"EARTH VILLAGE · 2027 SIGNAL MAP",
+  heroTitle:"把全球顶尖艺术与商科知识，<br>编译成 <em>EACO Web3</em> 的 20 个应用方向。",
+  heroLead:"从 QS 十大艺术学院与 QS 全球十大商学院的课程知识点出发，交叉推演 2027 年可能流行的 20 个方向，并逐一映射为可落地的 EACO Web3 应用。中英双语 · 三种设计风格 · 全链路可追溯。",
+  heroBtn1:"探索 20 个方向 ↓",heroBtn2:"查看 EACO 权威口径",
+  statArt:"全球顶级艺术学院",statBiz:"全球顶级商学院",statCourses:"代表性课程条目",statDir:"2027 应用方向",
+  methodKicker:"METHODOLOGY / 方法",methodTitle:"从课程知识点到应用闭环",
+  methodSub:"不编造数据：排名、院校与课程均标注来源；趋势为基于公开课程结构的推演，而非确定性预测。",
+  m1t:"01 · 取源",m1d:"艺术侧采用 QS 世界大学学科排名 2026「艺术与设计」前十；商科侧采用 QS Global MBA Rankings 2027（2026 年 9 月发布）前十。",
+  m2t:"02 · 交叉",m2d:"把 20 所院校的 230+ 门代表性课程归入设计研究、服务系统、数据决策、组织行为、战略、伦理与可持续等知识簇，寻找交集与张力。",
+  m3t:"03 · 映射",m3d:"每个方向都保留「艺术来源 → 商科来源 → 2027 趋势 → EACO 应用 → 五大目标」五段链路，形成可读、可查、可复核的闭环。",
+  sourceLabel:"数据源：",downloadJson:"下载结构化数据 JSON",copyAll:"复制 20 方向文本",
+  artTitle:"全球十大艺术学院 · 课程清单",artSub:"QS 2026 艺术与设计学科排名前十。课程为各校官网现行学位项目/核心课的代表性节选，非全部课程。",
+  bizTitle:"全球十大商学院 · 课程清单",bizSub:"QS Global MBA Rankings 2027（2026 年 9 月发布）前十。课程为核心/必修与知名选修的代表性节选；部分中文榜单沿用 QS 2026 顺序，本页统一采用最新一届。",
+  expandAll:"展开全部课程",collapseAll:"收起全部",coursesLabel:"门代表性课程 / 项目",official:"官网课程页 ↗",scoreLabel:"综合分",
+  trendTitle:"2027 年可能流行的 20 大方向",trendSub:"每个方向都可回溯到具体的艺术与商科知识点，并对应 EACO 的五大核心目标之一。以下为趋势推演与应用构想，不构成任何投资建议。",
+  searchPh:"搜索方向、关键词或应用…",filterAll:"全部 20",
+  goalLabel:["目标 1 · 提升个体认知","目标 2 · 提升组织效率","目标 3 · 推动社会文明进步","目标 4 · 促进地球可持续发展","目标 5 · 融合 100 个认知模型"],
+  trendLabel:"2027 趋势",artSrc:"艺术知识点",bizSrc:"商科知识点",appLabel:"EACO Web3 应用方向",
+  empty:"没有匹配的方向，试试其他关键词。",
+  eacoTitle:"EACO 权威口径",eacoLead:"Earth's Best Coin = EACO = E ｜ 中文：地球最好币。定位：Solana 链上「地球最好的 AI + RWA + Web3 代币」。最高原则：一切文明为人类文明服务，包括 EACO。",
+  fourTitle:"四要素 / FOUR ELEMENTS",
+  four1:"EACO = Positive Energy × Positive Mindset × Global Collaboration × Continuous Optimization",
+  four2:"EACO = 正能量 × 积极态度 × 全球协作 × 持续优化",
+  four3:"等价表述（早期资料）：Energy × Attitude × Cooperation × Optimization，缩写同为 EACO，互为解释。",
+  goalsTitle:"五大核心目标 / FIVE GOALS",goal1:"提升个体认知",goal2:"提升组织效率",goal3:"推动社会文明进步",goal4:"促进地球可持续发展",goal5:"融合 100 个认知模型",
+  factTitle:"基础信息 / KEY FACTS",fact1:"总供应量：13.5 亿枚（1.35 billion）",fact2:"LP：10% 永久锁定",fact3:"链：Solana",fact4:"官方网站 ↗",
+  caLabel:"CONTRACT ADDRESS / 合约地址（Solana Mint）",copyCa:"复制合约地址",caWarn:"认准合约地址，谨防假币。",
+  fact5:"口径提示：",fact5d:"早期生态资料中的流动性 200M、DAO 基金 250M、城市配额 700M 等分配细项与「LP 10% 永久锁定」存在统计口径重叠，本站不作拆分计算，待官方澄清。",
+  fact6:"风险提示：",fact6d:"本页 20 个方向为知识推演与概念构想，不代表已上线产品或路线图承诺。",
+  discTitle:"免责声明 / DISCLAIMER：",discText:"本内容不构成投资建议；加密资产波动剧烈；请自行核实合约地址并遵守当地法律法规。DYOR.",
+  footDesc:"地球最好币 · Solana 链上 AI + RWA + Web3 代币 · 地球村知识共创实验",footSite:"官网 ↗",footWarn:"认准合约地址，谨防假币",
+  footDisc:"免责声明：不构成投资建议；加密资产波动剧烈；请自行核实 CA 与当地合规。",
+  toastCopied:"已复制到剪贴板",toastDownloaded:"已下载 JSON 数据"
+ },
+ en:{
+  navMethod:"Method",navArt:"Art Top 10",navBiz:"Business Top 10",navTrend:"20 Directions",navEaco:"EACO Brief",
+  themeSwiss:"Minimal",themeNeo:"Neo",themeOrganic:"Organic",
+  heroKicker:"EARTH VILLAGE · 2027 SIGNAL MAP",
+  heroTitle:"Translating the world's top art &amp; business knowledge<br>into <em>20 EACO Web3</em> application directions.",
+  heroLead:"Starting from the curricula of the QS Top 10 art schools and QS Global Top 10 business schools, we cross-map 20 likely 2027 directions into concrete EACO Web3 applications. Bilingual · three design styles · fully traceable.",
+  heroBtn1:"Explore 20 directions ↓",heroBtn2:"See the EACO brief",
+  statArt:"Top art schools",statBiz:"Top business schools",statCourses:"Representative courses",statDir:"2027 applications",
+  methodKicker:"METHODOLOGY / METHOD",methodTitle:"From course knowledge to a closed loop",
+  methodSub:"No invented data: rankings, schools and courses are sourced. Trends are inferences from public curricula, not certain predictions.",
+  m1t:"01 · Source",m1d:"Art: QS World University Rankings by Subject 2026 (Art & Design) top 10. Business: QS Global MBA Rankings 2027, published September 2026, top 10.",
+  m2t:"02 · Cross",m2d:"230+ representative courses across 20 institutions are grouped into clusters — design research, service systems, data decisions, organisational behaviour, strategy, ethics and sustainability — to find overlaps and tensions.",
+  m3t:"03 · Map",m3d:"Every direction keeps a five-step chain: art source → business source → 2027 trend → EACO application → one of five core goals. Readable, checkable, reviewable.",
+  sourceLabel:"Sources:",downloadJson:"Download structured JSON",copyAll:"Copy 20 directions as text",
+  artTitle:"Top 10 Art Schools · Course Lists",artSub:"Top 10 in QS 2026 Art & Design. Courses are a representative selection of current degree programmes/core classes from official sites, not an exhaustive list.",
+  bizTitle:"Top 10 Business Schools · Course Lists",bizSub:"Top 10 in QS Global MBA Rankings 2027 (published September 2026). Core/required classes plus well-known electives; some Chinese lists still use the 2026 order, this page uses the latest edition.",
+  expandAll:"Expand all courses",collapseAll:"Collapse all",coursesLabel:"representative courses / programmes",official:"Official courses ↗",scoreLabel:"Score",
+  trendTitle:"20 Directions Likely to Rise in 2027",trendSub:"Each direction traces back to specific art and business knowledge points and maps to one of EACO's five core goals. These are trend inferences and concept sketches, not investment advice.",
+  searchPh:"Search directions, keywords or applications…",filterAll:"All 20",
+  goalLabel:["Goal 1 · Raise individual cognition","Goal 2 · Improve organisational efficiency","Goal 3 · Advance social civilisation","Goal 4 · Promote planetary sustainability","Goal 5 · Integrate 100 cognitive models"],
+  trendLabel:"2027 signal",artSrc:"Art knowledge",bizSrc:"Business knowledge",appLabel:"EACO Web3 application",
+  empty:"No matching directions. Try another keyword.",
+  eacoTitle:"The EACO Brief",eacoLead:"Earth's Best Coin = EACO = E. Positioning: the best AI + RWA + Web3 token for Earth on Solana. Highest principle: all civilisation serves human civilisation, including EACO.",
+  fourTitle:"FOUR ELEMENTS / 四要素",
+  four1:"EACO = Positive Energy × Positive Mindset × Global Collaboration × Continuous Optimization",
+  four2:"EACO = 正能量 × 积极态度 × 全球协作 × 持续优化",
+  four3:"Equivalent early formulation: Energy × Attitude × Cooperation × Optimization — same acronym, mutually explanatory.",
+  goalsTitle:"FIVE CORE GOALS / 五大目标",goal1:"Raise individual cognition",goal2:"Improve organisational efficiency",goal3:"Advance social civilisation",goal4:"Promote planetary sustainability",goal5:"Integrate 100 cognitive models",
+  factTitle:"KEY FACTS / 基础信息",fact1:"Total supply: 1.35 billion",fact2:"LP: 10% permanently locked",fact3:"Chain: Solana",fact4:"Official website ↗",
+  caLabel:"CONTRACT ADDRESS / Solana Mint",copyCa:"Copy contract address",caWarn:"Verify the contract address. Beware of counterfeit tokens.",
+  fact5:"Scope note:",fact5d:"Early ecosystem materials list liquidity 200M, DAO fund 250M, city allocation 700M and other breakdowns that overlap statistically with the 10% permanently locked LP. No split calculation is made here; awaiting official clarification.",
+  fact6:"Risk note:",fact6d:"The 20 directions are knowledge-based inferences and concept sketches, not launched products or roadmap guarantees.",
+  discTitle:"DISCLAIMER / 免责声明：",discText:"This content is not investment advice; crypto assets are highly volatile; verify the contract address and comply with local regulations. DYOR.",
+  footDesc:"Earth's Best Coin · AI + RWA + Web3 token on Solana · a global-village knowledge experiment",footSite:"Website ↗",footWarn:"Verify CA, beware of fakes",
+  footDisc:"Disclaimer: not investment advice; crypto assets are volatile; verify the CA and local compliance yourself.",
+  toastCopied:"Copied to clipboard",toastDownloaded:"JSON data downloaded"
+ }
+};
+
+/* ================= DATA: ART ================= */
+const ART = [
+ {rank:1,zh:"皇家艺术学院",en:"Royal College of Art",locZh:"英国 · 伦敦",locEn:"UK · London",score:"98.5",
+  fZh:"全球唯一纯研究生层次的艺术与设计大学，以跨学科实验、研究驱动与产业深度合作著称。",
+  fEn:"The world's only fully postgraduate art and design university, known for cross-disciplinary experimentation, research-led practice and deep industry links.",
+  url:"https://www.rca.ac.uk/study/programme-finder/",
+  courses:[["产品设计","Design Products","MA"],["时装","Fashion","MA"],["创新设计工程","Innovation Design Engineering","MA/MSc"],["服务设计","Service Design","MA"],["纺织品设计","Textiles","MA"],["室内设计","Interior Design","MA"],["动画","Animation","MA"],["视觉传达","Visual Communication","MA"],["信息体验设计","Information Experience Design","MA"],["当代艺术策展","Curating Contemporary Art","MA"],["设计未来","Design Futures","MDes"],["建筑","Architecture","MA"]]},
+ {rank:2,zh:"伦敦艺术大学",en:"University of the Arts London",locZh:"英国 · 伦敦",locEn:"UK · London",score:"95.5",
+  fZh:"欧洲规模最大的艺术与设计教育集群，由中央圣马丁、伦敦时装学院、伦敦传媒学院等六所学院组成。",
+  fEn:"Europe's largest art and design education cluster, comprising six colleges including Central Saint Martins, LCF and LCC.",
+  url:"https://www.arts.ac.uk/courses",
+  courses:[["纯艺术（荣誉）文学士","BA (Hons) Fine Art","CSM"],["平面传达设计","BA (Hons) Graphic Communication Design","CSM"],["时装设计：传播","BA (Hons) Fashion Design: Communication","CSM"],["时装设计：印花","BA (Hons) Fashion Design: Print","CSM"],["时装设计：针织","BA (Hons) Fashion Design: Knit","CSM"],["纺织品设计","BA (Hons) Textile Design","CSM"],["摄影","BA (Hons) Photography","LCC"],["插画","BA (Hons) Illustration","Camberwell"],["纯艺术","BA (Hons) Fine Art","Chelsea"],["女装时装设计技术","BA (Hons) Fashion Design Technology: Womenswear","LCF"],["插画文学硕士","MA Illustration","Camberwell"]]},
+ {rank:3,zh:"新学院 · 帕森斯设计学院",en:"The New School / Parsons School of Design",locZh:"美国 · 纽约",locEn:"USA · New York",score:"93.3",
+  fZh:"全球顶尖时尚设计院校之一，美国最早开设时装、平面与室内设计专业，强调商业创新与艺术表达融合。",
+  fEn:"One of the world's leading fashion schools and the first in the US to offer fashion, graphic and interior design, blending commercial innovation with artistic expression.",
+  url:"https://www.newschool.edu/parsons/",
+  courses:[["时装设计","Fashion Design","BFA"],["传播设计","Communication Design","BFA"],["室内设计","Interior Design","BFA"],["设计与技术","Design & Technology","BFA"],["产品设计","Product Design","BFA"],["插画","Illustration","BFA"],["战略设计与管理","Strategic Design & Management","BBA"],["整合设计","Integrated Design","BFA"],["时装设计与社会","Fashion Design and Society","MFA"],["工业设计","Industrial Design","MFA"],["跨学科设计","Transdisciplinary Design","MFA"],["设计与城市生态","Design & Urban Ecologies","MS"]]},
+ {rank:4,zh:"罗德岛设计学院",en:"Rhode Island School of Design",locZh:"美国 · 普罗维登斯",locEn:"USA · Providence",score:"93.2",
+  fZh:"被誉为「设计界哈佛」，以严苛基础训练与概念深度著称，与布朗大学互选课程并设双学位。",
+  fEn:"Often called the 'Harvard of design', known for rigorous foundation studies and conceptual depth, with cross-registration and a dual degree with Brown University.",
+  url:"https://www.risd.edu/academics",
+  courses:[["平面设计","Graphic Design","BFA/MFA"],["工业设计","Industrial Design","BFA/MID"],["服装设计","Apparel Design","BFA"],["插画","Illustration","BFA/MFA"],["建筑","Architecture","BArch/MArch"],["室内建筑","Interior Architecture","BFA/MDes"],["家具设计","Furniture Design","BFA/MFA"],["摄影","Photography","BFA/MFA"],["绘画","Painting","BFA/MFA"],["雕塑","Sculpture","BFA/MFA"],["电影 / 动画 / 视频","Film / Animation / Video","BFA"],["布朗–RISD 双学位","Brown | RISD Dual Degree","AB+ BFA"]]},
+ {rank:5,zh:"普瑞特艺术学院",en:"Pratt Institute",locZh:"美国 · 纽约布鲁克林",locEn:"USA · Brooklyn",score:"87.5",
+  fZh:"强调「理论 + 实践」融合，工作室创作与批判性反思并重，课程直面社会公正、可持续性与全球公民议题。",
+  fEn:"Blends theory and practice, pairing studio work with critical reflection on social justice, sustainability and global citizenship.",
+  url:"https://www.pratt.edu/academics/",
+  courses:[["传播设计（平面方向）","Communications Design, Graphic Design","BFA"],["传播设计（插画方向）","Communications Design, Illustration","BFA"],["时装设计","Fashion Design","BFA"],["工业设计","Industrial Design","BID"],["室内设计","Interior Design","BFA"],["传播设计","Communications Design","MFA"],["工业设计","Industrial Design","MID"],["室内设计","Interior Design","MFA"],["包装、识别与系统设计","Packaging, Identities and Systems Design","MS"],["时装系列与传播","Fashion Collection + Communication","MFA"],["纯艺术","Fine Arts","BFA"],["数字艺术：三维动画与动态艺术","3-D Animation and Motion Arts","BFA"]]},
+ {rank:6,zh:"麻省理工学院（媒体实验室）",en:"MIT (Media Lab / MAS)",locZh:"美国 · 剑桥",locEn:"USA · Cambridge",score:"84.8",
+  fZh:"媒体实验室以「艺术 + 科学 + 技术」融合著称，项目制研究与创业生态并重，传奇课程影响全球创客教育。",
+  fEn:"The Media Lab fuses art, science and technology through project-based research and entrepreneurship, home to a legendary maker course.",
+  url:"https://www.media.mit.edu/graduate-program/about-media-arts-sciences/",
+  courses:[["媒体艺术与科学硕士","MS in Media Arts and Sciences","SM"],["媒体艺术与科学博士","PhD in Media Arts and Sciences","PhD"],["如何（几乎）制造任何东西","How to Make (Almost) Anything","MAS.863J"],["城市科学","City Science","MAS.552J"],["情感计算与伦理高级研讨","Advanced Seminar: Affective Computing and Ethics","MAS.630"],["AI 影响力：全球创业","AI for Impact: Global Ventures","MAS.665J"],["人机交互","Human-Robot Interaction","MAS.750"],["可触界面","Tangible Interfaces","MAS.834"],["电子音乐界面原理","Principles of Electronic Music Interfaces","MAS.837"],["认知增强 AI 智能体","AI Agents for Cognitive Augmentation","MAS.S60"],["批判性物质：身体、情感与材料智能","Critical Matter: Body, Emotion, and Material Intelligence","MAS.S63"],["为儿童设计创意技术","Designing Creative Technologies for Kids","MAS.A02"]]},
+ {rank:7,zh:"米兰理工大学",en:"Politecnico di Milano",locZh:"意大利 · 米兰 / 科莫",locEn:"Italy · Milan / Como",score:"83.3",
+  fZh:"全球规模最大的设计教育机构之一，以「设计 + 工程」协同见长，约六成教师来自业界。",
+  fEn:"One of the world's largest design schools, distinguished by design–engineering synergy and a faculty roughly 60% from industry.",
+  url:"https://www.design.polimi.it/en/",
+  courses:[["产品设计","Product Design","Bachelor"],["传播设计","Communication Design","Bachelor/MA"],["时装设计","Fashion Design","Bachelor"],["室内设计","Interior Design","Bachelor"],["工业设计：家具设计","Industrial Design: Furniture Design","Bachelor"],["整合产品设计","Integrated Product Design","LM-12"],["室内与空间设计","Interior and Spatial Design","LM-12"],["时尚系统设计","Design for the Fashion System","LM"],["产品服务系统设计","Product Service System Design","LM"],["设计与工程：工业产品设计与工程","Design & Engineering","LM"],["数字与交互设计","Digital and Interaction Design","LM"]]},
+ {rank:8,zh:"格拉斯哥艺术学院",en:"The Glasgow School of Art",locZh:"英国 · 格拉斯哥",locEn:"UK · Glasgow",score:"82.9",
+  fZh:"欧洲领先独立艺术院校之一，由麦金托什建筑学院、设计学院、纯艺术学院与创新技术学院构成。",
+  fEn:"One of Europe's leading independent art schools, organised into four specialist schools including the Mackintosh School of Architecture.",
+  url:"https://www.gsa.ac.uk/study-at-the-gsa/undergraduate-degrees",
+  courses:[["建筑","Architecture","BArch (Hons)"],["传播设计","Communication Design","BA/MDes"],["时装设计","Fashion Design","BA (Hons)"],["时装叙事","Fashion Narrative","BA (Hons)"],["纯艺术：绘画与版画","Fine Art: Painting and Printmaking","BA (Hons)"],["纯艺术：摄影","Fine Art: Photography","BA (Hons)"],["纯艺术：雕塑与环境艺术","Fine Art: Sculpture and Environmental Art","BA (Hons)"],["交互设计","Interaction Design","BA (Hons)"],["室内设计","Interior Design","BA (Hons)"],["纺织品设计","Textile Design","BA (Hons)"],["产品设计","Product Design","BDes (Hons)"],["游戏与虚拟现实","Games and Virtual Reality","BSc (Hons)"]]},
+ {rank:9,zh:"阿尔托大学",en:"Aalto University",locZh:"芬兰 · 赫尔辛基 / 埃斯波",locEn:"Finland · Helsinki / Espoo",score:"82.3",
+  fZh:"北欧设计、时装、游戏与建筑教育领导者，以设计思维、协作式工业设计与可持续性研究著称。",
+  fEn:"A Nordic leader in design, fashion, games and architecture, renowned for design thinking, collaborative industrial design and sustainability research.",
+  url:"https://www.aalto.fi/en/school-of-arts-design-and-architecture/studies-and-programmes",
+  courses:[["设计与媒体","Design and Media","BA+MA"],["技术、商业与设计","Technology, Business and Design","Bachelor+Master"],["协作与工业设计","Collaborative and Industrial Design","MA"],["当代设计","Contemporary Design","MA"],["时装与纺织设计","Fashion and Textile Design","MA"],["创意可持续性","Creative Sustainability","MA"],["国际设计商业管理","International Design Business Management","MA"],["视觉传达设计","Visual Communication Design","MA"],["新媒体","New Media","MA"],["游戏设计与开发","Game Design and Development","MA"],["视觉文化、策展与当代艺术","Visual Cultures, Curating and Contemporary Art","MA"],["室内建筑","Interior Architecture","MA"]]},
+ {rank:10,zh:"埃因霍芬设计学院",en:"Design Academy Eindhoven",locZh:"荷兰 · 埃因霍芬",locEn:"Netherlands · Eindhoven",score:"81.1",
+  fZh:"以「设计即研究」「通过制作来思考」为核心，本科以 Studio 取代传统系别，硕士设五个批判性、社会导向方向。",
+  fEn:"Centred on 'design as research' and 'thinking through making', with BA Studios instead of departments and five socially oriented MA programmes.",
+  url:"https://www.designacademy.nl/page/397/bachelor-programme",
+  courses:[["本科设计项目","Bachelor Programme","BA"],["基础课程线","Fundamentals","BA"],["Do-Make 工作室","Studio Do-Make","BA Studio"],["Silva Systems 工作室","Studio Silva Systems","BA Studio"],["Thinking Hands 工作室","Studio Thinking Hands","BA Studio"],["The Morning Studio","The Morning Studio","BA Studio"],["Better Matter 工作室","Studio Better Matter","BA Studio"],["情境设计","Contextual Design","MA"],["批判探究实验室","Critical Inquiry Lab","MA"],["地缘设计","Geo—Design","MA"],["信息设计","Information Design","MA"],["社会设计","Social Design","MA"]]}
+];
+
+/* ================= DATA: BUSINESS ================= */
+const BIZ = [
+ {rank:1,zh:"麻省理工学院斯隆管理学院",en:"MIT Sloan School of Management",locZh:"美国 · 剑桥",locEn:"USA · Cambridge",score:"99.4",
+  fZh:"以行动学习与 MIT 工程/科技生态的深度融合著称，核心课强调数据建模与决策科学。",
+  fEn:"Distinctive for action learning and deep integration with MIT's engineering ecosystem, with a core grounded in data modelling and decision science.",
+  url:"https://mitsloan.mit.edu/mba/mba-course-descriptions",
+  courses:[["包容性世界的领导力挑战","Leadership Challenges for an Inclusive World","15.002"],["商业决策的经济分析","Economic Analysis for Business Decisions","15.010"],["数据、模型与决策","Data, Models, and Decisions","15.060"],["领导者沟通","Communication for Leaders","15.280"],["组织过程","Organizational Processes","15.311"],["财务会计","Financial Accounting","15.515"],["管理金融","Managerial Finance","Elective"],["运营管理导论","Intro to Operations Management","Elective"],["竞争战略","Competitive Strategy","Elective"],["营销创新","Marketing Innovation","Elective"]]},
+ {rank:2,zh:"哈佛商学院",en:"Harvard Business School",locZh:"美国 · 波士顿",locEn:"USA · Boston",score:"99.6",
+  fZh:"全球首个 MBA 学位项目，以案例教学法与全员统一必修课著称，培养综合管理者与领导者。",
+  fEn:"The world's first MBA degree, renowned for the case method and a common required curriculum that builds general managers and leaders.",
+  url:"https://www.hbs.edu/mba/academic-experience/curriculum",
+  courses:[["金融学 1","Finance 1 (FIN1)","Required"],["财务报告与控制","Financial Reporting & Control (FRC)","Required"],["领导力与组织行为","Leadership & Organizational Behavior (LEAD)","Required"],["市场营销","Marketing (MKT)","Required"],["技术与运营管理","Technology & Operations Management (TOM)","Required"],["战略","Strategy (STRAT)","Required"],["面向领导者的数据科学与 AI","Data Science & AI for Leaders (DSAIL)","Required"],["商业、政府与国际经济","Business, Government & the International Economy","Required"],["创业管理者","The Entrepreneurial Manager (TEM)","Required"],["金融学 2","Finance II (FIN2)","Required"],["领导力与企业责任","Leadership & Corporate Accountability","Required"],["企业的目的","Purpose of the Firm","Required"]]},
+ {rank:3,zh:"斯坦福商学院",en:"Stanford Graduate School of Business",locZh:"美国 · 帕洛阿尔托",locEn:"USA · Palo Alto",score:"99.0",
+  fZh:"规模小而精英化，依托硅谷资源，强调领导力、社会创新与创业精神。",
+  fEn:"An intimate Silicon Valley–rooted programme emphasising leadership, social innovation and entrepreneurship.",
+  url:"https://www.gsb.stanford.edu/programs/mba/academic-experience/curriculum",
+  courses:[["数据与决策","Data and Decisions","Core"],["金融","Finance","Core"],["财务会计","Financial Accounting","Core"],["微观经济学","Microeconomics","Core"],["优化与模拟建模","Optimization and Simulation Modeling","Core"],["领导力实验室","Leadership Laboratory","Core"],["价值引领","Leading with Values","Core"],["群体与团队管理","Managing Groups and Teams","Core"],["组织行为","Organizational Behavior","Core"],["市场营销","Marketing","Core"],["运营","Operations","Core"],["战略","Strategy","Core"]]},
+ {rank:4,zh:"宾夕法尼亚大学沃顿商学院",en:"Wharton School, University of Pennsylvania",locZh:"美国 · 费城",locEn:"USA · Philadelphia",score:"100.0",
+  fZh:"全球规模最大的 MBA 之一，采用「固定核心 + 弹性核心 + 主修 + 200 余门选修」结构，金融与管理见长。",
+  fEn:"One of the largest MBAs, with a fixed-plus-flex core, majors and 200+ electives; especially strong in finance and management.",
+  url:"https://www.wharton.upenn.edu/mba/academics/electives.cfm",
+  courses:[["团队协作与领导力基础","Foundations of Teamwork and Leadership","MGMT 6100"],["营销管理","Marketing Management","MKTG 6110"],["管理者回归分析","Regression Analysis for Managers","STAT 6130"],["管理者微观经济学：基础","Microeconomics for Managers: Foundations","BEPP 6110"],["管理者微观经济学：高级应用","Microeconomics for Managers: Advanced Applications","BEPP 6120"],["管理沟通","Management Communication","WHCP 6160"],["财务会计基础","Fundamentals of Financial Accounting","ACCT 6110"],["公司财务","Corporate Finance","FNCE 6110"],["宏观经济学与全球经济环境","Macroeconomics and the Global Economic Environment","FNCE 6130"],["全球管理中的责任","Responsibility in Global Management","LGST 6110"],["管理成熟企业","Managing the Established Enterprise","MGMT 6110"],["商业分析","Business Analytics","OIDD 6120"]]},
+ {rank:5,zh:"剑桥大学贾奇商学院",en:"Cambridge Judge Business School",locZh:"英国 · 剑桥",locEn:"UK · Cambridge",score:"97.0",
+  fZh:"一年制，以团队化真实客户咨询项目为核心，依托剑桥学院制与跨学科生态，强调让学习产生影响力。",
+  fEn:"A one-year programme built around team-based live-client projects, Cambridge's college system and cross-disciplinary ecosystem.",
+  url:"https://www.jbs.cam.ac.uk/masters-degrees/mba/curriculum/core-courses-and-electives/",
+  courses:[["战略与竞争优势","Strategy and Competitive Advantage","Michaelmas"],["商业分析","Business Analytics","Michaelmas"],["公司财务","Corporate Finance","Michaelmas"],["财务报告与问责","Financial Reporting and Accountability","Michaelmas"],["战略、领导力与执行","Strategy, Leadership and Execution","Lent"],["营销战略","Marketing Strategy","Lent"],["战略运营管理","Strategic Operations Management","Lent"],["商业中的人工智能","AI in Business","Lent"],["谈判实验室","Negotiations Lab","Lent"],["宏观经济学与全球经济议题","Macroeconomics and Global Economic Issues","Easter"],["治理与伦理","Governance and Ethics","Easter"],["引领可持续企业","Leading Sustainable Enterprises","Easter"]]},
+ {rank:6,zh:"巴黎高等商学院",en:"HEC Paris",locZh:"法国 · 巴黎",locEn:"France · Paris",score:"98.8",
+  fZh:"以跨文化学习小组、高比例国际学生与社会影响项目为特色，强调创新、技术与责任。",
+  fEn:"Known for cross-cultural study groups, a highly international cohort and a Social Impact Project, emphasising innovation, technology and responsibility.",
+  url:"https://www.hec.edu/en/mba-programs/mba/learning-experience/core-courses",
+  courses:[["金融市场与投资","Financial Markets & Investments","T1"],["财务报告与分析","Financial Reporting & Analysis","T1"],["创新、技术与创新领导力研讨会","HEC Colloquium: Innovation, Technology & Innovation Leadership","T1"],["沟通","Communication","T1"],["通过营销管理客户价值","Managing Customer Value through Marketing","T1"],["问题解决与沟通","Problem Solving & Communication","T1"],["商业统计基础：数据与 AI 工具的洞见","Statistical Foundations for Business: Insights from Data & AI Tools","T1"],["像经济学家一样思考","Thinking Like an Economist: Markets & Decisions","T1"],["构建与维系商业价值","Building & Sustaining Business Value","T2"],["公司财务","Corporate Finance","T2"],["领导力：影响力与决策","Leadership: Influence & Decision Making","T2"],["战略管理","Strategic Management","T2"]]},
+ {rank:7,zh:"牛津大学赛德商学院",en:"Saïd Business School, Oxford",locZh:"英国 · 牛津",locEn:"UK · Oxford",score:"95.1",
+  fZh:"一年制，以「有目标地领导」为核心，嵌入牛津三学期制与 GOTO 全球挑战课程，强调商业与社会、批判性思维。",
+  fEn:"A one-year MBA built around leadership with purpose, Oxford's three-term structure and the GOTO global challenges course.",
+  url:"https://www.sbs.ox.ac.uk/programmes/oxford-mba/academic-curriculum/core-courses-and-electives",
+  courses:[["会计","Accounting","Core"],["分析学","Analytics","Core"],["商业金融","Business Finance","Core"],["企业与市场","Firms and Markets","Core"],["市场营销","Marketing","Core"],["组织行为","Organisational Behaviour","Core"],["战略","Strategy","Core"],["技术与运营管理","Technology and Operations Management","Core"],["资本主义之辩","Capitalism in Debate","Elective"],["公司估值","Corporate Valuation","Elective"],["谈判","Negotiations","Elective"],["全球战略","Global Strategy","Elective"]]},
+ {rank:8,zh:"欧洲工商管理学院",en:"INSEAD",locZh:"法国 枫丹白露 / 新加坡",locEn:"France / Singapore",score:"96.9",
+  fZh:"一年制、双校区、高度国际化，以多元文化学习小组与商业伦理课程著称，强调负责任领导力与 AI 素养。",
+  fEn:"A one-year dual-campus programme with a highly international cohort, multicultural study groups and distinctive business-and-society training.",
+  url:"https://www.insead.edu/master-programmes/master-business-administration/core-courses",
+  courses:[["财务会计","Financial Accounting","P1"],["金融市场与估值","Financial Markets & Valuation","P1"],["组织行为 1","Organisational Behaviour 1","P1"],["价格与市场","Prices & Markets","P1"],["不确定性、数据与判断","Uncertainty, Data & Judgement","P1"],["战略导论","Introduction to Strategy","P1"],["公司财务政策","Corporate Financial Policy","P2"],["管理客户价值","Managing Customer Value","P2"],["组织行为 2","Organisational Behaviour 2","P2"],["管理会计","Managerial Accounting","P2"],["流程与运营管理","Processes & Operations Management","P2"],["领导力沟通基础","Leadership Communication Foundations","P2"]]},
+ {rank:9,zh:"伦敦商学院",en:"London Business School",locZh:"英国 · 伦敦",locEn:"UK · London",score:"97.6",
+  fZh:"坐落于伦敦金融与商业中心，以体验式学习、100+ 门选修课和 15/18/21 个月灵活学制著称。",
+  fEn:"Located in London's financial hub, distinguished by experiential learning, 100+ electives and a flexible 15/18/21-month completion window.",
+  url:"https://www.london.edu/masters-degrees/mba/programme-content/core-courses",
+  courses:[["理解综合管理","Understanding General Management","Core"],["管理者全球领导力评估","Global Leadership Assessment for Managers","Core"],["管理者数据分析","Data Analytics for Managers","Core"],["商业伦理视角","Perspectives in Business Ethics","Core"],["金融学 1","Finance I","Core"],["战略","Strategy","Core"],["市场","Marketplaces","Core"],["会计","Accounting","Core"],["市场营销","Marketing","Core"],["组织中的人：科学","The Science of People in Organisations","Core"],["运营管理","Operations Management","Core"],["管理者宏观经济学","Macroeconomics for Managers","Core"]]},
+ {rank:10,zh:"芝加哥大学布斯商学院",en:"Chicago Booth School of Business",locZh:"美国 · 芝加哥",locEn:"USA · Chicago",score:"94.6",
+  fZh:"选修自由度最高的顶级 MBA 之一，以经济学、行为科学与量化分析为根基，可跨芝加哥、伦敦、香港校区学习。",
+  fEn:"One of the most elective-driven MBAs, grounded in economics, behavioural science and quantitative rigor, with study across Chicago, London and Hong Kong.",
+  url:"https://www.chicagobooth.edu/programs/weekend/academics/curriculum/general-management",
+  courses:[["领导力效能与发展","Leadership Effectiveness and Development (LEAD)","Required"],["财务会计","Financial Accounting","30000"],["微观经济学","Microeconomics","33001"],["统计学","Statistics","41000"],["公司财务","Corporation Finance","35000"],["营销战略","Marketing Strategy","37000"],["运营管理：业务流程基础","Operations Management: Business Process Fundamentals","40000"],["管理决策","Management Decisions","30005"],["组织管理","People / Organisational Management","33032"],["战略","Strategy","42001"],["商业环境：宏观经济学","Business Environment / Macroeconomics","33050"]]}
+];
+
+/* ================= DATA: 20 DIRECTIONS ================= */
+const DIRS = [
+ {n:1,zk:"生成式共创",ek:"Generative Co-Creation",zt:"AI 从工具转为共同创作者，human-in-the-loop 的共创流程成为设计与商业的新默认。",et:"AI shifts from tool to co-creator; human-in-the-loop workflows become the new default in design and business.",az:"RCA《设计未来》、DAE「通过制作来思考」、MIT《认知增强 AI 智能体》",ae:"RCA Design Futures; DAE thinking-through-making; MIT AI Agents for Cognitive Augmentation",bz:"HEC《创新、技术与创新领导力》、哈佛《创业管理者》",be:"HEC Innovation, Technology & Innovation Leadership; HBS The Entrepreneurial Manager",az2:"EACO AI 共创工坊：以链上身份记录人与 AI 的贡献轨迹，把「正能量 × 积极态度」沉淀为可验证的协作信号。",ae2:"EACO AI Co-Creation Studio: on-chain identities record human–AI contribution trails, turning positive energy and mindset into verifiable collaboration signals.",g:1},
+ {n:2,zk:"服务设计通证化",ek:"Tokenized Service Design",zt:"服务从产品附属变成独立价值载体，可组合的服务凭证成为 RWA 的新形态。",et:"Services become standalone value carriers; composable service credentials emerge as a new RWA form.",az:"RCA《服务设计》、米兰理工《产品服务系统设计》",ae:"RCA Service Design; Politecnico di Milano Product Service System Design",bz:"INSEAD《管理客户价值》、LBS《客户与市场洞见》",be:"INSEAD Managing Customer Value; LBS Customer and Market Insights",az2:"EACO RWA 服务凭证：把服务设计蓝图与交付记录写入链上，让服务价值与贡献可被核验，提升组织效率。",ae2:"EACO RWA service credentials: service blueprints and delivery records on chain, making value and contribution verifiable.",g:2},
+ {n:3,zk:"设计未来与情景推演",ek:"Design Futures & Scenario Planning",zt:"不确定性常态化，组织用情景推演替代单点预测，长期主义叙事回归。",et:"With uncertainty as the norm, scenario planning replaces single-point forecasting and long-term narratives return.",az:"RCA《设计未来》、DAE《情境设计》、帕森斯《设计与城市生态》",ae:"RCA Design Futures; DAE Contextual Design; Parsons Design & Urban Ecologies",bz:"哈佛《战略》、剑桥《战略与竞争优势》、牛津 GOTO 全球挑战课",be:"HBS Strategy; Cambridge Strategy and Competitive Advantage; Oxford GOTO",az2:"EACO 未来城市沙盘：用链上记录情景假设与共识演进，服务城市与社区协作，不涉及任何价格预测。",ae2:"EACO future-city sandbox: on-chain records of scenario assumptions and consensus evolution for urban collaboration — no price forecasting.",g:2},
+ {n:4,zk:"认知模型图谱",ek:"Cognition Model Graph",zt:"个人知识从碎片笔记转向结构化模型网络，AI 辅助认知升级成为刚需。",et:"Personal knowledge moves from scattered notes to structured model networks; AI-assisted cognition becomes essential.",az:"MIT《城市科学》、DAE《信息设计》、RCA《信息体验设计》",ae:"MIT City Science; DAE Information Design; RCA Information Experience Design",bz:"MIT《数据、模型与决策》、布斯《统计学》、LBS《管理者数据分析》",be:"MIT Data, Models, and Decisions; Chicago Booth Statistics; LBS Data Analytics for Managers",az2:"EACO 认知图谱：以「融合 100 个认知模型」为目标，把模型关系与学习路径沉淀为可共享的开放知识资产。",ae2:"EACO cognition graph: working toward integrating 100 cognitive models, turning model relationships and learning paths into open shared knowledge assets.",g:1},
+ {n:5,zk:"全球协作 DAO",ek:"Global Collaboration DAO",zt:"远程与跨时区协作常态化，信任最小化的全球组织成为基础设施。",et:"Remote, cross-timezone work normalises trust-minimised global coordination as infrastructure.",az:"帕森斯《跨学科设计》、阿尔托《国际设计商业管理》",ae:"Parsons Transdisciplinary Design; Aalto International Design Business Management",bz:"INSEAD 多元文化学习小组、LBS 全球领导力评估、HEC 社会影响项目",be:"INSEAD multicultural study groups; LBS Global Leadership Assessment; HEC Social Impact Project",az2:"EACO 全球协作 DAO：对应四要素之 Global Collaboration / 全球协作，用链上提案与贡献证明连接地球村成员。",ae2:"EACO Global Collaboration DAO: embodying one of the four elements, linking global-village members via on-chain proposals and proof of contribution.",g:3},
+ {n:6,zk:"循环与可持续 RWA",ek:"Circular Sustainability RWA",zt:"ESG 进入可验证阶段，「可追溯」取代「宣称」，循环材料成为设计硬约束。",et:"ESG enters a verifiable phase: traceability replaces claims, and circular materials become a design constraint.",az:"阿尔托《创意可持续性》、DAE《Better Matter》、米兰理工《产品服务系统设计》",ae:"Aalto Creative Sustainability; DAE Better Matter; Polimi Product Service System Design",bz:"剑桥《引领可持续企业》、HEC《社会影响项目》",be:"Cambridge Leading Sustainable Enterprises; HEC Social Impact Project",az2:"EACO 可持续 RWA 登记：把生态项目、循环材料与修复成果上链存证，促进地球可持续发展。",ae2:"EACO sustainability RWA registry: on-chain evidence for ecological projects, circular materials and restoration outcomes.",g:4},
+ {n:7,zk:"情绪与体验计算",ek:"Affective & Experience Computing",zt:"体验经济从「功能满足」走向「情绪可设计」，伦理边界同步成为焦点。",et:"The experience economy moves from functional satisfaction to designed emotion, with ethics in equal focus.",az:"MIT《情感计算与伦理》、RCA《信息体验设计》、GSA《交互设计》",ae:"MIT Affective Computing and Ethics; RCA Information Experience Design; GSA Interaction Design",bz:"哈佛《领导力与组织行为》、LBS《组织中的人：科学》",be:"HBS Leadership & Organizational Behavior; LBS The Science of People in Organisations",az2:"EACO 体验反馈层：用链上声誉徽章记录真实体验贡献，尊重隐私与伦理边界，提升个体认知与自我理解。",ae2:"EACO experience feedback layer: on-chain reputation badges for genuine experience contributions, respecting privacy and ethical boundaries.",g:1},
+ {n:8,zk:"城市空间数字孪生",ek:"Urban & Spatial Digital Twins",zt:"城市治理从图纸走向实时数据沙盘，空间设计成为公共协作入口。",et:"Urban governance shifts from drawings to live data sandboxes; spatial design becomes a public collaboration entry point.",az:"MIT《城市科学》、RCA《室内设计》、阿尔托《室内建筑》、米兰理工《室内与空间设计》",ae:"MIT City Science; RCA Interior Design; Aalto Interior Architecture; Polimi Interior and Spatial Design",bz:"沃顿《商业分析》、剑桥《战略运营管理》",be:"Wharton Business Analytics; Cambridge Strategic Operations Management",az2:"EACO 城市协作沙盘：以 Web3 身份与数据存证支持社区空间共议；配额类口径待官方澄清，本站不作拆分计算。",ae2:"EACO urban collaboration sandbox: Web3 identities and data records for community spatial deliberation; allocation figures await official clarification.",g:4},
+ {n:9,zk:"叙事与 IP 确权",ek:"Narrative & IP Provenance",zt:"内容生产爆炸，来源可信与贡献分配成为创作者经济的核心问题。",et:"With content saturation, provenance and contribution allocation become the core of the creator economy.",az:"GSA《时装叙事》、RCA《当代艺术策展》、RISD《电影/动画/视频》、普瑞特《包装、识别与系统设计》",ae:"GSA Fashion Narrative; RCA Curating Contemporary Art; RISD Film/Animation/Video; Pratt Packaging, Identities and Systems Design",bz:"HEC《通过营销管理客户价值》、沃顿《管理沟通》",be:"HEC Managing Customer Value through Marketing; Wharton Management Communication",az2:"EACO 叙事确权层：为故事、策展与视觉资产提供链上时间线与贡献证明，让文化生产可追溯。",ae2:"EACO narrative provenance layer: on-chain timelines and contribution proofs for stories, curation and visual assets.",g:3},
+ {n:10,zk:"AI 代理与自主协作",ek:"AI Agents & Autonomous Collaboration",zt:"智能体从回答问题走向执行任务，「人定目标、代理执行」成为组织新范式。",et:"Agents move from answering to acting; 'humans set goals, agents execute' becomes a new organisational paradigm.",az:"MIT《认知增强 AI 智能体》《人机交互》、阿尔托《新媒体》",ae:"MIT AI Agents for Cognitive Augmentation and Human-Robot Interaction; Aalto New Media",bz:"剑桥《商业中的人工智能》、哈佛《面向领导者的数据科学与 AI》",be:"Cambridge AI in Business; HBS Data Science & AI for Leaders",az2:"EACO AI 代理协议：让代理以受限权限在链上执行协作任务，所有动作可审计，服务于组织效率与持续优化。",ae2:"EACO AI agent protocol: constrained on-chain agent execution with auditable actions, serving efficiency and continuous optimisation.",g:1},
+ {n:11,zk:"数据决策与透明治理",ek:"Data-Driven Governance",zt:"数据治理从后台合规走向前台产品能力，透明本身成为信任的组成部分。",et:"Data governance moves from back-office compliance to front-line capability; transparency becomes part of trust.",az:"DAE《信息设计》、RCA《信息体验设计》",ae:"DAE Information Design; RCA Information Experience Design",bz:"MIT《数据、模型与决策》、剑桥《治理与伦理》、HEC《商业统计基础》",be:"MIT Data, Models, and Decisions; Cambridge Governance and Ethics; HEC Statistical Foundations for Business",az2:"EACO 透明治理看板：把社区决策、贡献与资金流以可读数据呈现，用证据支撑持续优化。",ae2:"EACO transparent governance dashboard: readable community decisions, contributions and flows, supporting evidence-based optimisation.",g:2},
+ {n:12,zk:"真实项目行动学习",ek:"Action Learning & Live Projects",zt:"教育与培训从案例讨论走向真实客户项目，「做中学」重新定义能力认证。",et:"Education moves from case discussion to live client projects; learning-by-doing redefines credentialing.",az:"DAE Studio 制度、MIT《如何（几乎）制造任何东西》、RCA 跨学科工作室",ae:"DAE studio system; MIT How to Make (Almost) Anything; RCA cross-disciplinary studios",bz:"哈佛 FIELD、剑桥 CVP / GCP、LBS LondonCAP",be:"HBS FIELD; Cambridge CVP / GCP; LBS LondonCAP",az2:"EACO 地球村挑战赛：把真实问题变成链上项目，以可验证的成果徽章连接学习、贡献与协作。",ae2:"EACO Global Village Challenge: real problems become on-chain projects, with verifiable badges linking learning, contribution and collaboration.",g:5},
+ {n:13,zk:"跨文化本地化",ek:"Cross-Cultural Localization",zt:"全球化进入「全球在地」阶段，多语言与多语境表达能力成为基础能力。",et:"Globalisation enters a 'glocal' phase; multilingual and multi-context expression becomes foundational.",az:"阿尔托《国际设计商业管理》、DAE《情境设计》、帕森斯《设计与城市生态》",ae:"Aalto International Design Business Management; DAE Contextual Design; Parsons Design & Urban Ecologies",bz:"INSEAD 双校区多元文化、牛津 GOTO、LBS 全球体验课",be:"INSEAD dual-campus multiculturalism; Oxford GOTO; LBS Global Experience",az2:"EACO 双语与多语协作层：以华语与英语为起点，让同一份知识在不同文化语境中保持等价表达。",ae2:"EACO bilingual and multilingual layer: starting with Chinese and English, keeping knowledge equivalent across cultural contexts.",g:3},
+ {n:14,zk:"行为设计与正向激励",ek:"Behavioral Design & Positive Incentives",zt:"激励设计从「注意力争夺」转向「长期行为改变」，正向反馈机制受到重视。",et:"Incentive design shifts from fighting for attention to long-term behaviour change, valuing positive feedback loops.",az:"普瑞特社会公正导向课程、MIT《批判性物质：身体、情感与材料智能》",ae:"Pratt social-justice oriented courses; MIT Critical Matter: Body, Emotion, and Material Intelligence",bz:"布斯行为科学、INSEAD《组织行为》、LBS《组织中的人：科学》",be:"Chicago Booth behavioural science; INSEAD Organisational Behaviour; LBS The Science of People in Organisations",az2:"EACO 正向行为协议：把 Positive Energy × Positive Mindset 转译为可累积的声誉与贡献记录，避免短期投机叙事。",ae2:"EACO positive behaviour protocol: translating Positive Energy × Positive Mindset into accruable reputation and contribution records.",g:5},
+ {n:15,zk:"创客制造与材料溯源",ek:"Maker Fabrication & Material Provenance",zt:"小批量制造与在地材料复兴，供应链透明度成为品牌与用户的共同诉求。",et:"Small-batch fabrication and local materials revive; supply-chain transparency becomes a shared demand.",az:"MIT《如何（几乎）制造任何东西》、DAE Do-Make / Better Matter、RCA《纺织品设计》、RISD《家具设计》",ae:"MIT How to Make (Almost) Anything; DAE Do-Make / Better Matter; RCA Textiles; RISD Furniture Design",bz:"沃顿《运营管理导论》、剑桥《战略运营管理》",be:"Wharton Intro to Operations Management; Cambridge Strategic Operations Management",az2:"EACO RWA 材料护照：把材料来源、工艺与流转记录上链，让实体创作与 RWA 之间建立可验证连接。",ae2:"EACO RWA material passport: origins, craft and custody on chain, linking physical making to RWA verifiably.",g:4},
+ {n:16,zk:"游戏化世界与模拟",ek:"Gamified Worlds & Simulation",zt:"虚拟世界从娱乐扩展为协作与推演空间，模拟成为低成本试错工具。",et:"Virtual worlds expand from entertainment to collaboration and simulation; low-cost trial and error goes mainstream.",az:"GSA《游戏与虚拟现实》、阿尔托《游戏设计与开发》、MIT《为儿童设计创意技术》",ae:"GSA Games and Virtual Reality; Aalto Game Design and Development; MIT Designing Creative Technologies for Kids",bz:"斯坦福《超越市场的战略》、布斯《竞争战略》",be:"Stanford Strategy Beyond Markets; Chicago Booth Competitive Strategy",az2:"EACO 地球村模拟场：用游戏化场景演练协作、资源分配与文明议题，把「100 个认知模型」变成可体验的沙盘。",ae2:"EACO global-village simulation: gamified scenarios for collaboration, allocation and civilisation topics, turning 100 cognitive models into an experience.",g:5},
+ {n:17,zk:"负责任创新与伦理",ek:"Responsible Innovation & Ethics",zt:"技术能力越强，伦理框架越成为竞争力；可信 AI 与责任治理进入主流课程。",et:"The stronger the capability, the more ethics becomes a competitive advantage; trustworthy AI enters core curricula.",az:"MIT《情感计算与伦理高级研讨》、DAE《批判探究实验室》",ae:"MIT Advanced Seminar: Affective Computing and Ethics; DAE Critical Inquiry Lab",bz:"哈佛《领导力与企业责任》、LBS《商业伦理视角》、剑桥《治理与伦理》",be:"HBS Leadership & Corporate Accountability; LBS Perspectives in Business Ethics; Cambridge Governance and Ethics",az2:"EACO 治理宪章：以「一切文明为人类文明服务，包括 EACO」为最高原则，为 AI 与 RWA 应用设定伦理边界。",ae2:"EACO governance charter: guided by 'all civilisation serves human civilisation, including EACO', setting ethical boundaries for AI and RWA.",g:3},
+ {n:18,zk:"品牌识别与开放系统",ek:"Identity & Open Systems",zt:"品牌从视觉手册转向可扩展系统，开源协作成为社群型品牌的新范式。",et:"Branding moves from static manuals to extensible systems; open collaboration becomes the community-brand paradigm.",az:"UAL 平面传达设计、普瑞特《包装、识别与系统设计》、RCA《视觉传达》",ae:"UAL Graphic Communication Design; Pratt Packaging, Identities and Systems Design; RCA Visual Communication",bz:"沃顿《营销管理》、剑桥《营销战略》",be:"Wharton Marketing Management; Cambridge Marketing Strategy",az2:"EACO 开放识别资产库：把视觉规范、叙事模板与多语素材开放给社区，在一致性中鼓励本地化表达。",ae2:"EACO open identity asset library: visual guidelines, narrative templates and multilingual assets open to the community.",g:5},
+ {n:19,zk:"生态资产与社区共管",ek:"Ecological Assets & Community Stewardship",zt:"生态价值从公益叙事走向可核算、可共管，社区成为自然资产的重要主体。",et:"Ecological value moves from philanthropy to accountable, co-managed stewardship, with communities as key actors.",az:"DAE《地缘设计》《社会设计》、阿尔托《创意可持续性》",ae:"DAE Geo—Design and Social Design; Aalto Creative Sustainability",bz:"剑桥《引领可持续企业》、HEC《社会影响项目》、牛津《资本主义之辩》",be:"Cambridge Leading Sustainable Enterprises; HEC Social Impact Project; Oxford Capitalism in Debate",az2:"EACO 生态共管试点：以 RWA 记录生态资产与管护责任，让可持续发展目标落到具体社区与具体地块。",ae2:"EACO ecological co-stewardship pilots: RWA records of assets and custodianship, grounding sustainability in real communities.",g:4},
+ {n:20,zk:"组织协同协议",ek:"Organizational Coordination Protocols",zt:"组织效率从工具堆叠转向协议化协作，清晰规则比更多会议更有效。",et:"Organisational efficiency shifts from tool stacking to protocol-based coordination; clear rules beat more meetings.",az:"米兰理工《产品服务系统设计》、阿尔托《协作与工业设计》、帕森斯《战略设计与管理》",ae:"Polimi Product Service System Design; Aalto Collaborative and Industrial Design; Parsons Strategic Design & Management",bz:"MIT《组织过程》、斯坦福《群体与团队管理》、LBS《理解综合管理》",be:"MIT Organizational Processes; Stanford Managing Groups and Teams; LBS Understanding General Management",az2:"EACO 协同协议层：把角色、提案、贡献与复盘固化为链上流程，直接对应「提升组织效率」与「持续优化」。",ae2:"EACO coordination protocol layer: roles, proposals, contributions and retrospectives as on-chain processes for efficiency and continuous optimisation.",g:2}
+];
+
+/* ================= STATE & RENDER ================= */
+let lang = localStorage.getItem('eaco2027-lang') || 'zh';
+let theme = localStorage.getItem('eaco2027-theme') || 'swiss';
+let goalFilter = 'all';
+let query = '';
+
+const $ = s => document.querySelector(s);
+const t = key => (I[lang] && I[lang][key]) || key;
+function toast(msg){const el=$('#toast');el.textContent=msg;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('show'),1900);}
+
+function applyStatic(){
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+  document.querySelectorAll('[data-i18n]').forEach(el=>{el.textContent=t(el.dataset.i18n);});
+  document.querySelectorAll('[data-i18n-html]').forEach(el=>{el.innerHTML=t(el.dataset.i18nHtml);});
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{el.placeholder=t(el.dataset.i18nPh);});
+  document.querySelectorAll('#langSeg button').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
+  document.querySelectorAll('#themeSeg button').forEach(b=>b.classList.toggle('active',b.dataset.theme===theme));
+  document.documentElement.setAttribute('data-theme',theme);
+}
+
+function schoolCard(s,type){
+  const cs = s.courses.map(c=>`<li><span class="czh">${lang==='zh'?c[0]:c[1]}</span><span class="cen">${lang==='zh'?c[1]:c[0]}</span><span class="cnote">${c[2]}</span></li>`).join('');
+  const title = lang==='zh'?s.zh:s.en;
+  const feature = lang==='zh'?s.fZh:s.fEn;
+  const loc = lang==='zh'?s.locZh:s.locEn;
+  return `<article class="school">
+    <div class="school-top"><div class="rank">${String(s.rank).padStart(2,'0')}</div><div><h3>${title}</h3><div class="meta">${loc} · ${type==='art'?'QS A&D 2026':'QS MBA 2027'} · ${t('scoreLabel')||'Score'} ${s.score}</div></div></div>
+    <p class="feature">${feature}</p>
+    <details class="courses" data-type="${type}" data-rank="${s.rank}"><summary><span>${s.courses.length} ${t('coursesLabel')}</span></summary><ol class="course-list">${cs}</ol></details>
+    <a class="school-link" href="${s.url}" target="_blank" rel="noopener">${t('official')}</a>
+  </article>`;
+}
+
+function renderSchools(type){
+  const data = type==='art'?ART:BIZ;
+  $('#'+type+'Grid').innerHTML = data.map(s=>schoolCard(s,type)).join('');
+}
+
+function renderFilters(){
+  const labels = [t('filterAll')].concat(t('goalLabel'));
+  const vals = ['all','1','2','3','4','5'];
+  $('#goalFilters').innerHTML = vals.map((v,i)=>`<button class="chip ${goalFilter===v?'active':''}" data-goal="${v}">${labels[i]}</button>`).join('');
+}
+
+function dirCard(d){
+  const q = query.toLowerCase();
+  const hay = [d.zk,d.ek,d.zt,d.et,d.az2,d.ae2,d.az,d.ae,d.bz,d.be].join(' ').toLowerCase();
+  if(goalFilter!=='all' && String(d.g)!==goalFilter) return '';
+  if(q && !hay.includes(q)) return '';
+  return `<article class="dir">
+    <div class="num">DIRECTION ${String(d.n).padStart(2,'0')}</div>
+    <h3>${lang==='zh'?d.zk:d.ek} <span class="cen">/ ${lang==='zh'?d.ek:d.zk}</span></h3>
+    <p class="trend"><b>${t('trendLabel')}：</b>${lang==='zh'?d.zt:d.et}</p>
+    <div class="src"><b>${t('artSrc')}：</b>${lang==='zh'?d.az:d.ae}<br><b>${t('bizSrc')}：</b>${lang==='zh'?d.bz:d.be}</div>
+    <p class="app"><b>${t('appLabel')}：</b>${lang==='zh'?d.az2:d.ae2}</p>
+    <span class="goal-tag">${t('goalLabel')[d.g-1]}</span>
+  </article>`;
+}
+
+function renderDirections(){
+  const html = DIRS.map(dirCard).join('');
+  $('#dirGrid').innerHTML = html || `<div class="empty">${t('empty')}</div>`;
+}
+
+function renderAll(){applyStatic();renderSchools('art');renderSchools('biz');renderFilters();renderDirections();}
+
+/* ================= EVENTS ================= */
+$('#langSeg').addEventListener('click',e=>{
+  const b=e.target.closest('button[data-lang]'); if(!b)return;
+  lang=b.dataset.lang;localStorage.setItem('eaco2027-lang',lang);renderAll();
+});
+$('#themeSeg').addEventListener('click',e=>{
+  const b=e.target.closest('button[data-theme]'); if(!b)return;
+  theme=b.dataset.theme;localStorage.setItem('eaco2027-theme',theme);applyStatic();
+});
+document.addEventListener('click',e=>{
+  const ex=e.target.closest('[data-expand]'); if(ex){document.querySelectorAll('details.courses[data-type="'+ex.dataset.expand+'"]').forEach(d=>d.open=true);return;}
+  const co=e.target.closest('[data-collapse]'); if(co){document.querySelectorAll('details.courses[data-type="'+co.dataset.collapse+'"]').forEach(d=>d.open=false);return;}
+  const g=e.target.closest('[data-goal]'); if(g){goalFilter=g.dataset.goal;renderFilters();renderDirections();return;}
+});
+$('#searchInput').addEventListener('input',e=>{query=e.target.value.trim();renderDirections();});
+$('#copyCa').addEventListener('click',()=>{navigator.clipboard.writeText('DqfoyZH96RnvZusSp3Cdncjpyp3C74ZmJzGhjmHnDHRH').then(()=>toast(t('toastCopied')));});
+$('#copyAll').addEventListener('click',()=>{
+  const text = DIRS.map(d=>lang==='zh'?`${d.n}. ${d.zk}｜${d.zt}\n  艺术：${d.az}\n  商科：${d.bz}\n  EACO 应用：${d.az2}\n  目标：${I.zh.goalLabel[d.g-1]}`:`${d.n}. ${d.ek} | ${d.et}\n  Art: ${d.ae}\n  Business: ${d.be}\n  EACO app: ${d.ae2}\n  Goal: ${I.en.goalLabel[d.g-1]}`).join('\n\n')
+    +'\n\nEACO — '+ (lang==='zh'?'Earth\'s Best Coin｜CA: ':'Earth\'s Best Coin | CA: ') + 'DqfoyZH96RnvZusSp3Cdncjpyp3C74ZmJzGhjmHnDHRH\n'+(lang==='zh'?'认准合约地址，谨防假币。不构成投资建议。':'Verify the CA, beware of fakes. Not investment advice.');
+  navigator.clipboard.writeText(text).then(()=>toast(t('toastCopied')));
+});
+$('#downloadJson').addEventListener('click',()=>{
+  const payload={meta:{title:'EACO 2027 · Web3 应用 20 方向',rankingArt:'QS Art & Design 2026',rankingBusiness:'QS Global MBA Rankings 2027',notice:'Trend inferences, not investment advice.'},art:ART,business:BIZ,directions:DIRS};
+  const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='eaco-2027-directions.json';a.click();URL.revokeObjectURL(a.href);
+  toast(t('toastDownloaded'));
+});
+window.addEventListener('scroll',()=>{$('#topBtn').style.display=window.scrollY>500?'block':'none';});
+$('#topBtn').addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+renderAll();
+</script>
+</body>
+</html>

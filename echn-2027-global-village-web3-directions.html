@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-style="wabi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>eCNH 2027 · 地球村 Web3 应用 20 方向</title>
+<meta name="description" content="基于全球前十艺术学院与全球前十商学院课程知识点，推导 2027 年地球村 20 大趋势方向，并映射为 eCNH Web3 的 20 个应用方向。支持中英双语与三种亚洲流行设计风格。">
+<style>
+/* ============ THREE ASIAN DESIGN STYLES ============ */
+:root,[data-style="wabi"]{
+  --bg:#f4f1ea;--surface:#fbf9f4;--surface2:#ebe6da;--text:#2b2a26;--muted:#77736a;
+  --accent:#9c5b45;--accent2:#4b6157;--border:#d9d3c6;--grid:rgba(60,55,45,.045);
+  --header-bg:rgba(244,241,234,.9);--shadow:0 2px 14px rgba(60,50,35,.045);
+  --panel-bg:#2e2d28;--panel-text:#f7f3ea;--panel-muted:#c9c4b7;--panel-border:#565247;
+  --radius:4px;--font-h:"Songti SC","Noto Serif CJK SC",Georgia,serif;
+  --font-b:"PingFang SC","Microsoft YaHei","Segoe UI",Arial,sans-serif;
+  --accent-text:#fff;--pattern:none;
+}
+[data-style="cyber"]{
+  --bg:#080914;--surface:rgba(18,22,44,.78);--surface2:rgba(34,26,66,.72);--text:#eaf2ff;--muted:#a0a8ce;
+  --accent:#ff3fa4;--accent2:#37e8ff;--border:rgba(130,120,255,.24);--grid:rgba(120,90,255,.07);
+  --header-bg:rgba(8,9,20,.84);--shadow:0 10px 36px rgba(0,0,0,.4);
+  --panel-bg:linear-gradient(135deg,rgba(34,16,62,.95),rgba(10,32,64,.95));--panel-text:#f4f7ff;--panel-muted:#c0c8ee;--panel-border:rgba(255,63,164,.38);
+  --radius:14px;--font-h:"Segoe UI","PingFang SC",Arial,sans-serif;
+  --font-b:"Segoe UI","PingFang SC","Microsoft YaHei",Arial,sans-serif;
+  --accent-text:#fff;--pattern:none;
+}
+[data-style="guochao"]{
+  --bg:#fcf4e8;--surface:#fffaf0;--surface2:#f6e6cd;--text:#4a1f1a;--muted:#8b6252;
+  --accent:#b22222;--accent2:#b8860b;--border:#e3c9a4;--grid:rgba(178,34,34,.05);
+  --header-bg:rgba(252,244,232,.92);--shadow:0 4px 18px rgba(140,60,30,.09);
+  --panel-bg:#8c1f1f;--panel-text:#fff7e6;--panel-muted:#f0cfae;--panel-border:rgba(255,215,140,.4);
+  --radius:10px;--font-h:"Songti SC","STSong","Noto Serif CJK SC",serif;
+  --font-b:"PingFang SC","Microsoft YaHei",Arial,sans-serif;
+  --accent-text:#fff;--pattern:repeating-linear-gradient(45deg,transparent 0 14px,rgba(178,34,34,.025) 14px 15px);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font-b);line-height:1.65;transition:background .35s,color .35s}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background-image:var(--pattern),linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:auto,64px 64px,64px 64px}
+[data-style="cyber"] body::before{background-image:radial-gradient(circle at 12% 12%,rgba(255,63,164,.14),transparent 42%),radial-gradient(circle at 88% 28%,rgba(55,232,255,.14),transparent 44%),radial-gradient(circle at 50% 92%,rgba(120,80,255,.12),transparent 50%)}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1240px;margin:0 auto}
+.site-header{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:18px;padding:11px 5vw;background:var(--header-bg);border-bottom:1px solid var(--border);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.brand{font-family:var(--font-h);font-weight:800;font-size:1.05rem;letter-spacing:-.01em;white-space:nowrap}
+.brand span{color:var(--accent)}
+.nav{display:flex;gap:16px;margin-left:auto;font-size:.82rem;flex-wrap:wrap}
+.nav a{color:var(--muted);font-weight:600}
+.nav a:hover{color:var(--accent);text-decoration:none}
+.controls{display:flex;gap:6px;align-items:center}
+.seg{display:flex;border:1px solid var(--border);border-radius:999px;overflow:hidden;background:var(--surface)}
+.seg button{border:0;background:transparent;color:var(--muted);font-size:.74rem;padding:6px 10px;cursor:pointer;font-family:inherit;white-space:nowrap}
+.seg button.active{background:var(--accent);color:var(--accent-text);font-weight:700}
+.seg button:hover:not(.active){color:var(--text)}
+.hero{padding:82px 5vw 58px}
+.kicker{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:800}
+.hero h1{font-family:var(--font-h);font-size:clamp(2.2rem,5.4vw,4.4rem);line-height:1.12;letter-spacing:-.02em;margin:18px 0 22px;max-width:1010px}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p.lead{max-width:830px;color:var(--muted);font-size:1.02rem;margin:0 0 30px}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--accent);background:var(--accent);color:var(--accent-text);padding:11px 18px;border-radius:var(--radius);font-size:.88rem;font-weight:700;cursor:pointer;font-family:inherit;transition:transform .15s,opacity .15s}
+.btn:hover{transform:translateY(-2px);text-decoration:none;opacity:.92}
+.btn.ghost{background:transparent;color:var(--text);border-color:var(--border)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin-top:48px;max-width:840px}
+.stat{border-top:2px solid var(--accent);padding-top:12px}
+.stat b{display:block;font-family:var(--font-h);font-size:2rem;line-height:1}
+.stat span{font-size:.76rem;color:var(--muted)}
+section{padding:64px 5vw;border-top:1px solid var(--border)}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:28px}
+.sec-title{font-family:var(--font-h);font-size:clamp(1.65rem,3.2vw,2.5rem);margin:8px 0 6px;line-height:1.18}
+.sec-sub{color:var(--muted);font-size:.86rem;max-width:780px;margin:0}
+.sec-actions{display:flex;gap:8px;flex-wrap:wrap}
+.small-btn{border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:var(--radius);padding:7px 12px;font-size:.78rem;cursor:pointer;font-family:inherit}
+.small-btn:hover{border-color:var(--accent);color:var(--accent)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(295px,1fr));gap:14px}
+.school{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:19px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:10px}
+.school-top{display:flex;gap:13px;align-items:flex-start}
+.rank{font-family:var(--font-h);font-size:1.75rem;line-height:1;color:var(--accent);font-weight:800;min-width:44px}
+.school h3{margin:0;font-family:var(--font-h);font-size:1rem;line-height:1.3}
+.school .meta{font-size:.73rem;color:var(--muted);margin-top:3px}
+.school .feature{font-size:.83rem;color:var(--muted);margin:0;min-height:3.2em}
+details.courses{border-top:1px dashed var(--border);padding-top:9px;margin-top:auto}
+summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:.8rem;font-weight:700;color:var(--accent)}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-size:1.1rem;line-height:1}
+details[open] summary::after{content:"−"}
+.course-list{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:6px}
+.course-list li{display:flex;flex-wrap:wrap;align-items:baseline;gap:3px 7px;font-size:.78rem;border-bottom:1px solid var(--border);padding-bottom:6px}
+.course-list li:last-child{border-bottom:0}
+.czh{font-weight:600}.cen{color:var(--muted);font-size:.72rem}
+.cnote{margin-left:auto;font-size:.64rem;color:var(--accent2);border:1px solid var(--border);border-radius:999px;padding:0 6px;white-space:nowrap}
+.school-link{font-size:.72rem;align-self:flex-start}
+.method-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-bottom:22px}
+.method-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px}
+.method-card b{display:block;font-family:var(--font-h);color:var(--accent);margin-bottom:6px}
+.method-card p{margin:0;font-size:.85rem;color:var(--muted)}
+.source-line{font-size:.8rem;color:var(--muted);display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:6px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:22px 0}
+.chip{border:1px solid var(--border);background:var(--surface);color:var(--text);padding:7px 13px;border-radius:999px;cursor:pointer;font-size:.78rem;font-family:inherit}
+.chip.active{background:var(--accent);color:var(--accent-text);border-color:var(--accent);font-weight:700}
+.search{border:1px solid var(--border);background:var(--surface);color:var(--text);padding:8px 14px;border-radius:999px;font-size:.8rem;font-family:inherit;min-width:220px;outline:none}
+.search:focus{border-color:var(--accent)}
+.dir{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:19px;display:flex;flex-direction:column;gap:9px;box-shadow:var(--shadow)}
+.dir .num{font-family:var(--font-h);color:var(--accent);font-weight:800;font-size:.78rem;letter-spacing:.12em}
+.dir h3{font-family:var(--font-h);font-size:1.08rem;margin:0;line-height:1.28}
+.dir .trend{font-size:.82rem;color:var(--muted);margin:0}
+.dir .src{font-size:.74rem;color:var(--muted);background:var(--surface2);border-radius:var(--radius);padding:8px 10px;line-height:1.55}
+.dir .src b{color:var(--accent2)}
+.dir .app{font-size:.83rem;border-left:3px solid var(--accent);padding-left:11px;margin:0}
+.goal-tag{align-self:flex-start;font-size:.68rem;border:1px solid var(--accent);color:var(--accent);border-radius:999px;padding:2px 9px;margin-top:auto}
+.empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:40px 0}
+.eaco-panel{background:var(--panel-bg);color:var(--panel-text);border:1px solid var(--panel-border);border-radius:var(--radius);padding:34px}
+.eaco-panel .kicker{color:#ffd27f}
+.eaco-panel h2{font-family:var(--font-h);font-size:clamp(1.7rem,3vw,2.4rem);margin:8px 0 10px}
+.eaco-panel p,.eaco-panel li{color:var(--panel-muted)}
+.eaco-panel .lead{font-size:.92rem;max-width:920px}
+.eaco-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:26px;margin-top:26px}
+.eaco-cols h4{font-family:var(--font-h);font-size:.85rem;letter-spacing:.14em;text-transform:uppercase;color:#ffd27f;margin:0 0 10px}
+.eaco-cols ul{margin:0;padding-left:18px;font-size:.85rem}
+.eaco-cols li{margin-bottom:5px}
+.ca-box{margin-top:26px;border:1px solid var(--panel-border);border-radius:var(--radius);padding:16px;background:rgba(128,128,128,.09)}
+.ca-label{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:#ffd27f;font-weight:700}
+.ca-value{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.83rem;word-break:break-all;margin:8px 0;color:var(--panel-text)}
+.warn{font-size:.76rem;color:var(--panel-text);font-weight:700}
+.disclaimer{margin-top:24px;border-top:1px solid var(--panel-border);padding-top:18px;font-size:.78rem;color:var(--panel-muted)}
+.two-col{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-top:22px}
+.fact{border:1px solid var(--panel-border);border-radius:var(--radius);padding:14px;font-size:.84rem}
+.fact b{color:var(--panel-text)}
+footer{padding:34px 5vw;border-top:1px solid var(--border);font-size:.78rem;color:var(--muted)}
+.footer-row{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center}
+footer a{font-weight:600}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--text);color:var(--bg);padding:10px 18px;border-radius:999px;font-size:.8rem;opacity:0;pointer-events:none;transition:.25s;z-index:99}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+#topBtn{position:fixed;right:20px;bottom:20px;z-index:40;border:1px solid var(--accent);background:var(--accent);color:var(--accent-text);width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:1rem;display:none}
+@media(max-width:760px){.nav{display:none}.hero{padding-top:56px}.site-header{gap:8px}.seg button{padding:6px 8px;font-size:.7rem}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="brand">eCNH<span> / GLOBAL VILLAGE 2027</span></div>
+  <nav class="nav">
+    <a href="#method" data-i18n="navMethod">方法与口径</a>
+    <a href="#art" data-i18n="navArt">全球艺术 Top 10</a>
+    <a href="#biz" data-i18n="navBiz">全球商科 Top 10</a>
+    <a href="#trends" data-i18n="navTrend">20 大方向</a>
+    <a href="#eaco" data-i18n="navEaco">eCNH 信息</a>
+  </nav>
+  <div class="controls">
+    <div class="seg" id="langSeg"><button data-lang="zh" class="active">中文</button><button data-lang="en">EN</button></div>
+    <div class="seg" id="styleSeg">
+      <button data-style="wabi" class="active" data-i18n="styleWabi">侘寂</button>
+      <button data-style="cyber" data-i18n="styleCyber">赛博</button>
+      <button data-style="guochao" data-i18n="styleGuochao">新中式</button>
+    </div>
+  </div>
+</header>
+
+<main>
+<div class="hero wrap">
+  <div class="kicker" data-i18n="heroKicker">GLOBAL VILLAGE · 2027 SIGNAL MAP</div>
+  <h1 data-i18n-html="heroTitle">把地球村顶尖艺术与商科知识，<br>编译成 <em>eCNH Web3</em> 的 20 个应用方向。</h1>
+  <p class="lead" data-i18n="heroLead">从全球前十艺术学院与全球前十商学院的课程知识点出发，交叉推演 2027 年地球村可能流行的 20 个方向，并逐一映射为 eCNH Web3 的应用构想。中英双语 · 三种亚洲设计风格 · 全链路可追溯。</p>
+  <div class="actions">
+    <a class="btn" href="#trends" data-i18n="heroBtn1">探索 20 个方向 ↓</a>
+    <a class="btn ghost" href="#eaco" data-i18n="heroBtn2">查看 eCNH 权威信息</a>
+  </div>
+  <div class="stats">
+    <div class="stat"><b>10</b><span data-i18n="statArt">全球顶级艺术学院</span></div>
+    <div class="stat"><b>10</b><span data-i18n="statBiz">全球顶级商学院</span></div>
+    <div class="stat"><b>230+</b><span data-i18n="statCourses">代表性课程条目</span></div>
+    <div class="stat"><b>20</b><span data-i18n="statDir">2027 地球村应用方向</span></div>
+  </div>
+</div>
+
+<section id="method">
+  <div class="wrap">
+    <div class="sec-head"><div>
+      <div class="kicker" data-i18n="methodKicker">METHODOLOGY / 方法</div>
+      <h2 class="sec-title" data-i18n="methodTitle">从地球村课程知识点到应用闭环</h2>
+      <p class="sec-sub" data-i18n="methodSub">不编造数据：排名、院校与课程均标注来源；趋势为基于公开课程结构的推演，而非确定性预测。</p>
+    </div></div>
+    <div class="method-grid">
+      <div class="method-card"><b data-i18n="m1t">01 · 取源</b><p data-i18n="m1d">艺术侧采用 QS 2026 Art & Design 全球前十；商科侧采用 QS Global MBA Rankings 2027（2026 年 9 月发布）全球前十。</p></div>
+      <div class="method-card"><b data-i18n="m2t">02 · 交叉</b><p data-i18n="m2d">把 20 所院校的 235 门代表性课程归入设计研究、服务系统、数据决策、组织行为、战略、伦理与可持续等知识簇，寻找全球交集。</p></div>
+      <div class="method-card"><b data-i18n="m3t">03 · 映射</b><p data-i18n="m3d">每个方向保留「艺术来源 → 商科来源 → 2027 地球村趋势 → eCNH 应用 → 五大主题簇」五段链路；eCNH 信息严格引用项目官方仓库。</p></div>
+    </div>
+    <div class="source-line">
+      <span data-i18n="sourceLabel">数据源：</span>
+      <a href="https://qschina.cn/university-rankings/university-subject-rankings/2015/art-design" target="_blank" rel="noopener">QS Art &amp; Design 2026 ↗</a>
+      <a href="https://www.topuniversities.com/university-rankings-articles/full-time-mba-rankings-global/top-mba-programmes-world" target="_blank" rel="noopener">QS Global MBA 2027 ↗</a>
+      <a href="https://github.com/eaco-group/eCNH-team" target="_blank" rel="noopener">eCNH 官方仓库 ↗</a>
+      <button class="small-btn" id="downloadJson" data-i18n="downloadJson">下载结构化数据 JSON</button>
+      <button class="small-btn" id="copyAll" data-i18n="copyAll">复制 20 方向文本</button>
+    </div>
+  </div>
+</section>
+
+<section id="art">
+  <div class="wrap">
+    <div class="sec-head"><div>
+      <div class="kicker">GLOBAL ART &amp; DESIGN · TOP 10</div>
+      <h2 class="sec-title" data-i18n="artTitle">地球村十大艺术学院 · 课程清单</h2>
+      <p class="sec-sub" data-i18n="artSub">QS 2026 艺术与设计学科排名前十。课程为各校官网现行学位项目/核心课的代表性节选，非全部课程。</p>
+    </div><div class="sec-actions">
+      <button class="small-btn" data-expand="art" data-i18n="expandAll">展开全部课程</button>
+      <button class="small-btn" data-collapse="art" data-i18n="collapseAll">收起全部</button>
+    </div></div>
+    <div class="grid" id="artGrid"></div>
+  </div>
+</section>
+
+<section id="biz">
+  <div class="wrap">
+    <div class="sec-head"><div>
+      <div class="kicker">GLOBAL BUSINESS SCHOOL · TOP 10</div>
+      <h2 class="sec-title" data-i18n="bizTitle">地球村十大商学院 · 课程清单</h2>
+      <p class="sec-sub" data-i18n="bizSub">QS Global MBA Rankings 2027（2026 年 9 月发布）全球前十。课程为核心/必修与知名选修的代表性节选；部分中文榜单沿用 QS 2026 顺序，本页统一采用最新一届。</p>
+    </div><div class="sec-actions">
+      <button class="small-btn" data-expand="biz" data-i18n="expandAll">展开全部课程</button>
+      <button class="small-btn" data-collapse="biz" data-i18n="collapseAll">收起全部</button>
+    </div></div>
+    <div class="grid" id="bizGrid"></div>
+  </div>
+</section>
+
+<section id="trends">
+  <div class="wrap">
+    <div class="sec-head"><div>
+      <div class="kicker">GLOBAL VILLAGE 2027 FORECAST · 20 DIRECTIONS</div>
+      <h2 class="sec-title" data-i18n="trendTitle">2027 年地球村可能流行的 20 大方向</h2>
+      <p class="sec-sub" data-i18n="trendSub">每个方向都可回溯到具体的全球艺术与商科知识点，并对应 eCNH 官方资料中的一个主题簇。以下为趋势推演与概念构想，不构成投资建议。</p>
+    </div></div>
+    <div class="filters" id="goalFilters"></div>
+    <div class="filters"><input id="searchInput" class="search" type="search" data-i18n-ph="searchPh" placeholder="搜索方向、关键词或应用…"></div>
+    <div class="grid" id="dirGrid"></div>
+  </div>
+</section>
+
+<section id="eaco">
+  <div class="wrap">
+    <div class="eaco-panel">
+      <div class="kicker">eCNH · OFFICIAL INFORMATION</div>
+      <h2 data-i18n="eacoTitle">eCNH 权威信息与链接</h2>
+      <p class="lead" data-i18n="eacoLead">eCNH = Offshore Huaxia Coin（离岸华夏币，项目代币名称）。定位：Solana 链上、由 eCNH-group 社区推动的文明连接与虚拟经济实验代币。口号：Earth &amp; Global Humanity Builds and Shares eCNH Together / 全球人类共建共享 eCNH。</p>
+      <div class="eaco-cols">
+        <div>
+          <h4 data-i18n="coreTitle">核心理念 / CORE CONCEPTS</h4>
+          <ul>
+            <li data-i18n="core1">星际文明连接：以 eCNH 为媒介，连接华夏文明 3000 年历史底蕴与未来 3000 年星际文明。</li>
+            <li data-i18n="core2">游戏融合：探索作为全球十大星际科幻探索战争游戏的通用游戏币。</li>
+            <li data-i18n="core3">稳定机制（项目描述）：Andromeda 未来目标标准，1 eCNH ≈ 1 CNH，每日允许 ±1–3% 波动，并与 eaco、USDC、USDT、PYUSD、EURC 等配对。</li>
+            <li data-i18n="core4">AI 驱动：每日依据全球十大开源 AI 的公开免费 API 数据更新功能发展参考方案；每小时自动更新。</li>
+          </ul>
+        </div>
+        <div>
+          <h4 data-i18n="factTitle">关键事实 / KEY FACTS</h4>
+          <ul>
+            <li data-i18n="fact1">链：Solana</li>
+            <li data-i18n="fact2">发行总量设计：100 万亿枚（100 trillion，官方仓库口径）</li>
+            <li data-i18n="fact3">流通增速上限：每年不超过总量的 0.03–3%（项目描述）</li>
+            <li data-i18n="fact4">社区治理：探索建立 eCNH 星际联盟治理小组，以 DAO 机制自治</li>
+            <li data-i18n="fact5">独立官网：暂未发现，当前以官方 GitHub 仓库为准（待确认）</li>
+          </ul>
+        </div>
+        <div>
+          <h4 data-i18n="linkTitle">官方链接 / OFFICIAL LINKS</h4>
+          <ul>
+            <li><a href="https://github.com/eaco-group/eCNH-team" target="_blank" rel="noopener">GitHub 项目仓库 ↗</a></li>
+            <li><a href="https://solscan.io/token/7GQnqthWKa5v2GqXYWhmgWZY5mCRrniwK3Xuinm9GKw5" target="_blank" rel="noopener">Solscan 区块浏览器 ↗</a></li>
+            <li><a href="https://www.orca.so/pools/4RdJnPy3nb821SqZdJZmvD4aixCVsjzcbhiLL32iTuRS" target="_blank" rel="noopener">Orca eCNH–PYUSD 池 ↗</a></li>
+            <li><a href="https://www.orca.so/pools/BHf1yCvj6qh2E1y2JLrjesP7RRC8XjBN3FyHeq45LnBZ" target="_blank" rel="noopener">Orca eCNH–USDC 池 ↗</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="ca-box">
+        <div class="ca-label" data-i18n="caLabel">CONTRACT ADDRESS / 合约地址（Solana Mint）</div>
+        <div class="ca-value" id="caValue">7GQnqthWKa5v2GqXYWhmgWZY5mCRrniwK3Xuinm9GKw5</div>
+        <button class="small-btn" id="copyCa" data-i18n="copyCa">复制合约地址</button>
+        <div class="warn" data-i18n="caWarn">认准合约地址，谨防假币。</div>
+      </div>
+      <div class="two-col">
+        <div class="fact"><b data-i18n="note1">名称边界：</b><span data-i18n="note1d">eCNH 是社区项目的代币名称，不等同于官方离岸人民币（CNH），也不是法定货币或官方背书资产。</span></div>
+        <div class="fact"><b data-i18n="note2">机制边界：</b><span data-i18n="note2d">锚定、波动区间与流通增速均为项目文档所述的机制目标，不构成价值保证；第三方行情数据未在本页引用。</span></div>
+      </div>
+      <div class="disclaimer">
+        <b data-i18n="discTitle">免责声明 / DISCLAIMER：</b>
+        <span data-i18n="discText">本内容不构成投资建议；加密资产波动剧烈；请自行核实合约地址并遵守当地法律法规。DYOR.</span>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap footer-row">
+    <div>
+      <div class="brand">eCNH<span> — Offshore Huaxia Coin</span></div>
+      <div data-i18n="footDesc">全球人类共建共享 eCNH · Solana 链上文明连接与虚拟经济实验 · 地球村 2027 知识共创</div>
+    </div>
+    <div>
+      <a href="https://github.com/eaco-group/eCNH-team" target="_blank" rel="noopener" data-i18n="footSite">官方仓库 ↗</a>
+      &nbsp;·&nbsp; <span>CA: 7GQnqthWKa5v2GqXYWhmgWZY5mCRrniwK3Xuinm9GKw5</span>
+      &nbsp;·&nbsp; <span data-i18n="footWarn">认准合约地址，谨防假币</span>
+    </div>
+  </div>
+  <div class="wrap" style="margin-top:14px;font-size:.74rem" data-i18n="footDisc">免责声明：不构成投资建议；加密资产波动剧烈；请自行核实 CA 与当地合规。</div>
+</footer>
+
+<button id="topBtn" title="Back to top">↑</button>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ================= I18N ================= */
+const I = {
+ zh:{
+  navMethod:"方法与口径",navArt:"全球艺术 Top 10",navBiz:"全球商科 Top 10",navTrend:"20 大方向",navEaco:"eCNH 信息",
+  styleWabi:"侘寂",styleCyber:"赛博",styleGuochao:"新中式",
+  heroKicker:"GLOBAL VILLAGE · 2027 SIGNAL MAP",
+  heroTitle:"把地球村顶尖艺术与商科知识，<br>编译成 <em>eCNH Web3</em> 的 20 个应用方向。",
+  heroLead:"从全球前十艺术学院与全球前十商学院的课程知识点出发，交叉推演 2027 年地球村可能流行的 20 个方向，并逐一映射为 eCNH Web3 的应用构想。中英双语 · 三种亚洲设计风格 · 全链路可追溯。",
+  heroBtn1:"探索 20 个方向 ↓",heroBtn2:"查看 eCNH 权威信息",
+  statArt:"全球顶级艺术学院",statBiz:"全球顶级商学院",statCourses:"代表性课程条目",statDir:"2027 地球村应用方向",
+  methodKicker:"METHODOLOGY / 方法",methodTitle:"从地球村课程知识点到应用闭环",
+  methodSub:"不编造数据：排名、院校与课程均标注来源；趋势为基于公开课程结构的推演，而非确定性预测。",
+  m1t:"01 · 取源",m1d:"艺术侧采用 QS 2026 Art & Design 全球前十；商科侧采用 QS Global MBA Rankings 2027（2026 年 9 月发布）全球前十。",
+  m2t:"02 · 交叉",m2d:"把 20 所院校的 235 门代表性课程归入设计研究、服务系统、数据决策、组织行为、战略、伦理与可持续等知识簇，寻找全球交集。",
+  m3t:"03 · 映射",m3d:"每个方向保留「艺术来源 → 商科来源 → 2027 地球村趋势 → eCNH 应用 → 五大主题簇」五段链路；eCNH 信息严格引用项目官方仓库。",
+  sourceLabel:"数据源：",downloadJson:"下载结构化数据 JSON",copyAll:"复制 20 方向文本",
+  artTitle:"地球村十大艺术学院 · 课程清单",artSub:"QS 2026 艺术与设计学科排名前十。课程为各校官网现行学位项目/核心课的代表性节选，非全部课程。",
+  bizTitle:"地球村十大商学院 · 课程清单",bizSub:"QS Global MBA Rankings 2027（2026 年 9 月发布）全球前十。课程为核心/必修与知名选修的代表性节选；部分中文榜单沿用 QS 2026 顺序，本页统一采用最新一届。",
+  expandAll:"展开全部课程",collapseAll:"收起全部",coursesLabel:"门代表性课程 / 项目",official:"官网课程页 ↗",scoreLabel:"综合分",
+  trendTitle:"2027 年地球村可能流行的 20 大方向",trendSub:"每个方向都可回溯到具体的全球艺术与商科知识点，并对应 eCNH 官方资料中的一个主题簇。以下为趋势推演与概念构想，不构成投资建议。",
+  searchPh:"搜索方向、关键词或应用…",filterAll:"全部 20",
+  goalLabel:["主题 1 · 文明连接","主题 2 · 游戏与虚拟经济","主题 3 · 稳定与流通","主题 4 · AI 驱动演进","主题 5 · 社区治理与共建"],
+  trendLabel:"2027 地球村趋势",artSrc:"艺术知识点",bizSrc:"商科知识点",appLabel:"eCNH Web3 应用方向",
+  empty:"没有匹配的方向，试试其他关键词。",
+  eacoTitle:"eCNH 权威信息与链接",eacoLead:"eCNH = Offshore Huaxia Coin（离岸华夏币，项目代币名称）。定位：Solana 链上、由 eCNH-group 社区推动的文明连接与虚拟经济实验代币。口号：Earth & Global Humanity Builds and Shares eCNH Together / 全球人类共建共享 eCNH。",
+  coreTitle:"核心理念 / CORE CONCEPTS",core1:"星际文明连接：以 eCNH 为媒介，连接华夏文明 3000 年历史底蕴与未来 3000 年星际文明。",core2:"游戏融合：探索作为全球十大星际科幻探索战争游戏的通用游戏币。",core3:"稳定机制（项目描述）：Andromeda 未来目标标准，1 eCNH ≈ 1 CNH，每日允许 ±1–3% 波动，并与 eaco、USDC、USDT、PYUSD、EURC 等配对。",core4:"AI 驱动：每日依据全球十大开源 AI 的公开免费 API 数据更新功能发展参考方案；每小时自动更新。",
+  factTitle:"关键事实 / KEY FACTS",fact1:"链：Solana",fact2:"发行总量设计：100 万亿枚（100 trillion，官方仓库口径）",fact3:"流通增速上限：每年不超过总量的 0.03–3%（项目描述）",fact4:"社区治理：探索建立 eCNH 星际联盟治理小组，以 DAO 机制自治",fact5:"独立官网：暂未发现，当前以官方 GitHub 仓库为准（待确认）",
+  linkTitle:"官方链接 / OFFICIAL LINKS",
+  caLabel:"CONTRACT ADDRESS / 合约地址（Solana Mint）",copyCa:"复制合约地址",caWarn:"认准合约地址，谨防假币。",
+  note1:"名称边界：",note1d:"eCNH 是社区项目的代币名称，不等同于官方离岸人民币（CNH），也不是法定货币或官方背书资产。",
+  note2:"机制边界：",note2d:"锚定、波动区间与流通增速均为项目文档所述的机制目标，不构成价值保证；第三方行情数据未在本页引用。",
+  discTitle:"免责声明 / DISCLAIMER：",discText:"本内容不构成投资建议；加密资产波动剧烈；请自行核实合约地址并遵守当地法律法规。DYOR.",
+  footDesc:"全球人类共建共享 eCNH · Solana 链上文明连接与虚拟经济实验 · 地球村 2027 知识共创",footSite:"官方仓库 ↗",footWarn:"认准合约地址，谨防假币",
+  footDisc:"免责声明：不构成投资建议；加密资产波动剧烈；请自行核实 CA 与当地合规。",
+  toastCopied:"已复制到剪贴板",toastDownloaded:"已下载 JSON 数据"
+ },
+ en:{
+  navMethod:"Method",navArt:"Global Art Top 10",navBiz:"Global Business Top 10",navTrend:"20 Directions",navEaco:"eCNH Brief",
+  styleWabi:"Wabi-sabi",styleCyber:"Cyber Asia",styleGuochao:"New Chinese",
+  heroKicker:"GLOBAL VILLAGE · 2027 SIGNAL MAP",
+  heroTitle:"Translating global art &amp; business knowledge<br>into <em>20 eCNH Web3</em> application directions.",
+  heroLead:"Starting from the curricula of the world's top 10 art schools and business schools, we infer 20 likely 2027 global-village directions and map each into an eCNH Web3 application concept. Bilingual · three Asian design styles · fully traceable.",
+  heroBtn1:"Explore 20 directions ↓",heroBtn2:"See the eCNH brief",
+  statArt:"Top art schools worldwide",statBiz:"Top business schools worldwide",statCourses:"Representative courses",statDir:"2027 global applications",
+  methodKicker:"METHODOLOGY / METHOD",methodTitle:"From global curricula to a closed loop",
+  methodSub:"No invented data: rankings, schools and courses are sourced. Trends are inferences from public curricula, not certain predictions.",
+  m1t:"01 · Source",m1d:"Art: QS Art & Design 2026 global top 10. Business: QS Global MBA Rankings 2027, published September 2026, global top 10.",
+  m2t:"02 · Cross",m2d:"235 representative courses across 20 institutions are grouped into design research, service systems, data decisions, organisational behaviour, strategy, ethics and sustainability to find global intersections.",
+  m3t:"03 · Map",m3d:"Every direction keeps a five-step chain: art source → business source → 2027 global trend → eCNH application → one of five theme clusters. eCNH facts cite the official repository.",
+  sourceLabel:"Sources:",downloadJson:"Download structured JSON",copyAll:"Copy 20 directions as text",
+  artTitle:"Global Top 10 Art Schools · Course Lists",artSub:"Top 10 in QS 2026 Art & Design. Courses are a representative selection of current degree programmes/core classes from official sites, not an exhaustive list.",
+  bizTitle:"Global Top 10 Business Schools · Course Lists",bizSub:"Top 10 in QS Global MBA Rankings 2027 (published September 2026). Core/required classes plus well-known electives; some Chinese lists still use the 2026 order, this page uses the latest edition.",
+  expandAll:"Expand all courses",collapseAll:"Collapse all",coursesLabel:"representative courses / programmes",official:"Official courses ↗",scoreLabel:"Score",
+  trendTitle:"20 Directions Likely to Rise in the Global Village in 2027",trendSub:"Each direction traces back to specific global art and business knowledge points and maps to a theme cluster in eCNH's official materials. Trend inferences and concept sketches, not investment advice.",
+  searchPh:"Search directions, keywords or applications…",filterAll:"All 20",
+  goalLabel:["Cluster 1 · Civilisational Continuity","Cluster 2 · Games & Virtual Economy","Cluster 3 · Stability & Circulation","Cluster 4 · AI-Driven Evolution","Cluster 5 · Governance & Co-Build"],
+  trendLabel:"2027 global signal",artSrc:"Art knowledge",bizSrc:"Business knowledge",appLabel:"eCNH Web3 application",
+  empty:"No matching directions. Try another keyword.",
+  eacoTitle:"eCNH Official Information & Links",eacoLead:"eCNH = Offshore Huaxia Coin (a community project token name). Positioning: a Solana-based civilisational-connection and virtual-economy experiment promoted by the eCNH-group community. Slogan: Earth & Global Humanity Builds and Shares eCNH Together.",
+  coreTitle:"CORE CONCEPTS / 核心理念",core1:"Interstellar civilisation: using eCNH to connect 3,000 years of Chinese civilisational heritage with 3,000 years of future interstellar civilisation.",core2:"Game integration: exploring eCNH as a universal in-game currency for top-10 interstellar sci-fi exploration and warfare games.",core3:"Stability (as described by the project): Andromeda future target standard, 1 eCNH ≈ 1 CNH, ±1–3% daily fluctuation, paired with eaco, USDC, USDT, PYUSD and EURC.",core4:"AI-driven: daily updates of function-development references using public free APIs of the top 10 open-source AI models; hourly auto-refresh.",
+  factTitle:"KEY FACTS / 关键事实",fact1:"Chain: Solana",fact2:"Designed total supply: 100 trillion (official repository)",fact3:"Annual circulation growth cap: 0.03–3% of total supply (project description)",fact4:"Governance: exploring an eCNH Interstellar Alliance governance group with DAO mechanisms",fact5:"Dedicated website: none found; the official GitHub repository is the current source of truth (to be confirmed)",
+  linkTitle:"OFFICIAL LINKS / 官方链接",
+  caLabel:"CONTRACT ADDRESS / Solana Mint",copyCa:"Copy contract address",caWarn:"Verify the contract address. Beware of counterfeit tokens.",
+  note1:"Naming boundary:",note1d:"eCNH is a community project's token name. It is not the official offshore renminbi (CNH), nor legal tender or an officially endorsed asset.",
+  note2:"Mechanism boundary:",note2d:"Peg, fluctuation band and circulation growth are mechanism targets stated in project documents, not value guarantees; third-party market data is not cited here.",
+  discTitle:"DISCLAIMER / 免责声明：",discText:"This content is not investment advice; crypto assets are highly volatile; verify the contract address and comply with local regulations. DYOR.",
+  footDesc:"Earth & Global Humanity Builds and Shares eCNH · a Solana civilisational-connection and virtual-economy experiment · global village 2027 knowledge co-creation",footSite:"GitHub ↗",footWarn:"Verify CA, beware of fakes",
+  footDisc:"Disclaimer: not investment advice; crypto assets are volatile; verify the CA and local compliance yourself.",
+  toastCopied:"Copied to clipboard",toastDownloaded:"JSON data downloaded"
+ }
+};
+
+/* ================= DATA: GLOBAL ART TOP 10 ================= */
+const ART = [
+ {rank:1,zh:"皇家艺术学院",en:"Royal College of Art",locZh:"英国 · 伦敦",locEn:"UK · London",score:"98.5",
+  fZh:"全球唯一纯研究生层次的艺术与设计大学，以跨学科实验、研究驱动与产业深度合作著称。",
+  fEn:"The world's only fully postgraduate art and design university, known for cross-disciplinary experimentation, research-led practice and deep industry links.",
+  url:"https://www.rca.ac.uk/study/programme-finder/",
+  courses:[["产品设计","Design Products","MA"],["时装","Fashion","MA"],["创新设计工程","Innovation Design Engineering","MA/MSc"],["服务设计","Service Design","MA"],["纺织品设计","Textiles","MA"],["室内设计","Interior Design","MA"],["动画","Animation","MA"],["视觉传达","Visual Communication","MA"],["信息体验设计","Information Experience Design","MA"],["当代艺术策展","Curating Contemporary Art","MA"],["设计未来","Design Futures","MDes"],["建筑","Architecture","MA"]]},
+ {rank:2,zh:"伦敦艺术大学",en:"University of the Arts London",locZh:"英国 · 伦敦",locEn:"UK · London",score:"95.5",
+  fZh:"欧洲规模最大的艺术与设计教育集群，由中央圣马丁、伦敦时装学院、伦敦传媒学院等六所学院组成。",
+  fEn:"Europe's largest art and design education cluster, comprising six colleges including Central Saint Martins, LCF and LCC.",
+  url:"https://www.arts.ac.uk/courses",
+  courses:[["纯艺术（荣誉）文学士","BA (Hons) Fine Art","CSM"],["平面传达设计","BA (Hons) Graphic Communication Design","CSM"],["时装设计：传播","BA (Hons) Fashion Design: Communication","CSM"],["时装设计：印花","BA (Hons) Fashion Design: Print","CSM"],["时装设计：针织","BA (Hons) Fashion Design: Knit","CSM"],["纺织品设计","BA (Hons) Textile Design","CSM"],["摄影","BA (Hons) Photography","LCC"],["插画","BA (Hons) Illustration","Camberwell"],["纯艺术","BA (Hons) Fine Art","Chelsea"],["女装时装设计技术","BA (Hons) Fashion Design Technology: Womenswear","LCF"],["插画文学硕士","MA Illustration","Camberwell"]]},
+ {rank:3,zh:"新学院 · 帕森斯设计学院",en:"The New School / Parsons School of Design",locZh:"美国 · 纽约",locEn:"USA · New York",score:"93.3",
+  fZh:"全球顶尖时尚设计院校之一，美国最早开设时装、平面与室内设计专业，强调商业创新与艺术表达融合。",
+  fEn:"One of the world's leading fashion schools and the first in the US to offer fashion, graphic and interior design, blending commercial innovation with artistic expression.",
+  url:"https://www.newschool.edu/parsons/",
+  courses:[["时装设计","Fashion Design","BFA"],["传播设计","Communication Design","BFA"],["室内设计","Interior Design","BFA"],["设计与技术","Design & Technology","BFA"],["产品设计","Product Design","BFA"],["插画","Illustration","BFA"],["战略设计与管理","Strategic Design & Management","BBA"],["整合设计","Integrated Design","BFA"],["时装设计与社会","Fashion Design and Society","MFA"],["工业设计","Industrial Design","MFA"],["跨学科设计","Transdisciplinary Design","MFA"],["设计与城市生态","Design & Urban Ecologies","MS"]]},
+ {rank:4,zh:"罗德岛设计学院",en:"Rhode Island School of Design",locZh:"美国 · 普罗维登斯",locEn:"USA · Providence",score:"93.2",
+  fZh:"被誉为「设计界哈佛」，以严苛基础训练与概念深度著称，与布朗大学互选课程并设双学位。",
+  fEn:"Often called the 'Harvard of design', known for rigorous foundation studies and conceptual depth, with a dual degree with Brown University.",
+  url:"https://www.risd.edu/academics",
+  courses:[["平面设计","Graphic Design","BFA/MFA"],["工业设计","Industrial Design","BFA/MID"],["服装设计","Apparel Design","BFA"],["插画","Illustration","BFA/MFA"],["建筑","Architecture","BArch/MArch"],["室内建筑","Interior Architecture","BFA/MDes"],["家具设计","Furniture Design","BFA/MFA"],["摄影","Photography","BFA/MFA"],["绘画","Painting","BFA/MFA"],["雕塑","Sculpture","BFA/MFA"],["电影 / 动画 / 视频","Film / Animation / Video","BFA"],["布朗–RISD 双学位","Brown | RISD Dual Degree","AB+BFA"]]},
+ {rank:5,zh:"普瑞特艺术学院",en:"Pratt Institute",locZh:"美国 · 纽约布鲁克林",locEn:"USA · Brooklyn",score:"87.5",
+  fZh:"强调「理论 + 实践」融合，工作室创作与批判性反思并重，课程直面社会公正、可持续性与全球公民议题。",
+  fEn:"Blends theory and practice, pairing studio work with critical reflection on social justice, sustainability and global citizenship.",
+  url:"https://www.pratt.edu/academics/",
+  courses:[["传播设计（平面方向）","Communications Design, Graphic Design","BFA"],["传播设计（插画方向）","Communications Design, Illustration","BFA"],["时装设计","Fashion Design","BFA"],["工业设计","Industrial Design","BID"],["室内设计","Interior Design","BFA"],["传播设计","Communications Design","MFA"],["工业设计","Industrial Design","MID"],["室内设计","Interior Design","MFA"],["包装、识别与系统设计","Packaging, Identities and Systems Design","MS"],["时装系列与传播","Fashion Collection + Communication","MFA"],["纯艺术","Fine Arts","BFA"],["数字艺术：三维动画与动态艺术","3-D Animation and Motion Arts","BFA"]]},
+ {rank:6,zh:"麻省理工学院（媒体实验室）",en:"MIT (Media Lab / MAS)",locZh:"美国 · 剑桥",locEn:"USA · Cambridge",score:"84.8",
+  fZh:"媒体实验室以「艺术 + 科学 + 技术」融合著称，项目制研究与创业生态并重。",
+  fEn:"The Media Lab fuses art, science and technology through project-based research and entrepreneurship.",
+  url:"https://www.media.mit.edu/graduate-program/about-media-arts-sciences/",
+  courses:[["媒体艺术与科学硕士","MS in Media Arts and Sciences","SM"],["媒体艺术与科学博士","PhD in Media Arts and Sciences","PhD"],["如何（几乎）制造任何东西","How to Make (Almost) Anything","MAS.863J"],["城市科学","City Science","MAS.552J"],["情感计算与伦理高级研讨","Advanced Seminar: Affective Computing and Ethics","MAS.630"],["AI 影响力：全球创业","AI for Impact: Global Ventures","MAS.665J"],["人机交互","Human-Robot Interaction","MAS.750"],["可触界面","Tangible Interfaces","MAS.834"],["电子音乐界面原理","Principles of Electronic Music Interfaces","MAS.837"],["认知增强 AI 智能体","AI Agents for Cognitive Augmentation","MAS.S60"],["批判性物质：身体、情感与材料智能","Critical Matter: Body, Emotion, and Material Intelligence","MAS.S63"],["为儿童设计创意技术","Designing Creative Technologies for Kids","MAS.A02"]]},
+ {rank:7,zh:"米兰理工大学",en:"Politecnico di Milano",locZh:"意大利 · 米兰 / 科莫",locEn:"Italy · Milan / Como",score:"83.3",
+  fZh:"全球规模最大的设计教育机构之一，以「设计 + 工程」协同见长，约六成教师来自业界。",
+  fEn:"One of the world's largest design schools, distinguished by design–engineering synergy and a faculty roughly 60% from industry.",
+  url:"https://www.design.polimi.it/en/",
+  courses:[["产品设计","Product Design","Bachelor"],["传播设计","Communication Design","Bachelor/MA"],["时装设计","Fashion Design","Bachelor"],["室内设计","Interior Design","Bachelor"],["工业设计：家具设计","Industrial Design: Furniture Design","Bachelor"],["整合产品设计","Integrated Product Design","LM-12"],["室内与空间设计","Interior and Spatial Design","LM-12"],["时尚系统设计","Design for the Fashion System","LM"],["产品服务系统设计","Product Service System Design","LM"],["设计与工程：工业产品设计与工程","Design & Engineering","LM"],["数字与交互设计","Digital and Interaction Design","LM"]]},
+ {rank:8,zh:"格拉斯哥艺术学院",en:"The Glasgow School of Art",locZh:"英国 · 格拉斯哥",locEn:"UK · Glasgow",score:"82.9",
+  fZh:"欧洲领先独立艺术院校之一，由麦金托什建筑学院、设计学院、纯艺术学院与创新技术学院构成。",
+  fEn:"One of Europe's leading independent art schools, organised into four specialist schools including the Mackintosh School of Architecture.",
+  url:"https://www.gsa.ac.uk/study-at-the-gsa/undergraduate-degrees",
+  courses:[["建筑","Architecture","BArch (Hons)"],["传播设计","Communication Design","BA/MDes"],["时装设计","Fashion Design","BA (Hons)"],["时装叙事","Fashion Narrative","BA (Hons)"],["纯艺术：绘画与版画","Fine Art: Painting and Printmaking","BA (Hons)"],["纯艺术：摄影","Fine Art: Photography","BA (Hons)"],["纯艺术：雕塑与环境艺术","Fine Art: Sculpture and Environmental Art","BA (Hons)"],["交互设计","Interaction Design","BA (Hons)"],["室内设计","Interior Design","BA (Hons)"],["纺织品设计","Textile Design","BA (Hons)"],["产品设计","Product Design","BDes (Hons)"],["游戏与虚拟现实","Games and Virtual Reality","BSc (Hons)"]]},
+ {rank:9,zh:"阿尔托大学",en:"Aalto University",locZh:"芬兰 · 赫尔辛基 / 埃斯波",locEn:"Finland · Helsinki / Espoo",score:"82.3",
+  fZh:"北欧设计、时装、游戏与建筑教育领导者，以设计思维、协作式工业设计与可持续性研究著称。",
+  fEn:"A Nordic leader in design, fashion, games and architecture, renowned for design thinking, collaborative industrial design and sustainability research.",
+  url:"https://www.aalto.fi/en/school-of-arts-design-and-architecture/studies-and-programmes",
+  courses:[["设计与媒体","Design and Media","BA+MA"],["技术、商业与设计","Technology, Business and Design","Bachelor+Master"],["协作与工业设计","Collaborative and Industrial Design","MA"],["当代设计","Contemporary Design","MA"],["时装与纺织设计","Fashion and Textile Design","MA"],["创意可持续性","Creative Sustainability","MA"],["国际设计商业管理","International Design Business Management","MA"],["视觉传达设计","Visual Communication Design","MA"],["新媒体","New Media","MA"],["游戏设计与开发","Game Design and Development","MA"],["视觉文化、策展与当代艺术","Visual Cultures, Curating and Contemporary Art","MA"],["室内建筑","Interior Architecture","MA"]]},
+ {rank:10,zh:"埃因霍芬设计学院",en:"Design Academy Eindhoven",locZh:"荷兰 · 埃因霍芬",locEn:"Netherlands · Eindhoven",score:"81.1",
+  fZh:"以「设计即研究」「通过制作来思考」为核心，本科以 Studio 取代传统系别，硕士设五个批判性社会导向方向。",
+  fEn:"Centred on 'design as research' and 'thinking through making', with BA Studios instead of departments and five socially oriented MA programmes.",
+  url:"https://www.designacademy.nl/page/397/bachelor-programme",
+  courses:[["本科设计项目","Bachelor Programme","BA"],["基础课程线","Fundamentals","BA"],["Do-Make 工作室","Studio Do-Make","BA Studio"],["Silva Systems 工作室","Studio Silva Systems","BA Studio"],["Thinking Hands 工作室","Studio Thinking Hands","BA Studio"],["The Morning Studio","The Morning Studio","BA Studio"],["Better Matter 工作室","Studio Better Matter","BA Studio"],["情境设计","Contextual Design","MA"],["批判探究实验室","Critical Inquiry Lab","MA"],["地缘设计","Geo—Design","MA"],["信息设计","Information Design","MA"],["社会设计","Social Design","MA"]]}
+];
+
+/* ================= DATA: GLOBAL BUSINESS TOP 10 ================= */
+const BIZ = [
+ {rank:1,zh:"麻省理工学院斯隆管理学院",en:"MIT Sloan School of Management",locZh:"美国 · 剑桥",locEn:"USA · Cambridge",score:"99.4",
+  fZh:"以行动学习与 MIT 工程/科技生态的深度融合著称，核心课强调数据建模与决策科学。",
+  fEn:"Distinctive for action learning and deep integration with MIT's engineering ecosystem, with a core grounded in data modelling.",
+  url:"https://mitsloan.mit.edu/mba/mba-course-descriptions",
+  courses:[["包容性世界的领导力挑战","Leadership Challenges for an Inclusive World","15.002"],["商业决策的经济分析","Economic Analysis for Business Decisions","15.010"],["数据、模型与决策","Data, Models, and Decisions","15.060"],["领导者沟通","Communication for Leaders","15.280"],["组织过程","Organizational Processes","15.311"],["财务会计","Financial Accounting","15.515"],["管理金融","Managerial Finance","Elective"],["运营管理导论","Intro to Operations Management","Elective"],["竞争战略","Competitive Strategy","Elective"],["营销创新","Marketing Innovation","Elective"]]},
+ {rank:2,zh:"哈佛商学院",en:"Harvard Business School",locZh:"美国 · 波士顿",locEn:"USA · Boston",score:"99.6",
+  fZh:"全球首个 MBA 学位项目，以案例教学法与全员统一必修课著称，培养综合管理者与领导者。",
+  fEn:"The world's first MBA degree, renowned for the case method and a common required curriculum.",
+  url:"https://www.hbs.edu/mba/academic-experience/curriculum",
+  courses:[["金融学 1","Finance 1 (FIN1)","Required"],["财务报告与控制","Financial Reporting & Control","Required"],["领导力与组织行为","Leadership & Organizational Behavior","Required"],["市场营销","Marketing (MKT)","Required"],["技术与运营管理","Technology & Operations Management","Required"],["战略","Strategy (STRAT)","Required"],["面向领导者的数据科学与 AI","Data Science & AI for Leaders","Required"],["商业、政府与国际经济","Business, Government & the International Economy","Required"],["创业管理者","The Entrepreneurial Manager","Required"],["金融学 2","Finance II","Required"],["领导力与企业责任","Leadership & Corporate Accountability","Required"],["企业的目的","Purpose of the Firm","Required"]]},
+ {rank:3,zh:"斯坦福商学院",en:"Stanford Graduate School of Business",locZh:"美国 · 帕洛阿尔托",locEn:"USA · Palo Alto",score:"99.0",
+  fZh:"规模小而精英化，依托硅谷资源，强调领导力、社会创新与创业精神。",
+  fEn:"An intimate Silicon Valley–rooted programme emphasising leadership, social innovation and entrepreneurship.",
+  url:"https://www.gsb.stanford.edu/programs/mba/academic-experience/curriculum",
+  courses:[["数据与决策","Data and Decisions","Core"],["金融","Finance","Core"],["财务会计","Financial Accounting","Core"],["微观经济学","Microeconomics","Core"],["优化与模拟建模","Optimization and Simulation Modeling","Core"],["领导力实验室","Leadership Laboratory","Core"],["价值引领","Leading with Values","Core"],["群体与团队管理","Managing Groups and Teams","Core"],["组织行为","Organizational Behavior","Core"],["市场营销","Marketing","Core"],["运营","Operations","Core"],["战略","Strategy","Core"]]},
+ {rank:4,zh:"宾夕法尼亚大学沃顿商学院",en:"Wharton School, University of Pennsylvania",locZh:"美国 · 费城",locEn:"USA · Philadelphia",score:"100.0",
+  fZh:"全球规模最大的 MBA 之一，采用「固定核心 + 弹性核心 + 主修 + 200 余门选修」结构。",
+  fEn:"One of the largest MBAs, with a fixed-plus-flex core, majors and 200+ electives.",
+  url:"https://www.wharton.upenn.edu/mba/academics/electives.cfm",
+  courses:[["团队协作与领导力基础","Foundations of Teamwork and Leadership","MGMT 6100"],["营销管理","Marketing Management","MKTG 6110"],["管理者回归分析","Regression Analysis for Managers","STAT 6130"],["管理者微观经济学：基础","Microeconomics for Managers: Foundations","BEPP 6110"],["管理者微观经济学：高级应用","Microeconomics for Managers: Advanced Applications","BEPP 6120"],["管理沟通","Management Communication","WHCP 6160"],["财务会计基础","Fundamentals of Financial Accounting","ACCT 6110"],["公司财务","Corporate Finance","FNCE 6110"],["宏观经济学与全球经济环境","Macroeconomics and the Global Economic Environment","FNCE 6130"],["全球管理中的责任","Responsibility in Global Management","LGST 6110"],["管理成熟企业","Managing the Established Enterprise","MGMT 6110"],["商业分析","Business Analytics","OIDD 6120"]]},
+ {rank:5,zh:"剑桥大学贾奇商学院",en:"Cambridge Judge Business School",locZh:"英国 · 剑桥",locEn:"UK · Cambridge",score:"97.0",
+  fZh:"一年制，以团队化真实客户咨询项目为核心，依托剑桥学院制与跨学科生态。",
+  fEn:"A one-year programme built around team-based live-client projects and Cambridge's interdisciplinary ecosystem.",
+  url:"https://www.jbs.cam.ac.uk/masters-degrees/mba/curriculum/core-courses-and-electives/",
+  courses:[["战略与竞争优势","Strategy and Competitive Advantage","Michaelmas"],["商业分析","Business Analytics","Michaelmas"],["公司财务","Corporate Finance","Michaelmas"],["财务报告与问责","Financial Reporting and Accountability","Michaelmas"],["战略、领导力与执行","Strategy, Leadership and Execution","Lent"],["营销战略","Marketing Strategy","Lent"],["战略运营管理","Strategic Operations Management","Lent"],["商业中的人工智能","AI in Business","Lent"],["谈判实验室","Negotiations Lab","Lent"],["宏观经济学与全球经济议题","Macroeconomics and Global Economic Issues","Easter"],["治理与伦理","Governance and Ethics","Easter"],["引领可持续企业","Leading Sustainable Enterprises","Easter"]]},
+ {rank:6,zh:"巴黎高等商学院",en:"HEC Paris",locZh:"法国 · 巴黎",locEn:"France · Paris",score:"98.8",
+  fZh:"以跨文化学习小组、高比例国际学生与社会影响项目为特色，强调创新、技术与责任。",
+  fEn:"Known for cross-cultural study groups, a highly international cohort and a Social Impact Project.",
+  url:"https://www.hec.edu/en/mba-programs/mba/learning-experience/core-courses",
+  courses:[["金融市场与投资","Financial Markets & Investments","T1"],["财务报告与分析","Financial Reporting & Analysis","T1"],["创新、技术与创新领导力研讨会","HEC Colloquium: Innovation, Technology & Innovation Leadership","T1"],["沟通","Communication","T1"],["通过营销管理客户价值","Managing Customer Value through Marketing","T1"],["问题解决与沟通","Problem Solving & Communication","T1"],["商业统计基础：数据与 AI 工具的洞见","Statistical Foundations for Business","T1"],["像经济学家一样思考","Thinking Like an Economist","T1"],["构建与维系商业价值","Building & Sustaining Business Value","T2"],["公司财务","Corporate Finance","T2"],["领导力：影响力与决策","Leadership: Influence & Decision Making","T2"],["战略管理","Strategic Management","T2"]]},
+ {rank:7,zh:"牛津大学赛德商学院",en:"Saïd Business School, Oxford",locZh:"英国 · 牛津",locEn:"UK · Oxford",score:"95.1",
+  fZh:"一年制，以「有目标地领导」为核心，嵌入牛津三学期制与 GOTO 全球挑战课程。",
+  fEn:"A one-year MBA built around leadership with purpose and the GOTO global challenges course.",
+  url:"https://www.sbs.ox.ac.uk/programmes/oxford-mba/academic-curriculum/core-courses-and-electives",
+  courses:[["会计","Accounting","Core"],["分析学","Analytics","Core"],["商业金融","Business Finance","Core"],["企业与市场","Firms and Markets","Core"],["市场营销","Marketing","Core"],["组织行为","Organisational Behaviour","Core"],["战略","Strategy","Core"],["技术与运营管理","Technology and Operations Management","Core"],["资本主义之辩","Capitalism in Debate","Elective"],["公司估值","Corporate Valuation","Elective"],["谈判","Negotiations","Elective"],["全球战略","Global Strategy","Elective"]]},
+ {rank:8,zh:"欧洲工商管理学院",en:"INSEAD",locZh:"法国 枫丹白露 / 新加坡",locEn:"France / Singapore",score:"96.9",
+  fZh:"一年制、双校区、高度国际化，以多元文化学习小组与商业伦理课程著称。",
+  fEn:"A one-year dual-campus programme with multicultural study groups and distinctive business-and-society training.",
+  url:"https://www.insead.edu/master-programmes/master-business-administration/core-courses",
+  courses:[["财务会计","Financial Accounting","P1"],["金融市场与估值","Financial Markets & Valuation","P1"],["组织行为 1","Organisational Behaviour 1","P1"],["价格与市场","Prices & Markets","P1"],["不确定性、数据与判断","Uncertainty, Data & Judgement","P1"],["战略导论","Introduction to Strategy","P1"],["公司财务政策","Corporate Financial Policy","P2"],["管理客户价值","Managing Customer Value","P2"],["组织行为 2","Organisational Behaviour 2","P2"],["管理会计","Managerial Accounting","P2"],["流程与运营管理","Processes & Operations Management","P2"],["领导力沟通基础","Leadership Communication Foundations","P2"]]},
+ {rank:9,zh:"伦敦商学院",en:"London Business School",locZh:"英国 · 伦敦",locEn:"UK · London",score:"97.6",
+  fZh:"坐落于伦敦金融与商业中心，以体验式学习、100+ 门选修课和灵活学制著称。",
+  fEn:"Located in London's financial hub, distinguished by experiential learning and 100+ electives.",
+  url:"https://www.london.edu/masters-degrees/mba/programme-content/core-courses",
+  courses:[["理解综合管理","Understanding General Management","Core"],["管理者全球领导力评估","Global Leadership Assessment for Managers","Core"],["管理者数据分析","Data Analytics for Managers","Core"],["商业伦理视角","Perspectives in Business Ethics","Core"],["金融学 1","Finance I","Core"],["战略","Strategy","Core"],["市场","Marketplaces","Core"],["会计","Accounting","Core"],["市场营销","Marketing","Core"],["组织中的人：科学","The Science of People in Organisations","Core"],["运营管理","Operations Management","Core"],["管理者宏观经济学","Macroeconomics for Managers","Core"]]},
+ {rank:10,zh:"芝加哥大学布斯商学院",en:"Chicago Booth School of Business",locZh:"美国 · 芝加哥",locEn:"USA · Chicago",score:"94.6",
+  fZh:"选修自由度最高的顶级 MBA 之一，以经济学、行为科学与量化分析为根基。",
+  fEn:"One of the most elective-driven MBAs, grounded in economics, behavioural science and quantitative rigor.",
+  url:"https://www.chicagobooth.edu/programs/weekend/academics/curriculum/general-management",
+  courses:[["领导力效能与发展","Leadership Effectiveness and Development (LEAD)","Required"],["财务会计","Financial Accounting","30000"],["微观经济学","Microeconomics","33001"],["统计学","Statistics","41000"],["公司财务","Corporation Finance","35000"],["营销战略","Marketing Strategy","37000"],["运营管理：业务流程基础","Operations Management: Business Process Fundamentals","40000"],["管理决策","Management Decisions","30005"],["组织管理","People / Organisational Management","33032"],["战略","Strategy","42001"],["商业环境：宏观经济学","Business Environment / Macroeconomics","33050"]]}
+];
+
+/* ================= DATA: 20 GLOBAL VILLAGE DIRECTIONS ================= */
+const DIRS = [
+ {n:1,zk:"地球村文明共同体",ek:"Global Village Civilisation Commons",zt:"全球文明叙事从并列展示走向共同建构，跨文化共同体成为新的组织范式。",et:"Civilisational narratives move from parallel display to shared construction; cross-cultural commons become a new organisational paradigm.",az:"RCA《当代艺术策展》、UAL 中央圣马丁纯艺、帕森斯《时装设计与社会》",ae:"RCA Curating Contemporary Art; UAL CSM Fine Art; Parsons Fashion Design and Society",bz:"哈佛《企业的目的》、INSEAD 商业与社会伦理、牛津《资本主义之辩》",be:"HBS Purpose of the Firm; INSEAD business-and-society ethics; Oxford Capitalism in Debate",az2:"eCNH 文明连接协议：把不同文明的叙事与贡献记录到同一链上空间，呼应「连接 3000 年历史与 3000 年未来星际文明」。",ae2:"eCNH civilisational protocol: recording narratives and contributions from different civilisations in one shared on-chain space.",g:1},
+ {n:2,zk:"全球策展网络",ek:"Global Curatorial Network",zt:"策展从线下机构扩展到分布式网络，跨馆协作与巡展记录成为基础设施。",et:"Curation expands from institutions to distributed networks; cross-museum collaboration needs infrastructure.",az:"RCA《当代艺术策展》、阿尔托《视觉文化、策展与当代艺术》、普瑞特《纯艺术》",ae:"RCA Curating Contemporary Art; Aalto Visual Cultures, Curating and Contemporary Art; Pratt Fine Arts",bz:"哈佛《商业、政府与国际经济》、LBS《全球体验课》",be:"HBS Business, Government & the International Economy; LBS Global Experience",az2:"eCNH 策展协作层：记录巡展、展品来源与策展贡献，让全球展览网络可追溯、可协作。",ae2:"eCNH curatorial layer: touring exhibitions, provenance and curatorial contributions in a traceable network.",g:1},
+ {n:3,zk:"多元文化叙事",ek:"Multicultural Narrative",zt:"同一议题在不同文化中的表达差异成为资产，多语叙事模板需求上升。",et:"Divergent expressions of the same topic across cultures become assets; multilingual narrative templates rise.",az:"GSA《时装叙事》、UAL《平面传达设计》、DAE《情境设计》",ae:"GSA Fashion Narrative; UAL Graphic Communication Design; DAE Contextual Design",bz:"INSEAD 多元文化学习小组、HEC 跨文化学习小组、沃顿《管理沟通》",be:"INSEAD multicultural study groups; HEC cross-cultural groups; Wharton Management Communication",az2:"eCNH 多语叙事模板：把同一故事的不同文化版本与贡献者记录在链上，保持等价表达。",ae2:"eCNH multilingual templates: equivalent cultural versions of one story with contributors recorded on chain.",g:1},
+ {n:4,zk:"记忆与档案公地",ek:"Memory & Archive Commons",zt:"数字记忆的长期保存从机构责任变成公共协作，档案公地概念升温。",et:"Long-term digital memory shifts from institutional duty to public collaboration; archive commons gain ground.",az:"MIT《城市科学》、RCA《信息体验设计》、RISD《摄影》",ae:"MIT City Science; RCA Information Experience Design; RISD Photography",bz:"沃顿《管理沟通》、牛津 GOTO 全球挑战课",be:"Wharton Management Communication; Oxford GOTO",az2:"eCNH 记忆档案：为个人与社区记忆提供链上时间戳、来源与长期保存的实验性公地。",ae2:"eCNH memory archive: on-chain timestamps, provenance and long-term preservation as a commons experiment.",g:1},
+ {n:5,zk:"星际游戏通用货币",ek:"Universal In-Game Currency",zt:"跨游戏、跨平台的统一经济系统从科幻设定走向产品讨论。",et:"Unified cross-game economies move from science-fiction settings into product discussions.",az:"GSA《游戏与虚拟现实》、阿尔托《游戏设计与开发》、MIT《为儿童设计创意技术》",ae:"GSA Games and Virtual Reality; Aalto Game Design and Development; MIT Designing Creative Technologies for Kids",bz:"斯坦福《超越市场的战略》、布斯《竞争战略》",be:"Stanford Strategy Beyond Markets; Chicago Booth Competitive Strategy",az2:"eCNH 游戏结算层：作为星际科幻探索战争游戏通用游戏币的链上结算与记账构想（官方核心理念之一）。",ae2:"eCNH game settlement layer: an on-chain settlement concept for the proposed universal in-game currency.",g:2},
+ {n:6,zk:"虚拟世界治理",ek:"Virtual World Governance",zt:"虚拟世界规模扩大后，规则透明与纠纷解决成为社区核心诉求。",et:"As virtual worlds scale, transparent rules and dispute resolution become core community demands.",az:"阿尔托《新媒体》、MIT《可触界面》、DAE《社会设计》",ae:"Aalto New Media; MIT Tangible Interfaces; DAE Social Design",bz:"剑桥《治理与伦理》、LBS《商业伦理视角》",be:"Cambridge Governance and Ethics; LBS Perspectives in Business Ethics",az2:"eCNH 虚拟治理：把虚拟世界的规则、提案与裁决流程搬上链，形成可审计的治理实验。",ae2:"eCNH virtual governance: rules, proposals and rulings on chain for auditable governance experiments.",g:2},
+ {n:7,zk:"数字身份与通行",ek:"Digital Identity & Passport",zt:"跨场景身份与凭证的可携带性成为全球数字游民与创作者的基础需求。",et:"Portable identity and credentials become basic needs for global nomads and creators.",az:"普瑞特《包装、识别与系统设计》、RCA《视觉传达》、帕森斯《传播设计》",ae:"Pratt Packaging, Identities and Systems Design; RCA Visual Communication; Parsons Communication Design",bz:"LBS《管理者全球领导力评估》、HEC《沟通》",be:"LBS Global Leadership Assessment; HEC Communication",az2:"eCNH 数字通行证：为全球创作者提供可携带的身份、贡献与声誉凭证层。",ae2:"eCNH digital passport: portable identity, contribution and reputation credentials for global creators.",g:2},
+ {n:8,zk:"沉浸式跨文化体验",ek:"Immersive Cross-Cultural Experience",zt:"沉浸式体验成为文化传播与教育的新载体，跨语境设计能力稀缺。",et:"Immersive experience becomes a new carrier of culture and education; cross-context design is scarce.",az:"UAL 伦敦传媒学院《摄影》、MIT《城市科学》、DAE《信息设计》",ae:"UAL LCC Photography; MIT City Science; DAE Information Design",bz:"牛津 GOTO、LBS《全球体验课》、HEC《社会影响项目》",be:"Oxford GOTO; LBS Global Experience; HEC Social Impact Project",az2:"eCNH 体验凭证：为全球沉浸式文化体验提供链上门票、参与记录与贡献追溯。",ae2:"eCNH experience credentials: on-chain tickets, participation and contribution traces for immersive culture.",g:2},
+ {n:9,zk:"锚定标准的透明化",ek:"Transparent Peg Standard",zt:"稳定机制的可观测性成为信任前提，参数公开比口号更重要。",et:"Observability of stability becomes the basis of trust; public parameters matter more than slogans.",az:"DAE《地缘设计》、米兰理工《产品服务系统设计》",ae:"DAE Geo—Design; Polimi Product Service System Design",bz:"MIT《商业决策的经济分析》、布斯《微观经济学》、HEC《像经济学家一样思考》",be:"MIT Economic Analysis for Business Decisions; Booth Microeconomics; HEC Thinking Like an Economist",az2:"eCNH 锚定参数页：把项目所述的 1 eCNH ≈ 1 CNH 与 ±1–3% 波动区间做成公开可查的数据页（机制目标，非价值保证）。",ae2:"eCNH peg parameter page: public readable peg and ±1–3% band — mechanism targets, not guarantees.",g:3},
+ {n:10,zk:"多币种配对与流动性",ek:"Multi-Currency Pairing & Liquidity",zt:"多稳定币组合成为链上结算常规，流动性结构需要被清楚地看见。",et:"Multi-stablecoin pairing becomes routine; liquidity structure needs to be clearly visible.",az:"RCA《视觉传达》、MIT《AI 影响力：全球创业》",ae:"RCA Visual Communication; MIT AI for Impact: Global Ventures",bz:"沃顿《公司财务》、LBS《金融学 1》、INSEAD《金融市场与估值》",be:"Wharton Corporate Finance; LBS Finance I; INSEAD Financial Markets & Valuation",az2:"eCNH 配对可视化：呈现 eaco、USDC、USDT、PYUSD、EURC 等配对关系与官方流动性池链接。",ae2:"eCNH pairing visualisation: eaco, USDC, USDT, PYUSD and EURC pairings and official pool links.",g:3},
+ {n:11,zk:"跨境结算与地球村贸易",ek:"Cross-Border Settlement",zt:"全球贸易碎片化与小额化并行，低成本透明结算工具需求上升。",et:"Trade becomes fragmented and small-scale; low-cost transparent settlement tools gain demand.",az:"米兰理工《时尚系统设计》、阿尔托《国际设计商业管理》",ae:"Polimi Design for the Fashion System; Aalto International Design Business Management",bz:"哈佛《商业、政府与国际经济》、LBS《管理者宏观经济学》、INSEAD《全球经济中的宏观经济学》",be:"HBS BGIE; LBS Macroeconomics for Managers; INSEAD Macroeconomics in the Global Economy",az2:"eCNH 跨境结算实验：面向地球村小额贸易的结算记录与合规提示层，不宣称法定货币地位。",ae2:"eCNH cross-border settlement experiment: records and compliance notes for small-scale global trade.",g:3},
+ {n:12,zk:"资源循环与流通上限",ek:"Circular Flow & Supply Cap",zt:"循环设计与供给规则结合，动态上限成为治理设计的一部分。",et:"Circular design meets supply rules; dynamic caps become part of governance design.",az:"阿尔托《创意可持续性》、DAE《Better Matter》、帕森斯《设计与城市生态》",ae:"Aalto Creative Sustainability; DAE Better Matter; Parsons Design & Urban Ecologies",bz:"剑桥《引领可持续企业》、HEC《社会影响项目》",be:"Cambridge Leading Sustainable Enterprises; HEC Social Impact Project",az2:"eCNH 流通看板：公开呈现项目所述的年度流通增速上限（0.03–3%）与循环设计成果。",ae2:"eCNH circulation dashboard: public view of the stated 0.03–3% cap and circular design outcomes.",g:3},
+ {n:13,zk:"AI 公共数据驱动",ek:"AI Public Data Driven",zt:"公开数据与开源模型成为产品演化的日常输入，可审计日志同步成为标配。",et:"Public data and open models become daily inputs to product evolution; auditable logs become standard.",az:"MIT《认知增强 AI 智能体》《AI 影响力：全球创业》、RCA《设计未来》",ae:"MIT AI Agents for Cognitive Augmentation and AI for Impact; RCA Design Futures",bz:"哈佛《面向领导者的数据科学与 AI》、剑桥《商业中的人工智能》、HEC《商业统计基础》",be:"HBS Data Science & AI for Leaders; Cambridge AI in Business; HEC Statistical Foundations for Business",az2:"eCNH AI 演进日志：按项目官方描述，用开源 AI 公开数据每日更新功能发展参考方案并公开留痕。",ae2:"eCNH AI evolution log: daily reference updates from open-source AI public data, as described in official docs.",g:4},
+ {n:14,zk:"人机共创设计",ek:"Human-AI Co-Design",zt:"AI 从生成图像走向参与服务与制度设计，共创流程需要被记录。",et:"AI moves from image generation to service and institutional design; co-creation needs records.",az:"MIT《如何（几乎）制造任何东西》、RCA《创新设计工程》、DAE Do-Make 工作室",ae:"MIT How to Make (Almost) Anything; RCA Innovation Design Engineering; DAE Studio Do-Make",bz:"斯坦福《群体与团队管理》、MIT《组织过程》",be:"Stanford Managing Groups and Teams; MIT Organizational Processes",az2:"eCNH 共创参考库：把人机协作的设计草案、版本与决策过程写入链上时间线。",ae2:"eCNH co-design reference library: drafts, versions and decisions on an on-chain timeline.",g:4},
+ {n:15,zk:"全球实时决策",ek:"Real-Time Global Decisions",zt:"跨时区组织依赖实时数据做决策，小时级更新从能力变成承诺。",et:"Cross-timezone organisations rely on live data; hourly refresh shifts from capability to promise.",az:"DAE《信息设计》、MIT《城市科学》、RCA《信息体验设计》",ae:"DAE Information Design; MIT City Science; RCA Information Experience Design",bz:"MIT《数据、模型与决策》、布斯《统计学》、LBS《管理者数据分析》",be:"MIT Data, Models, and Decisions; Booth Statistics; LBS Data Analytics for Managers",az2:"eCNH 决策与更新看板：把项目所述的 1:01 / 9:01 / 17:01 小时级更新做成公开可追溯的日志。",ae2:"eCNH decision and update dashboard: public traceable logs for the stated hourly refresh.",g:4},
+ {n:16,zk:"可持续智能设计",ek:"Sustainable Intelligent Design",zt:"可持续指标进入设计早期阶段，全球供应链需要可核查的证据。",et:"Sustainability metrics enter early design; global supply chains need verifiable evidence.",az:"阿尔托《创意可持续性》、米兰理工《产品服务系统设计》、DAE《Silva Systems 工作室》",ae:"Aalto Creative Sustainability; Polimi Product Service System Design; DAE Studio Silva Systems",bz:"牛津《资本主义之辩》、剑桥《引领可持续企业》",be:"Oxford Capitalism in Debate; Cambridge Leading Sustainable Enterprises",az2:"eCNH 可持续存证：把全球项目可持续设计成果与指标写入链上，支持可核查的 ESG 叙事。",ae2:"eCNH sustainability evidence: on-chain records of global sustainability outcomes for verifiable ESG narratives.",g:4},
+ {n:17,zk:"星际联盟治理",ek:"Interstellar Alliance Governance",zt:"全球社区对透明治理的期待上升，DAO 从概念走向可执行规则。",et:"Global communities expect transparent governance; DAOs move from concept to executable rules.",az:"DAE《社会设计》、普瑞特社会公正导向课程、GSA《交互设计》",ae:"DAE Social Design; Pratt social-justice courses; GSA Interaction Design",bz:"LBS《商业伦理视角》、哈佛《领导力与企业责任》、剑桥《治理与伦理》",be:"LBS Perspectives in Business Ethics; HBS Leadership & Corporate Accountability; Cambridge Governance and Ethics",az2:"eCNH 星际联盟治理：围绕官方所述的治理小组构想，试验提案、投票与披露的链上流程。",ae2:"eCNH alliance governance: on-chain proposals, voting and disclosure for the proposed governance group.",g:5},
+ {n:18,zk:"贡献证明与声誉",ek:"Contribution Proof & Reputation",zt:"贡献证明成为全球分布式团队分配话语权与认可的新依据。",et:"Proof of contribution becomes a new basis for recognition in distributed global teams.",az:"RCA《服务设计》、阿尔托《协作与工业设计》、MIT《媒体艺术与科学》",ae:"RCA Service Design; Aalto Collaborative and Industrial Design; MIT Media Arts and Sciences",bz:"沃顿《全球管理中的责任》、斯坦福《价值引领》",be:"Wharton Responsibility in Global Management; Stanford Leading with Values",az2:"eCNH 贡献证明：把全球协作、内容贡献与治理参与记录为可复核的链上凭证。",ae2:"eCNH proof of contribution: verifiable on-chain credentials for global collaboration and governance participation.",g:5},
+ {n:19,zk:"开放协作协议",ek:"Open Collaboration Protocol",zt:"组织效率从工具堆叠转向协议化协作，清晰规则比更多会议更有效。",et:"Efficiency shifts from tool stacking to protocol-based coordination; clear rules beat more meetings.",az:"MIT 媒体实验室、帕森斯《跨学科设计》、DAE《情境设计》",ae:"MIT Media Lab; Parsons Transdisciplinary Design; DAE Contextual Design",bz:"MIT《组织过程》、INSEAD《组织行为》、布斯《领导力效能与发展》",be:"MIT Organizational Processes; INSEAD Organisational Behaviour; Booth LEAD",az2:"eCNH 开放协作协议：把角色、提案、贡献与复盘固化为链上流程，供全球社区复用。",ae2:"eCNH open collaboration protocol: roles, proposals, contributions and retrospectives as reusable on-chain processes.",g:5},
+ {n:20,zk:"全球人类共建共享",ek:"Global Humanity Co-Build",zt:"地球村协作边界继续模糊，开放参与成为长期主义的组织能力。",et:"Global-village collaboration boundaries blur; open participation becomes a long-term organisational capability.",az:"RCA《设计未来》、DAE《批判探究实验室》、RISD《雕塑》",ae:"RCA Design Futures; DAE Critical Inquiry Lab; RISD Sculpture",bz:"哈佛《企业的目的》、牛津 GOTO、HEC《社会影响项目》",be:"HBS Purpose of the Firm; Oxford GOTO; HEC Social Impact Project",az2:"eCNH 共建入口：以「全球人类共建共享 eCNH」为口号，建立开放提案、角色分工与成果归档的协作入口。",ae2:"eCNH co-build entry: open proposals, role assignment and archiving under the slogan 'Earth & Global Humanity Builds and Shares eCNH'.",g:5}
+];
+
+/* ================= STATE & RENDER ================= */
+let lang=localStorage.getItem('echnGV2027-lang')||'zh';
+let style=localStorage.getItem('echnGV2027-style')||'wabi';
+let goalFilter='all',query='';
+const $=s=>document.querySelector(s);
+const t=k=>(I[lang]&&I[lang][k])||k;
+function toast(msg){const el=$('#toast');el.textContent=msg;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('show'),1900);}
+function applyStatic(){
+  document.documentElement.lang=lang==='zh'?'zh-CN':'en';
+  document.querySelectorAll('[data-i18n]').forEach(el=>{el.textContent=t(el.dataset.i18n);});
+  document.querySelectorAll('[data-i18n-html]').forEach(el=>{el.innerHTML=t(el.dataset.i18nHtml);});
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{el.placeholder=t(el.dataset.i18nPh);});
+  document.querySelectorAll('#langSeg button').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
+  document.querySelectorAll('#styleSeg button').forEach(b=>b.classList.toggle('active',b.dataset.style===style));
+  document.documentElement.setAttribute('data-style',style);
+}
+function schoolCard(s,type){
+  const cs=s.courses.map(c=>`<li><span class="czh">${lang==='zh'?c[0]:c[1]}</span><span class="cen">${lang==='zh'?c[1]:c[0]}</span><span class="cnote">${c[2]}</span></li>`).join('');
+  return `<article class="school"><div class="school-top"><div class="rank">${String(s.rank).padStart(2,'0')}</div><div><h3>${lang==='zh'?s.zh:s.en}</h3><div class="meta">${lang==='zh'?s.locZh:s.locEn} · ${type==='art'?'QS A&D 2026':'QS MBA 2027'} · ${t('scoreLabel')} ${s.score}</div></div></div>
+  <p class="feature">${lang==='zh'?s.fZh:s.fEn}</p>
+  <details class="courses" data-type="${type}"><summary><span>${s.courses.length} ${t('coursesLabel')}</span></summary><ol class="course-list">${cs}</ol></details>
+  <a class="school-link" href="${s.url}" target="_blank" rel="noopener">${t('official')}</a></article>`;
+}
+function renderSchools(type){$('#'+type+'Grid').innerHTML=(type==='art'?ART:BIZ).map(s=>schoolCard(s,type)).join('');}
+function renderFilters(){
+  const labels=[t('filterAll')].concat(t('goalLabel'));
+  $('#goalFilters').innerHTML=['all','1','2','3','4','5'].map((v,i)=>`<button class="chip ${goalFilter===v?'active':''}" data-goal="${v}">${labels[i]}</button>`).join('');
+}
+function dirCard(d){
+  const q=query.toLowerCase();
+  const hay=[d.zk,d.ek,d.zt,d.et,d.az2,d.ae2,d.az,d.ae,d.bz,d.be].join(' ').toLowerCase();
+  if(goalFilter!=='all'&&String(d.g)!==goalFilter)return '';
+  if(q&&!hay.includes(q))return '';
+  return `<article class="dir"><div class="num">DIRECTION ${String(d.n).padStart(2,'0')}</div>
+  <h3>${lang==='zh'?d.zk:d.ek} <span class="cen">/ ${lang==='zh'?d.ek:d.zk}</span></h3>
+  <p class="trend"><b>${t('trendLabel')}：</b>${lang==='zh'?d.zt:d.et}</p>
+  <div class="src"><b>${t('artSrc')}：</b>${lang==='zh'?d.az:d.ae}<br><b>${t('bizSrc')}：</b>${lang==='zh'?d.bz:d.be}</div>
+  <p class="app"><b>${t('appLabel')}：</b>${lang==='zh'?d.az2:d.ae2}</p>
+  <span class="goal-tag">${t('goalLabel')[d.g-1]}</span></article>`;
+}
+function renderDirections(){$('#dirGrid').innerHTML=DIRS.map(dirCard).join('')||`<div class="empty">${t('empty')}</div>`;}
+function renderAll(){applyStatic();renderSchools('art');renderSchools('biz');renderFilters();renderDirections();}
+$('#langSeg').addEventListener('click',e=>{const b=e.target.closest('button[data-lang]');if(!b)return;lang=b.dataset.lang;localStorage.setItem('echnGV2027-lang',lang);renderAll();});
+$('#styleSeg').addEventListener('click',e=>{const b=e.target.closest('button[data-style]');if(!b)return;style=b.dataset.style;localStorage.setItem('echnGV2027-style',style);applyStatic();});
+document.addEventListener('click',e=>{
+  const ex=e.target.closest('[data-expand]');if(ex){document.querySelectorAll('details.courses[data-type="'+ex.dataset.expand+'"]').forEach(d=>d.open=true);return;}
+  const co=e.target.closest('[data-collapse]');if(co){document.querySelectorAll('details.courses[data-type="'+co.dataset.collapse+'"]').forEach(d=>d.open=false);return;}
+  const g=e.target.closest('[data-goal]');if(g){goalFilter=g.dataset.goal;renderFilters();renderDirections();return;}
+});
+$('#searchInput').addEventListener('input',e=>{query=e.target.value.trim();renderDirections();});
+$('#copyCa').addEventListener('click',()=>{navigator.clipboard.writeText('7GQnqthWKa5v2GqXYWhmgWZY5mCRrniwK3Xuinm9GKw5').then(()=>toast(t('toastCopied')));});
+$('#copyAll').addEventListener('click',()=>{
+  const text=DIRS.map(d=>lang==='zh'?`${d.n}. ${d.zk}｜${d.zt}\n  艺术：${d.az}\n  商科：${d.bz}\n  eCNH 应用：${d.az2}\n  主题：${I.zh.goalLabel[d.g-1]}`:`${d.n}. ${d.ek} | ${d.et}\n  Art: ${d.ae}\n  Business: ${d.be}\n  eCNH app: ${d.ae2}\n  Cluster: ${I.en.goalLabel[d.g-1]}`).join('\n\n')
+   +'\n\neCNH — Offshore Huaxia Coin | CA: 7GQnqthWKa5v2GqXYWhmgWZY5mCRrniwK3Xuinm9GKw5\n'+(lang==='zh'?'认准合约地址，谨防假币。不构成投资建议。':'Verify the CA, beware of fakes. Not investment advice.');
+  navigator.clipboard.writeText(text).then(()=>toast(t('toastCopied')));
+});
+$('#downloadJson').addEventListener('click',()=>{
+  const payload={meta:{title:'eCNH 2027 · Global Village Web3 20 Directions',rankingArt:'QS Art & Design 2026 global top 10',rankingBusiness:'QS Global MBA Rankings 2027 global top 10',notice:'Trend inferences, not investment advice.'},artGlobal:ART,businessGlobal:BIZ,directions:DIRS};
+  const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='echn-2027-global-village-directions.json';a.click();URL.revokeObjectURL(a.href);
+  toast(t('toastDownloaded'));
+});
+window.addEventListener('scroll',()=>{$('#topBtn').style.display=window.scrollY>500?'block':'none';});
+$('#topBtn').addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+renderAll();
+</script>
+</body>
+</html>
